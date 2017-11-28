@@ -1,5 +1,6 @@
 package consumat;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import agent.farm.Farm;
@@ -10,13 +11,14 @@ import decision.Decision;
 import decision.DecisionResult;
 import decision.AbstractDecision;
 import output.Output;
-import output.TextOutput;
 import product.Crop;
 import product.Livestock;
 import product.Product;
 import reader.MockReader;
 import reader.Reader;
 import socialnetworks.SocialNetworks;
+
+import agent.Agent;
 
 public class Consumat {
 
@@ -39,6 +41,18 @@ public class Consumat {
 		Calculator calculator = new MockCalculator();
 		calculator.getSatisfaction(potatoes, farms, socialNetworks, government);
 		calculator.getSatisfaction(diaryCattle, farms, socialNetworks, government);
+		
+		// Simple version
+		
+		Agent farmer = new Agent(50, 10);
+		System.out.println(String.format("Action: %s", farmer.agentAction()));
+		BatchOutput batch = new BatchOutput();
+		try {
+			batch.generateBatch(farmer.agentAction());
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		// decision-making
 		//Decision decision = new AbstractDecision();

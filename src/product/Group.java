@@ -14,4 +14,5 @@ public class Group {
 	public void setGroupId(int groupId) {
 		this.groupId = groupId;
 	}
+	
 }

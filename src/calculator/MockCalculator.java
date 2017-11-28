@@ -11,23 +11,27 @@ import socialnetworks.SocialNetworks;
 import product.Crop.CropCategory;
 import product.Livestock.LivestockCategory;
 
-public class DefaultCalculator implements Calculator {
+public class MockCalculator implements Calculator {
 
 	@Override
 	public double getSatisfaction(Product product, List<Farm> adjacentFarms, SocialNetworks socialNetworks,
 			Government government) {
 		if (product.isNone()) {
-			System.out.println("do nothing, the satisfaction is 0");
+			System.out.println("No product. Do nothing.");
 		} else {
 			if (product instanceof Crop) {
-				// crop
+				// Crop
 				if (product.getCategory() == CropCategory.Potatoes) {
-					System.out.println("I'm a potato, the satisfaction is 5");
+					System.out.println("test from MockCalculator: potato");
+					Crop potatoes = (Crop)product;
+					//potatoes.(see its characteristics)
 				}
 			} else if (product instanceof Livestock) {
-				// livestock
+				// Livestock
 				if (product.getCategory() == LivestockCategory.Diary_Cattle) {
-					System.out.println("I'm a diary cattle, the satisfaction is 7");
+					System.out.println("test from MockCalculator: diary cattle");
+					Livestock diaryCattles = (Livestock)product;
+					//diaryCattles.
 				}
 			}
 		}

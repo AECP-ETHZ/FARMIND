@@ -40,8 +40,8 @@ public class MockReader implements Reader {
 		farm001Head.setMemory(5);
 		// farm001Head's preferences
 		List<Product> farm001HeadPreferences = new ArrayList<Product>();
-		Product maize = new Crop("maize");
-		Product diaryCattle = new Livestock("diary cattle");
+		Product maize = new Crop("maize");  // Strictly corresponding to enumeration at Crop.java
+		Product diaryCattle = new Livestock("diary cattle");  // Strictly corresponding to enumeration at Livestock.java
 		farm001HeadPreferences.add(maize);
 		farm001HeadPreferences.add(diaryCattle);
 		farm001Head.setPreferences(farm001HeadPreferences);

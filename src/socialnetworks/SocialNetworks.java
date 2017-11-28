@@ -59,7 +59,7 @@ public class SocialNetworks {
 		StringBuffer stringBuffer = new StringBuffer();
 		for (SocialNetwork socialNetwork : this.socialNetworks) {
 			for (NetworkNode networkNode : socialNetwork.getNetworkNodes()) {
-				stringBuffer.append(String.format("[%s,%s]->%s\t", socialNetwork.getFramId(), networkNode.getFarmId(),
+				stringBuffer.append(String.format("[%s,%s] -> %s\t", socialNetwork.getFramId(), networkNode.getFarmId(),
 						networkNode.getWeigh().setScale(2,RoundingMode.HALF_UP).doubleValue()));
 			}
 			stringBuffer.append("\n");

@@ -3,7 +3,7 @@ package product;
 /**
  * The order of product
  * */
-public class Order {
+public class Order extends Class {
 
 	private int orderId;
 

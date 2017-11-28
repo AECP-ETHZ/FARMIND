@@ -1,6 +1,6 @@
 package product;
 
-public class Livestock extends Class implements Product {
+public class Livestock extends Order implements Product {
 
 	public Livestock(String name) {
 		this.name = name;

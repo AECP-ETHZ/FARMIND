@@ -12,65 +12,53 @@ public class Farm implements Member {
 	private Member head;
 	private Member spouse;
 	private Member child;
-
+	private double[] coordinates; 
+	
+	
 	@Override
 	public int getAge() {
-		if (this.head != null)
-			return this.head.getAge();
+		// TODO Auto-generated method stub
 		return 0;
 	}
-
 	@Override
 	public int getEducation() {
-		if (this.head != null)
-			return this.head.getEducation();
+		// TODO Auto-generated method stub
 		return 0;
 	}
-
 	@Override
 	public List<Product> getPreferences() {
-		if (this.head != null)
-			return Collections.unmodifiableList(this.head.getPreferences());
-		return new ArrayList<Product>();
+		// TODO Auto-generated method stub
+		return null;
 	}
-
 	@Override
 	public int getMemory() {
-		if (this.head != null)
-			return this.head.getMemory();
+		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
 	public String getFarmId() {
 		return farmId;
 	}
-
 	public void setFarmId(String farmId) {
 		this.farmId = farmId;
 	}
-
 	public Member getHead() {
 		return head;
 	}
-
 	public void setHead(Member head) {
 		this.head = head;
 	}
-
 	public Member getSpouse() {
 		return spouse;
 	}
-
 	public void setSpouse(Member spouse) {
 		this.spouse = spouse;
 	}
-
 	public Member getChild() {
 		return child;
 	}
-
 	public void setChild(Member child) {
 		this.child = child;
 	}
-
+	
 }

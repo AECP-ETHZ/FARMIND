@@ -3,21 +3,48 @@ package agent.farm;
 import java.util.ArrayList;
 import java.util.List;
 
+import agent.Agent.ACTION;
 import product.Product;
 
 public class DefaultMember implements Member {
 
-	public DefaultMember() {
-		this.age = 0;
-		this.education = 0;
-		this.preferences = new ArrayList<Product>();
-		this.memory = 0;
+	public enum ACTION {
+		REPETITION,
+		OPTIMIZATION,
+		IMITATION,
+		OPT_OUT,
 	}
 	
 	private int age;
 	private int education;
 	private List<Product> preferences;
 	private int memory;
+	
+	public DefaultMember(int age, int education, int memory) {
+		this.age = 0;
+		this.education = 0;
+		this.preferences = new ArrayList<Product>();
+		this.memory = 0;
+	}
+	
+	public ACTION agentAction() {
+		
+		if ((age <= 35)&&(education > 10 )) {
+			return ACTION.OPT_OUT;
+		}
+		if ((age > 35)&&(education > 10 )) {
+			return ACTION.OPTIMIZATION;
+		}
+		if ((age <= 35)&&(education <= 10 )) {
+			return ACTION.IMITATION;
+		}
+		if ((age > 35)&&(education <= 10 )) {
+			return ACTION.REPETITION;
+		}
+		else {
+			return null;
+			}
+	}
 	
 	@Override
 	public int getAge() {

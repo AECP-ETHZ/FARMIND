@@ -3,6 +3,7 @@ package consumat;
 import java.io.FileNotFoundException;
 import java.util.List;
 
+import agent.farm.DefaultMember;
 import agent.farm.Farm;
 import agent.government.Government;
 import calculator.Calculator;
@@ -15,6 +16,7 @@ import product.Crop;
 import product.Livestock;
 import product.Product;
 import reader.MockReader;
+import reader.ParameterInput;
 import reader.Reader;
 import socialnetworks.SocialNetworks;
 
@@ -23,6 +25,7 @@ import agent.Agent;
 public class Consumat {
 
 	public static void main(String[] args) {
+		/*
 		// reader
 		Reader reader = new MockReader();
 		// read social networks
@@ -41,26 +44,29 @@ public class Consumat {
 		Calculator calculator = new MockCalculator();
 		calculator.getSatisfaction(potatoes, farms, socialNetworks, government);
 		calculator.getSatisfaction(diaryCattle, farms, socialNetworks, government);
+		*/
 		
-		// Simple version
+		// 1 read parameters
+		ParameterInput param = new ParameterInput();
+		try {
+			param.readParameters();
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
 		
-		Agent farmer = new Agent(50, 10);
-		System.out.println(String.format("Action: %s", farmer.agentAction()));
+		// 2 create agent
+		DefaultMember farmer = new DefaultMember(50, 10, 5);
+
+		// 3 decision making
+		System.out.println(String.format("Action: %s", farmer.agentAction()));	
+		
+		// 4 output batch file
 		BatchOutput batch = new BatchOutput();
 		try {
-			batch.generateBatch(farmer.agentAction());
+			batch.generateBatch();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		// decision-making
-		//Decision decision = new AbstractDecision();
-		//DecisionResult decisionResult = decision.make(farms.get(0), farms, socialNetworks, government, calculator);
-		// output the decision result
-		//Output output = new TextOutput();
-		//output.write(decisionResult);
-
 	}
 
 }

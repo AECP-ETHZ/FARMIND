@@ -3,8 +3,6 @@ package consumat;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
-import agent.farm.DefaultMember;
-
 public class BatchOutput {
 	
 	public void generateBatch() throws FileNotFoundException {

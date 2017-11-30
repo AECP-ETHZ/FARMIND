@@ -3,7 +3,6 @@ package agent.farm;
 import java.util.ArrayList;
 import java.util.List;
 
-import agent.Agent.ACTION;
 import product.Product;
 
 public class DefaultMember implements Member {
@@ -21,10 +20,10 @@ public class DefaultMember implements Member {
 	private int memory;
 	
 	public DefaultMember(int age, int education, int memory) {
-		this.age = 0;
-		this.education = 0;
+		this.age = age;
+		this.education = education;
 		this.preferences = new ArrayList<Product>();
-		this.memory = 0;
+		this.memory = memory;
 	}
 	
 	public ACTION agentAction() {

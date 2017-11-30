@@ -1,6 +1,7 @@
 package consumat;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 import agent.farm.DefaultMember;
@@ -19,8 +20,6 @@ import reader.MockReader;
 import reader.ParameterInput;
 import reader.Reader;
 import socialnetworks.SocialNetworks;
-
-import agent.Agent;
 
 public class Consumat {
 
@@ -46,16 +45,23 @@ public class Consumat {
 		calculator.getSatisfaction(diaryCattle, farms, socialNetworks, government);
 		*/
 		
+		// set up loop around reading/output cycle
+		
 		// 1 read parameters
 		ParameterInput param = new ParameterInput();
+		ArrayList<Integer> preferences = new ArrayList<Integer>();
+		
 		try {
-			param.readParameters();
+			preferences = param.readParameters();
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}
 		
 		// 2 create agent
-		DefaultMember farmer = new DefaultMember(50, 10, 5);
+		int age = preferences.get(0);
+		int education = preferences.get(1);
+		int memory = preferences.get(2);
+		DefaultMember farmer = new DefaultMember(age, education, memory);
 
 		// 3 decision making
 		System.out.println(String.format("Action: %s", farmer.agentAction()));	

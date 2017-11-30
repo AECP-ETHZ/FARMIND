@@ -25,16 +25,7 @@ public class SocialNetworks {
 
 	public void addSocialNetwork(SocialNetwork socialNetwork) {
 		if (socialNetwork != null) {
-			socialNetwork.addNetworkNode(new NetworkNode(socialNetwork.getFramId(), 0.00));
 			this.socialNetworks.add(socialNetwork);
-			for (NetworkNode networkNode : socialNetwork.getNetworkNodes()) {
-				SocialNetwork other = this.getSocialNetwork(networkNode.getFarmId());
-				if (other == null) {
-					other = new SocialNetwork(networkNode.getFarmId());
-					this.socialNetworks.add(other);
-				}
-				other.addNetworkNode(new NetworkNode(socialNetwork.getFramId(), networkNode.getWeigh()));
-			}
 		}
 	}
 

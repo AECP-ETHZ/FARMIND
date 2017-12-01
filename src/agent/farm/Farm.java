@@ -1,19 +1,16 @@
 package agent.farm;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import product.Product;
 
 public class Farm implements Member {
-
+	
 	private String farmId;
 	private Member head;
 	private Member spouse;
 	private Member child;
-	private double[] coordinates; 
-	
+	//private double[] coordinates; 
 	
 	@Override
 	public int getAge() {
@@ -34,6 +31,25 @@ public class Farm implements Member {
 	public int getMemory() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	public agent.farm.Person.ACTION getAction() {
+		
+		if ((head.getAge() <= 35)&&(head.getEducation() > 10 )) {
+			return ACTION.OPT_OUT;
+		}
+		if ((head.getAge() > 35)&&(head.getEducation() > 10 )) {
+			return ACTION.OPTIMIZATION;
+		}
+		if ((head.getAge() <= 35)&&(head.getEducation() <= 10 )) {
+			return ACTION.IMITATION;
+		}
+		if ((head.getAge() > 35)&&(head.getEducation() <= 10 )) {
+			return ACTION.REPETITION;
+		}
+		else {
+			return null;
+			}
 	}
 	
 	public String getFarmId() {

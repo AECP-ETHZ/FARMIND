@@ -7,16 +7,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import agent.farm.DefaultMember;
+import agent.farm.Person;
 import agent.farm.Farm;
-import product.Crop;
-import product.Livestock;
-import product.Product;
 import socialnetworks.NetworkNode;
 import socialnetworks.SocialNetwork;
 import socialnetworks.SocialNetworks;
 
-public class MockReader1 implements Reader {
+public class ReadParameters implements Reader {
 
 	@Override
 	public SocialNetworks getSocialNetworks() {
@@ -47,19 +44,18 @@ public class MockReader1 implements Reader {
 			Buffer = new BufferedReader(new FileReader("./data/farm_data.csv"));
 			Line = Buffer.readLine();									       // first line to throw away
 			
-			
 			while ((Line = Buffer.readLine()) != null) {                       // Read farm's parameters line by line
 				farmParameters = CSVtoArrayList(Line);
 				System.out.println("ArrayList data: " + farmParameters);
 				Farm farm = new Farm();
 				
-				farm.setFarmId("Farm" + Integer.toString(index));
+				farm.setFarmId("Farm" + String.format("%03d", index) );
 				
 				age = currentYear - Integer.parseInt( farmParameters.get(3));
 				education = Integer.parseInt( farmParameters.get(4) );
 				memory = Integer.parseInt( farmParameters.get(5));
 				
-				DefaultMember farmHead = new DefaultMember(age, education,memory);
+				Person farmHead = new Person(age, education,memory);
 				farm.setHead(farmHead);
 				
 				farms.add(farm);
@@ -78,8 +74,7 @@ public class MockReader1 implements Reader {
 		return farms;
 	}
 
-	// Utility which converts CSV to ArrayList using Split Operation
-	public static ArrayList<String> CSVtoArrayList(String CSV) {
+	public static ArrayList<String> CSVtoArrayList(String CSV) {		       // Utility which converts CSV to ArrayList using Split Operation
 		ArrayList<String> Result = new ArrayList<String>();
 		
 		if (CSV != null) {

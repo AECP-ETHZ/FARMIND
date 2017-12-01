@@ -3,7 +3,7 @@ package reader;
 import java.util.ArrayList;
 import java.util.List;
 
-import agent.farm.DefaultMember;
+import agent.farm.Person;
 import agent.farm.Farm;
 import product.Crop;
 import product.Livestock;
@@ -34,7 +34,7 @@ public class MockReader implements Reader {
 		Farm farm001 = new Farm();
 		farm001.setFarmId("Farm001");
 		// farm001's head
-		DefaultMember farm001Head = new DefaultMember(34,19,5);
+		Person farm001Head = new Person(34,19,5);
 		farm001Head.setAge(34);
 		farm001Head.setEducation(19);
 		farm001Head.setMemory(5);
@@ -48,7 +48,7 @@ public class MockReader implements Reader {
 		farm001.setHead(farm001Head);
 
 		// farm001's spouse
-		DefaultMember farm001Spouse = new DefaultMember(32,14,6);
+		Person farm001Spouse = new Person(32,14,6);
 		farm001Spouse.setAge(32);
 		farm001Spouse.setEducation(14);
 		farm001Spouse.setMemory(6);
@@ -63,7 +63,7 @@ public class MockReader implements Reader {
 		
 
 		// farm001's child
-		DefaultMember farm001Child = new DefaultMember(9,4,2);
+		Person farm001Child = new Person(9,4,2);
 		farm001Child.setAge(9);
 		farm001Child.setEducation(4);
 		farm001Child.setMemory(2);

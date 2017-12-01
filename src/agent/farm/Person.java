@@ -5,44 +5,18 @@ import java.util.List;
 
 import product.Product;
 
-public class DefaultMember implements Member {
+public class Person implements Member {
 
-	public enum ACTION {
-		REPETITION,
-		OPTIMIZATION,
-		IMITATION,
-		OPT_OUT,
-	}
-	
 	private int age;
 	private int education;
 	private List<Product> preferences;
 	private int memory;
 	
-	public DefaultMember(int age, int education, int memory) {
+	public Person(int age, int education, int memory) {
 		this.age = age;
 		this.education = education;
 		this.preferences = new ArrayList<Product>();
 		this.memory = memory;
-	}
-	
-	public ACTION agentAction() {
-		
-		if ((age <= 35)&&(education > 10 )) {
-			return ACTION.OPT_OUT;
-		}
-		if ((age > 35)&&(education > 10 )) {
-			return ACTION.OPTIMIZATION;
-		}
-		if ((age <= 35)&&(education <= 10 )) {
-			return ACTION.IMITATION;
-		}
-		if ((age > 35)&&(education <= 10 )) {
-			return ACTION.REPETITION;
-		}
-		else {
-			return null;
-			}
 	}
 	
 	@Override
@@ -79,6 +53,12 @@ public class DefaultMember implements Member {
 
 	public void setMemory(int memory) {
 		this.memory = memory;
+	}
+
+	@Override
+	public ACTION getAction() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

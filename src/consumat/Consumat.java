@@ -18,6 +18,8 @@ public class Consumat {
 
 		// 3 decision making
 		System.out.println(String.format("Action: %s", farms.get(0).getAction() ));	
+		System.out.println(String.format("Action: %s", farms.get(1).getAction() ));	
+		System.out.println(String.format("Action: %s", farms.get(2).getAction() ));	
 		
 		// 4 output batch file
 		BatchOutput batch = new BatchOutput();

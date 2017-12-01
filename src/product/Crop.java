@@ -1,6 +1,6 @@
 package product;
 
-public class Crop extends Order implements Product {
+public class Crop extends ProductOrder implements Product {
 
 	public Crop(String name) {
 		this.name = name;

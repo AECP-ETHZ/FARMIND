@@ -7,10 +7,11 @@ import product.Product;
 public class Farm implements Member {
 	
 	private String farmId;
+	private String farmName;
 	private Member head;
 	private Member spouse;
 	private Member child;
-	//private double[] coordinates; 
+	private Location location; 
 	
 	@Override
 	public int getAge() {
@@ -76,5 +77,17 @@ public class Farm implements Member {
 	public void setChild(Member child) {
 		this.child = child;
 	}
-	
+	public String getFarmName() {
+		return farmName;
+	}
+	public void setFarmName(String farmName) {
+		this.farmName = farmName;
+	}
+	public Location getLocation() {
+		return location;
+	}
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
 }

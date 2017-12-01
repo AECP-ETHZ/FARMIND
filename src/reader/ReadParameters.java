@@ -15,6 +15,7 @@ import product.Livestock;
 import product.Livestock.LivestockCategory;
 import product.Product;
 import agent.farm.Farm;
+import agent.farm.Location;
 import socialnetworks.NetworkNode;
 import socialnetworks.SocialNetwork;
 import socialnetworks.SocialNetworks;
@@ -38,6 +39,7 @@ public class ReadParameters implements Reader {
 		String Line;
 		List<Farm> farms = new ArrayList<Farm>();
 		ArrayList<String> farmParameters;
+		String name = "";
 		int age = 0;
 		int education = 0;
 		int memory = 0;
@@ -57,29 +59,38 @@ public class ReadParameters implements Reader {
 				farmParameters = CSVtoArrayList(Line);
 				System.out.println("ArrayList data: " + farmParameters);
 				Farm farm = new Farm();
+				Location location = new Location();							   // create new location for each farm
+				double[] coordinates = {0,0};
+				
+				name = farmParameters.get(0);
+				coordinates[0] = Double.parseDouble(farmParameters.get(1));
+				coordinates[1] = Double.parseDouble(farmParameters.get(2));
+				location.setCoordinates(coordinates);
 				
 				farm.setFarmId("Farm" + String.format("%03d", index) );		   // index is used to set the actual farm id value
-				
+				farm.setFarmName(name);
+				farm.setLocation(location);
+
 				age = currentYear - Integer.parseInt( farmParameters.get(3));
 				education = Integer.parseInt( farmParameters.get(4) );
 				memory = Integer.parseInt( farmParameters.get(5));
 				entrepreneurship = Integer.parseInt( farmParameters.get(6));
 				
 				int len = farmParameters.size();
-				
+				preferences.clear();
 				for (int i = 7; i < len; i++) {							       // check the element against all possible enum values and add to parameter
 					if (farmParameters.get(i) != null) {
-						for (LivestockCategory x: LivestockCategory.values() ) {
-							String xx = x.toString();
-							if (xx.equalsIgnoreCase( farmParameters.get(i))) {
+						for (LivestockCategory s: LivestockCategory.values() ) {
+							String cat = s.toString();
+							if (cat.equalsIgnoreCase( farmParameters.get(i))) {
 								p = new Livestock(farmParameters.get(i));
 								preferences.add(p);
 							}
 						}
 						
-						for (CropCategory x: CropCategory.values() ) {
-							String xx = x.toString();
-							if (xx.equalsIgnoreCase( farmParameters.get(i))) {
+						for (CropCategory s: CropCategory.values() ) {
+							String cat = s.toString();
+							if (cat.equalsIgnoreCase( farmParameters.get(i))) {
 								p = new Crop(farmParameters.get(i));
 								preferences.add(p);
 							}
@@ -87,10 +98,9 @@ public class ReadParameters implements Reader {
 					}
 				}
 				
-				Person farmHead = new Person(age, education,memory, entrepreneurship, preferences);          // create new farm head and add to farm
-				preferences.clear();
-				farm.setHead(farmHead);
+				Person farmHead = new Person(age, education,memory, entrepreneurship, preferences);          
 				
+				farm.setHead(farmHead);
 				farms.add(farm);
 				index++;	
 			}

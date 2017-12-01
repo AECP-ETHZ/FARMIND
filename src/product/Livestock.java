@@ -29,8 +29,8 @@ public class Livestock extends Order implements Product {
 	}
 
 	public enum LivestockCategory implements Product.Category {
-		None("none"), Diary_Cattle("diary cattle"), Beef_Cattle("beef cattle"), Pigs("pigs"), Goats("goats"), Sheep(
-				"sheep");
+		None("none"), Dairy_Cattle("dairy_cattle"), Beef_Cattle("beef_cattle"), Pigs("pigs"), Goats("goats"), Sheep(
+				"sheep"),Ducks("ducks"),Geese("geese"),Chickens("chickens");
 
 		private String name;
 

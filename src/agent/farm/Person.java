@@ -11,12 +11,14 @@ public class Person implements Member {
 	private int education;
 	private List<Product> preferences;
 	private int memory;
+	private int entrepreneurship;
 	
-	public Person(int age, int education, int memory) {
+	public Person(int age, int education, int memory, int entrepreneurship, List<Product> preferences) {
 		this.age = age;
 		this.education = education;
 		this.preferences = new ArrayList<Product>();
 		this.memory = memory;
+		this.setEntrepreneurship(entrepreneurship);
 	}
 	
 	@Override
@@ -59,6 +61,14 @@ public class Person implements Member {
 	public ACTION getAction() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public int getEntrepreneurship() {
+		return entrepreneurship;
+	}
+
+	public void setEntrepreneurship(int entrepreneurship) {
+		this.entrepreneurship = entrepreneurship;
 	}
 
 }

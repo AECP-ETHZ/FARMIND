@@ -29,7 +29,7 @@ public class Crop extends Order implements Product {
 	}
 
 	public enum CropCategory implements Product.Category {
-		None("none"), Potatoes("potatoes"), Wheat("wheat"), Rice("rice"), Maize("maize");
+		None("none"), Potatoes("potatoes"), Wheat("wheat"), Rice("rice"), Maize("maize"), Carrots("carrots"),Eggplants("eggplants"),Lettuce("lettuce");
 
 		private String name;
 

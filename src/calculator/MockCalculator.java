@@ -28,7 +28,7 @@ public class MockCalculator implements Calculator {
 				}
 			} else if (product instanceof Livestock) {
 				// Livestock
-				if (product.getCategory() == LivestockCategory.Diary_Cattle) {
+				if (product.getCategory() == LivestockCategory.Dairy_Cattle) {
 					System.out.println("test from MockCalculator: diary cattle");
 					Livestock diaryCattles = (Livestock)product;
 					//diaryCattles.

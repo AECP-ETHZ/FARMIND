@@ -7,7 +7,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+
 import agent.farm.Person;
+import product.Crop;
+import product.Crop.CropCategory;
+import product.Livestock;
+import product.Livestock.LivestockCategory;
+import product.Product;
 import agent.farm.Farm;
 import socialnetworks.NetworkNode;
 import socialnetworks.SocialNetwork;
@@ -32,11 +38,14 @@ public class ReadParameters implements Reader {
 		String Line;
 		List<Farm> farms = new ArrayList<Farm>();
 		ArrayList<String> farmParameters;
-		int age;
-		int education;
-		int memory;
+		int age = 0;
+		int education = 0;
+		int memory = 0;
+		int entrepreneurship = 0;
+		List<Product> preferences = new ArrayList<Product>();
+		BufferedReader Buffer = null;	
 		int index = 0;
-		BufferedReader Buffer = null;		
+		Product p = null;
 		
 		try {
 			Calendar now = Calendar.getInstance();                             // Gets the current date and time
@@ -49,17 +58,41 @@ public class ReadParameters implements Reader {
 				System.out.println("ArrayList data: " + farmParameters);
 				Farm farm = new Farm();
 				
-				farm.setFarmId("Farm" + String.format("%03d", index) );
+				farm.setFarmId("Farm" + String.format("%03d", index) );		   // index is used to set the actual farm id value
 				
 				age = currentYear - Integer.parseInt( farmParameters.get(3));
 				education = Integer.parseInt( farmParameters.get(4) );
 				memory = Integer.parseInt( farmParameters.get(5));
+				entrepreneurship = Integer.parseInt( farmParameters.get(6));
 				
-				Person farmHead = new Person(age, education,memory);
+				int len = farmParameters.size();
+				
+				for (int i = 7; i < len; i++) {							       // check the element against all possible enum values and add to parameter
+					if (farmParameters.get(i) != null) {
+						for (LivestockCategory x: LivestockCategory.values() ) {
+							String xx = x.toString();
+							if (xx.equalsIgnoreCase( farmParameters.get(i))) {
+								p = new Livestock(farmParameters.get(i));
+								preferences.add(p);
+							}
+						}
+						
+						for (CropCategory x: CropCategory.values() ) {
+							String xx = x.toString();
+							if (xx.equalsIgnoreCase( farmParameters.get(i))) {
+								p = new Crop(farmParameters.get(i));
+								preferences.add(p);
+							}
+						}
+					}
+				}
+				
+				Person farmHead = new Person(age, education,memory, entrepreneurship, preferences);          // create new farm head and add to farm
+				preferences.clear();
 				farm.setHead(farmHead);
 				
 				farms.add(farm);
-				index++;
+				index++;	
 			}
 			
 		} catch (IOException e) {

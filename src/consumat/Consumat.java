@@ -23,5 +23,4 @@ public class Consumat {
 		BatchOutput batch = new BatchOutput();
 		batch.write();
 	}
-
 }

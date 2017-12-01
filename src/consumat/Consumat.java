@@ -1,9 +1,9 @@
 package consumat;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 
 import agent.farm.Farm;
+import output.BatchOutput;
 import reader.ReadParameters;
 
 public class Consumat {
@@ -21,11 +21,7 @@ public class Consumat {
 		
 		// 4 output batch file
 		BatchOutput batch = new BatchOutput();
-		try {
-			batch.generateBatch();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		batch.write();
 	}
 
 }

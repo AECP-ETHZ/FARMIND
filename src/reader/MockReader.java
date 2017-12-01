@@ -15,7 +15,7 @@ import socialnetworks.SocialNetworks;
 public class MockReader implements Reader {
 
 	@Override
-	public SocialNetworks getSocalNetwroks() {
+	public SocialNetworks getSocialNetworks() {
 		SocialNetworks socialNetworks = new SocialNetworks();
 		// read social networks from input file
 		SocialNetwork socialNetwork = new SocialNetwork("Farm001");

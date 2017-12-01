@@ -17,6 +17,7 @@ import product.Crop;
 import product.Livestock;
 import product.Product;
 import reader.MockReader;
+import reader.MockReader1;
 import reader.ParameterInput;
 import reader.Reader;
 import socialnetworks.SocialNetworks;
@@ -56,6 +57,9 @@ public class Consumat {
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}
+		
+		MockReader1 reader = new MockReader1();
+		List<Farm> farms = reader.getFarms();
 		
 		// 2 create agent
 		int age = preferences.get(0);

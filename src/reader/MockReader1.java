@@ -19,7 +19,7 @@ import socialnetworks.SocialNetworks;
 public class MockReader1 implements Reader {
 
 	@Override
-	public SocialNetworks getSocalNetwroks() {
+	public SocialNetworks getSocialNetworks() {
 		SocialNetworks socialNetworks = new SocialNetworks();
 		// read social networks from input file
 		SocialNetwork socialNetwork = new SocialNetwork("Farm001");
@@ -32,36 +32,38 @@ public class MockReader1 implements Reader {
 
 	@Override
 	public List<Farm> getFarms() {
-		
+		String Line;
+		List<Farm> farms = new ArrayList<Farm>();
+		ArrayList<String> farmParameters;
+		int age;
+		int education;
+		int memory;
+		int index = 0;
 		BufferedReader Buffer = null;		
+		
 		try {
-			String Line;
-			List<Farm> farms = new ArrayList<Farm>();
-			ArrayList<String> farmParameters;
-			int age;
-			int education;
-			int memory;
-			
-			Calendar now = Calendar.getInstance();   // Gets the current date and time
+			Calendar now = Calendar.getInstance();                             // Gets the current date and time
 			int currentYear = now.get(Calendar.YEAR); 
-			
 			Buffer = new BufferedReader(new FileReader("./data/farm_data.csv"));
+			Line = Buffer.readLine();									       // first line to throw away
 			
-			// Read farm's parameters line by line
-			while ((Line = Buffer.readLine()) != null) {
-				// How to ignore the first line, which are the titles
+			
+			while ((Line = Buffer.readLine()) != null) {                       // Read farm's parameters line by line
 				farmParameters = CSVtoArrayList(Line);
 				System.out.println("ArrayList data: " + farmParameters);
-				// Generate an unique ID for each farm, in the format of "farm001"
-				Farm farm001 = new Farm();
-				farm001.setFarmId("Farm001");
-				DefaultMember farm001Head = new DefaultMember(34,19,5);
-				age = currentYear - Integer(farmParameters.get(3));
-				education = Integer(farmParameters.get(4));
-				memory = Integer(farmParameters.get(5));
-				farm001Head.setAge(age);
-				farm001Head.setEducation(education);
-				farm001Head.setMemory(memory);
+				Farm farm = new Farm();
+				
+				farm.setFarmId("Farm" + Integer.toString(index));
+				
+				age = currentYear - Integer.parseInt( farmParameters.get(3));
+				education = Integer.parseInt( farmParameters.get(4) );
+				memory = Integer.parseInt( farmParameters.get(5));
+				
+				DefaultMember farmHead = new DefaultMember(age, education,memory);
+				farm.setHead(farmHead);
+				
+				farms.add(farm);
+				index++;
 			}
 			
 		} catch (IOException e) {
@@ -72,16 +74,8 @@ public class MockReader1 implements Reader {
 			} catch (IOException Exception) {
 				Exception.printStackTrace();
 			}
-		}	
-	}
-	
-	farms.add(farm001);
-	return farms;
-	
-
-	private int Integer(String string) {
-		// TODO Auto-generated method stub
-		return 0;
+		}
+		return farms;
 	}
 
 	// Utility which converts CSV to ArrayList using Split Operation

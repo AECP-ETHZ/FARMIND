@@ -7,7 +7,7 @@ import socialnetworks.SocialNetworks;
 
 public interface Reader {
 	
-	SocialNetworks getSocalNetwroks();
+	SocialNetworks getSocialNetworks();
 	
 	List<Farm> getFarms();
 }

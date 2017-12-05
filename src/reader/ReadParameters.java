@@ -29,10 +29,8 @@ public class ReadParameters implements Reader {
 		
 		BufferedReader Buffer = null;	
 		String Line;
-		
 		ArrayList<String> data;
 		ArrayList<String> FarmNames;
-		
 		DefaultEdge edge;
 		
 		try {
@@ -40,12 +38,9 @@ public class ReadParameters implements Reader {
 			Line = Buffer.readLine();	
 			FarmNames = CSVtoArrayList(Line);
 			FarmNames.remove(0);
-			System.out.println(FarmNames);
 			
 			while ((Line = Buffer.readLine()) != null) {
 				data = CSVtoArrayList(Line);
-				System.out.println(data);
-				
 				Graph<String, DefaultEdge> g = new SimpleWeightedGraph<String, DefaultEdge>(DefaultEdge.class);
 				
 				// build graph with all nodes
@@ -64,13 +59,10 @@ public class ReadParameters implements Reader {
 					else {
 						edge = g.addEdge( data.get(0), FarmNames.get(i) );
 						g.setEdgeWeight(edge, Double.parseDouble(data.get(i+1)) );
-						
 					}
 				}
 				NetworkList.add(g);
 			}
-			
-			
 			Buffer.close();
 		} catch (IOException e) {
 			e.printStackTrace();

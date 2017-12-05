@@ -3,11 +3,13 @@ package reader;
 import java.util.List;
 
 import agent.farm.Farm;
-import socialnetworks.SocialNetworks;
+
+import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultEdge;
 
 public interface Reader {
 	
-	SocialNetworks getSocialNetworks();
+	List<Graph<String, DefaultEdge>> getSocialNetworks();
 	
 	List<Farm> getFarms();
 }

@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleWeightedGraph;
 
 import agent.farm.Person;
 import product.Crop;
@@ -16,22 +19,64 @@ import product.Livestock.LivestockCategory;
 import product.Product;
 import agent.farm.Farm;
 import agent.farm.Location;
-import socialnetworks.NetworkNode;
-import socialnetworks.SocialNetwork;
-import socialnetworks.SocialNetworks;
+
 
 public class ReadParameters implements Reader {
 
 	@Override
-	public SocialNetworks getSocialNetworks() {
-		SocialNetworks socialNetworks = new SocialNetworks();
-		// read social networks from input file
-		SocialNetwork socialNetwork = new SocialNetwork("Farm001");
-		socialNetwork.addNetworkNode(new NetworkNode("Farm002", 0.3));
-		socialNetwork.addNetworkNode(new NetworkNode("Farm003", 0.2));
-		socialNetwork.addNetworkNode(new NetworkNode("Farm003", 0.5));
-		socialNetworks.addSocialNetwork(socialNetwork);
-		return socialNetworks;
+	public 	List<Graph<String, DefaultEdge>> getSocialNetworks(){
+		List<Graph<String, DefaultEdge>> NetworkList = new ArrayList<Graph<String, DefaultEdge>>();
+		
+		BufferedReader Buffer = null;	
+		String Line;
+		
+		ArrayList<String> data;
+		ArrayList<String> FarmNames;
+		
+		DefaultEdge edge;
+		
+		try {
+			Buffer = new BufferedReader(new FileReader("./data/social_networks.csv"));
+			Line = Buffer.readLine();	
+			FarmNames = CSVtoArrayList(Line);
+			FarmNames.remove(0);
+			System.out.println(FarmNames);
+			
+			while ((Line = Buffer.readLine()) != null) {
+				data = CSVtoArrayList(Line);
+				System.out.println(data);
+				
+				Graph<String, DefaultEdge> g = new SimpleWeightedGraph<String, DefaultEdge>(DefaultEdge.class);
+				
+				// build graph with all nodes
+				for (int i = 0; i<FarmNames.size(); i++)
+				{
+					g.addVertex(FarmNames.get(i));
+				}
+				
+				// add all nodes except root to graph as vertices
+				for (int i = 0; i<FarmNames.size(); i++)
+				{
+					if (data.get(0).equalsIgnoreCase(FarmNames.get(i)))
+					{
+						continue;
+					}
+					else {
+						edge = g.addEdge( data.get(0), FarmNames.get(i) );
+						g.setEdgeWeight(edge, Double.parseDouble(data.get(i+1)) );
+						
+					}
+				}
+				NetworkList.add(g);
+			}
+			
+			
+			Buffer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return NetworkList;
 	}
 
 	@Override

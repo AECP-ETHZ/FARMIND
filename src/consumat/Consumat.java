@@ -8,7 +8,7 @@ import agent.farm.Farm;
 import output.BatchOutput;
 import reader.ReadParameters;
 
-import org.jgrapht.*;
+import org.jgrapht.Graph;
 import org.jgrapht.graph.*;
 
 public class Consumat {
@@ -19,37 +19,24 @@ public class Consumat {
         Graph<String, DefaultEdge> g = new SimpleWeightedGraph<String, DefaultEdge>(DefaultEdge.class);
         int EdgeCount;
         double sum = 0;
-
-        String v1 = "v1";
-        String v2 = "v2";
-        String v3 = "v3";
-        String v4 = "v4";
-        String v5 = "v5";
-
-        // add the vertices
-        g.addVertex(v1);
-        g.addVertex(v2);
-        g.addVertex(v3);
-        g.addVertex(v4);
-        g.addVertex(v5);
-
-        // add edges to create a star graph
-        DefaultEdge e = g.addEdge(v1, v2);
-        g.setEdgeWeight(e,30.0);
-       
-        e = g.addEdge(v1, v3);
-        g.setEdgeWeight(e,20.0);
         
-        e = g.addEdge(v1, v4);
-        g.setEdgeWeight(e,15.0);
-        
-        e = g.addEdge(v1, v5);
-        g.setEdgeWeight(e,22.0);
-        
-        System.out.println(g.toString());
-        
-        Set<DefaultEdge> E = g.outgoingEdgesOf(v1);
-        Iterator<DefaultEdge> I = E.iterator();
+        double avg = 0;
+        Set<DefaultEdge> E;
+        Iterator<DefaultEdge> I;
+		
+		// 1 input parameters
+		ReadParameters reader = new ReadParameters();
+		
+		// 2 create agents
+		List<Farm> farms = reader.getFarms();
+		List<Graph<String, DefaultEdge>> network = reader.getSocialNetworks();
+		
+		g = network.get(2);
+		
+		System.out.println(g);
+		
+		E = g.outgoingEdgesOf("Farm_C");
+        I = E.iterator();
         
         EdgeCount = E.size();
         
@@ -58,15 +45,11 @@ public class Consumat {
         	sum = sum + g.getEdgeWeight(I.next());
         }
         
-        double avg = sum/EdgeCount;
+        avg = sum/EdgeCount;
         System.out.println(avg);
 		
-
-		// 1 input parameters
-		ReadParameters reader = new ReadParameters();
 		
-		// 2 create agents
-		List<Farm> farms = reader.getFarms();
+		System.out.println();
 
 		// 3 decision making
 		System.out.println(String.format("Action: %s", farms.get(0).getAction() ));	

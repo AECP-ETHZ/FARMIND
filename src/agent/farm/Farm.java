@@ -1,6 +1,8 @@
 package agent.farm;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import product.Product;
 
@@ -17,7 +19,6 @@ public class Farm implements Member {
 	private Location location; 
 	private Graph<String, DefaultEdge> network; 
 
-	
 	@Override
 	public int getAge() {
 		// TODO Auto-generated method stub
@@ -56,6 +57,29 @@ public class Farm implements Member {
 		else {
 			return null;
 			}
+	}
+	
+	public double getSocialTies() {
+        double sum = 0;
+        double avg = 0;
+		int EdgeCount;
+        Set<DefaultEdge> E;
+        Iterator<DefaultEdge> I;
+        
+		System.out.println(this.network);
+		
+		E = this.network.outgoingEdgesOf(this.farmName);
+        I = E.iterator();
+        
+        EdgeCount = E.size();
+        while (I.hasNext())
+        {
+        	sum = sum + this.network.getEdgeWeight(I.next());
+        }
+        
+        avg = sum/EdgeCount;
+		return avg;
+		
 	}
 	
 	public String getFarmId() {

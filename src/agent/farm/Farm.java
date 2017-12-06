@@ -65,9 +65,7 @@ public class Farm implements Member {
 		int EdgeCount;
         Set<DefaultEdge> E;
         Iterator<DefaultEdge> I;
-        
-		System.out.println(this.network);
-		
+    		
 		E = this.network.outgoingEdgesOf(this.farmName);
         I = E.iterator();
         

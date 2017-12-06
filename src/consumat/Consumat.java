@@ -18,17 +18,18 @@ public class Consumat {
 		// 2 create agents
 		List<Farm> farms = reader.getFarms();
 		
-		int index = 1;
-		avg = farms.get(index).getSocialTies();
-        System.out.println(String.format("farm network weight is: %f", avg) );
+		for ( int i = 0; i < farms.size(); i++) {
+			avg = farms.get(i).getSocialTies();
+	        System.out.println(String.format("farm network weight is: %f", avg) );
+			System.out.println(String.format("Action: %s", farms.get(i).getAction() ));	
+			System.out.println(String.format( farms.get(i).getNetwork().toString() ) );
+			
+			System.out.println();
+			
+			// 4 output batch file
+			BatchOutput batch = new BatchOutput();
+			batch.write();
+		}
 
-		// 3 decision making
-		System.out.println(String.format("Action: %s", farms.get(0).getAction() ));	
-		System.out.println(String.format("Action: %s", farms.get(1).getAction() ));	
-		System.out.println(String.format("Action: %s", farms.get(2).getAction() ));	
-		
-		// 4 output batch file
-		BatchOutput batch = new BatchOutput();
-		batch.write();
 	}
 }

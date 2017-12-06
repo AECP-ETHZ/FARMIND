@@ -48,7 +48,6 @@ public class ReadParameters implements Reader {
 			
 			while ((Line = Buffer.readLine()) != null) {                       // Read farm's parameters line by line
 				farmParameters = CSVtoArrayList(Line);
-				System.out.println("ArrayList data: " + farmParameters);
 				Farm farm = new Farm();
 				Location location = new Location();							   // create new location for each farm
 				double[] coordinates = {0,0};

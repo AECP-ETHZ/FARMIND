@@ -15,24 +15,27 @@ public class Consumat {
 
 	public static void main(String[] args) {
 		
-        Graph<String, DefaultEdge> g = new SimpleWeightedGraph<String, DefaultEdge>(DefaultEdge.class);
-        int EdgeCount;
+		int EdgeCount;
         double sum = 0;
         double avg = 0;
         Set<DefaultEdge> E;
         Iterator<DefaultEdge> I;
+		
+        Graph<String, DefaultEdge> g = new SimpleWeightedGraph<String, DefaultEdge>(DefaultEdge.class);
+       
 		
 		// 1 input parameters
 		ReadParameters reader = new ReadParameters();
 		
 		// 2 create agents
 		List<Farm> farms = reader.getFarms();
-		List<Graph<String, DefaultEdge>> network = reader.getSocialNetworks();
 		
-		g = network.get(2);
+		int index = 2;
+		
+		g = farms.get(index).getNetwork();
 		System.out.println(g);
 		
-		E = g.outgoingEdgesOf("Farm_C");
+		E = g.outgoingEdgesOf(farms.get(index).getFarmName());
         I = E.iterator();
         
         EdgeCount = E.size();
@@ -43,6 +46,8 @@ public class Consumat {
         
         avg = sum/EdgeCount;
         System.out.println(String.format("farm network weight is: %f", avg) );
+        
+       
 
 
 		// 3 decision making

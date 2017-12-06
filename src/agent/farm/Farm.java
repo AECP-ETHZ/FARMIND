@@ -4,6 +4,9 @@ import java.util.List;
 
 import product.Product;
 
+import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultEdge;
+
 public class Farm implements Member {
 	
 	private String farmId;
@@ -12,6 +15,8 @@ public class Farm implements Member {
 	private Member spouse;
 	private Member child;
 	private Location location; 
+	private Graph<String, DefaultEdge> network; 
+
 	
 	@Override
 	public int getAge() {
@@ -88,6 +93,12 @@ public class Farm implements Member {
 	}
 	public void setLocation(Location location) {
 		this.location = location;
+	}
+	public Graph<String, DefaultEdge> getNetwork() {
+		return network;
+	}
+	public void setNetwork(Graph<String, DefaultEdge> network) {
+		this.network = network;
 	}
 
 }

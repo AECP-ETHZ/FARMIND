@@ -24,54 +24,6 @@ import agent.farm.Location;
 public class ReadParameters implements Reader {
 
 	@Override
-	public 	List<Graph<String, DefaultEdge>> getSocialNetworks(){
-		List<Graph<String, DefaultEdge>> NetworkList = new ArrayList<Graph<String, DefaultEdge>>();
-		
-		BufferedReader Buffer = null;	
-		String Line;
-		ArrayList<String> data;
-		ArrayList<String> FarmNames;
-		DefaultEdge edge;
-		
-		try {
-			Buffer = new BufferedReader(new FileReader("./data/social_networks.csv"));
-			Line = Buffer.readLine();	
-			FarmNames = CSVtoArrayList(Line);
-			FarmNames.remove(0);
-			
-			while ((Line = Buffer.readLine()) != null) {
-				data = CSVtoArrayList(Line);
-				Graph<String, DefaultEdge> g = new SimpleWeightedGraph<String, DefaultEdge>(DefaultEdge.class);
-				
-				// build graph with all nodes
-				for (int i = 0; i<FarmNames.size(); i++)
-				{
-					g.addVertex(FarmNames.get(i));
-				}
-				
-				// add all nodes except root to graph as vertices
-				for (int i = 0; i<FarmNames.size(); i++)
-				{
-					if (data.get(0).equalsIgnoreCase(FarmNames.get(i)))
-					{
-						continue;
-					}
-					else {
-						edge = g.addEdge( data.get(0), FarmNames.get(i) );
-						g.setEdgeWeight(edge, Double.parseDouble(data.get(i+1)) );
-					}
-				}
-				NetworkList.add(g);
-			}
-			Buffer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return NetworkList;
-	}
-
-	@Override
 	public List<Farm> getFarms() {
 		String Line;
 		List<Farm> farms = new ArrayList<Farm>();
@@ -85,6 +37,8 @@ public class ReadParameters implements Reader {
 		BufferedReader Buffer = null;	
 		int index = 0;
 		Product p = null;
+		
+		List<Graph<String, DefaultEdge>> network = this.getSocialNetworks();   // build social network graphs
 		
 		try {
 			Calendar now = Calendar.getInstance();                             // Gets the current date and time
@@ -107,6 +61,8 @@ public class ReadParameters implements Reader {
 				farm.setFarmId("Farm" + String.format("%03d", index) );		   // index is used to set the actual farm id value
 				farm.setFarmName(name);
 				farm.setLocation(location);
+				
+				farm.setNetwork(network.get(index));
 
 				age = currentYear - Integer.parseInt( farmParameters.get(3));
 				education = Integer.parseInt( farmParameters.get(4) );
@@ -153,8 +109,55 @@ public class ReadParameters implements Reader {
 		}
 		return farms;
 	}
+	
+	private List<Graph<String, DefaultEdge>> getSocialNetworks(){
+		List<Graph<String, DefaultEdge>> NetworkList = new ArrayList<Graph<String, DefaultEdge>>();
+		
+		BufferedReader Buffer = null;	
+		String Line;
+		ArrayList<String> data;
+		ArrayList<String> FarmNames;
+		DefaultEdge edge;
+		
+		try {
+			Buffer = new BufferedReader(new FileReader("./data/social_networks.csv"));
+			Line = Buffer.readLine();	
+			FarmNames = CSVtoArrayList(Line);
+			FarmNames.remove(0);
+			
+			while ((Line = Buffer.readLine()) != null) {
+				data = CSVtoArrayList(Line);
+				Graph<String, DefaultEdge> g = new SimpleWeightedGraph<String, DefaultEdge>(DefaultEdge.class);
+				
+				// build graph with all nodes
+				for (int i = 0; i<FarmNames.size(); i++)
+				{
+					g.addVertex(FarmNames.get(i));
+				}
+				
+				// add all nodes except root to graph as vertices
+				for (int i = 0; i<FarmNames.size(); i++)
+				{
+					if (data.get(0).equalsIgnoreCase(FarmNames.get(i)))
+					{
+						continue;
+					}
+					else {
+						edge = g.addEdge( data.get(0), FarmNames.get(i) );
+						g.setEdgeWeight(edge, Double.parseDouble(data.get(i+1)) );
+					}
+				}
+				NetworkList.add(g);
+			}
+			Buffer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return NetworkList;
+	}
 
-	public static ArrayList<String> CSVtoArrayList(String CSV) {		       // Utility which converts CSV to ArrayList using Split Operation
+	private static ArrayList<String> CSVtoArrayList(String CSV) {		       // Utility which converts CSV to ArrayList using Split Operation
 		ArrayList<String> Result = new ArrayList<String>();
 		
 		if (CSV != null) {

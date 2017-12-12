@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
@@ -107,8 +108,14 @@ public class ReadParameters implements Reader {
 				
 				Person farmHead = new Person(age, education,memory, entrepreneurship, preferences);          
 				
-				farm.setHead(farmHead);
+				Random rand = new Random();
+				farm.setUncertainty( rand.nextInt(100) );
+				farm.setSatisfaction( rand.nextInt(100) );
 				
+				farm.setAspiration( 50);
+				farm.setTolerance( 50 );
+				
+				farm.setHead(farmHead);
 				farms.add(farm);
 				index++;	
 			}

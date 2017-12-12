@@ -68,9 +68,24 @@ public class ReadParameters implements Reader {
 				memory = Integer.parseInt( farmParameters.get(5));
 				entrepreneurship = Integer.parseInt( farmParameters.get(6));
 				
+				for (LivestockCategory s: LivestockCategory.values() ) {
+					String cat = s.toString();
+					if (cat.equalsIgnoreCase( farmParameters.get(7))) {
+						Product current_action = new Livestock(farmParameters.get(7)); 
+						farm.setCurrentAction(current_action);
+					}
+				}
+				for (CropCategory s: CropCategory.values() ) {
+					String cat = s.toString();
+					if (cat.equalsIgnoreCase( farmParameters.get(7))) {
+						Product current_action = new Crop(farmParameters.get(7)); 
+						farm.setCurrentAction(current_action);
+					}
+				}
+					
 				int len = farmParameters.size();
 				preferences.clear();
-				for (int i = 7; i < len; i++) {							       // check the element against all possible enum values and add to parameter
+				for (int i = 8; i < len; i++) {							       // check the element against all possible enum values and add to parameter
 					if (farmParameters.get(i) != null) {
 						for (LivestockCategory s: LivestockCategory.values() ) {
 							String cat = s.toString();
@@ -93,6 +108,7 @@ public class ReadParameters implements Reader {
 				Person farmHead = new Person(age, education,memory, entrepreneurship, preferences);          
 				
 				farm.setHead(farmHead);
+				
 				farms.add(farm);
 				index++;	
 			}

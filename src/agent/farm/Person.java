@@ -58,7 +58,7 @@ public class Person implements Member {
 	}
 
 	@Override
-	public ACTION getAction() {
+	public List<Product> getAction() {
 		// TODO Auto-generated method stub
 		return null;
 	}

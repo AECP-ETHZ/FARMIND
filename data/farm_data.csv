@@ -1,4 +1,4 @@
-farm_name,latitude,longitude,birth_year,education,memory,entrepreneurship,activity_preference1,activity_preference2,activity_preference3,activity_preference4,activity_preference5
-Farm_A,47.11,8.22,1960,12,5,8,Dairy_Cattle,sheep,goats,
-Farm_B,48.11,9.22,1965,15,5,6,wheat,carrots,eggplants,lettuce,
-Farm_C,49.11,10.22,1970,9,5,10,ducks,geese,chickens,
+farm_name,latitude,longitude,birth_year,education,memory,entrepreneurship,current action,activity_preference1,activity_preference2,activity_preference3,activity_preference4,activity_preference5
+Farm_A,47.11,8.22,1960,12,5,8,Dairy_Cattle,Dairy_Cattle,sheep,goats,,
+Farm_B,48.11,9.22,1965,15,5,6,wheat,wheat,carrots,eggplants,lettuce,
+Farm_C,49.11,10.22,1970,9,5,10,ducks,ducks,geese,chickens,,

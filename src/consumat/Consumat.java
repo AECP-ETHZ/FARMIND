@@ -4,13 +4,12 @@ import java.util.List;
 
 import agent.farm.Farm;
 import output.BatchOutput;
+import product.Product;
 import reader.ReadParameters;
 
 public class Consumat {
 
 	public static void main(String[] args) {
-		
-		double avg;
 		
 		// 1 input parameters
 		ReadParameters reader = new ReadParameters();
@@ -25,11 +24,10 @@ public class Consumat {
 			
 			// rerun simulation
 			
-			avg = farms.get(i).getSocialTies(farms);
-	        System.out.println(String.format("farm network weight is: %f", avg) );
-			System.out.println(String.format("Action: %s", farms.get(i).getAction() ));	
-			System.out.println(String.format( farms.get(i).getNetwork().toString() ) );
+			Product p = farms.get(i).getAction().get(0);
 			
+			System.out.println(String.format("Action: %s", p.getName()  ));	
+
 			System.out.println();
 			
 			// 4 output batch file

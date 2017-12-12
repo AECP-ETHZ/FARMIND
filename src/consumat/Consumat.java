@@ -19,7 +19,13 @@ public class Consumat {
 		List<Farm> farms = reader.getFarms();
 		
 		for ( int i = 0; i < farms.size(); i++) {
-			avg = farms.get(i).getSocialTies();
+			
+			
+			// update farms with dairydyn simulation results
+			
+			// rerun simulation
+			
+			avg = farms.get(i).getSocialTies(farms);
 	        System.out.println(String.format("farm network weight is: %f", avg) );
 			System.out.println(String.format("Action: %s", farms.get(i).getAction() ));	
 			System.out.println(String.format( farms.get(i).getNetwork().toString() ) );
@@ -29,6 +35,8 @@ public class Consumat {
 			// 4 output batch file
 			BatchOutput batch = new BatchOutput();
 			batch.write();
+			
+			// run terminal command (dairydyn)
 		}
 
 	}

@@ -40,7 +40,9 @@ public class Farm implements Member {
 		return 0;
 	}
 	
-	public agent.farm.Person.ACTION getAction() {
+	// tolerance level, satisfaction, uncertainty
+	
+	public ACTION getAction() {
 		
 		if ((head.getAge() <= 35)&&(head.getEducation() > 10 )) {
 			return ACTION.OPT_OUT;
@@ -59,7 +61,7 @@ public class Farm implements Member {
 			}
 	}
 	
-	public double getSocialTies() {
+	public double getSocialTies(List<Farm> farms) {
         double sum = 0;
         double avg = 0;
 		int EdgeCount;
@@ -67,11 +69,33 @@ public class Farm implements Member {
         Iterator<DefaultEdge> I;
     		
 		E = this.network.outgoingEdgesOf(this.farmName);
+		
+		Object[] x = this.network.vertexSet().toArray();
+		
         I = E.iterator();
         
         EdgeCount = E.size();
+        
+        for (int i = 0; i<= E.size(); i++)
+        {
+        	
+        	for (int j = 0; j<farms.size();j++) {
+        	
+        		if (farms.get(j).farmName.equals(x[i].toString() ) && !farms.get(j).farmName.equals(this.farmName)) {
+        			//System.out.println(x[i].toString());
+        			
+        			List<Product> p = farms.get(j).head.getPreferences();
+        			
+        			//System.out.println( p );
+        		}
+        	}
+        }
+        
+        
         while (I.hasNext())
         {
+        	
+        	
         	sum = sum + this.network.getEdgeWeight(I.next());
         }
         

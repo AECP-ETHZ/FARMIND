@@ -29,7 +29,7 @@ public class SocialNetworks {
 		}
 	}
 
-	public double getWeigh(String farmId, String correlativeFarmId) {
+	public double getWeight(String farmId, String correlativeFarmId) {
 		SocialNetwork socialNetwork = this.getSocialNetwork(farmId);
 		if (socialNetwork != null) {
 			return socialNetwork.getWeigh(correlativeFarmId);
@@ -51,7 +51,7 @@ public class SocialNetworks {
 		for (SocialNetwork socialNetwork : this.socialNetworks) {
 			for (NetworkNode networkNode : socialNetwork.getNetworkNodes()) {
 				stringBuffer.append(String.format("[%s,%s] -> %s\t", socialNetwork.getFramId(), networkNode.getFarmId(),
-						networkNode.getWeigh().setScale(2,RoundingMode.HALF_UP).doubleValue()));
+						networkNode.getWeight().setScale(2,RoundingMode.HALF_UP).doubleValue()));
 			}
 			stringBuffer.append("\n");
 		}

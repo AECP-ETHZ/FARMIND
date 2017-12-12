@@ -37,7 +37,7 @@ public class SocialNetwork {
 		if (correlativeFarmId != null && this.networkNodes != null) {
 			for (NetworkNode networkNode : this.networkNodes) {
 				if (networkNode.getFarmId().equalsIgnoreCase(correlativeFarmId)) {
-					return networkNode.getWeigh().doubleValue();
+					return networkNode.getWeight().doubleValue();
 				}
 			}
 		}

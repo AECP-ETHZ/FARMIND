@@ -4,29 +4,29 @@ import java.math.BigDecimal;
 
 public class NetworkNode implements Comparable<NetworkNode> {
 
-	public NetworkNode(String farmId, double weigh) {
+	public NetworkNode(String farmId, double weight) {
 		this.farmId = farmId;
-		this.weigh = new BigDecimal(weigh);
+		this.weight = new BigDecimal(weight);
 	}
 	
-	public NetworkNode(String farmId, BigDecimal weigh) {
+	public NetworkNode(String farmId, BigDecimal weight) {
 		this.farmId = farmId;
-		this.weigh = weigh;
+		this.weight = weight;
 	}
 
 	private String farmId;
-	private BigDecimal weigh;
+	private BigDecimal weight;
 
 	public String getFarmId() {
 		return farmId;
 	}
 
-	public BigDecimal getWeigh() {
-		return weigh;
+	public BigDecimal getWeight() {
+		return weight;
 	}
 
 	@Override
 	public int compareTo(NetworkNode o) {
-		return this.getWeigh().compareTo(o.getWeigh());
+		return this.getWeight().compareTo(o.getWeight());
 	}
 }

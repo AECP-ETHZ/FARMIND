@@ -69,6 +69,7 @@ public class ReadParameters implements Reader {
 				memory = Integer.parseInt( farmParameters.get(5));
 				entrepreneurship = Integer.parseInt( farmParameters.get(6));
 				
+				/*
 				for (LivestockCategory s: LivestockCategory.values() ) {
 					String cat = s.toString();
 					if (cat.equalsIgnoreCase( farmParameters.get(7))) {
@@ -108,6 +109,7 @@ public class ReadParameters implements Reader {
 				
 				Person farmHead = new Person(age, education,memory, entrepreneurship, preferences);          
 				
+				*/
 				Random rand = new Random();
 				farm.setUncertainty( rand.nextInt(100) );
 				farm.setSatisfaction( rand.nextInt(100) );
@@ -115,7 +117,7 @@ public class ReadParameters implements Reader {
 				farm.setAspiration( 50);
 				farm.setTolerance( 50 );
 				
-				farm.setHead(farmHead);
+				//farm.setHead(farmHead);
 				farms.add(farm);
 				index++;	
 			}
@@ -179,6 +181,72 @@ public class ReadParameters implements Reader {
 		return NetworkList;
 	}
 
+	public List<Crop> getCropList() {
+		String Line;
+		List<Crop> crops = new ArrayList<Crop>();
+		ArrayList<String> cropRow;
+		BufferedReader Buffer = null;	
+
+		try {
+			Buffer = new BufferedReader(new FileReader("./data/crop_classification.csv"));
+			Line = Buffer.readLine();									       // first line to throw away
+			
+			while ((Line = Buffer.readLine()) != null) {                       // Read crop data
+				cropRow = CSVtoArrayList(Line);
+				
+				int ID = Integer.parseInt(cropRow.get(0));
+				String name = cropRow.get(1);
+				
+				Crop crop = new Crop(ID, name);
+				
+				crops.add(crop);
+			}
+				
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (Buffer != null) Buffer.close();
+			} catch (IOException Exception) {
+				Exception.printStackTrace();
+			}
+		}
+		return crops;
+	}
+	
+	public List<Livestock> getLivestockList() {
+		String Line;
+		List<Livestock> livestock = new ArrayList<Livestock>();
+		ArrayList<String> livestockRow;
+		BufferedReader Buffer = null;	
+
+		try {
+			Buffer = new BufferedReader(new FileReader("./data/livestock_classification.csv"));
+			Line = Buffer.readLine();									       // first line to throw away
+			
+			while ((Line = Buffer.readLine()) != null) {                       // Read livestock data
+				livestockRow = CSVtoArrayList(Line);
+				
+				int ID = Integer.parseInt(livestockRow.get(0));
+				String name = livestockRow.get(1);
+				
+				Livestock stock = new Livestock(ID, name);
+				
+				livestock.add(stock);
+			}
+				
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (Buffer != null) Buffer.close();
+			} catch (IOException Exception) {
+				Exception.printStackTrace();
+			}
+		}
+		return livestock;
+	}
+	
 	private static ArrayList<String> CSVtoArrayList(String CSV) {		       // Utility which converts CSV to ArrayList using Split Operation
 		ArrayList<String> Result = new ArrayList<String>();
 		
@@ -193,5 +261,6 @@ public class ReadParameters implements Reader {
 		
 		return Result;
 	}
+
 
 }

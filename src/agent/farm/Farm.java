@@ -47,8 +47,8 @@ public class Farm implements Member {
 		List<Product> products = new ArrayList<Product>();
 		products.add(this.CurrentAction);
 		
-		if ((head.getAge() > 60)) {
-			System.out.println(ACTION.REPETITION);
+		if ((head.getAge() > 65)) {
+			System.out.println(ACTION.EXIT);
 			products.add(this.CurrentAction);
 		}
 		else if (this.Uncertainty >= this.Tolerance) {

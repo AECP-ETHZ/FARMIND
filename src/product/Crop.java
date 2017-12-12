@@ -1,12 +1,14 @@
 package product;
 
-public class Crop extends ProductOrder implements Product {
-
-	public Crop(String name) {
-		this.name = name;
-	}
+public class Crop implements Product {
 
 	private String name;
+	private int ID;
+
+	public Crop(int ID, String name) {
+		this.name = name;
+		this.setID(ID);
+	}
 
 	@Override
 	public String getName() {
@@ -26,6 +28,14 @@ public class Crop extends ProductOrder implements Product {
 	@Override
 	public boolean isNone() {
 		return this.getCategory() == CropCategory.None;
+	}
+
+	public int getID() {
+		return ID;
+	}
+
+	public void setID(int iD) {
+		ID = iD;
 	}
 
 	public enum CropCategory implements Product.Category {

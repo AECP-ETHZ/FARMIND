@@ -11,6 +11,7 @@ public interface Member {
 		OPTIMIZATION,
 		IMITATION,
 		OPT_OUT,
+		EXIT,
 	}
 
 	int getAge();

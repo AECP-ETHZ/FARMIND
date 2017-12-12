@@ -14,9 +14,7 @@ import org.jgrapht.graph.SimpleWeightedGraph;
 
 import agent.farm.Person;
 import product.Crop;
-import product.Crop.CropCategory;
 import product.Livestock;
-import product.Livestock.LivestockCategory;
 import product.Product;
 import agent.farm.Farm;
 import agent.farm.Location;
@@ -37,9 +35,10 @@ public class ReadParameters implements Reader {
 		List<Product> preferences = new ArrayList<Product>();
 		BufferedReader Buffer = null;	
 		int index = 0;
-		Product p = null;
 		
 		List<Graph<String, DefaultEdge>> network = this.getSocialNetworks();   // build social network graphs
+		List<Crop> crops = getCropList();
+		List<Livestock> livestock = getLivestockList();
 		
 		try {
 			Calendar now = Calendar.getInstance();                             // Gets the current date and time
@@ -69,47 +68,45 @@ public class ReadParameters implements Reader {
 				memory = Integer.parseInt( farmParameters.get(5));
 				entrepreneurship = Integer.parseInt( farmParameters.get(6));
 				
-				/*
-				for (LivestockCategory s: LivestockCategory.values() ) {
-					String cat = s.toString();
-					if (cat.equalsIgnoreCase( farmParameters.get(7))) {
-						Product current_action = new Livestock(farmParameters.get(7)); 
+				for(int i = 0; i<crops.size(); i++) {
+					if (crops.get(i).getName().equals(farmParameters.get(7) )) {
+						int ID = crops.get(i).getID();
+						Product current_action = new Crop(ID, farmParameters.get(7)); 
 						farm.setCurrentAction(current_action);
 					}
 				}
-				for (CropCategory s: CropCategory.values() ) {
-					String cat = s.toString();
-					if (cat.equalsIgnoreCase( farmParameters.get(7))) {
-						Product current_action = new Crop(farmParameters.get(7)); 
+				
+				for(int i = 0; i<livestock.size(); i++) {
+					if (livestock.get(i).getName().equals(farmParameters.get(7) )) {
+						int ID = livestock.get(i).getID();
+						Product current_action = new Livestock(ID, farmParameters.get(7)); 
 						farm.setCurrentAction(current_action);
 					}
 				}
-					
-				int len = farmParameters.size();
+				
 				preferences.clear();
-				for (int i = 8; i < len; i++) {							       // check the element against all possible enum values and add to parameter
-					if (farmParameters.get(i) != null) {
-						for (LivestockCategory s: LivestockCategory.values() ) {
-							String cat = s.toString();
-							if (cat.equalsIgnoreCase( farmParameters.get(i))) {
-								p = new Livestock(farmParameters.get(i));
-								preferences.add(p);
-							}
+				for (int k = 8; k < farmParameters.size(); k++) {
+					for(int i = 0; i<crops.size(); i++) {
+						if (crops.get(i).getName().equals(farmParameters.get(k) )) {
+							int ID = crops.get(i).getID();
+							Product p = new Crop(ID, farmParameters.get(k)); 
+							preferences.add(p);
 						}
-						
-						for (CropCategory s: CropCategory.values() ) {
-							String cat = s.toString();
-							if (cat.equalsIgnoreCase( farmParameters.get(i))) {
-								p = new Crop(farmParameters.get(i));
-								preferences.add(p);
-							}
+					}
+				}
+				
+				for (int k = 8; k < farmParameters.size(); k++) {
+					for(int i = 0; i<livestock.size(); i++) {
+						if (livestock.get(i).getName().equals(farmParameters.get(k) )) {
+							int ID = livestock.get(i).getID();
+							Product p = new Livestock(ID, farmParameters.get(k)); 
+							preferences.add(p);
 						}
 					}
 				}
 				
 				Person farmHead = new Person(age, education,memory, entrepreneurship, preferences);          
 				
-				*/
 				Random rand = new Random();
 				farm.setUncertainty( rand.nextInt(100) );
 				farm.setSatisfaction( rand.nextInt(100) );
@@ -117,7 +114,7 @@ public class ReadParameters implements Reader {
 				farm.setAspiration( 50);
 				farm.setTolerance( 50 );
 				
-				//farm.setHead(farmHead);
+				farm.setHead(farmHead);
 				farms.add(farm);
 				index++;	
 			}

@@ -6,11 +6,6 @@ public interface Product {
 	
 	void setName(String name);
 	
-	Category getCategory();
-	
-	boolean isNone();
-	
-	public interface Category{
+	int getID();
 		
-	}
 }

@@ -4,18 +4,15 @@ import java.util.List;
 
 import agent.farm.Farm;
 import agent.government.Government;
-import product.Crop;
-import product.Livestock;
 import product.Product;
 import socialnetworks.SocialNetworks;
-import product.Crop.CropCategory;
-import product.Livestock.LivestockCategory;
 
 public class MockCalculator implements Calculator {
 
 	@Override
 	public double getSatisfaction(Product product, List<Farm> adjacentFarms, SocialNetworks socialNetworks,
 			Government government) {
+		/*
 		if (product.isNone()) {
 			System.out.println("No product. Do nothing.");
 		} else {
@@ -35,7 +32,9 @@ public class MockCalculator implements Calculator {
 				}
 			}
 		}
+		*/
 		return 0;
+		
 	}
 
 	@Override

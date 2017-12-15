@@ -26,24 +26,14 @@ public class Farm implements Member {
 	private int Uncertainty;
 	private int Tolerance;
 
-	public void setTolerance(int tolerance) {
-		Tolerance = tolerance;
-	}
-	
-	public void setUncertainty(int uncertainty) {
-		Uncertainty = uncertainty;
-	}
 
-	public void setAspiration(int aspiration) {
-		Aspiration = aspiration;
-	}
-
-	public void setSatisfaction(int satisfaction) {
-		Satisfaction = satisfaction;
-	}
-	
 	public List<Product> getAction() {
 		
+		// update satisfaction and uncertainty before making decisions
+		updateSatisfaction();
+		updateUncertainty();
+		
+		// create final action array
 		List<Product> products = new ArrayList<Product>();
 		products.add(this.CurrentAction);
 		
@@ -70,6 +60,14 @@ public class Farm implements Member {
 		return products;
 	}
 	
+	private void updateUncertainty() {
+		// setUncertainty();
+	}
+
+	private void updateSatisfaction() {
+		// setSatisfaction();
+	}
+
 	public double getSocialTies(List<Farm> farms) {
         double sum = 0;
         double avg = 0;
@@ -107,6 +105,22 @@ public class Farm implements Member {
         avg = sum/EdgeCount;
 		return avg;
 		
+	}
+	
+	public void setTolerance(int tolerance) {
+		Tolerance = tolerance;
+	}
+	
+	public void setUncertainty(int uncertainty) {
+		Uncertainty = uncertainty;
+	}
+
+	public void setAspiration(int aspiration) {
+		Aspiration = aspiration;
+	}
+
+	public void setSatisfaction(int satisfaction) {
+		Satisfaction = satisfaction;
 	}
 	
 	@Override

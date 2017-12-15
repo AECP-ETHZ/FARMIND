@@ -1,0 +1,35 @@
+Group,Class,Subclass,Order,Title,Type
+1,,,,Large ruminants,1
+,11,,,Cattle,1
+,12,,,Buffaloes,1
+,13,,,Yaks,1
+2,,,,Small ruminants,1
+,21,,,Sheep,1
+,22,,,Goats,1
+3,,,,Pigs or swine,1
+4,,,,Equines,1
+,41,,,Horses,1
+,42,,,Mules and hinnies,1
+,43,,,Asses,1
+,44,,,"Other equines (e.g., zebras)",1
+5,,,,Camels and camelids,1
+,51,,,Camels,1
+,52,,,Llamas and alpacas,1
+6,,,,Poultry,1
+,61,,,Chickens,1
+,62,,,Ducks,1
+,63,,,Geese,1
+,64,,,Turkeys,1
+,65,,,Guinea fowls,1
+,66,,,Pigeons,1
+,67,,,Other poultry,1
+7,,,,Other animals,1
+,71,,,"Deer, elk, reindeer",1
+,72,,,Fur-bearing animals such as foxes and minks,1
+,73,,,Dogs and cats,1
+,74,,,Rabbits and hares,1
+,75,,,"Other (e.g., ostriches, emus, elephants)",1
+8,,,,Insects,1
+,81,,,Bees,1
+,82,,,Silkworms,1
+,83,,,Other worms or insects,1

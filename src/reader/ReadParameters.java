@@ -111,8 +111,8 @@ public class ReadParameters implements Reader {
 				farm.setUncertainty( rand.nextInt(100) );
 				farm.setSatisfaction( rand.nextInt(100) );
 				
-				farm.setAspiration( 50);
-				farm.setTolerance( 50 );
+				farm.setAspiration(50);
+				farm.setTolerance(50);
 				
 				farm.setHead(farmHead);
 				farms.add(farm);

@@ -22,12 +22,12 @@ public class Consumat {
 		for ( int i = 0; i < farms.size(); i++) {
 			
 			List<Product> p = farms.get(i).getAction();
+			String id = farms.get(i).getFarmId();
 
-			DecisionResult decision = new DecisionResult(farms.get(i).getFarmId(), p);
+			DecisionResult decision = new DecisionResult(id, p);
 			
 			BatchOutput batch = new BatchOutput(decision);
 			batch.write();
 		}
-
 	}
 }

@@ -20,13 +20,16 @@ public class Farm implements Member {
 	private Member child;
 	private Location location; 
 	private Graph<String, DefaultEdge> network; 
-	
 	private int Satisfaction;
 	private int Aspiration;
 	private int Uncertainty;
 	private int Tolerance;
 
 
+	/** 
+	 * Calculate satisfaction and uncertainty for the decision tree
+	 * @return List of Products/Actions that the farm will produce
+	 */
 	public List<Product> getAction() {
 		
 		// update satisfaction and uncertainty before making decisions
@@ -60,14 +63,25 @@ public class Farm implements Member {
 		return products;
 	}
 	
+	/**
+	 * Update farm uncertainty
+	 */
 	private void updateUncertainty() {
 		// setUncertainty();
 	}
 
+	/**
+	 * Update farm satisfacation level
+	 */
 	private void updateSatisfaction() {
 		// setSatisfaction();
 	}
 
+	/**
+	 * Using social network graph to calculate social weight of neighbors
+	 * @param farms
+	 * @return social weight of ties
+	 */
 	public double getSocialTies(List<Farm> farms) {
         double sum = 0;
         double avg = 0;

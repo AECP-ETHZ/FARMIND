@@ -21,6 +21,10 @@ public class BatchOutput implements Output {
 		this.p = decision.getProducts();
 	}
 
+	/** 
+	 * Output text file as a batch file for farmdyn/dairydyn program
+	 * Use class fields from constructor to create batch
+	 */
 	public void write() {
 		PrintWriter writer;
 		try {

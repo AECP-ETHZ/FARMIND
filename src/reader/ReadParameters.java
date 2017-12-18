@@ -67,7 +67,7 @@ public class ReadParameters implements Reader {
 				age = currentYear - Integer.parseInt( farmParameters.get(3));
 				education = Integer.parseInt( farmParameters.get(4) );
 				memory = Integer.parseInt( farmParameters.get(5));
-				entrepreneurship = Integer.parseInt( farmParameters.get(6));
+				entrepreneurship = Double.parseDouble( farmParameters.get(6));
 				
 				for(int i = 0; i<crops.size(); i++) {
 					if (crops.get(i).getName().equals(farmParameters.get(7) )) {

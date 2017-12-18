@@ -68,38 +68,54 @@ public class Farm implements Member {
 	 */
 	private void updateUncertainty(List<Farm> farms) {
         double uncertainty = 0;
+        double match = 0;													   // match value of a farm 
+        double weight = 0;
+        double matchingProducts = 0;
 		int EdgeCount = 0;
 		int totalFarms = 0;
+		double currentFarmProductCount = 0;
+		double farmSetProductCount = 0;
+		
         Set<DefaultEdge> E;
         Iterator<DefaultEdge> I;
     		
 		E = this.network.outgoingEdgesOf(this.farmName);
-		
 		Object[] neighbors = this.network.vertexSet().toArray();
 		
         I = E.iterator();
         EdgeCount = E.size();
         totalFarms = farms.size();
         
+        currentFarmProductCount = this.getPreferences().size();
+        
         for (int i = 0; i<= EdgeCount; i++)									// loop through all neighbors in the graph			
         {
-        	for (int j = 0; j < totalFarms; j++) 
+        	for (int j = 0; j < totalFarms; j++) 						   //  loop through all farms
         	{
         		if (farms.get(j).farmName.equals(neighbors[i].toString() ) && !farms.get(j).farmName.equals(this.farmName)) {
-        			System.out.println(neighbors[i].toString());
+        			List<Product> p = farms.get(j).getPreferences();
+        			matchingProducts = 0;
         			
-        			List<Product> p = farms.get(j).head.getPreferences();
-        			System.out.println( p );
-        			System.out.println();
+        			for (int k = 0; k < currentFarmProductCount; k++) 
+        			{
+        				for (int m = 0; m < p.size(); m++)
+        				{
+        					if ( this.getPreferences().get(k).getName().equals(p.get(m).getName()) ) {
+        						matchingProducts++;
+        					}
+        				}
+        			}
+
+        			farmSetProductCount = currentFarmProductCount + farms.get(j).getPreferences().size();
+
+        			weight = network.getEdgeWeight(I.next());
+        			
+        			match = match + weight * (matchingProducts/farmSetProductCount);
         		}
         	}
         }
         
-        while (I.hasNext())
-        {
-        	uncertainty = uncertainty + this.network.getEdgeWeight(I.next());
-        }
-        		
+        System.out.println(String.format("Match value between Current Farm and Network: %f", match));
 		setUncertainty(uncertainty);
 	}
 
@@ -182,8 +198,8 @@ public class Farm implements Member {
 	}
 	@Override
 	public List<Product> getPreferences() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return this.head.getPreferences();
 	}
 	@Override
 	public int getMemory() {

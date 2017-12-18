@@ -5,15 +5,15 @@ import java.util.List;
 
 import product.Product;
 
-public class Person implements Member {
+public class Person {
 
 	private int age;
 	private int education;
 	private List<Product> preferences;
 	private int memory;
-	private int entrepreneurship;
+	private double entrepreneurship;
 	
-	public Person(int age, int education, int memory, int entrepreneurship, List<Product> preferences) {
+	public Person(int age, int education, int memory, double entrepreneurship, List<Product> preferences) {
 		this.age = age;
 		this.education = education;
 		this.preferences = new ArrayList<Product>();
@@ -21,7 +21,7 @@ public class Person implements Member {
 		this.setEntrepreneurship(entrepreneurship);
 	}
 	
-	@Override
+
 	public int getAge() {
 		return age;
 	}
@@ -30,7 +30,6 @@ public class Person implements Member {
 		this.age = age;
 	}
 
-	@Override
 	public int getEducation() {
 		return education;
 	}
@@ -39,7 +38,6 @@ public class Person implements Member {
 		this.education = education;
 	}
 
-	@Override
 	public List<Product> getPreferences() {
 		return preferences;
 	}
@@ -48,7 +46,6 @@ public class Person implements Member {
 		this.preferences = preferences;
 	}
 
-	@Override
 	public int getMemory() {
 		return memory;
 	}
@@ -57,18 +54,12 @@ public class Person implements Member {
 		this.memory = memory;
 	}
 
-	@Override
-	public List<Product> getAction() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public int getEntrepreneurship() {
+	public double getEntrepreneurship() {
 		return entrepreneurship;
 	}
 
-	public void setEntrepreneurship(int entrepreneurship) {
-		this.entrepreneurship = entrepreneurship;
+	public void setEntrepreneurship(double entrepreneurship2) {
+		this.entrepreneurship = entrepreneurship2;
 	}
 
 }

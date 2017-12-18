@@ -18,7 +18,7 @@ public interface Member {
 	
 	int getEducation();
 	
-	List<Product> getAction();
+	List<Product> getAction(List<Farm> farms);
 	
 	List<Product> getPreferences();
 	

@@ -31,7 +31,7 @@ public class ReadParameters implements Reader {
 		int age = 0;
 		int education = 0;
 		int memory = 0;
-		int entrepreneurship = 0;
+		double entrepreneurship = 0;
 		List<Product> preferences = new ArrayList<Product>();
 		BufferedReader Buffer = null;	
 		int index = 0;
@@ -112,7 +112,7 @@ public class ReadParameters implements Reader {
 				farm.setSatisfaction( rand.nextInt(100) );
 				
 				farm.setAspiration(50);
-				farm.setTolerance(50);
+				farm.setTolerance(entrepreneurship);
 				
 				farm.setHead(farmHead);
 				farms.add(farm);

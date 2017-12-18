@@ -14,27 +14,27 @@ public class Farm implements Member {
 	
 	private String farmId;
 	private String farmName;
-	private Member head;
+	private Person head;
 	private Product CurrentAction;
-	private Member spouse;
-	private Member child;
+	private Person spouse;
+	private Person child;
 	private Location location; 
 	private Graph<String, DefaultEdge> network; 
-	private int Satisfaction;
-	private int Aspiration;
-	private int Uncertainty;
-	private int Tolerance;
+	private double Satisfaction;
+	private double Aspiration;
+	private double Uncertainty;
+	private double Tolerance;
 
 
 	/** 
 	 * Calculate satisfaction and uncertainty for the decision tree
 	 * @return List of Products/Actions that the farm will produce
 	 */
-	public List<Product> getAction() {
+	public List<Product> getAction(List<Farm> farms) {
 		
 		// update satisfaction and uncertainty before making decisions
 		updateSatisfaction();
-		updateUncertainty();
+		updateUncertainty(farms);
 		
 		// create final action array
 		List<Product> products = new ArrayList<Product>();
@@ -66,7 +66,44 @@ public class Farm implements Member {
 	/**
 	 * Update farm uncertainty
 	 */
-	private void updateUncertainty() {
+	private void updateUncertainty(List<Farm> farms) {
+        double sum = 0;
+        double avg = 0;
+		int EdgeCount;
+        Set<DefaultEdge> E;
+        Iterator<DefaultEdge> I;
+    		
+		E = this.network.outgoingEdgesOf(this.farmName);
+		
+		Object[] x = this.network.vertexSet().toArray();
+		
+        I = E.iterator();
+        
+        EdgeCount = E.size();
+        
+        for (int i = 0; i<= E.size(); i++)
+        {
+        	
+        	for (int j = 0; j<farms.size();j++) {
+        	
+        		if (farms.get(j).farmName.equals(x[i].toString() ) && !farms.get(j).farmName.equals(this.farmName)) {
+        			System.out.println(x[i].toString());
+        			
+        			//List<Product> p = farms.get(j).head.getPreferences();
+        			//System.out.println( p );
+        		}
+        	}
+        }
+        
+        while (I.hasNext())
+        {
+        	sum = sum + this.network.getEdgeWeight(I.next());
+        }
+        
+        avg = sum/EdgeCount;
+		//return avg;
+		
+		
 		// setUncertainty();
 	}
 
@@ -121,8 +158,8 @@ public class Farm implements Member {
 		
 	}
 	
-	public void setTolerance(int tolerance) {
-		Tolerance = tolerance;
+	public void setTolerance(double entrepreneurship) {
+		Tolerance = entrepreneurship;
 	}
 	
 	public void setUncertainty(int uncertainty) {
@@ -164,22 +201,22 @@ public class Farm implements Member {
 	public void setFarmId(String farmId) {
 		this.farmId = farmId;
 	}
-	public Member getHead() {
+	public Person getHead() {
 		return head;
 	}
-	public void setHead(Member head) {
-		this.head = head;
+	public void setHead(Person farmHead) {
+		this.head = farmHead;
 	}
-	public Member getSpouse() {
+	public Person getSpouse() {
 		return spouse;
 	}
-	public void setSpouse(Member spouse) {
+	public void setSpouse(Person spouse) {
 		this.spouse = spouse;
 	}
-	public Member getChild() {
+	public Person getChild() {
 		return child;
 	}
-	public void setChild(Member child) {
+	public void setChild(Person child) {
 		this.child = child;
 	}
 	public String getFarmName() {
@@ -207,19 +244,19 @@ public class Farm implements Member {
 		CurrentAction = current_action;
 	}
 
-	public int getTolerance() {
+	public double getTolerance() {
 		return Tolerance;
 	}
 
-	public int getUncertainty() {
+	public double getUncertainty() {
 		return Uncertainty;
 	}
 
-	public int getAspiration() {
+	public double getAspiration() {
 		return Aspiration;
 	}
 
-	public int getSatisfaction() {
+	public double getSatisfaction() {
 		return Satisfaction;
 	}
 

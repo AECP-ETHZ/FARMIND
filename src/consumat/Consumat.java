@@ -21,7 +21,7 @@ public class Consumat {
 		
 		for ( int i = 0; i < farms.size(); i++) {
 			
-			List<Product> p = farms.get(i).getAction();
+			List<Product> p = farms.get(i).getAction(farms);
 			String id = farms.get(i).getFarmId();
 
 			DecisionResult decision = new DecisionResult(id, p);

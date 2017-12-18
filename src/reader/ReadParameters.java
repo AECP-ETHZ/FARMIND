@@ -115,6 +115,10 @@ public class ReadParameters implements Reader {
 				farm.setAspiration(50);
 				farm.setTolerance(entrepreneurship);
 				
+				List<Double> match = new ArrayList<Double>();
+				match.add(1.0);
+				farm.setMatch(match);
+				
 				farm.setHead(farmHead);
 				farms.add(farm);
 				index++;	

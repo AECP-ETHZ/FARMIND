@@ -24,6 +24,7 @@ public class Farm implements Member {
 	private double Aspiration;
 	private double Uncertainty;
 	private double Tolerance;
+	private List<Double> similarity;
 
 
 	/** 
@@ -63,18 +64,26 @@ public class Farm implements Member {
 		return products;
 	}
 	
+	
 	/**
-	 * Update farm uncertainty
+	 * Using list of all current farms in the system and the social network of the main farm,
+	 * update the main farm's uncertainty value based on the social network weight and the similarity 
+	 * between neighbor's product types 
+	 * 
+	 * @param farms Input list of all farms in the system. 
 	 */
 	private void updateUncertainty(List<Farm> farms) {
-        double uncertainty = 0;
-        double match = 0;													   // match value of a farm 
-        double weight = 0;
-        double matchingProducts = 0;
-		int EdgeCount = 0;
-		int totalFarms = 0;
-		double currentFarmProductCount = 0;
-		double farmSetProductCount = 0;
+        double uncertainty = 0;												   // uncertainty value based on network
+        double currentSimilarity = 0;										   // similarity value of a farm 
+        double weight = 0;													   // social weight between two farms
+        double matchingProducts = 0;										   // how many products match between farms
+		int EdgeCount = 0;													   // how many edges does this farm have (ie neighbors)
+		int totalFarms = 0;													   // how many total farms are there in the network
+		double mainFarmProductCount = 0;									   // how many products the main farm produces
+		double neighborProductCount = 0;								       // how many products the neighbor farm produces
+		double farmSetProductCount = 0;										   // total product count between the two farms
+        double sum = 0;														   // sum of previous similarities
+        double prevSimilarityAvg = 0;										   // average of previous similarities
 		
         Set<DefaultEdge> E;
         Iterator<DefaultEdge> I;
@@ -86,36 +95,43 @@ public class Farm implements Member {
         EdgeCount = E.size();
         totalFarms = farms.size();
         
-        currentFarmProductCount = this.getPreferences().size();
+        mainFarmProductCount = this.getPreferences().size();
         
-        for (int i = 0; i<= EdgeCount; i++)									// loop through all neighbors in the graph			
+        for (int i = 0; i<= EdgeCount; i++)									   // loop through all neighbors in the graph			
         {
-        	for (int j = 0; j < totalFarms; j++) 						   //  loop through all farms
+        	for (int j = 0; j < totalFarms; j++) 						       //  loop through all farms
         	{
         		if (farms.get(j).farmName.equals(neighbors[i].toString() ) && !farms.get(j).farmName.equals(this.farmName)) {
-        			List<Product> p = farms.get(j).getPreferences();
-        			matchingProducts = 0;
+        			List<Product> p = farms.get(j).getPreferences();		   // product of neighbor farms
+        			neighborProductCount = p.size();
+        			farmSetProductCount = mainFarmProductCount + neighborProductCount;
         			
-        			for (int k = 0; k < currentFarmProductCount; k++) 
+        			weight = network.getEdgeWeight(I.next());
+        			
+        			matchingProducts = 0;								    
+        			for (int k = 0; k < mainFarmProductCount; k++)             // get number of matching products between two farms
         			{
-        				for (int m = 0; m < p.size(); m++)
+        				for (int m = 0; m < neighborProductCount; m++)
         				{
         					if ( this.getPreferences().get(k).getName().equals(p.get(m).getName()) ) {
         						matchingProducts++;
         					}
         				}
         			}
-
-        			farmSetProductCount = currentFarmProductCount + farms.get(j).getPreferences().size();
-
-        			weight = network.getEdgeWeight(I.next());
-        			
-        			match = match + weight * (matchingProducts/farmSetProductCount);
+        			currentSimilarity = currentSimilarity + weight * (matchingProducts/farmSetProductCount);
         		}
         	}
         }
         
-        System.out.println(String.format("Match value between Current Farm and Network: %f", match));
+        for (int i = 0; i< this.similarity.size(); i++) {
+        	sum = sum + this.similarity.get(i);
+        }
+        prevSimilarityAvg = sum / this.similarity.size(); // match average
+        this.similarity.add(currentSimilarity);        // add previous match
+        
+        System.out.println(String.format("Similarity value between Current Farm and Network: %f", currentSimilarity));
+        uncertainty = (currentSimilarity - prevSimilarityAvg)/prevSimilarityAvg;
+        
 		setUncertainty(uncertainty);
 	}
 
@@ -124,50 +140,6 @@ public class Farm implements Member {
 	 */
 	private void updateSatisfaction() {
 		// setSatisfaction();
-	}
-
-	/**
-	 * Using social network graph to calculate social weight of neighbors
-	 * @param farms
-	 * @return social weight of ties
-	 */
-	public double getSocialTies(List<Farm> farms) {
-        double sum = 0;
-        double avg = 0;
-		int EdgeCount;
-        Set<DefaultEdge> E;
-        Iterator<DefaultEdge> I;
-    		
-		E = this.network.outgoingEdgesOf(this.farmName);
-		
-		Object[] x = this.network.vertexSet().toArray();
-		
-        I = E.iterator();
-        
-        EdgeCount = E.size();
-        
-        for (int i = 0; i<= E.size(); i++)
-        {
-        	
-        	for (int j = 0; j<farms.size();j++) {
-        	
-        		if (farms.get(j).farmName.equals(x[i].toString() ) && !farms.get(j).farmName.equals(this.farmName)) {
-        			System.out.println(x[i].toString());
-        			
-        			//List<Product> p = farms.get(j).head.getPreferences();
-        			//System.out.println( p );
-        		}
-        	}
-        }
-        
-        while (I.hasNext())
-        {
-        	sum = sum + this.network.getEdgeWeight(I.next());
-        }
-        
-        avg = sum/EdgeCount;
-		return avg;
-		
 	}
 	
 	public void setTolerance(double entrepreneurship) {
@@ -270,6 +242,19 @@ public class Farm implements Member {
 
 	public double getSatisfaction() {
 		return Satisfaction;
+	}
+
+	public List<Double> getMatch() {
+		return similarity;
+	}
+
+	public void setMatch(List<Double> match) {
+		this.similarity = match;
+	}
+	
+	public void updateMatch(double match)
+	{
+		this.similarity.add(match);
 	}
 
 }

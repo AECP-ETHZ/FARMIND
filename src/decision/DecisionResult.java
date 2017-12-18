@@ -8,6 +8,11 @@ public class DecisionResult {
 
 	private String farmId;
 	private List<Product> products;
+	
+	public DecisionResult(String farmId, List<Product> p) {
+		setFarmId(farmId);
+		setProducts(p);
+	}
 	public String getFarmId() {
 		return farmId;
 	}

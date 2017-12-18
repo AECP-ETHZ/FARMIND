@@ -1,13 +1,25 @@
 package product;
 
+/**
+ * Implements generic product interface
+ * @see Product
+ * @author kellerke
+ *
+ */
 public class Crop implements Product {
 
 	private String name;
 	private int ID;
 
+	/**
+	 * Plant product for the farm
+	 * Check name in master list of crops before object creation
+	 * @param ID
+	 * @param name
+	 */
 	public Crop(int ID, String name) {
 		this.name = name;
-		this.setID(ID);
+		this.setId(ID);
 	}
 
 	@Override
@@ -20,12 +32,14 @@ public class Crop implements Product {
 		this.name = name;
 	}
 
-	public int getID() {
-		return ID;
+	@Override
+	public void setId(int id) {
+		ID = id;
 	}
 
-	public void setID(int iD) {
-		ID = iD;
+	@Override
+	public int getID() {
+		return ID;
 	}
 
 }

@@ -14,36 +14,30 @@ public class Farm implements Member {
 	
 	private String farmId;
 	private String farmName;
-	private Member head;
+	private Person head;
 	private Product CurrentAction;
-	private Member spouse;
-	private Member child;
+	private Person spouse;
+	private Person child;
 	private Location location; 
 	private Graph<String, DefaultEdge> network; 
-	
-	private int Satisfaction;
-	private int Aspiration;
-	private int Uncertainty;
-	private int Tolerance;
+	private double Satisfaction;
+	private double Aspiration;
+	private double Uncertainty;
+	private double Tolerance;
+	private List<Double> similarity;
 
-	public void setTolerance(int tolerance) {
-		Tolerance = tolerance;
-	}
-	
-	public void setUncertainty(int uncertainty) {
-		Uncertainty = uncertainty;
-	}
 
-	public void setAspiration(int aspiration) {
-		Aspiration = aspiration;
-	}
-
-	public void setSatisfaction(int satisfaction) {
-		Satisfaction = satisfaction;
-	}
-	
-	public List<Product> getAction() {
+	/** 
+	 * Calculate satisfaction and uncertainty for the decision tree
+	 * @return List of Products/Actions that the farm will produce
+	 */
+	public List<Product> getAction(List<Farm> farms) {
 		
+		// update satisfaction and uncertainty before making decisions
+		updateSatisfaction();
+		updateUncertainty(farms);
+		
+		// create final action array
 		List<Product> products = new ArrayList<Product>();
 		products.add(this.CurrentAction);
 		
@@ -70,43 +64,98 @@ public class Farm implements Member {
 		return products;
 	}
 	
-	public double getSocialTies(List<Farm> farms) {
-        double sum = 0;
-        double avg = 0;
-		int EdgeCount;
+	
+	/**
+	 * Using list of all current farms in the system and the social network of the main farm,
+	 * update the main farm's uncertainty value based on the social network weight and the similarity 
+	 * between neighbor's product types 
+	 * 
+	 * @param farms Input list of all farms in the system. 
+	 */
+	private void updateUncertainty(List<Farm> farms) {
+        double uncertainty = 0;												   // uncertainty value based on network
+        double currentSimilarity = 0;										   // similarity value of a farm 
+        double weight = 0;													   // social weight between two farms
+        double matchingProducts = 0;										   // how many products match between farms
+		int EdgeCount = 0;													   // how many edges does this farm have (ie neighbors)
+		int totalFarms = 0;													   // how many total farms are there in the network
+		double mainFarmProductCount = 0;									   // how many products the main farm produces
+		double neighborProductCount = 0;								       // how many products the neighbor farm produces
+		double farmSetProductCount = 0;										   // total product count between the two farms
+        double sum = 0;														   // sum of previous similarities
+        double prevSimilarityAvg = 0;										   // average of previous similarities
+		
         Set<DefaultEdge> E;
         Iterator<DefaultEdge> I;
     		
 		E = this.network.outgoingEdgesOf(this.farmName);
-		
-		Object[] x = this.network.vertexSet().toArray();
+		Object[] neighbors = this.network.vertexSet().toArray();
 		
         I = E.iterator();
-        
         EdgeCount = E.size();
+        totalFarms = farms.size();
         
-        for (int i = 0; i<= E.size(); i++)
+        mainFarmProductCount = this.getPreferences().size();
+        
+        for (int i = 0; i<= EdgeCount; i++)									   // loop through all neighbors in the graph			
         {
-        	
-        	for (int j = 0; j<farms.size();j++) {
-        	
-        		if (farms.get(j).farmName.equals(x[i].toString() ) && !farms.get(j).farmName.equals(this.farmName)) {
-        			System.out.println(x[i].toString());
+        	for (int j = 0; j < totalFarms; j++) 						       //  loop through all farms
+        	{
+        		if (farms.get(j).farmName.equals(neighbors[i].toString() ) && !farms.get(j).farmName.equals(this.farmName)) {
+        			List<Product> p = farms.get(j).getPreferences();		   // product of neighbor farms
+        			neighborProductCount = p.size();
+        			farmSetProductCount = mainFarmProductCount + neighborProductCount;
         			
-        			//List<Product> p = farms.get(j).head.getPreferences();
-        			//System.out.println( p );
+        			weight = network.getEdgeWeight(I.next());
+        			
+        			matchingProducts = 0;								    
+        			for (int k = 0; k < mainFarmProductCount; k++)             // get number of matching products between two farms
+        			{
+        				for (int m = 0; m < neighborProductCount; m++)
+        				{
+        					if ( this.getPreferences().get(k).getName().equals(p.get(m).getName()) ) {
+        						matchingProducts++;
+        					}
+        				}
+        			}
+        			currentSimilarity = currentSimilarity + weight * (matchingProducts/farmSetProductCount);
         		}
         	}
         }
         
-        while (I.hasNext())
-        {
-        	sum = sum + this.network.getEdgeWeight(I.next());
+        for (int i = 0; i< this.similarity.size(); i++) {
+        	sum = sum + this.similarity.get(i);
         }
+        prevSimilarityAvg = sum / this.similarity.size(); // match average
+        this.similarity.add(currentSimilarity);        // add previous match
         
-        avg = sum/EdgeCount;
-		return avg;
-		
+        System.out.println(String.format("Similarity value between Current Farm and Network: %f", currentSimilarity));
+        uncertainty = (currentSimilarity - prevSimilarityAvg)/prevSimilarityAvg;
+        
+		setUncertainty(uncertainty);
+	}
+
+	/**
+	 * Update farm satisfaction level
+	 */
+	private void updateSatisfaction() {
+		// setSatisfaction();
+	}
+	
+	public void setTolerance(double entrepreneurship) {
+		Tolerance = entrepreneurship;
+	}
+	
+	public void setUncertainty(double uncertainty2) {
+		Uncertainty = uncertainty2;
+	}
+
+	public void setAspiration(double aspiration) {
+		Aspiration = aspiration;
+	}
+
+	public void setSatisfaction(double satisfaction) {
+		Satisfaction = satisfaction;
 	}
 	
 	@Override
@@ -121,8 +170,8 @@ public class Farm implements Member {
 	}
 	@Override
 	public List<Product> getPreferences() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return this.head.getPreferences();
 	}
 	@Override
 	public int getMemory() {
@@ -136,22 +185,22 @@ public class Farm implements Member {
 	public void setFarmId(String farmId) {
 		this.farmId = farmId;
 	}
-	public Member getHead() {
+	public Person getHead() {
 		return head;
 	}
-	public void setHead(Member head) {
-		this.head = head;
+	public void setHead(Person farmHead) {
+		this.head = farmHead;
 	}
-	public Member getSpouse() {
+	public Person getSpouse() {
 		return spouse;
 	}
-	public void setSpouse(Member spouse) {
+	public void setSpouse(Person spouse) {
 		this.spouse = spouse;
 	}
-	public Member getChild() {
+	public Person getChild() {
 		return child;
 	}
-	public void setChild(Member child) {
+	public void setChild(Person child) {
 		this.child = child;
 	}
 	public String getFarmName() {
@@ -179,20 +228,33 @@ public class Farm implements Member {
 		CurrentAction = current_action;
 	}
 
-	public int getTolerance() {
+	public double getTolerance() {
 		return Tolerance;
 	}
 
-	public int getUncertainty() {
+	public double getUncertainty() {
 		return Uncertainty;
 	}
 
-	public int getAspiration() {
+	public double getAspiration() {
 		return Aspiration;
 	}
 
-	public int getSatisfaction() {
+	public double getSatisfaction() {
 		return Satisfaction;
+	}
+
+	public List<Double> getMatch() {
+		return similarity;
+	}
+
+	public void setMatch(List<Double> match) {
+		this.similarity = match;
+	}
+	
+	public void updateMatch(double match)
+	{
+		this.similarity.add(match);
 	}
 
 }

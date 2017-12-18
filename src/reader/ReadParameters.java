@@ -31,8 +31,8 @@ public class ReadParameters implements Reader {
 		int age = 0;
 		int education = 0;
 		int memory = 0;
-		int entrepreneurship = 0;
-		List<Product> preferences = new ArrayList<Product>();
+		double entrepreneurship = 0;
+		
 		BufferedReader Buffer = null;	
 		int index = 0;
 		
@@ -50,6 +50,7 @@ public class ReadParameters implements Reader {
 				farmParameters = CSVtoArrayList(Line);
 				Farm farm = new Farm();
 				Location location = new Location();							   // create new location for each farm
+				List<Product> preferences = new ArrayList<Product>();
 				double[] coordinates = {0,0};
 				
 				name = farmParameters.get(0);
@@ -66,7 +67,7 @@ public class ReadParameters implements Reader {
 				age = currentYear - Integer.parseInt( farmParameters.get(3));
 				education = Integer.parseInt( farmParameters.get(4) );
 				memory = Integer.parseInt( farmParameters.get(5));
-				entrepreneurship = Integer.parseInt( farmParameters.get(6));
+				entrepreneurship = Double.parseDouble( farmParameters.get(6));
 				
 				for(int i = 0; i<crops.size(); i++) {
 					if (crops.get(i).getName().equals(farmParameters.get(7) )) {
@@ -84,7 +85,7 @@ public class ReadParameters implements Reader {
 					}
 				}
 				
-				preferences.clear();
+				//preferences.clear();
 				for (int k = 8; k < farmParameters.size(); k++) {
 					for(int i = 0; i<crops.size(); i++) {
 						if (crops.get(i).getName().equals(farmParameters.get(k) )) {
@@ -111,8 +112,12 @@ public class ReadParameters implements Reader {
 				farm.setUncertainty( rand.nextInt(100) );
 				farm.setSatisfaction( rand.nextInt(100) );
 				
-				farm.setAspiration( 50);
-				farm.setTolerance( 50 );
+				farm.setAspiration(50);
+				farm.setTolerance(entrepreneurship);
+				
+				List<Double> match = new ArrayList<Double>();
+				match.add(1.0);
+				farm.setMatch(match);
 				
 				farm.setHead(farmHead);
 				farms.add(farm);
@@ -131,6 +136,12 @@ public class ReadParameters implements Reader {
 		return farms;
 	}
 	
+	/**
+	 * Read a csv file that specifies each farm and generate a star network for each listed farm
+	 * Each farm id/name is set as the root of the star graph, and each associated node has an associated link weight
+	 * Each farm will have an individual graph set based on the master list produced in this method
+	 * @return List of graphs for each farm
+	 */
 	private List<Graph<String, DefaultEdge>> getSocialNetworks(){
 		List<Graph<String, DefaultEdge>> NetworkList = new ArrayList<Graph<String, DefaultEdge>>();
 		
@@ -178,6 +189,11 @@ public class ReadParameters implements Reader {
 		return NetworkList;
 	}
 
+	/**
+	 * Create list of crop type/category from master CSV list
+	 * This is used to generate the individual farm product lists
+	 * @return List of crops in the master CSV file
+	 */
 	public List<Crop> getCropList() {
 		String Line;
 		List<Crop> crops = new ArrayList<Crop>();
@@ -211,6 +227,11 @@ public class ReadParameters implements Reader {
 		return crops;
 	}
 	
+	/**
+	 * Create list of livestock type/category from master CSV list
+	 * This is used to generate the individual farm product lists
+	 * @return List of livestock in the master CSV file
+	 */
 	public List<Livestock> getLivestockList() {
 		String Line;
 		List<Livestock> livestock = new ArrayList<Livestock>();
@@ -244,7 +265,12 @@ public class ReadParameters implements Reader {
 		return livestock;
 	}
 	
-	private static ArrayList<String> CSVtoArrayList(String CSV) {		       // Utility which converts CSV to ArrayList using Split Operation
+	/**
+	 * Input a readline from a csv using a split operation 
+	 * @param CSV String from input csv file to break into array
+	 * @return Result ArrayList of strings 
+	 */
+	private static ArrayList<String> CSVtoArrayList(String CSV) {		       
 		ArrayList<String> Result = new ArrayList<String>();
 		
 		if (CSV != null) {
@@ -255,9 +281,7 @@ public class ReadParameters implements Reader {
 				}
 			}
 		}
-		
 		return Result;
 	}
-
 
 }

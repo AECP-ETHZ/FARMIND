@@ -1,6 +1,5 @@
 package agent.farm;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import product.Product;
@@ -16,7 +15,7 @@ public class Person {
 	public Person(int age, int education, int memory, double entrepreneurship, List<Product> preferences) {
 		this.age = age;
 		this.education = education;
-		this.preferences = new ArrayList<Product>();
+		this.preferences = preferences;
 		this.memory = memory;
 		this.setEntrepreneurship(entrepreneurship);
 	}

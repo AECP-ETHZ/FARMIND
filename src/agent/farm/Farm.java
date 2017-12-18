@@ -67,48 +67,44 @@ public class Farm implements Member {
 	 * Update farm uncertainty
 	 */
 	private void updateUncertainty(List<Farm> farms) {
-        double sum = 0;
-        double avg = 0;
-		int EdgeCount;
+        double uncertainty = 0;
+		int EdgeCount = 0;
+		int totalFarms = 0;
         Set<DefaultEdge> E;
         Iterator<DefaultEdge> I;
     		
 		E = this.network.outgoingEdgesOf(this.farmName);
 		
-		Object[] x = this.network.vertexSet().toArray();
+		Object[] neighbors = this.network.vertexSet().toArray();
 		
         I = E.iterator();
-        
         EdgeCount = E.size();
+        totalFarms = farms.size();
         
-        for (int i = 0; i<= E.size(); i++)
+        for (int i = 0; i<= EdgeCount; i++)									// loop through all neighbors in the graph			
         {
-        	
-        	for (int j = 0; j<farms.size();j++) {
-        	
-        		if (farms.get(j).farmName.equals(x[i].toString() ) && !farms.get(j).farmName.equals(this.farmName)) {
-        			System.out.println(x[i].toString());
+        	for (int j = 0; j < totalFarms; j++) 
+        	{
+        		if (farms.get(j).farmName.equals(neighbors[i].toString() ) && !farms.get(j).farmName.equals(this.farmName)) {
+        			System.out.println(neighbors[i].toString());
         			
-        			//List<Product> p = farms.get(j).head.getPreferences();
-        			//System.out.println( p );
+        			List<Product> p = farms.get(j).head.getPreferences();
+        			System.out.println( p );
+        			System.out.println();
         		}
         	}
         }
         
         while (I.hasNext())
         {
-        	sum = sum + this.network.getEdgeWeight(I.next());
+        	uncertainty = uncertainty + this.network.getEdgeWeight(I.next());
         }
-        
-        avg = sum/EdgeCount;
-		//return avg;
-		
-		
-		// setUncertainty();
+        		
+		setUncertainty(uncertainty);
 	}
 
 	/**
-	 * Update farm satisfacation level
+	 * Update farm satisfaction level
 	 */
 	private void updateSatisfaction() {
 		// setSatisfaction();
@@ -162,15 +158,15 @@ public class Farm implements Member {
 		Tolerance = entrepreneurship;
 	}
 	
-	public void setUncertainty(int uncertainty) {
-		Uncertainty = uncertainty;
+	public void setUncertainty(double uncertainty2) {
+		Uncertainty = uncertainty2;
 	}
 
-	public void setAspiration(int aspiration) {
+	public void setAspiration(double aspiration) {
 		Aspiration = aspiration;
 	}
 
-	public void setSatisfaction(int satisfaction) {
+	public void setSatisfaction(double satisfaction) {
 		Satisfaction = satisfaction;
 	}
 	

@@ -20,7 +20,7 @@ public class Consumat {
 		List<Farm> farms = reader.getFarms();
 		
 		for ( int i = 0; i < farms.size(); i++) {
-			
+
 			List<Product> p = farms.get(i).getAction(farms);
 			String id = farms.get(i).getFarmId();
 

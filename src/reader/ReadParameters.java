@@ -32,7 +32,7 @@ public class ReadParameters implements Reader {
 		int education = 0;
 		int memory = 0;
 		double entrepreneurship = 0;
-		List<Product> preferences = new ArrayList<Product>();
+		
 		BufferedReader Buffer = null;	
 		int index = 0;
 		
@@ -50,6 +50,7 @@ public class ReadParameters implements Reader {
 				farmParameters = CSVtoArrayList(Line);
 				Farm farm = new Farm();
 				Location location = new Location();							   // create new location for each farm
+				List<Product> preferences = new ArrayList<Product>();
 				double[] coordinates = {0,0};
 				
 				name = farmParameters.get(0);
@@ -84,7 +85,7 @@ public class ReadParameters implements Reader {
 					}
 				}
 				
-				preferences.clear();
+				//preferences.clear();
 				for (int k = 8; k < farmParameters.size(); k++) {
 					for(int i = 0; i<crops.size(); i++) {
 						if (crops.get(i).getName().equals(farmParameters.get(k) )) {

@@ -93,6 +93,7 @@ public class ReadParameters implements Reader {
 							Product p = new Crop(ID, farmParameters.get(k)); 
 							preferences.add(p);
 						}
+<<<<<<< Updated upstream
 					}
 				}
 				
@@ -102,11 +103,20 @@ public class ReadParameters implements Reader {
 							int ID = livestock.get(i).getID();
 							Product p = new Livestock(ID, farmParameters.get(k)); 
 							preferences.add(p);
+=======
+						
+						for (CropCategory s: CropCategory.values() ) {
+							String cat = s.toString();
+							if (cat.equalsIgnoreCase(farmParameters.get(i))) {
+								p = new Crop(farmParameters.get(i));
+								preferences.add(p);
+							}
+>>>>>>> Stashed changes
 						}
 					}
 				}
 				
-				Person farmHead = new Person(age, education,memory, entrepreneurship, preferences);          
+				Person farmHead = new Person(age, education, memory, entrepreneurship, preferences);          
 				
 				Random rand = new Random();
 				farm.setUncertainty( rand.nextInt(100) );

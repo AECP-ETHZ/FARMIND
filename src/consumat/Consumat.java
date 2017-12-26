@@ -17,8 +17,6 @@ public class Consumat {
 		//List<Crop> crops = reader.getCropList();
 		//List<Livestock> livestock = reader.getLivestockList();
 		
-		// comment
-		
 		List<Farm> farms = reader.getFarms();
 		
 		for ( int i = 0; i < farms.size(); i++) {

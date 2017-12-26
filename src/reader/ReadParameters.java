@@ -85,7 +85,7 @@ public class ReadParameters implements Reader {
 					}
 				}
 				
-				//preferences.clear();
+				preferences.clear();
 				for (int k = 8; k < farmParameters.size(); k++) {
 					for(int i = 0; i<crops.size(); i++) {
 						if (crops.get(i).getName().equals(farmParameters.get(k) )) {
@@ -93,28 +93,28 @@ public class ReadParameters implements Reader {
 							Product p = new Crop(ID, farmParameters.get(k)); 
 							preferences.add(p);
 						}
-<<<<<<< Updated upstream
 					}
 				}
-				
+						
 				for (int k = 8; k < farmParameters.size(); k++) {
 					for(int i = 0; i<livestock.size(); i++) {
 						if (livestock.get(i).getName().equals(farmParameters.get(k) )) {
 							int ID = livestock.get(i).getID();
 							Product p = new Livestock(ID, farmParameters.get(k)); 
 							preferences.add(p);
-=======
-						
-						for (CropCategory s: CropCategory.values() ) {
-							String cat = s.toString();
-							if (cat.equalsIgnoreCase(farmParameters.get(i))) {
-								p = new Crop(farmParameters.get(i));
-								preferences.add(p);
-							}
->>>>>>> Stashed changes
 						}
 					}
 				}
+
+				/*			
+					for (CropCategory s: CropCategory.values() ) {
+						String cat = s.toString();
+						if (cat.equalsIgnoreCase(farmParameters.get(i))) {
+							p = new Crop(farmParameters.get(i));
+							preferences.add(p);
+						}
+				 */
+
 				
 				Person farmHead = new Person(age, education, memory, entrepreneurship, preferences);          
 				

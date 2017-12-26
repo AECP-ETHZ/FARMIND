@@ -1,6 +1,8 @@
 package agent.farm;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -84,7 +86,9 @@ public class Farm implements Member {
 		double farmSetProductCount = 0;										   // total product count between the two farms
         double sum = 0;														   // sum of previous similarities
         double prevSimilarityAvg = 0;										   // average of previous similarities
-		
+        List<Product> TotalProductList = new ArrayList<Product>();			   // all products on the network
+        List<String>  ProductNames = new ArrayList<String>();				   // intermediate variable of just names, not product objects
+        
         Set<DefaultEdge> E;
         Iterator<DefaultEdge> I;
     		
@@ -97,6 +101,20 @@ public class Farm implements Member {
         
         mainFarmProductCount = this.getPreferences().size();
         
+    	for (int j = 0; j < totalFarms; j++) 						       //  loop through all farms
+    	{
+    		List<Product> p = farms.get(j).getPreferences();
+    		for (int i = 0; i < p.size(); i++) {
+    			if (!ProductNames.contains(p.get(i).getName())) 
+    			{
+    				ProductNames.add(p.get(i).getName());
+    				TotalProductList.add(p.get(i));
+    			}
+    		}
+    	}
+    	
+    	
+    	
         for (int i = 0; i<= EdgeCount; i++)									   // loop through all neighbors in the graph			
         {
         	for (int j = 0; j < totalFarms; j++) 						       //  loop through all farms

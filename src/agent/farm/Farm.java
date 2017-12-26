@@ -1,10 +1,10 @@
 package agent.farm;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import product.Product;
@@ -86,8 +86,9 @@ public class Farm implements Member {
 		double farmSetProductCount = 0;										   // total product count between the two farms
         double sum = 0;														   // sum of previous similarities
         double prevSimilarityAvg = 0;										   // average of previous similarities
-        List<Product> TotalProductList = new ArrayList<Product>();			   // all products on the network
         List<String>  ProductNames = new ArrayList<String>();				   // intermediate variable of just names, not product objects
+        Map<String, Integer> ProductMap = new HashMap<String,Integer>();       // map of all products on network, with count of often it's produced
+
         
         Set<DefaultEdge> E;
         Iterator<DefaultEdge> I;
@@ -101,6 +102,7 @@ public class Farm implements Member {
         
         mainFarmProductCount = this.getPreferences().size();
         
+        
     	for (int j = 0; j < totalFarms; j++) 						       //  loop through all farms
     	{
     		List<Product> p = farms.get(j).getPreferences();
@@ -108,12 +110,36 @@ public class Farm implements Member {
     			if (!ProductNames.contains(p.get(i).getName())) 
     			{
     				ProductNames.add(p.get(i).getName());
-    				TotalProductList.add(p.get(i));
+    				ProductMap.put(p.get(i).getName(), 1);
+    			} else {
+    				ProductMap.put(p.get(i).getName(), ProductMap.get(p.get(i).getName()) + 1);    // increment map
     			}
     		}
     	}
     	
+    	List<String> mainProduct = new ArrayList<String>();
     	
+    	for (int i = 0; i < this.getPreferences().size(); i++)
+    	{
+    		mainProduct.add(this.getPreferences().get(i).getName());
+    	}
+    	
+    	Double dissimilarity = 0.0;
+    	
+    	for (int i = 0; i < ProductNames.size(); i++)
+    	{
+    		System.out.println(ProductNames.get(i));
+    		if (mainProduct.contains(ProductNames.get(i))) {
+    			continue;
+    			
+    		} else {
+    			System.out.println( String.format("%d", ProductMap.get(ProductNames.get(i)) ));
+    			dissimilarity = dissimilarity + (ProductMap.get(ProductNames.get(i)) / ((double)EdgeCount) );
+    		}
+    	}
+    	
+    	dissimilarity = dissimilarity/ProductNames.size();
+    	System.out.println( "Diss Value: " + String.format("%f", dissimilarity ));
     	
         for (int i = 0; i<= EdgeCount; i++)									   // loop through all neighbors in the graph			
         {

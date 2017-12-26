@@ -128,19 +128,17 @@ public class Farm implements Member {
     	
     	for (int i = 0; i < ProductNames.size(); i++)
     	{
-    		System.out.println(ProductNames.get(i));
     		if (mainProduct.contains(ProductNames.get(i))) {
     			continue;
     			
     		} else {
-    			System.out.println( String.format("%d", ProductMap.get(ProductNames.get(i)) ));
     			dissimilarity = dissimilarity + (ProductMap.get(ProductNames.get(i)) / ((double)EdgeCount) );
     		}
     	}
     	
     	dissimilarity = dissimilarity/ProductNames.size();
-    	System.out.println( "Diss Value: " + String.format("%f", dissimilarity ));
     	
+    	// THIS IS THE OLD VERSION
         for (int i = 0; i<= EdgeCount; i++)									   // loop through all neighbors in the graph			
         {
         	for (int j = 0; j < totalFarms; j++) 						       //  loop through all farms
@@ -165,7 +163,11 @@ public class Farm implements Member {
         			currentSimilarity = currentSimilarity + weight * (matchingProducts/farmSetProductCount);
         		}
         	}
-        }
+        } 
+        // END OLD VERSION
+        
+        // TEMPORARY SETUP
+        currentSimilarity = dissimilarity; 
         
         for (int i = 0; i< this.similarity.size(); i++) {
         	sum = sum + this.similarity.get(i);

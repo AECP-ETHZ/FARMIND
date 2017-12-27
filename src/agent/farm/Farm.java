@@ -85,11 +85,9 @@ public class Farm implements Member {
         Double dissimilarity = 0.0;											   // dissimilarity value for farm
         
         Set<DefaultEdge> E;
-        //Iterator<DefaultEdge> I;
     		
 		E = this.network.outgoingEdgesOf(this.farmName);
 
-        //I = E.iterator();
         EdgeCount = E.size();
         totalFarms = farms.size();
         

@@ -16,6 +16,7 @@ import agent.farm.Person;
 import product.Crop;
 import product.Livestock;
 import product.Product;
+import transactioncost.TCMatrix;
 import agent.farm.Farm;
 import agent.farm.Location;
 
@@ -273,6 +274,38 @@ public class ReadParameters implements Reader {
 			}
 		}
 		return livestock;
+	}
+	
+	public TCMatrix getTCMatrix() {
+		String Line;
+		ArrayList<String> matrixRow;
+		BufferedReader Buffer = null;	
+		TCMatrix matrix = new TCMatrix();
+
+		try {
+			Buffer = new BufferedReader(new FileReader("./data/transaction_cost.csv"));
+			Line = Buffer.readLine();
+			matrixRow = CSVtoArrayList(Line);
+			matrixRow.remove(0);
+			matrix.setProductIndex(matrixRow);
+			
+			while ((Line = Buffer.readLine()) != null) {                       // Read row data
+				matrixRow = CSVtoArrayList(Line);
+				matrix.setProductMap(matrixRow);
+			}
+				
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (Buffer != null) Buffer.close();
+			} catch (IOException Exception) {
+				Exception.printStackTrace();
+			}
+		}
+		
+		return matrix;
+
 	}
 	
 	/**

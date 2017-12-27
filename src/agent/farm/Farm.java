@@ -68,7 +68,7 @@ public class Farm implements Member {
 	
 	/**
 	 * Using list of all current farms in the system and the social network of the main farm,
-	 * update the main farm's uncertainty value based on the social network weight and the similarity 
+	 * update the main farm's uncertainty value based on the social network weight and the dissimilarity 
 	 * between neighbor's product types 
 	 * 
 	 * @param farms Input list of all farms in the system. 
@@ -151,8 +151,8 @@ public class Farm implements Member {
 		Tolerance = entrepreneurship;
 	}
 	
-	public void setUncertainty(double uncertainty2) {
-		Uncertainty = uncertainty2;
+	public void setUncertainty(double uncertainty) {
+		Uncertainty = uncertainty;
 	}
 
 	public void setAspiration(double aspiration) {

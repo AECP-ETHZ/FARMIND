@@ -1,0 +1,5 @@
+﻿Product,Wheat,Maize,Chickens,Cattle
+Wheat,0,3,10,10
+Maize,3,0,10,10
+Chickens,10,10,0,4
+Cattle,10,10,4,0

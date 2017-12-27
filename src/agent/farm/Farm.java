@@ -2,7 +2,6 @@ package agent.farm;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -26,7 +25,7 @@ public class Farm implements Member {
 	private double Aspiration;
 	private double Uncertainty;
 	private double Tolerance;
-	private List<Double> similarity;
+	private List<Double> dissimilarity;
 
 
 	/** 
@@ -76,34 +75,25 @@ public class Farm implements Member {
 	 */
 	private void updateUncertainty(List<Farm> farms) {
         double uncertainty = 0;												   // uncertainty value based on network
-        double currentSimilarity = 0;										   // similarity value of a farm 
-        double weight = 0;													   // social weight between two farms
-        double matchingProducts = 0;										   // how many products match between farms
-		int EdgeCount = 0;													   // how many edges does this farm have (ie neighbors)
+        double currentDissimilarity = 0;									   // similarity value of a farm 
+        int EdgeCount = 0;													   // how many edges does this farm have (ie neighbors)
 		int totalFarms = 0;													   // how many total farms are there in the network
-		double mainFarmProductCount = 0;									   // how many products the main farm produces
-		double neighborProductCount = 0;								       // how many products the neighbor farm produces
-		double farmSetProductCount = 0;										   // total product count between the two farms
         double sum = 0;														   // sum of previous similarities
-        double prevSimilarityAvg = 0;										   // average of previous similarities
+        double prevDissimilarityAvg = 0;									   // average of previous similarities
         List<String>  ProductNames = new ArrayList<String>();				   // intermediate variable of just names, not product objects
         Map<String, Integer> ProductMap = new HashMap<String,Integer>();       // map of all products on network, with count of often it's produced
-
+        Double dissimilarity = 0.0;											   // dissimilarity value for farm
         
         Set<DefaultEdge> E;
-        Iterator<DefaultEdge> I;
+        //Iterator<DefaultEdge> I;
     		
 		E = this.network.outgoingEdgesOf(this.farmName);
-		Object[] neighbors = this.network.vertexSet().toArray();
-		
-        I = E.iterator();
+
+        //I = E.iterator();
         EdgeCount = E.size();
         totalFarms = farms.size();
         
-        mainFarmProductCount = this.getPreferences().size();
-        
-        
-    	for (int j = 0; j < totalFarms; j++) 						       //  loop through all farms
+    	for (int j = 0; j < totalFarms; j++)  						           //  loop through all farms
     	{
     		List<Product> p = farms.get(j).getPreferences();
     		for (int i = 0; i < p.size(); i++) {
@@ -118,65 +108,34 @@ public class Farm implements Member {
     	}
     	
     	List<String> mainProduct = new ArrayList<String>();
-    	
     	for (int i = 0; i < this.getPreferences().size(); i++)
     	{
     		mainProduct.add(this.getPreferences().get(i).getName());
     	}
     	
-    	Double dissimilarity = 0.0;
-    	
+    	// ACTUAL DISSIMILARITY CALULATION
     	for (int i = 0; i < ProductNames.size(); i++)
     	{
+    		// if the product is produced by the main farmer ignore that product in the dissimilarity
     		if (mainProduct.contains(ProductNames.get(i))) {
     			continue;
     			
     		} else {
+    			// these products are not grown by the main farmer so it counts for the dissimilarity
     			dissimilarity = dissimilarity + (ProductMap.get(ProductNames.get(i)) / ((double)EdgeCount) );
     		}
     	}
-    	
-    	dissimilarity = dissimilarity/ProductNames.size();
-    	
-    	// THIS IS THE OLD VERSION
-        for (int i = 0; i<= EdgeCount; i++)									   // loop through all neighbors in the graph			
-        {
-        	for (int j = 0; j < totalFarms; j++) 						       //  loop through all farms
-        	{
-        		if (farms.get(j).farmName.equals(neighbors[i].toString() ) && !farms.get(j).farmName.equals(this.farmName)) {
-        			List<Product> p = farms.get(j).getPreferences();		   // product of neighbor farms
-        			neighborProductCount = p.size();
-        			farmSetProductCount = mainFarmProductCount + neighborProductCount;
-        			
-        			weight = network.getEdgeWeight(I.next());
-        			
-        			matchingProducts = 0;								    
-        			for (int k = 0; k < mainFarmProductCount; k++)             // get number of matching products between two farms
-        			{
-        				for (int m = 0; m < neighborProductCount; m++)
-        				{
-        					if ( this.getPreferences().get(k).getName().equals(p.get(m).getName()) ) {
-        						matchingProducts++;
-        					}
-        				}
-        			}
-        			currentSimilarity = currentSimilarity + weight * (matchingProducts/farmSetProductCount);
-        		}
-        	}
-        } 
-        // END OLD VERSION
+
+        currentDissimilarity = dissimilarity/ProductNames.size();
         
-        // TEMPORARY SETUP
-        currentSimilarity = dissimilarity; 
-        
-        for (int i = 0; i< this.similarity.size(); i++) {
-        	sum = sum + this.similarity.get(i);
+        for (int i = 0; i< this.dissimilarity.size(); i++) {
+        	sum = sum + this.dissimilarity.get(i);
         }
-        prevSimilarityAvg = sum / this.similarity.size(); // match average
-        this.similarity.add(currentSimilarity);        // add previous match
+        prevDissimilarityAvg = sum / this.dissimilarity.size();                // dissimilarity average over all previous years
+        this.dissimilarity.add(currentDissimilarity);                          // add previous match
         
-        System.out.println(String.format("Similarity value between Current Farm and Network: %f", currentSimilarity));
-        uncertainty = (currentSimilarity - prevSimilarityAvg)/prevSimilarityAvg;
+        System.out.println(String.format("Dissimilarity value between Current Farm and Network: %f", currentDissimilarity));
+        uncertainty = (currentDissimilarity - prevDissimilarityAvg)/prevDissimilarityAvg;
         
 		setUncertainty(uncertainty);
 	}
@@ -291,16 +250,16 @@ public class Farm implements Member {
 	}
 
 	public List<Double> getMatch() {
-		return similarity;
+		return dissimilarity;
 	}
 
 	public void setMatch(List<Double> match) {
-		this.similarity = match;
+		this.dissimilarity = match;
 	}
 	
 	public void updateMatch(double match)
 	{
-		this.similarity.add(match);
+		this.dissimilarity.add(match);
 	}
 
 }

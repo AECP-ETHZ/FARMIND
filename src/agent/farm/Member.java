@@ -23,5 +23,7 @@ public interface Member {
 	
 	Preferences getPreferences();
 	
+	List<Product> getProducts();
+	
 	int getMemory();
 }

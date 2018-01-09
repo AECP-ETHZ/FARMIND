@@ -54,6 +54,7 @@ public class ReadParameters implements Reader {
 				Farm farm = new Farm();
 				Location location = new Location();							   // create new location for each farm
 				Preferences preferences = new Preferences();
+				List<Product> actions = new ArrayList<Product>();
 				double[] coordinates = {0,0};
 				
 				name = farmParameters.get(0);
@@ -88,11 +89,32 @@ public class ReadParameters implements Reader {
 					}
 				}
 				
+				actions.clear();
+				for (int k = 7; k < farmParameters.size(); k++) {
+					for(int i = 0; i<crops.size(); i++) {
+						if (crops.get(i).getName().equals(farmParameters.get(k) )) {
+							int ID = crops.get(i).getID();
+							Product p = new Crop(ID, farmParameters.get(k)); 
+							actions.add(p);
+						}
+					}
+				}
+						
+				for (int k = 7; k < farmParameters.size(); k++) {
+					for(int i = 0; i<livestock.size(); i++) {
+						if (livestock.get(i).getName().equals(farmParameters.get(k) )) {
+							int ID = livestock.get(i).getID();
+							Product p = new Livestock(ID, farmParameters.get(k)); 
+							actions.add(p);
+						}
+					}
+				}		
+				
 				preferences.setPreferencesID(pref.getpreferencesID());
 				preferences.setPreferencesName(pref.getPreferencesName());
 				preferences.setPreferencesMap(pref.getpreferencesMap());
 
-				Person farmHead = new Person(age, education, memory, entrepreneurship, preferences);          
+				Person farmHead = new Person(age, education, memory, entrepreneurship, preferences, actions);          
 				
 				Random rand = new Random();
 				farm.setUncertainty( rand.nextInt(100) );

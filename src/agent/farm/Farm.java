@@ -92,10 +92,9 @@ public class Farm implements Member {
         EdgeCount = E.size();
         totalFarms = farms.size();
         
-        /*
     	for (int j = 0; j < totalFarms; j++)  						           //  loop through all farms
     	{
-    		List<Product> p = farms.get(j).getPreferences();
+    		List<Product> p = farms.get(j).getProducts();
     		for (int i = 0; i < p.size(); i++) {
     			if (!ProductNames.contains(p.get(i).getName())) 
     			{
@@ -108,9 +107,9 @@ public class Farm implements Member {
     	}
     	
     	List<String> mainProduct = new ArrayList<String>();
-    	for (int i = 0; i < this.getPreferences().size(); i++)
+    	for (int i = 0; i < this.getProducts().size(); i++)
     	{
-    		mainProduct.add(this.getPreferences().get(i).getName());
+    		mainProduct.add(this.getProducts().get(i).getName());
     	}
     	
     	// ACTUAL DISSIMILARITY CALULATION
@@ -125,10 +124,8 @@ public class Farm implements Member {
     			dissimilarity = dissimilarity + (ProductMap.get(ProductNames.get(i)) / ((double)EdgeCount) );
     		}
     	}
-    	*/
 
         currentDissimilarity = dissimilarity/ProductNames.size();
-        
         
         for (int i = 0; i< this.dissimilarity.size(); i++) {
         	sum = sum + this.dissimilarity.get(i);
@@ -281,6 +278,12 @@ public class Farm implements Member {
 	public void updateMatch(double match)
 	{
 		this.dissimilarity.add(match);
+	}
+
+
+	@Override
+	public List<Product> getProducts() {
+		return head.getProducts();
 	}
 
 }

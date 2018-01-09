@@ -87,8 +87,6 @@ public class Farm implements Member {
         Set<DefaultEdge> E;
     		
 		E = this.network.outgoingEdgesOf(this.farmName);
-		
-		System.out.println("test");
 
         EdgeCount = E.size();
         totalFarms = farms.size();

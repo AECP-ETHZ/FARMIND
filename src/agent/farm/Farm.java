@@ -43,6 +43,7 @@ public class Farm implements Member {
 		// update satisfaction and uncertainty before making decisions
 		updateSatisfaction(50.0);
 		updateUncertainty(farms);
+		// update aspiration levels
 		
 		// create final action array
 		List<Product> products = new ArrayList<Product>();

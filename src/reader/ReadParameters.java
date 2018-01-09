@@ -16,7 +16,7 @@ import agent.farm.Person;
 import product.Crop;
 import product.Livestock;
 import product.Product;
-import transactioncost.TCMatrix;
+import transactioncost.TDMatrix;
 import agent.farm.Farm;
 import agent.farm.Location;
 
@@ -40,6 +40,8 @@ public class ReadParameters implements Reader {
 		List<Graph<String, DefaultEdge>> network = this.getSocialNetworks();   // build social network graphs
 		List<Crop> crops = getCropList();
 		List<Livestock> livestock = getLivestockList();
+		
+		// get preferences for all farms here
 		
 		try {
 			Calendar now = Calendar.getInstance();                             // Gets the current date and time
@@ -145,6 +147,13 @@ public class ReadParameters implements Reader {
 			}
 		}
 		return farms;
+	}
+
+	public List<Product> getPreferences() {
+		List<Product> preferences = new ArrayList<Product>();
+		
+		
+		return preferences; 
 	}
 	
 	/**
@@ -276,11 +285,11 @@ public class ReadParameters implements Reader {
 		return livestock;
 	}
 	
-	public TCMatrix getTCMatrix() {
+	public TDMatrix getTDMatrix() {
 		String Line;
 		ArrayList<String> matrixRow;
 		BufferedReader Buffer = null;	
-		TCMatrix matrix = new TCMatrix();
+		TDMatrix matrix = new TDMatrix();
 
 		try {
 			Buffer = new BufferedReader(new FileReader("./data/transaction_cost.csv"));

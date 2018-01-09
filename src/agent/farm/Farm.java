@@ -35,7 +35,7 @@ public class Farm implements Member {
 	public List<Product> getAction(List<Farm> farms) {
 		
 		// update satisfaction and uncertainty before making decisions
-		updateSatisfaction();
+		updateSatisfaction(50.0);
 		updateUncertainty(farms);
 		
 		// create final action array
@@ -141,8 +141,27 @@ public class Farm implements Member {
 	/**
 	 * Update farm satisfaction level
 	 */
-	private void updateSatisfaction() {
-		// setSatisfaction();
+	private void updateSatisfaction(double x) {
+		double satisfaction = 0;
+		double alpha_plus = 0.6;
+		double alpha_minus = 0.6;
+		double phi_plus = 0.8;
+		double phi_minus = 0.8;
+		double probability = 0.5;
+		double v = 0;
+		double theta = 0;
+		
+		if (x >= this.Aspiration) {
+			v = Math.pow(x, alpha_plus);
+			theta = ( Math.pow(probability, phi_plus) ) / Math.pow( (Math.pow(probability, phi_plus) + Math.pow((1 - probability), phi_plus)), (1/phi_plus) );
+		}
+		else if (x < this.Aspiration) {
+			v = Math.pow(x, alpha_minus);
+			theta = ( Math.pow(probability, phi_minus) ) / Math.pow( (Math.pow(probability, phi_minus) + Math.pow((1 - probability), phi_minus)), (1/phi_minus) );
+		}
+		
+		satisfaction = v*theta;
+		setSatisfaction(satisfaction);
 	}
 	
 	public void setTolerance(double entrepreneurship) {

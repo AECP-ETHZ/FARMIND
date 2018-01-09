@@ -7,7 +7,7 @@ import decision.DecisionResult;
 import output.BatchOutput;
 import product.Product;
 import reader.ReadParameters;
-import transactioncost.TCMatrix;
+import transactioncost.TDMatrix;
 
 public class Consumat {
 
@@ -15,9 +15,9 @@ public class Consumat {
 		
 		ReadParameters reader = new ReadParameters();
 		
-		TCMatrix matrix = reader.getTCMatrix();
+		TDMatrix matrix = reader.getTDMatrix();
 		
-		int cost = matrix.getCost("Wheat", "Maize");
+		int cost = matrix.getDistance("Wheat", "Maize");
 		
 		System.out.println(cost);
 		

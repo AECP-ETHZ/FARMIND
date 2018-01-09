@@ -9,16 +9,13 @@ import product.Crop;
 import product.Livestock;
 
 /** 
- * This contains all product preferences for all the farms in the system.
- * Each farm is given a copy of this object 
+ * Contains all product preferences (integer list) for all farms with ID and Name of each preferences
+ * Each farm contains a copy of this list. 
  * @author kellerke
  *
  */
 
 public class Preferences {
-	
-	// First row gives the ID
-	// Second row gives the titles
 	private List<String> preferencesID = new ArrayList<String>();
 	private List<String> preferencesName = new ArrayList<String>();
 	private Map<String,Integer[]> preferencesMap = new HashMap<String,Integer[]>();
@@ -27,6 +24,13 @@ public class Preferences {
 		return preferencesID;
 	}
 	
+	/**
+	 * @param p1 product name one
+	 * @param p2 product name two
+	 * @param crops list of all crops in system
+	 * @param livestock list of all livestock in system
+	 * @return technological distance between crops
+	 */
 	public Integer getTechDistance(String p1, String p2, List<Crop> crops, List<Livestock> livestock) {
 		int distance = 0;
 		List<String> cropName = new ArrayList<String>();

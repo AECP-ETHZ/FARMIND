@@ -4,6 +4,11 @@ import java.util.List;
 
 import product.Product;
 
+/**
+ * Decision object that stores decision
+ * @author kellerke
+ *
+ */
 public class DecisionResult {
 
 	private String farmId;

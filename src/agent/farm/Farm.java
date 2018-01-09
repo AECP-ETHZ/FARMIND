@@ -12,6 +12,11 @@ import reader.Preferences;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 
+/** 
+ * Farm object contains all preferences, networks, people, and paramaters associated with each farm
+ * @author kellerke
+ *
+ */
 public class Farm implements Member {
 	
 	private String farmId;
@@ -201,7 +206,6 @@ public class Farm implements Member {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
 	public String getFarmId() {
 		return farmId;
 	}
@@ -250,37 +254,28 @@ public class Farm implements Member {
 	public void setCurrentAction(Product current_action) {
 		CurrentAction = current_action;
 	}
-
 	public double getTolerance() {
 		return Tolerance;
 	}
-
 	public double getUncertainty() {
 		return Uncertainty;
 	}
-
 	public double getAspiration() {
 		return Aspiration;
 	}
-
 	public double getSatisfaction() {
 		return Satisfaction;
 	}
-
 	public List<Double> getMatch() {
 		return dissimilarity;
 	}
-
 	public void setMatch(List<Double> match) {
 		this.dissimilarity = match;
 	}
-	
 	public void updateMatch(double match)
 	{
 		this.dissimilarity.add(match);
 	}
-
-
 	@Override
 	public List<Product> getProducts() {
 		return head.getProducts();

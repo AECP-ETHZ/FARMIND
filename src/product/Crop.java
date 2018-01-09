@@ -1,7 +1,7 @@
 package product;
 
 /**
- * Implements generic product interface
+ * Implements generic product interface for crops
  * @see Product
  * @author kellerke
  *

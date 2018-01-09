@@ -5,6 +5,11 @@ import java.util.List;
 import product.Product;
 import reader.Preferences;
 
+/** 
+ * Person object to go inside farm object. Contains parameters such as age, preferences, memory, and current products.
+ * @author kellerke
+ *
+ */
 public class Person {
 
 	private int age;

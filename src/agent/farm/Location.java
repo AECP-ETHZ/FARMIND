@@ -1,5 +1,10 @@
 package agent.farm;
 
+/**
+ * Object that contains coordinates of the farm
+ * @author kellerke
+ *
+ */
 public class Location {
 	
 	private double[] coordinates;

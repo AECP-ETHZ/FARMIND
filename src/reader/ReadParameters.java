@@ -41,7 +41,7 @@ public class ReadParameters implements Reader {
 		List<Crop> crops = getCropList();
 		List<Livestock> livestock = getLivestockList();
 		
-		// get preferences for all farms here
+		Preferences pref = getPreferences();
 		
 		try {
 			Calendar now = Calendar.getInstance();                             // Gets the current date and time
@@ -53,7 +53,7 @@ public class ReadParameters implements Reader {
 				farmParameters = CSVtoArrayList(Line);
 				Farm farm = new Farm();
 				Location location = new Location();							   // create new location for each farm
-				List<Product> preferences = new ArrayList<Product>();
+				Preferences preferences = new Preferences();
 				double[] coordinates = {0,0};
 				
 				name = farmParameters.get(0);
@@ -88,37 +88,10 @@ public class ReadParameters implements Reader {
 					}
 				}
 				
-				preferences.clear();
-				for (int k = 8; k < farmParameters.size(); k++) {
-					for(int i = 0; i<crops.size(); i++) {
-						if (crops.get(i).getName().equals(farmParameters.get(k) )) {
-							int ID = crops.get(i).getID();
-							Product p = new Crop(ID, farmParameters.get(k)); 
-							preferences.add(p);
-						}
-					}
-				}
-						
-				for (int k = 8; k < farmParameters.size(); k++) {
-					for(int i = 0; i<livestock.size(); i++) {
-						if (livestock.get(i).getName().equals(farmParameters.get(k) )) {
-							int ID = livestock.get(i).getID();
-							Product p = new Livestock(ID, farmParameters.get(k)); 
-							preferences.add(p);
-						}
-					}
-				}
+				preferences.setPreferencesID(pref.getpreferencesID());
+				preferences.setPreferencesName(pref.getPreferencesName());
+				preferences.setPreferencesMap(pref.getpreferencesMap());
 
-				/*			
-					for (CropCategory s: CropCategory.values() ) {
-						String cat = s.toString();
-						if (cat.equalsIgnoreCase(farmParameters.get(i))) {
-							p = new Crop(farmParameters.get(i));
-							preferences.add(p);
-						}
-				 */
-
-				
 				Person farmHead = new Person(age, education, memory, entrepreneurship, preferences);          
 				
 				Random rand = new Random();
@@ -149,11 +122,40 @@ public class ReadParameters implements Reader {
 		return farms;
 	}
 
-	public List<Product> getPreferences() {
-		List<Product> preferences = new ArrayList<Product>();
+	public Preferences getPreferences() {
+		String Line;
+		ArrayList<String> matrixRow;
+		BufferedReader Buffer = null;	
+		Preferences preferences = new Preferences();
+
+		try {
+			Buffer = new BufferedReader(new FileReader("./data/products_preference.csv"));
+			Line = Buffer.readLine();
+			matrixRow = CSVtoArrayList(Line);
+			matrixRow.remove(0);
+			preferences.setPreferencesID(matrixRow);
+			
+			Line = Buffer.readLine();
+			matrixRow = CSVtoArrayList(Line);
+			matrixRow.remove(0);
+			preferences.setPreferencesName(matrixRow);
+			
+			while ((Line = Buffer.readLine()) != null) {                       // Read row data
+				matrixRow = CSVtoArrayList(Line);
+				preferences.setPreferencesMap(matrixRow);
+			}
+				
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (Buffer != null) Buffer.close();
+			} catch (IOException Exception) {
+				Exception.printStackTrace();
+			}
+		}
 		
-		
-		return preferences; 
+		return preferences;
 	}
 	
 	/**

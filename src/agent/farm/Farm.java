@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import product.Product;
+import reader.Preferences;
 
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
@@ -91,6 +92,7 @@ public class Farm implements Member {
         EdgeCount = E.size();
         totalFarms = farms.size();
         
+        /*
     	for (int j = 0; j < totalFarms; j++)  						           //  loop through all farms
     	{
     		List<Product> p = farms.get(j).getPreferences();
@@ -123,6 +125,7 @@ public class Farm implements Member {
     			dissimilarity = dissimilarity + (ProductMap.get(ProductNames.get(i)) / ((double)EdgeCount) );
     		}
     	}
+    	*/
 
         currentDissimilarity = dissimilarity/ProductNames.size();
         
@@ -192,7 +195,7 @@ public class Farm implements Member {
 		return 0;
 	}
 	@Override
-	public List<Product> getPreferences() {
+	public Preferences getPreferences() {
 		
 		return this.head.getPreferences();
 	}

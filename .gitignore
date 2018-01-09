@@ -1,4 +1,9 @@
 /bin/*.class 
 .project
 .classpath
+<<<<<<< HEAD
+src/agent/farm/Farm.java
+src/agent/farm/Farm.java
+=======
 /bin/
+>>>>>>> 8c88949f8551ad25e8a7492815095613835341bd

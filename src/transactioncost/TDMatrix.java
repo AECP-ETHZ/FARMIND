@@ -7,13 +7,15 @@ import java.util.Map;
 
 /**
  * 
- * Transaction Cost Matrix is created based on an external CSV file. 
- * Query the matrix object with two product strings and the cost between those products can be returned. 
+ * Technological Distance Matrix is created based on the livestock and crop FAO classifications
+ * Query the matrix object with two product strings and the tech distance between those products can be returned. 
+ * 
+ * These distances are precalculated to save run time
  * @author kekeller
  *
  */
 
-public class TCMatrix {
+public class TDMatrix {
 	
 	// First row gives the index
 	private List<String> productIndex = new ArrayList<String>();
@@ -24,18 +26,18 @@ public class TCMatrix {
 	 * 
 	 * @param p1 product 1 to compare
 	 * @param p2 product 2 to compare
-	 * @return cost between product 1 and product 2
+	 * @return distance between product 1 and product 2
 	 */
-	public Integer getCost(String p1, String p2) {
+	public Integer getDistance(String p1, String p2) {
 		int index = 0;
 		Integer[] values;
-		int cost = 0;
+		int distance = 0;
 		index = productIndex.indexOf(p1);
 		
 		values = productMap.get(p2);
 		
-		cost = values[index];
-		return cost;
+		distance = values[index];
+		return distance;
 	}
 	
 	public List<String> getProductIndex() {

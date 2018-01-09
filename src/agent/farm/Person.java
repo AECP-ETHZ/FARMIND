@@ -1,21 +1,19 @@
 package agent.farm;
 
-import java.util.List;
-
-import product.Product;
+import reader.Preferences;
 
 public class Person {
 
 	private int age;
 	private int education;
-	private List<Product> preferences;
+	private Preferences preferences;
 	private int memory;
 	private double entrepreneurship;
 	
-	public Person(int age, int education, int memory, double entrepreneurship, List<Product> preferences) {
+	public Person(int age, int education, int memory, double entrepreneurship, Preferences preferences2) {
 		this.age = age;
 		this.education = education;
-		this.preferences = preferences;
+		this.preferences = preferences2;
 		this.memory = memory;
 		this.setEntrepreneurship(entrepreneurship);
 	}
@@ -37,11 +35,11 @@ public class Person {
 		this.education = education;
 	}
 
-	public List<Product> getPreferences() {
+	public Preferences getPreferences() {
 		return preferences;
 	}
 
-	public void setPreferences(List<Product> preferences) {
+	public void setPreferences(Preferences preferences) {
 		this.preferences = preferences;
 	}
 

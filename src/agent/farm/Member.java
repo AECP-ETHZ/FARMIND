@@ -3,6 +3,7 @@ package agent.farm;
 import java.util.List;
 
 import product.Product;
+import reader.Preferences;
 
 public interface Member {
 	
@@ -20,7 +21,7 @@ public interface Member {
 	
 	List<Product> getAction(List<Farm> farms);
 	
-	List<Product> getPreferences();
+	Preferences getPreferences();
 	
 	int getMemory();
 }

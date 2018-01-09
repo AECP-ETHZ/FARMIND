@@ -20,6 +20,8 @@ public class Consumat {
 		int cost = matrix.getDistance("Wheat", "Maize");
 		
 		System.out.println(cost);
+
+		System.out.println(cost);
 		
 		//List<Crop> crops = reader.getCropList();
 		//List<Livestock> livestock = reader.getLivestockList();

@@ -126,6 +126,7 @@ public class Farm implements Member {
 
         currentDissimilarity = dissimilarity/ProductNames.size();
         
+        
         for (int i = 0; i< this.dissimilarity.size(); i++) {
         	sum = sum + this.dissimilarity.get(i);
         }

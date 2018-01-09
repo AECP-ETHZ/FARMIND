@@ -5,9 +5,11 @@ import java.util.List;
 import agent.farm.Farm;
 import decision.DecisionResult;
 import output.BatchOutput;
+import product.Crop;
+import product.Livestock;
 import product.Product;
+import reader.Preferences;
 import reader.ReadParameters;
-import transactioncost.TDMatrix;
 
 public class Consumat {
 
@@ -15,15 +17,15 @@ public class Consumat {
 		
 		ReadParameters reader = new ReadParameters();
 		
-		TDMatrix matrix = reader.getTDMatrix();
+		Preferences matrix = reader.getPreferences();
 		
-		int cost = matrix.getDistance("Wheat", "Maize");
+		List<Crop> crops = reader.getCropList();
+		List<Livestock> livestock = reader.getLivestockList();
+		
+		int cost = matrix.getTechDistance("Eggplants", "Tomatoes", crops, livestock);
 		
 		System.out.println(cost);
-		
-		//List<Crop> crops = reader.getCropList();
-		//List<Livestock> livestock = reader.getLivestockList();
-		
+
 		List<Farm> farms = reader.getFarms();
 		
 		for ( int i = 0; i < farms.size(); i++) {

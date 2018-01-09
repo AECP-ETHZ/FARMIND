@@ -16,6 +16,7 @@ import agent.farm.Person;
 import product.Crop;
 import product.Livestock;
 import product.Product;
+import transactioncost.TCMatrix;
 import agent.farm.Farm;
 import agent.farm.Location;
 
@@ -85,7 +86,7 @@ public class ReadParameters implements Reader {
 					}
 				}
 				
-				//preferences.clear();
+				preferences.clear();
 				for (int k = 8; k < farmParameters.size(); k++) {
 					for(int i = 0; i<crops.size(); i++) {
 						if (crops.get(i).getName().equals(farmParameters.get(k) )) {
@@ -95,7 +96,7 @@ public class ReadParameters implements Reader {
 						}
 					}
 				}
-				
+						
 				for (int k = 8; k < farmParameters.size(); k++) {
 					for(int i = 0; i<livestock.size(); i++) {
 						if (livestock.get(i).getName().equals(farmParameters.get(k) )) {
@@ -105,8 +106,18 @@ public class ReadParameters implements Reader {
 						}
 					}
 				}
+
+				/*			
+					for (CropCategory s: CropCategory.values() ) {
+						String cat = s.toString();
+						if (cat.equalsIgnoreCase(farmParameters.get(i))) {
+							p = new Crop(farmParameters.get(i));
+							preferences.add(p);
+						}
+				 */
+
 				
-				Person farmHead = new Person(age, education,memory, entrepreneurship, preferences);          
+				Person farmHead = new Person(age, education, memory, entrepreneurship, preferences);          
 				
 				Random rand = new Random();
 				farm.setUncertainty( rand.nextInt(100) );
@@ -263,6 +274,38 @@ public class ReadParameters implements Reader {
 			}
 		}
 		return livestock;
+	}
+	
+	public TCMatrix getTCMatrix() {
+		String Line;
+		ArrayList<String> matrixRow;
+		BufferedReader Buffer = null;	
+		TCMatrix matrix = new TCMatrix();
+
+		try {
+			Buffer = new BufferedReader(new FileReader("./data/transaction_cost.csv"));
+			Line = Buffer.readLine();
+			matrixRow = CSVtoArrayList(Line);
+			matrixRow.remove(0);
+			matrix.setProductIndex(matrixRow);
+			
+			while ((Line = Buffer.readLine()) != null) {                       // Read row data
+				matrixRow = CSVtoArrayList(Line);
+				matrix.setProductMap(matrixRow);
+			}
+				
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (Buffer != null) Buffer.close();
+			} catch (IOException Exception) {
+				Exception.printStackTrace();
+			}
+		}
+		
+		return matrix;
+
 	}
 	
 	/**

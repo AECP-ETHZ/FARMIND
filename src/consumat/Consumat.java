@@ -7,6 +7,7 @@ import decision.DecisionResult;
 import output.BatchOutput;
 import product.Product;
 import reader.ReadParameters;
+import transactioncost.TCMatrix;
 
 public class Consumat {
 
@@ -14,10 +15,14 @@ public class Consumat {
 		
 		ReadParameters reader = new ReadParameters();
 		
+		TCMatrix matrix = reader.getTCMatrix();
+		
+		int cost = matrix.getCost("Wheat", "Maize");
+		
+		System.out.println(cost);
+		
 		//List<Crop> crops = reader.getCropList();
 		//List<Livestock> livestock = reader.getLivestockList();
-		
-		// comment
 		
 		List<Farm> farms = reader.getFarms();
 		

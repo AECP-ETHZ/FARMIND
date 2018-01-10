@@ -22,7 +22,6 @@ public class Person {
 	public Person(int age, int education, int memory, double entrepreneurship, FarmProductMatrix preferences2, List<Product> actions) {
 		this.age = age;
 		this.education = education;
-		this.preferences = preferences2;
 		this.memory = memory;
 		this.setEntrepreneurship(entrepreneurship);
 		this.setProducts(actions);

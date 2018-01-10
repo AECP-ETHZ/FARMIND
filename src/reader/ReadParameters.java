@@ -43,6 +43,7 @@ public class ReadParameters implements Reader {
 		List<Livestock> livestock = getLivestockList();
 		
 		FarmProductMatrix pref = getPreferences();
+		FarmProductMatrix experience = getExperience();
 		
 		try {
 			Calendar now = Calendar.getInstance();                             // Gets the current date and time
@@ -55,6 +56,7 @@ public class ReadParameters implements Reader {
 				Farm farm = new Farm();
 				Location location = new Location();							   // create new location for each farm
 				FarmProductMatrix preferences = new FarmProductMatrix();
+				FarmProductMatrix FarmExperience = new FarmProductMatrix();
 				List<Product> actions = new ArrayList<Product>();
 				double[] coordinates = {0,0};
 				
@@ -114,6 +116,8 @@ public class ReadParameters implements Reader {
 				
 				preferences.setProductName(pref.getProductName());
 				preferences.setProductMap(pref.getProductmap());
+				FarmExperience.setProductName(experience.getProductName());
+				FarmExperience.setProductMap(experience.getProductmap());
 
 				Person farmHead = new Person(age, education, memory, entrepreneurship, preferences, actions);          
 				
@@ -121,6 +125,7 @@ public class ReadParameters implements Reader {
 				farm.setSatisfaction( satisfaction );
 				farm.setAspiration( aspiration );
 				farm.setTolerance(entrepreneurship);
+				farm.setExperience(FarmExperience);
 				
 				List<Double> dissimilarity = new ArrayList<Double>();
 				dissimilarity.add(1.0);

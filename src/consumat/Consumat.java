@@ -30,7 +30,7 @@ public class Consumat {
 		
 		List<Farm> farms = reader.getFarms();
 		
-		int cost = farms.get(0).getTechDistance("Eggplants", "Tomatoes", crops, livestock);
+		double cost = farms.get(0).getTransactionCost("Goats", crops, livestock);
 		
 		System.out.println(cost);
 		

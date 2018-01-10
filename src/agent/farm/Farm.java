@@ -27,15 +27,16 @@ public class Farm implements Member {
 	private Product CurrentAction;
 	private Person spouse;
 	private Person child;
-	private Location location; 
-	private Graph<String, DefaultEdge> network; 
+	private Location location;
 	private double Satisfaction;
 	private double Aspiration;
 	private double Uncertainty;
 	private double Tolerance;
 	private List<Double> dissimilarity;
-
-
+	private Graph<String, DefaultEdge> network; 
+	private FarmProductMatrix preferences;
+	private FarmProductMatrix experience;
+	
 	/** 
 	 * Calculate satisfaction and uncertainty for the decision tree
 	 * @return List of Products/Actions that the farm will produce
@@ -186,6 +187,27 @@ public class Farm implements Member {
 
 	public void setSatisfaction(double satisfaction) {
 		Satisfaction = satisfaction;
+	}
+	
+	public double getTransactionCost(String newProduct, List<Crop> crops, List<Livestock> livestock) {
+		double cost = 0;
+		double dist = 0;
+		int i = 0;
+		double q;
+		int k = 5;
+		int time = 0;
+		
+		for (i = 0; i < this.head.getProducts().size(); i++) {
+			dist = dist + getTechDistance( this.head.getProducts().get(i).getName(), newProduct, crops, livestock);
+		}
+		dist = dist / i; // average distance between the current products and the new product
+		
+		time = experience.farmProductValue(this.farmName, newProduct);
+		q = 1 / ( 1 +  Math.exp( (-k*time) ));
+		
+		
+		
+		return q;
 	}
 	
 	/**
@@ -356,6 +378,18 @@ public class Farm implements Member {
 	@Override
 	public List<Product> getProducts() {
 		return head.getProducts();
+	}
+
+	public void setPreferences(FarmProductMatrix preferences) {
+		this.preferences = preferences;
+	}
+
+	public FarmProductMatrix getExperience() {
+		return this.experience;
+	}
+
+	public void setExperience(FarmProductMatrix experience) {
+		this.experience = experience;
 	}
 
 }

@@ -239,6 +239,7 @@ public class ReadParameters implements Reader {
 			while ((Line = Buffer.readLine()) != null) {
 				data = CSVtoArrayList(Line);
 				Graph<String, DefaultEdge> g = new SimpleWeightedGraph<String, DefaultEdge>(DefaultEdge.class);
+	
 				
 				// build graph with all nodes
 				for (int i = 0; i<FarmNames.size(); i++)

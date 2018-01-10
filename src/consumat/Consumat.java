@@ -30,7 +30,7 @@ public class Consumat {
 		
 		List<Farm> farms = reader.getFarms();
 		
-		double cost = farms.get(0).getTransactionCost("Goats", crops, livestock);
+		double cost = farms.get(19).getTransactionCost("Goats", crops, livestock, farms);
 		
 		System.out.println(cost);
 		

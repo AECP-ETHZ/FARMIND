@@ -2,6 +2,7 @@ package agent.farm;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -189,23 +190,51 @@ public class Farm implements Member {
 		Satisfaction = satisfaction;
 	}
 	
-	public double getTransactionCost(String newProduct, List<Crop> crops, List<Livestock> livestock) {
+	public double getTransactionCost(String newProduct, List<Crop> crops, List<Livestock> livestock, List<Farm> farms) {
 		double cost = 0;
 		double dist = 0;
 		int i = 0;
 		double q;
 		int k = 5;
-		int time = 0;
-		
+		int time = 0;		
+        int totalFarms = 0;													   // how many total farms are there in the network
+		Set<DefaultEdge> E;
+		Iterator<DefaultEdge> I;
+		double S = 0;
+        double w;
+        double Qvalue;
+        double product;
+        double max = 0;
+        double sum = 0;
+        
+		// Tech distance calculation
 		for (i = 0; i < this.head.getProducts().size(); i++) {
 			dist = dist + getTechDistance( this.head.getProducts().get(i).getName(), newProduct, crops, livestock);
 		}
 		dist = dist / i; // average distance between the current products and the new product
 		
+		// personal experience calculation
 		time = experience.farmProductValue(this.farmName, newProduct);
 		q = 1 / ( 1 +  Math.exp( (-k*time) ));
-		
-		
+	
+		// social learning calculation
+		E = this.network.outgoingEdgesOf(this.farmName);
+        totalFarms = farms.size();
+        I = E.iterator();
+        
+        for (i = 0; i < totalFarms; i++) {
+        	if (!farms.get(i).getFarmName().equals(this.farmName) ) {
+        		w = this.network.getEdgeWeight(I.next());
+        		Qvalue = this.experience.farmProductValue(farms.get(i).getFarmName(), newProduct);
+        		product = w*Qvalue;
+        		if (product > max) {max = product;}
+        		sum = sum + product;
+        	}
+        }
+        S = sum/max;
+        
+        // product preference
+
 		
 		return q;
 	}

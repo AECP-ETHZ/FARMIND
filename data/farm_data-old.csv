@@ -1,0 +1,4 @@
+farm_name,latitude,longitude,birth_year,education,memory,entrepreneurship,action1,action2,action3
+Farm_A,47.11,8.22,1960,12,5,0.8,Maize,,
+Farm_B,48.11,9.22,1965,15,5,0.6,Cattle,Sheep,Wheat
+Farm_C,49.11,10.22,1970,9,5,0.9,Cattle,Pigs,

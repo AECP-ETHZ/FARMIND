@@ -19,6 +19,8 @@ public class Consumat {
 		
 		Preferences matrix = reader.getPreferences();
 		
+		Preferences experience = reader.getExperience();
+		
 		List<Crop> crops = reader.getCropList();
 		List<Livestock> livestock = reader.getLivestockList();
 		

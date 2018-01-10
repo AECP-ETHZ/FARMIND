@@ -33,7 +33,7 @@ public class ReadParameters implements Reader {
 		double entrepreneurship = 0;
 		double aspiration = 0;
 		double satisfaction = 0;
-		int start_action_index = 9;											   // the input spreadsheet starts the actions at column 9
+		int start_action_index = 7;											   // the input spreadsheet starts the actions at column 9
 		
 		BufferedReader Buffer = null;	 
 		int farm_count_index = 0;                                              // index is used to set the actual farm id value
@@ -72,8 +72,11 @@ public class ReadParameters implements Reader {
 				education = Integer.parseInt( farmParameters.get(4) );
 				memory = Integer.parseInt( farmParameters.get(5));
 				entrepreneurship = Double.parseDouble( farmParameters.get(6));
-				aspiration = Double.parseDouble(farmParameters.get(7));
-				satisfaction = Double.parseDouble(farmParameters.get(8));
+				//aspiration = Double.parseDouble(farmParameters.get(7));
+				//satisfaction = Double.parseDouble(farmParameters.get(8));
+				
+				aspiration = 0.5;
+				satisfaction = 0.5;
 				
 				for(int i = 0; i<crops.size(); i++) {
 					if (crops.get(i).getName().equals(farmParameters.get(start_action_index) )) {
@@ -144,6 +147,10 @@ public class ReadParameters implements Reader {
 		return farms;
 	}
 
+	/**
+	 * Read preferences of each farm for each crop and build preference object
+	 * @return
+	 */
 	public Preferences getPreferences() {
 		String Line;
 		ArrayList<String> matrixRow;
@@ -178,6 +185,43 @@ public class ReadParameters implements Reader {
 		}
 		
 		return preferences;
+	}
+	
+	public Preferences getExperience() {
+		String Line;
+		ArrayList<String> matrixRow;
+		BufferedReader Buffer = null;	
+		Preferences experience = new Preferences();
+
+		try {
+			Buffer = new BufferedReader(new FileReader("./data/products_years.csv"));
+			Line = Buffer.readLine();
+			matrixRow = CSVtoArrayList(Line);
+			matrixRow.remove(0);
+			experience.setPreferencesID(matrixRow);
+			
+			Line = Buffer.readLine();
+			matrixRow = CSVtoArrayList(Line);
+			matrixRow.remove(0);
+			experience.setPreferencesName(matrixRow);
+			
+			while ((Line = Buffer.readLine()) != null) {                       // Read row data
+				matrixRow = CSVtoArrayList(Line);
+				experience.setPreferencesMap(matrixRow);
+			}
+				
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (Buffer != null) Buffer.close();
+			} catch (IOException Exception) {
+				Exception.printStackTrace();
+			}
+		}
+		
+		return experience;
+		
 	}
 	
 	/**

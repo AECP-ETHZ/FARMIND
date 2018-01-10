@@ -112,7 +112,6 @@ public class ReadParameters implements Reader {
 					}
 				}		
 				
-				preferences.setProductID(pref.getpreferencesID());
 				preferences.setProductName(pref.getProductName());
 				preferences.setProductMap(pref.getProductmap());
 
@@ -159,11 +158,6 @@ public class ReadParameters implements Reader {
 			Line = Buffer.readLine();
 			matrixRow = CSVtoArrayList(Line);
 			matrixRow.remove(0);
-			preferences.setProductID(matrixRow);
-			
-			Line = Buffer.readLine();
-			matrixRow = CSVtoArrayList(Line);
-			matrixRow.remove(0);
 			preferences.setProductName(matrixRow);
 			
 			while ((Line = Buffer.readLine()) != null) {                       // Read row data
@@ -192,11 +186,6 @@ public class ReadParameters implements Reader {
 
 		try {
 			Buffer = new BufferedReader(new FileReader("./data/products_years.csv"));
-			Line = Buffer.readLine();
-			matrixRow = CSVtoArrayList(Line);
-			matrixRow.remove(0);
-			experience.setProductID(matrixRow);
-			
 			Line = Buffer.readLine();
 			matrixRow = CSVtoArrayList(Line);
 			matrixRow.remove(0);

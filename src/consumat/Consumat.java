@@ -21,6 +21,10 @@ public class Consumat {
 		
 		FarmProductMatrix experience = reader.getExperience();
 		
+		int x = experience.farmProductValue("Farm19", "Chickens");
+		
+		System.out.println(x);
+		
 		List<Crop> crops = reader.getCropList();
 		List<Livestock> livestock = reader.getLivestockList();
 		

@@ -19,12 +19,14 @@ import product.Livestock;
  */
 
 public class FarmProductMatrix {
-	private List<String> productID = new ArrayList<String>();
 	private List<String> productName = new ArrayList<String>();
 	private Map<String,Integer[]> productMap = new HashMap<String,Integer[]>();
 
-	public List<String> getpreferencesID() {
-		return productID;
+	public int farmProductValue(String FarmID, String Product) {
+		int val;
+		int index = productName.indexOf(Product);
+		val = productMap.get(FarmID)[index];	 							   // returns int array
+		return val;
 	}
 	
 	/**
@@ -52,7 +54,7 @@ public class FarmProductMatrix {
 			liveID.add(livestock.get(i).getID());
 		}
 		
-		// if product types are different than 10
+		// if product types are different, return 10
 		if (liveName.contains(p1) && !liveName.contains(p2))
 		{
 			distance = 10;
@@ -103,15 +105,7 @@ public class FarmProductMatrix {
 		
 		return distance;
 	}
-	
-	/** 
-	 * 
-	 * @param productID is the list array of all the products in the system
-	 */
-	public void setProductID(List<String> productID) {
-		this.productID = productID;
-	}	
-	
+		
 	public List<String> getProductName() {
 		return productName;
 	}

@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import product.Crop;
+import product.Livestock;
 import product.Product;
 import reader.FarmProductMatrix;
 
@@ -41,7 +43,7 @@ public class Farm implements Member {
 	public List<Product> getAction(List<Farm> farms) {
 		
 		// update satisfaction and uncertainty before making decisions
-		updateSatisfaction(50.0);
+		updateSatisfaction();
 		updateUncertainty(farms);
 		// update aspiration levels
 		
@@ -71,7 +73,6 @@ public class Farm implements Member {
 		}
 		return products;
 	}
-	
 	
 	/**
 	 * Using list of all current farms in the system and the social network of the main farm,
@@ -139,7 +140,7 @@ public class Farm implements Member {
         prevDissimilarityAvg = sum / this.dissimilarity.size();                // dissimilarity average over all previous years
         this.dissimilarity.add(currentDissimilarity);                          // add previous match
         
-        System.out.println(String.format("Dissimilarity value between Current Farm and Network: %f", currentDissimilarity));
+        System.out.println(String.format("Dissimilarity value between Farm %s and Network: %f", farmName, currentDissimilarity));
         uncertainty = (currentDissimilarity - prevDissimilarityAvg)/prevDissimilarityAvg;
         
 		setUncertainty(uncertainty);
@@ -148,7 +149,7 @@ public class Farm implements Member {
 	/**
 	 * Update farm satisfaction level
 	 */
-	private void updateSatisfaction(double x) {
+	private void updateSatisfaction() {
 		double satisfaction = 0;
 		double alpha_plus = 0.6;
 		double alpha_minus = 0.6;
@@ -158,12 +159,12 @@ public class Farm implements Member {
 		double v = 0;
 		double theta = 0;
 		
-		if (x >= this.Aspiration) {
-			v = Math.pow(x, alpha_plus);
+		if (this.Satisfaction >= this.Aspiration) {
+			v = Math.pow(this.Satisfaction, alpha_plus);
 			theta = ( Math.pow(probability, phi_plus) ) / Math.pow( (Math.pow(probability, phi_plus) + Math.pow((1 - probability), phi_plus)), (1/phi_plus) );
 		}
-		else if (x < this.Aspiration) {
-			v = Math.pow(x, alpha_minus);
+		else if (this.Satisfaction < this.Aspiration) {
+			v = Math.pow(this.Satisfaction, alpha_minus);
 			theta = ( Math.pow(probability, phi_minus) ) / Math.pow( (Math.pow(probability, phi_minus) + Math.pow((1 - probability), phi_minus)), (1/phi_minus) );
 		}
 		
@@ -187,15 +188,91 @@ public class Farm implements Member {
 		Satisfaction = satisfaction;
 	}
 	
+	/**
+	 * @param p1 product name one
+	 * @param p2 product name two
+	 * @param crops list of all crops in system
+	 * @param livestock list of all livestock in system
+	 * @return technological distance between crops
+	 */
+	public Integer getTechDistance(String p1, String p2, List<Crop> crops, List<Livestock> livestock) {
+		int distance = 0;
+		List<String> cropName = new ArrayList<String>();
+		List<Integer> cropID = new ArrayList<Integer>();
+		List<String> liveName = new ArrayList<String>();
+		List<Integer> liveID = new ArrayList<Integer>();
+		
+		// get list of names and ID values to compare
+		for (int i = 0; i<crops.size(); i++) {
+			cropName.add(crops.get(i).getName());
+			cropID.add(crops.get(i).getID());
+		}
+		
+		for (int i = 0; i<livestock.size(); i++) {
+			liveName.add(livestock.get(i).getName());
+			liveID.add(livestock.get(i).getID());
+		}
+		
+		// if product types are different, return 10
+		if (liveName.contains(p1) && !liveName.contains(p2))
+		{
+			distance = 10;
+		}
+		else if (cropName.contains(p1) && !cropName.contains(p2))
+		{
+			distance = 10;
+		}
+		
+		// if both crop or both livestock than check ID values
+		else if (cropName.contains(p1) && cropName.contains(p2))
+		{
+			int index = cropName.indexOf(p1);
+			double d1 = cropID.get(index);
+			index = cropName.indexOf(p2);
+			double d2 = cropID.get(index);
+			
+			if ( Math.abs(d1 - d2) > 1000.00) {
+				distance = 4;
+			} else if ( Math.abs(d1 - d2) > 100.00) {
+				distance = 3;
+			}
+			else if ( Math.abs(d1 - d2) > 10.00) {
+				distance = 3;
+			} else {
+				distance = 1;
+			}
+		}
+		
+		else if (liveName.contains(p1) && liveName.contains(p2))
+		{
+			int index = liveName.indexOf(p1);
+			double d1 = liveID.get(index);
+			index = liveName.indexOf(p2);
+			double d2 = liveID.get(index);
+			
+			if ( Math.abs(d1 - d2) > 1000.00) {
+				distance = 4;
+			} else if ( Math.abs(d1 - d2) > 100.00) {
+				distance = 3;
+			}
+			else if ( Math.abs(d1 - d2) > 10.00) {
+				distance = 3;
+			} else {
+				distance = 1;
+			}
+		}
+		
+		return distance;
+	}
+		
+	
 	@Override
 	public int getAge() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.head.getAge();
 	}
 	@Override
 	public int getEducation() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.head.getEducation();
 	}
 	@Override
 	public FarmProductMatrix getPreferences() {
@@ -204,8 +281,7 @@ public class Farm implements Member {
 	}
 	@Override
 	public int getMemory() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.head.getMemory();
 	}
 	public String getFarmId() {
 		return farmId;

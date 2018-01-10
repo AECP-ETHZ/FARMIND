@@ -28,11 +28,11 @@ public class Consumat {
 		List<Crop> crops = reader.getCropList();
 		List<Livestock> livestock = reader.getLivestockList();
 		
-		int cost = matrix.getTechDistance("Eggplants", "Tomatoes", crops, livestock);
+		List<Farm> farms = reader.getFarms();
+		
+		int cost = farms.get(0).getTechDistance("Eggplants", "Tomatoes", crops, livestock);
 		
 		System.out.println(cost);
-
-		List<Farm> farms = reader.getFarms();
 		
 		for ( int i = 0; i < farms.size(); i++) {
 

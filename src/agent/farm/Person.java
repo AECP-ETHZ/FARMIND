@@ -3,7 +3,7 @@ package agent.farm;
 import java.util.List;
 
 import product.Product;
-import reader.Preferences;
+import reader.FarmProductMatrix;
 
 /** 
  * Person object to go inside farm object. Contains parameters such as age, preferences, memory, and current products.
@@ -14,12 +14,12 @@ public class Person {
 
 	private int age;
 	private int education;
-	private Preferences preferences;
+	private FarmProductMatrix preferences;
 	private int memory;
 	private double entrepreneurship;
 	private List<Product> products;
 	
-	public Person(int age, int education, int memory, double entrepreneurship, Preferences preferences2, List<Product> actions) {
+	public Person(int age, int education, int memory, double entrepreneurship, FarmProductMatrix preferences2, List<Product> actions) {
 		this.age = age;
 		this.education = education;
 		this.preferences = preferences2;
@@ -44,11 +44,11 @@ public class Person {
 		this.education = education;
 	}
 
-	public Preferences getPreferences() {
+	public FarmProductMatrix getPreferences() {
 		return preferences;
 	}
 
-	public void setPreferences(Preferences preferences) {
+	public void setPreferences(FarmProductMatrix preferences) {
 		this.preferences = preferences;
 	}
 

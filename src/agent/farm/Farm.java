@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import product.Product;
-import reader.Preferences;
+import reader.FarmProductMatrix;
 
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
@@ -198,7 +198,7 @@ public class Farm implements Member {
 		return 0;
 	}
 	@Override
-	public Preferences getPreferences() {
+	public FarmProductMatrix getPreferences() {
 		
 		return this.head.getPreferences();
 	}

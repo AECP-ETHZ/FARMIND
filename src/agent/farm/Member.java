@@ -3,7 +3,7 @@ package agent.farm;
 import java.util.List;
 
 import product.Product;
-import reader.Preferences;
+import reader.FarmProductMatrix;
 
 /** 
  * Individual Agent for the ABM - represented as a farm
@@ -26,7 +26,7 @@ public interface Member {
 	
 	List<Product> getAction(List<Farm> farms);
 	
-	Preferences getPreferences();
+	FarmProductMatrix getPreferences();
 	
 	List<Product> getProducts();
 	

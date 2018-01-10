@@ -9,19 +9,22 @@ import product.Crop;
 import product.Livestock;
 
 /** 
- * Contains all product preferences (integer list) for all farms with ID and Name of each preferences
+ * Contains a name and ID list for all products with a matching hashmap for each individual farm with the matching products
+ * row 1: Product ID...
+ * row 2: Product Name...
+ * row 3: Farm1: [values for each product] could be preference value or years of experience
  * Each farm contains a copy of this list. 
  * @author kellerke
  *
  */
 
-public class Preferences {
-	private List<String> preferencesID = new ArrayList<String>();
-	private List<String> preferencesName = new ArrayList<String>();
-	private Map<String,Integer[]> preferencesMap = new HashMap<String,Integer[]>();
+public class FarmProductMatrix {
+	private List<String> productID = new ArrayList<String>();
+	private List<String> productName = new ArrayList<String>();
+	private Map<String,Integer[]> productMap = new HashMap<String,Integer[]>();
 
 	public List<String> getpreferencesID() {
-		return preferencesID;
+		return productID;
 	}
 	
 	/**
@@ -103,29 +106,29 @@ public class Preferences {
 	
 	/** 
 	 * 
-	 * @param preferencesID is the list array of all the products in the system
+	 * @param productID is the list array of all the products in the system
 	 */
-	public void setPreferencesID(List<String> preferencesID) {
-		this.preferencesID = preferencesID;
+	public void setProductID(List<String> productID) {
+		this.productID = productID;
 	}	
 	
-	public List<String> getPreferencesName() {
-		return preferencesName;
+	public List<String> getProductName() {
+		return productName;
 	}
 
-	public void setPreferencesName(List<String> preferencesName) {
-		this.preferencesName = preferencesName;
+	public void setProductName(List<String> productName) {
+		this.productName = productName;
 	}
 	
-	public Map<String,Integer[]> getpreferencesMap() {
-		return preferencesMap;
+	public Map<String,Integer[]> getProductmap() {
+		return productMap;
 	}
 	
 	/**
 	 * Create the actual product cost lists
 	 * @param matrixRow is an array list starting with a farm name and continuing with integer costs
 	 */
-	public void setPreferencesMap(ArrayList<String> matrixRow) {
+	public void setProductMap(ArrayList<String> matrixRow) {
 		String name = matrixRow.get(0);
 		Integer[] values = new Integer[matrixRow.size() - 1];
 		
@@ -133,11 +136,11 @@ public class Preferences {
 			values[i-1] = Integer.valueOf(matrixRow.get(i));
 		}
 		
-		this.preferencesMap.put(name, values);
+		this.productMap.put(name, values);
 	}
 
-	public void setPreferencesMap(Map<String, Integer[]> localpreferencesMap) {
-		this.preferencesMap = localpreferencesMap;
+	public void setProductMap(Map<String, Integer[]> localProductMap) {
+		this.productMap = localProductMap;
 	}
 	
 }

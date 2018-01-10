@@ -8,7 +8,7 @@ import output.BatchOutput;
 import product.Crop;
 import product.Livestock;
 import product.Product;
-import reader.Preferences;
+import reader.FarmProductMatrix;
 import reader.ReadParameters;
 
 public class Consumat {
@@ -17,9 +17,9 @@ public class Consumat {
 		
 		ReadParameters reader = new ReadParameters();
 		
-		Preferences matrix = reader.getPreferences();
+		FarmProductMatrix matrix = reader.getPreferences();
 		
-		Preferences experience = reader.getExperience();
+		FarmProductMatrix experience = reader.getExperience();
 		
 		List<Crop> crops = reader.getCropList();
 		List<Livestock> livestock = reader.getLivestockList();

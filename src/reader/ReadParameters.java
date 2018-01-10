@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Random;
 
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
@@ -32,9 +31,12 @@ public class ReadParameters implements Reader {
 		int education = 0;
 		int memory = 0;
 		double entrepreneurship = 0;
+		double aspiration = 0;
+		double satisfaction = 0;
+		int start_action_index = 9;											   // the input spreadsheet starts the actions at column 9
 		
-		BufferedReader Buffer = null;	
-		int index = 0;
+		BufferedReader Buffer = null;	 
+		int farm_count_index = 0;                                              // index is used to set the actual farm id value
 		
 		List<Graph<String, DefaultEdge>> network = this.getSocialNetworks();   // build social network graphs
 		List<Crop> crops = getCropList();
@@ -61,35 +63,36 @@ public class ReadParameters implements Reader {
 				coordinates[1] = Double.parseDouble(farmParameters.get(2));
 				location.setCoordinates(coordinates);
 				
-				farm.setFarmId("Farm" + String.format("%03d", index) );		   // index is used to set the actual farm id value
+				farm.setFarmId("Farm" + String.format("%03d", farm_count_index) );		   
 				farm.setFarmName(name);
 				farm.setLocation(location);
-				
-				farm.setNetwork(network.get(index));
+				farm.setNetwork(network.get(farm_count_index));
 
 				age = currentYear - Integer.parseInt( farmParameters.get(3));
 				education = Integer.parseInt( farmParameters.get(4) );
 				memory = Integer.parseInt( farmParameters.get(5));
 				entrepreneurship = Double.parseDouble( farmParameters.get(6));
+				aspiration = Double.parseDouble(farmParameters.get(7));
+				satisfaction = Double.parseDouble(farmParameters.get(8));
 				
 				for(int i = 0; i<crops.size(); i++) {
-					if (crops.get(i).getName().equals(farmParameters.get(7) )) {
+					if (crops.get(i).getName().equals(farmParameters.get(start_action_index) )) {
 						int ID = crops.get(i).getID();
-						Product current_action = new Crop(ID, farmParameters.get(7)); 
+						Product current_action = new Crop(ID, farmParameters.get(start_action_index)); 
 						farm.setCurrentAction(current_action);
 					}
 				}
 				
 				for(int i = 0; i<livestock.size(); i++) {
-					if (livestock.get(i).getName().equals(farmParameters.get(7) )) {
+					if (livestock.get(i).getName().equals(farmParameters.get(start_action_index) )) {
 						int ID = livestock.get(i).getID();
-						Product current_action = new Livestock(ID, farmParameters.get(7)); 
+						Product current_action = new Livestock(ID, farmParameters.get(start_action_index)); 
 						farm.setCurrentAction(current_action);
 					}
 				}
 				
 				actions.clear();
-				for (int k = 7; k < farmParameters.size(); k++) {
+				for (int k = start_action_index; k < farmParameters.size(); k++) {
 					for(int i = 0; i<crops.size(); i++) {
 						if (crops.get(i).getName().equals(farmParameters.get(k) )) {
 							int ID = crops.get(i).getID();
@@ -99,7 +102,7 @@ public class ReadParameters implements Reader {
 					}
 				}
 						
-				for (int k = 7; k < farmParameters.size(); k++) {
+				for (int k = start_action_index; k < farmParameters.size(); k++) {
 					for(int i = 0; i<livestock.size(); i++) {
 						if (livestock.get(i).getName().equals(farmParameters.get(k) )) {
 							int ID = livestock.get(i).getID();
@@ -115,20 +118,18 @@ public class ReadParameters implements Reader {
 
 				Person farmHead = new Person(age, education, memory, entrepreneurship, preferences, actions);          
 				
-				Random rand = new Random();
-				farm.setUncertainty( rand.nextInt(100) );
-				farm.setSatisfaction( rand.nextInt(100) );
-				
-				farm.setAspiration(50);
+				farm.setUncertainty( 0 );
+				farm.setSatisfaction( satisfaction );
+				farm.setAspiration( aspiration );
 				farm.setTolerance(entrepreneurship);
 				
-				List<Double> match = new ArrayList<Double>();
-				match.add(1.0);
-				farm.setMatch(match);
+				List<Double> dissimilarity = new ArrayList<Double>();
+				dissimilarity.add(1.0);
+				farm.setDissimilarity(dissimilarity);
 				
 				farm.setHead(farmHead);
 				farms.add(farm);
-				index++;	
+				farm_count_index++;	
 			}
 			
 		} catch (IOException e) {

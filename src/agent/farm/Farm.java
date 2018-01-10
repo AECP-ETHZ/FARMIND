@@ -267,11 +267,11 @@ public class Farm implements Member {
 	public double getSatisfaction() {
 		return Satisfaction;
 	}
-	public List<Double> getMatch() {
+	public List<Double> getDissimilarity() {
 		return dissimilarity;
 	}
-	public void setMatch(List<Double> match) {
-		this.dissimilarity = match;
+	public void setDissimilarity(List<Double> dissimilarity) {
+		this.dissimilarity = dissimilarity;
 	}
 	public void updateMatch(double match)
 	{

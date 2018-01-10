@@ -25,6 +25,7 @@ public class Person {
 		this.memory = memory;
 		this.setEntrepreneurship(entrepreneurship);
 		this.setProducts(actions);
+		this.setPreferences(preferences2);
 	}
 	
 	public int getAge() {

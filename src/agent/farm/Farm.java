@@ -207,6 +207,8 @@ public class Farm implements Member {
         double max = 0;
         double sum = 0;
         
+        double p = 0;
+        
 		// Tech distance calculation
 		for (i = 0; i < this.head.getProducts().size(); i++) {
 			dist = dist + getTechDistance( this.head.getProducts().get(i).getName(), newProduct, crops, livestock);
@@ -234,9 +236,9 @@ public class Farm implements Member {
         S = sum/max;
         
         // product preference
-
+        p =  this.head.getPreferences().farmProductValue(this.farmName, newProduct) ;
 		
-		return q;
+		return q + S + p;
 	}
 	
 	/**

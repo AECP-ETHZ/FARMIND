@@ -3,6 +3,7 @@ package consumat;
 import java.util.List;
 
 import agent.farm.Farm;
+import calculator.Calculator;
 import decision.DecisionResult;
 import output.BatchOutput;
 import product.Crop;
@@ -29,6 +30,10 @@ public class Consumat {
 		List<Livestock> livestock = reader.getLivestockList();
 		
 		List<Farm> farms = reader.getFarms();
+		
+		Calculator cal = new Calculator();
+		
+		cal.getTransactionCost(farms.get(0), crops, livestock, farms);
 		
 		double cost = farms.get(19).getTransactionCost("Wheat", crops, livestock, farms);
 		

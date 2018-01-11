@@ -190,8 +190,15 @@ public class Farm implements Member {
 		Satisfaction = satisfaction;
 	}
 	
+	/** 
+	 * Given a new product, what is the cost of switching to that product from the current products
+	 * @param newProduct
+	 * @param crops
+	 * @param livestock
+	 * @param farms
+	 * @return
+	 */
 	public double getTransactionCost(String newProduct, List<Crop> crops, List<Livestock> livestock, List<Farm> farms) {
-		double cost = 0;
 		double dist = 0;
 		int i = 0;
 		double q;
@@ -236,9 +243,12 @@ public class Farm implements Member {
         S = sum/max;
         
         // product preference
-        p =  this.head.getPreferences().farmProductValue(this.farmName, newProduct) ;
+        p =  1 - ( this.head.getPreferences().farmProductValue(this.farmName, newProduct) / this.head.getPreferences().getProductName().size() ) ;
+        
+        double Ej = (q + 0.1*S + 0.1*p);
+		double C = dist*(1 - Ej);
 		
-		return q + S + p;
+		return C;
 	}
 	
 	/**

@@ -85,8 +85,7 @@ public class TransactionCalculator {
 		E = farm.getNetwork().outgoingEdgesOf(farm.getFarmName());
         totalFarms = farms.size();
         I = E.iterator();
-        
-        
+
         List<List<Double>> QForAllFarms = new ArrayList<List<Double>>();
         
         for (i = 0; i < totalFarms; i++) {

@@ -20,7 +20,6 @@ public class Farm implements Member {
 	private String farmId;
 	private String farmName;
 	private Person head;
-	//private Product CurrentAction;
 	private Person spouse;
 	private Person child;
 	private Location location;
@@ -33,13 +32,15 @@ public class Farm implements Member {
 	private FarmProductMatrix experience;
 	
 	/** 
-	 * Calculate satisfaction and uncertainty for the decision tree
+	 * update satisfaction and uncertainty for the farm
+	 * check which option farm will pursue
+	 * return decision, and update product list
+	 * 
 	 * @return List of Products/Actions that the farm will produce
 	 */
 	public List<Product> getAction(List<Farm> farms) {
-		
-		// update satisfaction and uncertainty before making decisions
-		updateSatisfaction(100.00);
+
+		updateSatisfaction(10.00);
 		updateUncertainty(farms);
 		
 		// create final action array
@@ -51,6 +52,7 @@ public class Farm implements Member {
 		else if (this.Uncertainty >= this.Tolerance) {
 			if (this.Satisfaction > this.Aspiration) {
 				System.out.println(ACTION.IMITATION);
+				// check calculator with S,Q,P
 			}
 			else {
 				System.out.println(ACTION.OPT_OUT);
@@ -62,6 +64,7 @@ public class Farm implements Member {
 			}
 			else {
 				System.out.println(ACTION.OPTIMIZATION);
+				// check calculator with Q,P (no social costs)
 			}
 		}
 		return products;
@@ -133,7 +136,7 @@ public class Farm implements Member {
         prevDissimilarityAvg = sum / this.dissimilarity.size();                // dissimilarity average over all previous years
         this.dissimilarity.add(currentDissimilarity);                          // add previous match
         
-        System.out.println(String.format("Dissimilarity value between Farm %s and Network: %f", farmName, currentDissimilarity));
+        //System.out.println(String.format("Dissimilarity value between Farm %s and Network: %f", farmName, currentDissimilarity));
         uncertainty = (currentDissimilarity - prevDissimilarityAvg)/prevDissimilarityAvg;
         
 		setUncertainty(uncertainty);
@@ -241,7 +244,6 @@ public class Farm implements Member {
 	public void setNetwork(Graph<String, DefaultEdge> network) {
 		this.network = network;
 	}
-
 	public double getTolerance() {
 		return Tolerance;
 	}
@@ -268,11 +270,9 @@ public class Farm implements Member {
 	public List<Product> getProducts() {
 		return head.getProducts();
 	}
-
 	public FarmProductMatrix getExperience() {
 		return this.experience;
 	}
-
 	public void setExperience(FarmProductMatrix experience) {
 		this.experience = experience;
 	}

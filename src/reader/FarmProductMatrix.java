@@ -7,11 +7,12 @@ import java.util.Map;
 
 /** 
  * Contains a name and ID list for all products with a matching hashmap for each individual farm with the matching products
- * row 1: Product Name...
- * row 2: Farm1: [values for each product] could be preference value or years of experience
- * Each farm contains a copy of this list. 
+ * row 1: Vector of product names
+ * row 2: Farm1: [values for each product] vector of values associated with farm and product
+ * row 3: Farm2: [values for each product] 
+ * Each farm contains a copy of this list
+ * These values for could be product preference, years of experience, or a different metric
  * @author kellerke
- *
  */
 
 public class FarmProductMatrix {
@@ -25,7 +26,7 @@ public class FarmProductMatrix {
 	 * @param Product
 	 * @return value of that cell in the matrix
 	 */
-	public int farmProductValue(String FarmID, String Product) {
+	public int getFarmProductValue(String FarmID, String Product) {
 		int val;
 		int index = productName.indexOf(Product);
 		val = productMap.get(FarmID)[index];	 							   // get(FarmID) returns int array

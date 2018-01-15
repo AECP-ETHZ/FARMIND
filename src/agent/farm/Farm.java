@@ -2,21 +2,16 @@ package agent.farm;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import product.Crop;
-import product.Livestock;
 import product.Product;
 import reader.FarmProductMatrix;
-
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 
 /** 
- * Farm object contains all preferences, networks, people, and paramaters associated with each farm
+ * Farm object contains all preferences, networks, people, and parameters associated with each farm
  * @author kellerke
  *
  */
@@ -25,7 +20,7 @@ public class Farm implements Member {
 	private String farmId;
 	private String farmName;
 	private Person head;
-	private Product CurrentAction;
+	//private Product CurrentAction;
 	private Person spouse;
 	private Person child;
 	private Location location;
@@ -35,7 +30,6 @@ public class Farm implements Member {
 	private double Tolerance;
 	private List<Double> dissimilarity;
 	private Graph<String, DefaultEdge> network; 
-	private FarmProductMatrix preferences;
 	private FarmProductMatrix experience;
 	
 	/** 
@@ -45,17 +39,14 @@ public class Farm implements Member {
 	public List<Product> getAction(List<Farm> farms) {
 		
 		// update satisfaction and uncertainty before making decisions
-		updateSatisfaction();
+		updateSatisfaction(100.00);
 		updateUncertainty(farms);
-		// update aspiration levels
 		
 		// create final action array
 		List<Product> products = new ArrayList<Product>();
-		products.add(this.CurrentAction);
 		
 		if ((head.getAge() > 65)) {
 			System.out.println(ACTION.EXIT);
-			products.add(this.CurrentAction);
 		}
 		else if (this.Uncertainty >= this.Tolerance) {
 			if (this.Satisfaction > this.Aspiration) {
@@ -149,9 +140,10 @@ public class Farm implements Member {
 	}
 
 	/**
-	 * Update farm satisfaction level
+	 * Based on the current income level of the farmer calculate new satisfaction level.
+	 * The farmer's income is set externally from farmdyn 
 	 */
-	private void updateSatisfaction() {
+	private void updateSatisfaction(double income) {
 		double satisfaction = 0;
 		double alpha_plus = 0.6;
 		double alpha_minus = 0.6;
@@ -161,12 +153,12 @@ public class Farm implements Member {
 		double v = 0;
 		double theta = 0;
 		
-		if (this.Satisfaction >= this.Aspiration) {
-			v = Math.pow(this.Satisfaction, alpha_plus);
+		if (income >= this.Aspiration) {
+			v = Math.pow(income, alpha_plus);
 			theta = ( Math.pow(probability, phi_plus) ) / Math.pow( (Math.pow(probability, phi_plus) + Math.pow((1 - probability), phi_plus)), (1/phi_plus) );
 		}
-		else if (this.Satisfaction < this.Aspiration) {
-			v = Math.pow(this.Satisfaction, alpha_minus);
+		else if (income < this.Aspiration) {
+			v = Math.pow(income, alpha_minus);
 			theta = ( Math.pow(probability, phi_minus) ) / Math.pow( (Math.pow(probability, phi_minus) + Math.pow((1 - probability), phi_minus)), (1/phi_minus) );
 		}
 		
@@ -189,145 +181,6 @@ public class Farm implements Member {
 	public void setSatisfaction(double satisfaction) {
 		Satisfaction = satisfaction;
 	}
-	
-	/** 
-	 * Given a new product, what is the cost of switching to that product from the current products
-	 * @param newProduct
-	 * @param crops
-	 * @param livestock
-	 * @param farms
-	 * @return
-	 */
-	public double getTransactionCost(String newProduct, List<Crop> crops, List<Livestock> livestock, List<Farm> farms) {
-		double dist = 0;
-		int i = 0;
-		double q;
-		int k = 5;
-		int time = 0;		
-        int totalFarms = 0;													   // how many total farms are there in the network
-		Set<DefaultEdge> E;
-		Iterator<DefaultEdge> I;
-		double S = 0;
-        double w;
-        double Qvalue;
-        double product;
-        double max = 0;
-        double sum = 0;
-        
-        double p = 0;
-        
-		// Tech distance calculation
-		for (i = 0; i < this.head.getProducts().size(); i++) {
-			dist = dist + getTechDistance( this.head.getProducts().get(i).getName(), newProduct, crops, livestock);
-		}
-		dist = dist / i; // average distance between the current products and the new product
-		
-		// personal experience calculation
-		time = experience.farmProductValue(this.farmName, newProduct);
-		q = 1 / ( 1 +  Math.exp( (-k*time) ));
-	
-		// social learning calculation
-		E = this.network.outgoingEdgesOf(this.farmName);
-        totalFarms = farms.size();
-        I = E.iterator();
-        
-        for (i = 0; i < totalFarms; i++) {
-        	if (!farms.get(i).getFarmName().equals(this.farmName) ) {
-        		w = this.network.getEdgeWeight(I.next());
-        		Qvalue = this.experience.farmProductValue(farms.get(i).getFarmName(), newProduct);
-        		product = w*Qvalue;
-        		if (product > max) {max = product;}
-        		sum = sum + product;
-        	}
-        }
-        S = sum/max;
-        
-        // product preference
-        p =  1 - ( this.head.getPreferences().farmProductValue(this.farmName, newProduct) / this.head.getPreferences().getProductName().size() ) ;
-        
-        double Ej = (q + 0.1*S + 0.1*p);
-		double C = dist*(1 - Ej);
-		
-		return C;
-	}
-	
-	/**
-	 * @param p1 product name one
-	 * @param p2 product name two
-	 * @param crops list of all crops in system
-	 * @param livestock list of all livestock in system
-	 * @return technological distance between crops
-	 */
-	public Integer getTechDistance(String p1, String p2, List<Crop> crops, List<Livestock> livestock) {
-		int distance = 0;
-		List<String> cropName = new ArrayList<String>();
-		List<Integer> cropID = new ArrayList<Integer>();
-		List<String> liveName = new ArrayList<String>();
-		List<Integer> liveID = new ArrayList<Integer>();
-		
-		// get list of names and ID values to compare
-		for (int i = 0; i<crops.size(); i++) {
-			cropName.add(crops.get(i).getName());
-			cropID.add(crops.get(i).getID());
-		}
-		
-		for (int i = 0; i<livestock.size(); i++) {
-			liveName.add(livestock.get(i).getName());
-			liveID.add(livestock.get(i).getID());
-		}
-		
-		// if product types are different, return 10
-		if (liveName.contains(p1) && !liveName.contains(p2))
-		{
-			distance = 10;
-		}
-		else if (cropName.contains(p1) && !cropName.contains(p2))
-		{
-			distance = 10;
-		}
-		
-		// if both crop or both livestock than check ID values
-		else if (cropName.contains(p1) && cropName.contains(p2))
-		{
-			int index = cropName.indexOf(p1);
-			double d1 = cropID.get(index);
-			index = cropName.indexOf(p2);
-			double d2 = cropID.get(index);
-			
-			if ( Math.abs(d1 - d2) > 1000.00) {
-				distance = 4;
-			} else if ( Math.abs(d1 - d2) > 100.00) {
-				distance = 3;
-			}
-			else if ( Math.abs(d1 - d2) > 10.00) {
-				distance = 3;
-			} else {
-				distance = 1;
-			}
-		}
-		
-		else if (liveName.contains(p1) && liveName.contains(p2))
-		{
-			int index = liveName.indexOf(p1);
-			double d1 = liveID.get(index);
-			index = liveName.indexOf(p2);
-			double d2 = liveID.get(index);
-			
-			if ( Math.abs(d1 - d2) > 1000.00) {
-				distance = 4;
-			} else if ( Math.abs(d1 - d2) > 100.00) {
-				distance = 3;
-			}
-			else if ( Math.abs(d1 - d2) > 10.00) {
-				distance = 3;
-			} else {
-				distance = 1;
-			}
-		}
-		
-		return distance;
-	}
-		
 	
 	@Override
 	public int getAge() {
@@ -388,12 +241,7 @@ public class Farm implements Member {
 	public void setNetwork(Graph<String, DefaultEdge> network) {
 		this.network = network;
 	}
-	public Product getCurrentAction() {
-		return CurrentAction;
-	}
-	public void setCurrentAction(Product current_action) {
-		CurrentAction = current_action;
-	}
+
 	public double getTolerance() {
 		return Tolerance;
 	}
@@ -419,10 +267,6 @@ public class Farm implements Member {
 	@Override
 	public List<Product> getProducts() {
 		return head.getProducts();
-	}
-
-	public void setPreferences(FarmProductMatrix preferences) {
-		this.preferences = preferences;
 	}
 
 	public FarmProductMatrix getExperience() {

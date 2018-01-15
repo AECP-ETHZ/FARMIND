@@ -34,14 +34,13 @@ public class ReadParameters implements Reader {
 		double aspiration = 0;
 		double satisfaction = 0;
 		int start_action_index = 9;											   // the input spreadsheet starts the actions at column 9
-		
-		BufferedReader Buffer = null;	 
+		BufferedReader Buffer = null;	 									   // read input file
 		int farm_count_index = 0;                                              // index is used to set the actual farm id value
 		
-		List<Graph<String, DefaultEdge>> network = this.getSocialNetworks();   // build social network graphs
+		// reference objects for building farm list
+		List<Graph<String, DefaultEdge>> network = this.getSocialNetworks();   
 		List<Crop> crops = getCropList();
 		List<Livestock> livestock = getLivestockList();
-		
 		FarmProductMatrix pref = getPreferences();
 		FarmProductMatrix experience = getExperience();
 		
@@ -76,23 +75,7 @@ public class ReadParameters implements Reader {
 				entrepreneurship = Double.parseDouble( farmParameters.get(6));
 				satisfaction = Double.parseDouble(farmParameters.get(7));
 				aspiration = Double.parseDouble(farmParameters.get(8));
-				
-				for(int i = 0; i<crops.size(); i++) {
-					if (crops.get(i).getName().equals(farmParameters.get(start_action_index) )) {
-						int ID = crops.get(i).getID();
-						Product current_action = new Crop(ID, farmParameters.get(start_action_index)); 
-						farm.setCurrentAction(current_action);
-					}
-				}
-				
-				for(int i = 0; i<livestock.size(); i++) {
-					if (livestock.get(i).getName().equals(farmParameters.get(start_action_index) )) {
-						int ID = livestock.get(i).getID();
-						Product current_action = new Livestock(ID, farmParameters.get(start_action_index)); 
-						farm.setCurrentAction(current_action);
-					}
-				}
-				
+							
 				actions.clear();
 				for (int k = start_action_index; k < farmParameters.size(); k++) {
 					for(int i = 0; i<crops.size(); i++) {

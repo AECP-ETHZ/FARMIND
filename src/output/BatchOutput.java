@@ -30,7 +30,7 @@ public class BatchOutput implements Output {
 		try {
 			writer = new PrintWriter( String.format("./BatchFiles/%s.txt",this.farmId ));
 			writer.println(String.format("Farm ID: %s",this.farmId));
-			writer.println(String.format("Main Product: %s", this.p.get(0).getName() ));
+			//writer.println(String.format("Main Product: %s", this.p ));
 			writer.close();
 			
 		} catch (FileNotFoundException e) {

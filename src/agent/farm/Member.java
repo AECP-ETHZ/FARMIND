@@ -28,7 +28,7 @@ public interface Member {
 	
 	FarmProductMatrix getPreferences();
 	
-	List<Product> getProducts();
+	List<Product> getCurrentProducts();
 	
 	int getMemory();
 }

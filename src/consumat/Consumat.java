@@ -22,14 +22,10 @@ public class Consumat {
 		
 		TransactionCalculator cal = new TransactionCalculator(farms.get(0), crops, livestock, farms);
 		
-		double cost = 0; 
-		
-		System.out.println(cost);
-		
 		for ( int i = 0; i < farms.size(); i++) {
 
 			List<Product> p = farms.get(i).getAction(farms);
-			String id = farms.get(i).getFarmId();
+			String id = farms.get(i).getFarmName();
 
 			DecisionResult decision = new DecisionResult(id, p);
 			

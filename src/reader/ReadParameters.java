@@ -56,15 +56,14 @@ public class ReadParameters implements Reader {
 				Location location = new Location();							   // create new location for each farm
 				FarmProductMatrix preferences = new FarmProductMatrix();
 				FarmProductMatrix FarmExperience = new FarmProductMatrix();
-				List<Product> actions = new ArrayList<Product>();
+				List<Product> currentProducts = new ArrayList<Product>();
 				double[] coordinates = {0,0};
 				
 				name = farmParameters.get(0);
 				coordinates[0] = Double.parseDouble(farmParameters.get(1));
 				coordinates[1] = Double.parseDouble(farmParameters.get(2));
 				location.setCoordinates(coordinates);
-				
-				farm.setFarmId("Farm" + String.format("%03d", farm_count_index) );		   
+				   
 				farm.setFarmName(name);
 				farm.setLocation(location);
 				farm.setNetwork(network.get(farm_count_index));
@@ -73,16 +72,18 @@ public class ReadParameters implements Reader {
 				education = Integer.parseInt( farmParameters.get(4) );
 				memory = Integer.parseInt( farmParameters.get(5));
 				entrepreneurship = Double.parseDouble( farmParameters.get(6));
+				Person farmHead = new Person(age, education, memory, entrepreneurship);          
+				
 				satisfaction = Double.parseDouble(farmParameters.get(7));
 				aspiration = Double.parseDouble(farmParameters.get(8));
-							
-				actions.clear();
+      			
+				currentProducts.clear();
 				for (int k = start_action_index; k < farmParameters.size(); k++) {
 					for(int i = 0; i<crops.size(); i++) {
 						if (crops.get(i).getName().equals(farmParameters.get(k) )) {
 							int ID = crops.get(i).getID();
 							Product p = new Crop(ID, farmParameters.get(k)); 
-							actions.add(p);
+							currentProducts.add(p);
 						}
 					}
 				}
@@ -92,7 +93,7 @@ public class ReadParameters implements Reader {
 						if (livestock.get(i).getName().equals(farmParameters.get(k) )) {
 							int ID = livestock.get(i).getID();
 							Product p = new Livestock(ID, farmParameters.get(k)); 
-							actions.add(p);
+							currentProducts.add(p);
 						}
 					}
 				}		
@@ -102,13 +103,15 @@ public class ReadParameters implements Reader {
 				FarmExperience.setProductName(experience.getProductName());
 				FarmExperience.setProductMap(experience.getProductmap());
 
-				Person farmHead = new Person(age, education, memory, entrepreneurship, preferences, actions);          
+				
 				
 				farm.setUncertainty( 0 );
 				farm.setSatisfaction( satisfaction );
 				farm.setAspiration( aspiration );
 				farm.setTolerance(entrepreneurship);
 				farm.setExperience(FarmExperience);
+				farm.setPreferences(preferences);
+				farm.setCurrentProducts(currentProducts);
 				
 				List<Double> dissimilarity = new ArrayList<Double>();
 				dissimilarity.add(1.0);

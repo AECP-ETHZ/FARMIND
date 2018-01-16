@@ -26,7 +26,7 @@ public class TransactionCalculator {
 
 	public TransactionCalculator(Farm farm, List<Crop> crops, List<Livestock> livestock, List<Farm> farms) {
 		double m = farm.getPreferences().getProductName().size();		       // number of products in system
-
+	
 		this.Q = getFarmExperienceVector(farm,m);
 		this.P = getFarmPreferenceVector(farm,m);
 		this.S = getNetworkExperienceAverageVector(farm, m, farms);
@@ -43,9 +43,8 @@ public class TransactionCalculator {
 			q = 1 / ( 1 +  Math.exp( (-k*time) ));
 			Q.add(q);
 		}
-		
-		//NOTE Normalize return 
-		return Q;
+
+		return normalizeList(Q);
 	}
 	
 	private List<Double> getFarmPreferenceVector(Farm farm, double m) {
@@ -58,8 +57,7 @@ public class TransactionCalculator {
 			P.add(1 - R[i]/m);
 		}
 		
-		//NOTE Normalize return 
-		return P;
+		return normalizeList(P);
 	}
 	
 	/** 
@@ -98,8 +96,8 @@ public class TransactionCalculator {
         		for (j = 0; j< m; j++) {
         			 Q_scaled.add(Q.get(j)*w);
         		}
-        		//NOTE Normalize Q_scaled before adding to list
-        		QForAllFarms.add(Q_scaled);
+
+        		QForAllFarms.add(normalizeList(Q_scaled));
         	}
         }
         
@@ -113,8 +111,7 @@ public class TransactionCalculator {
         	S.add(sum);
         }
 
-        //NOTE Normalize return 
-		return S;
+		return normalizeList(S);
 	}
 	
 	/**
@@ -192,6 +189,40 @@ public class TransactionCalculator {
 		}
 		
 		return distance;
+	}
+	
+	private List<Double> normalizeList(List<Double> list) {
+		List<Double> normalizedList = new ArrayList<Double>();
+
+		double min = min(list);
+		double max = max(list);
+		
+		for (int i = 0; i<list.size();i++) {
+			 normalizedList.add( (list.get(i) - min) / (max - min) );
+		}
+		return normalizedList;
+	}
+	
+	private double min(List<Double> list) {
+		double min = 0;
+		double temp = 0;
+		
+		for(int i=0; i<list.size();i++) {
+			temp = list.get(i);
+			if (temp < min) { min = temp;}
+		}
+		return min;
+	}
+	
+	private double max(List<Double> list) {
+		double max = 0;
+		double temp = 0;
+		
+		for(int i=0; i<list.size();i++) {
+			temp = list.get(i);
+			if (temp > max) { max = temp;}
+		}
+		return max;
 	}
 	
 }

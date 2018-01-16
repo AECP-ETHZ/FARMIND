@@ -17,11 +17,8 @@ import org.jgrapht.graph.DefaultEdge;
  */
 public class Farm implements Member {
 	
-	private String farmId;
 	private String farmName;
 	private Person head;
-	private Person spouse;
-	private Person child;
 	private Location location;
 	private double Satisfaction;
 	private double Aspiration;
@@ -30,6 +27,8 @@ public class Farm implements Member {
 	private List<Double> dissimilarity;
 	private Graph<String, DefaultEdge> network; 
 	private FarmProductMatrix experience;
+	private FarmProductMatrix preferences;
+	private List<Product> currentProducts;
 	
 	/** 
 	 * update satisfaction and uncertainty for the farm
@@ -39,8 +38,7 @@ public class Farm implements Member {
 	 * @return List of Products/Actions that the farm will produce
 	 */
 	public List<Product> getAction(List<Farm> farms) {
-
-		updateSatisfaction(10.00);
+		updateSatisfaction(50000.00);
 		updateUncertainty(farms);
 		
 		// create final action array
@@ -50,7 +48,7 @@ public class Farm implements Member {
 			System.out.println(ACTION.EXIT);
 		}
 		else if (this.Uncertainty >= this.Tolerance) {
-			if (this.Satisfaction > this.Aspiration) {
+			if (this.Satisfaction >= 1) {
 				System.out.println(ACTION.IMITATION);
 				// check calculator with S,Q,P
 			}
@@ -59,7 +57,7 @@ public class Farm implements Member {
 			}
 		}
 		else {
-			if (this.Satisfaction > this.Aspiration) {
+			if (this.Satisfaction < 1) {
 				System.out.println(ACTION.REPETITION);
 			}
 			else {
@@ -97,7 +95,7 @@ public class Farm implements Member {
         
     	for (int j = 0; j < totalFarms; j++)  						           //  loop through all farms
     	{
-    		List<Product> p = farms.get(j).getProducts();
+    		List<Product> p = farms.get(j).getCurrentProducts();
     		for (int i = 0; i < p.size(); i++) {
     			if (!ProductNames.contains(p.get(i).getName())) 
     			{
@@ -110,9 +108,9 @@ public class Farm implements Member {
     	}
     	
     	List<String> mainProduct = new ArrayList<String>();
-    	for (int i = 0; i < this.getProducts().size(); i++)
+    	for (int i = 0; i < this.getCurrentProducts().size(); i++)
     	{
-    		mainProduct.add(this.getProducts().get(i).getName());
+    		mainProduct.add(this.getCurrentProducts().get(i).getName());
     	}
     	
     	// ACTUAL DISSIMILARITY CALULATION
@@ -136,8 +134,10 @@ public class Farm implements Member {
         prevDissimilarityAvg = sum / this.dissimilarity.size();                // dissimilarity average over all previous years
         this.dissimilarity.add(currentDissimilarity);                          // add previous match
         
-        //System.out.println(String.format("Dissimilarity value between Farm %s and Network: %f", farmName, currentDissimilarity));
         uncertainty = (currentDissimilarity - prevDissimilarityAvg)/prevDissimilarityAvg;
+        //System.out.println(String.format("Dissimilarity value between %s and Network: %f, %f, %f", farmName, currentDissimilarity, uncertainty, prevDissimilarityAvg));
+        
+        uncertainty = (currentDissimilarity);
         
 		setUncertainty(uncertainty);
 	}
@@ -148,24 +148,26 @@ public class Farm implements Member {
 	 */
 	private void updateSatisfaction(double income) {
 		double satisfaction = 0;
-		double alpha_plus = 0.6;
-		double alpha_minus = 0.6;
+		
+		/*double alpha_plus = 0.6;
+		double alpha_minus = -0.6;
 		double phi_plus = 0.8;
-		double phi_minus = 0.8;
+		double phi_minus = -0.8;
 		double probability = 0.5;
 		double v = 0;
-		double theta = 0;
+		double theta = 0; */
 		
 		if (income >= this.Aspiration) {
-			v = Math.pow(income, alpha_plus);
-			theta = ( Math.pow(probability, phi_plus) ) / Math.pow( (Math.pow(probability, phi_plus) + Math.pow((1 - probability), phi_plus)), (1/phi_plus) );
+			//v = Math.pow(income, alpha_plus);
+			//theta = ( Math.pow(probability, phi_plus) ) / Math.pow( (Math.pow(probability, phi_plus) + Math.pow((1 - probability), phi_plus)), (1/phi_plus) );
+			satisfaction = 1.0;
 		}
 		else if (income < this.Aspiration) {
-			v = Math.pow(income, alpha_minus);
-			theta = ( Math.pow(probability, phi_minus) ) / Math.pow( (Math.pow(probability, phi_minus) + Math.pow((1 - probability), phi_minus)), (1/phi_minus) );
+			//v = Math.pow(income, alpha_minus);
+			//theta = ( Math.pow(probability, phi_minus) ) / Math.pow( (Math.pow(probability, phi_minus) + Math.pow((1 - probability), phi_minus)), (1/phi_minus) );
+			satisfaction = -1.0;
 		}
-		
-		satisfaction = v*theta;
+
 		setSatisfaction(satisfaction);
 	}
 	
@@ -196,35 +198,17 @@ public class Farm implements Member {
 	@Override
 	public FarmProductMatrix getPreferences() {
 		
-		return this.head.getPreferences();
+		return this.preferences;
 	}
 	@Override
 	public int getMemory() {
 		return this.head.getMemory();
-	}
-	public String getFarmId() {
-		return farmId;
-	}
-	public void setFarmId(String farmId) {
-		this.farmId = farmId;
 	}
 	public Person getHead() {
 		return head;
 	}
 	public void setHead(Person farmHead) {
 		this.head = farmHead;
-	}
-	public Person getSpouse() {
-		return spouse;
-	}
-	public void setSpouse(Person spouse) {
-		this.spouse = spouse;
-	}
-	public Person getChild() {
-		return child;
-	}
-	public void setChild(Person child) {
-		this.child = child;
 	}
 	public String getFarmName() {
 		return farmName;
@@ -266,15 +250,23 @@ public class Farm implements Member {
 	{
 		this.dissimilarity.add(match);
 	}
-	@Override
-	public List<Product> getProducts() {
-		return head.getProducts();
-	}
 	public FarmProductMatrix getExperience() {
 		return this.experience;
 	}
 	public void setExperience(FarmProductMatrix experience) {
 		this.experience = experience;
+	}
+
+	public void setPreferences(FarmProductMatrix preferences) {
+		this.preferences = preferences;
+	}
+
+	public void setCurrentProducts(List<Product> products) {
+		this.currentProducts = products;
+	}
+	@Override
+	public List<Product> getCurrentProducts() {
+		return this.currentProducts;
 	}
 
 }

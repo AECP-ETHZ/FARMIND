@@ -35,7 +35,7 @@ public class TransactionCalculator {
 	private List<Double> getFarmExperienceVector(Farm farm, double m) {
 		List<Double> Q = new ArrayList<Double>();                              // learning by doing vector for specific farm
 		int time = 0;
-		int k = 5;
+		int k = 1;
 		double q;
 		
 		for (int i = 0; i < m; i++) {
@@ -105,7 +105,9 @@ public class TransactionCalculator {
         for (j = 0; j < m; j++) {
         	sum = 0;
         	for (i = 0; i < QForAllFarms.size(); i++) {
-        		sum = sum + QForAllFarms.get(i).get(j);                        // farm i, product j
+        		if (QForAllFarms.get(i).get(j) > 0) {
+        			sum = sum + QForAllFarms.get(i).get(j);                        // farm i, product j
+        		}
         	}
         	sum = sum/QForAllFarms.size();
         	S.add(sum);

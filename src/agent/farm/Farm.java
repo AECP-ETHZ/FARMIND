@@ -38,7 +38,7 @@ public class Farm implements Member {
 	 * @return List of Products/Actions that the farm will produce
 	 */
 	public List<Product> getAction(List<Farm> farms) {
-		updateSatisfaction(50000.00);
+		updateSatisfaction(40000.00);
 		updateUncertainty(farms);
 		
 		// create final action array
@@ -57,7 +57,7 @@ public class Farm implements Member {
 			}
 		}
 		else {
-			if (this.Satisfaction < 1) {
+			if (this.Satisfaction >= 1) {
 				System.out.println(ACTION.REPETITION);
 			}
 			else {

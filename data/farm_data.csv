@@ -1,6 +1,6 @@
 Farm,Latitude,Longitude,Birth Year,Education,Memory,Entrepreneurship,Satisfaction,Aspiration,Action1,Action2,Action3
 Farm01,0,0,1973,14,5,0.5,49000,30700,Cattle,Wheat,Goats
-Farm02,0,0,1958,15,5,0.2,76000,42600,Sheep,Mushrooms,NA
+Farm02,0,0,1958,15,5,0.2,76000,42600,Sheep,Sheep,Goats
 Farm03,0,0,1975,6,5,1,56500,36650,Eggplants,Sheep,Pigs
-Farm04,0,0,1972,8,5,0.3,70000,44700,Sheep,NA,NA
-Farm05,0,0,1972,6,5,0.7,40500,37350,Mushrooms,Pineapples,NA
+Farm04,0,0,1972,8,5,0.1,70000,37350,Cabbages,NA,NA
+Farm05,0,0,1972,6,5,0.7,40500,44700,Maize,Pineapple,NA

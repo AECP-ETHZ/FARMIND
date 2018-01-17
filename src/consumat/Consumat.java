@@ -3,13 +3,8 @@ package consumat;
 import java.util.List;
 
 import agent.farm.Farm;
-import decision.DecisionResult;
-import output.BatchOutput;
-import product.Crop;
-import product.Livestock;
 import product.Product;
 import reader.ReadParameters;
-import transaction_calculator.TransactionCalculator;
 
 public class Consumat {
 
@@ -18,18 +13,23 @@ public class Consumat {
 		ReadParameters reader = new ReadParameters();
 		List<Farm>     farms = reader.getFarms();
 		
-		for ( int i = 0; i < farms.size(); i++) {
-
-			List<Product> p = farms.get(i).getAction(farms, 40000.00);
+		for (int years = 0; years < 3; years++) {
+			// get updated products and income from farmydyn
+			// farms.updateIncome();
+			// farms.updateProducts();
+		
+			// simulate all farms for time period t
+			for ( int i = 0; i < farms.size(); i++) {
+				List<Product> p = farms.get(i).getAction(farms, 40000.00);
+				String id = farms.get(i).getFarmName();
+				System.out.println(id + " " + p.toString());
+				
+				farms.get(i).updateExperience();                               // each time period update experience
+			}
 			
-			farms.get(i).updateExperience();
-			
-			String id = farms.get(i).getFarmName();
-
-			DecisionResult decision = new DecisionResult(id, p);
-			
-			BatchOutput batch = new BatchOutput(decision);
-			batch.write();
+			// run farm dyn with newly generated batch files for all farms
+			System.out.println();
 		}
+		
 	}
 }

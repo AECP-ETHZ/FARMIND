@@ -60,6 +60,7 @@ public class Farm {
 			if (this.Satisfaction >= 1) {
 				System.out.println("IMITATION");
 				// check calculator with S,Q,P
+				products = cal.getImitationProducts();
 			}
 			else {
 				System.out.println("OPT_OUT");
@@ -73,10 +74,10 @@ public class Farm {
 			else {
 				System.out.println("OPTIMIZATION");
 				// check calculator with Q,P (no social costs)
+				products = cal.getOptimizeProducts();
 			}
 		}
 
-		System.out.println(products.toString());
 		return products;
 	}
 	

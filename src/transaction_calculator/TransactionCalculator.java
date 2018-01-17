@@ -10,6 +10,7 @@ import org.jgrapht.graph.DefaultEdge;
 import agent.farm.Farm;
 import product.Crop;
 import product.Livestock;
+import product.Product;
 
 /** 
  * Object contains three vectors (Q,P,S) that contain normalized rankings of experience, preference, and social network experience for a specific farm. 
@@ -31,6 +32,29 @@ public class TransactionCalculator {
 		this.P = getFarmPreferenceVector(farm,m);
 		this.S = getNetworkExperienceAverageVector(farm, m, farms);
 	}
+	
+	/** 
+	 * Using fuzzy logic check S,P,Q lists to determine best product combinations
+	 * @return
+	 */
+	public List<Product> getImitationProducts() {
+		List<Product> prod = new ArrayList<Product>();
+		
+		
+		return prod;
+	}
+	
+	/** 
+	 * Using fuzzy logic check P,Q lists to determine best product combinations.
+	 * Do not take into account social learning vector S
+	 * @return
+	 */
+	public List<Product> getOptimizeProducts() {
+		List<Product> prod = new ArrayList<Product>();
+		
+		return prod;
+	}
+	
 	
 	private List<Double> getFarmExperienceVector(Farm farm, double m) {
 		List<Double> Q = new ArrayList<Double>();                              // learning by doing vector for specific farm

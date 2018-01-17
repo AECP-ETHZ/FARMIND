@@ -1,4 +1,4 @@
-package calculator;
+package transaction_calculator;
 
 import java.util.ArrayList;
 import java.util.Iterator;

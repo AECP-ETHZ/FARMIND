@@ -3,13 +3,13 @@ package consumat;
 import java.util.List;
 
 import agent.farm.Farm;
-import calculator.TransactionCalculator;
 import decision.DecisionResult;
 import output.BatchOutput;
 import product.Crop;
 import product.Livestock;
 import product.Product;
 import reader.ReadParameters;
+import transaction_calculator.TransactionCalculator;
 
 public class Consumat {
 

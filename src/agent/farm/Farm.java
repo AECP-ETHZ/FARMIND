@@ -10,18 +10,19 @@ import product.Crop;
 import product.Livestock;
 import product.Product;
 import reader.FarmProductMatrix;
+import transaction_calculator.TransactionCalculator;
+
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 
-import calculator.TransactionCalculator;
-
 /** 
- * Farm object contains all preferences, networks, people, and parameters associated with each farm
+ * Farm object contains people and parameters associated with each farm
+ * contains copy of crop and livestock list, preferences and experiences and network list
+ * 
  * @author kellerke
  *
  */
-public class Farm implements Member {
-	
+public class Farm {
 	private String farmName;
 	private Person head;
 	private Location location;
@@ -53,24 +54,24 @@ public class Farm implements Member {
 		updateUncertainty(farms);
 		
 		if ((head.getAge() > 65)) {
-			System.out.println(ACTION.EXIT);
+			System.out.println("EXIT");
 		}
 		else if (this.Uncertainty >= this.Tolerance) {
 			if (this.Satisfaction >= 1) {
-				System.out.println(ACTION.IMITATION);
+				System.out.println("IMITATION");
 				// check calculator with S,Q,P
 			}
 			else {
-				System.out.println(ACTION.OPT_OUT);
+				System.out.println("OPT_OUT");
 			}
 		}
 		else {
 			if (this.Satisfaction >= 1) {
-				System.out.println(ACTION.REPETITION);
+				System.out.println("REPETITION");
 				products = this.getCurrentProducts();
 			}
 			else {
-				System.out.println(ACTION.OPTIMIZATION);
+				System.out.println("OPTIMIZATION");
 				// check calculator with Q,P (no social costs)
 			}
 		}
@@ -205,20 +206,16 @@ public class Farm implements Member {
 		}		
 	}
 	
-	@Override
 	public int getAge() {
 		return this.head.getAge();
 	}
-	@Override
 	public int getEducation() {
 		return this.head.getEducation();
 	}
-	@Override
 	public FarmProductMatrix getPreferences() {
 		
 		return this.preferences;
 	}
-	@Override
 	public int getMemory() {
 		return this.head.getMemory();
 	}
@@ -282,7 +279,6 @@ public class Farm implements Member {
 	public void setCurrentProducts(List<Product> products) {
 		this.currentProducts = products;
 	}
-	@Override
 	public List<Product> getCurrentProducts() {
 		return this.currentProducts;
 	}

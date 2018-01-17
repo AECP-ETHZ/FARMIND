@@ -25,6 +25,9 @@ public class Consumat {
 		for ( int i = 0; i < farms.size(); i++) {
 
 			List<Product> p = farms.get(i).getAction(farms);
+			
+			farms.get(i).updateExperience(crops, livestock);
+			
 			String id = farms.get(i).getFarmName();
 
 			DecisionResult decision = new DecisionResult(id, p);

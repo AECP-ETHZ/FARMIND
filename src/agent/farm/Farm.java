@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import product.Crop;
+import product.Livestock;
 import product.Product;
 import reader.FarmProductMatrix;
 import org.jgrapht.Graph;
@@ -185,6 +188,14 @@ public class Farm implements Member {
 
 	public void setSatisfaction(double satisfaction) {
 		Satisfaction = satisfaction;
+	}
+	
+	public void updateExperience(List<Crop> crops, List<Livestock> livestock) {
+		
+		for (int i = 0; i< this.getCurrentProducts().size(); i++) {
+			int value = this.experience.getFarmProductValue(farmName, this.getCurrentProducts().get(i).getName());
+			this.experience.setFarmProductValue(farmName, this.getCurrentProducts().get(i).getName(), value + 1);
+		}		
 	}
 	
 	@Override

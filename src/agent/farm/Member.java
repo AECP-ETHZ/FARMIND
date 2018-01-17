@@ -24,7 +24,7 @@ public interface Member {
 	
 	int getEducation();
 	
-	List<Product> getAction(List<Farm> farms);
+	List<Product> getAction(List<Farm> farms, double income);
 	
 	FarmProductMatrix getPreferences();
 	

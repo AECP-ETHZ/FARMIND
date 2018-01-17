@@ -24,7 +24,7 @@ public class TransactionCalculator {
 	List<Double> P = new ArrayList<Double>();							   // rank of all product preferences for specific farm
 	List<Double> S = new ArrayList<Double>();							   // average social learning value for each products weighted by social network
 
-	public TransactionCalculator(Farm farm, List<Crop> crops, List<Livestock> livestock, List<Farm> farms) {
+	public TransactionCalculator(Farm farm, List<Farm> farms) {
 		double m = farm.getPreferences().getProductName().size();		       // number of products in system
 	
 		this.Q = getFarmExperienceVector(farm,m);

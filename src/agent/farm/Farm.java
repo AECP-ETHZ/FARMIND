@@ -13,6 +13,8 @@ import reader.FarmProductMatrix;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 
+import calculator.TransactionCalculator;
+
 /** 
  * Farm object contains all preferences, networks, people, and parameters associated with each farm
  * @author kellerke
@@ -32,6 +34,8 @@ public class Farm implements Member {
 	private FarmProductMatrix experience;
 	private FarmProductMatrix preferences;
 	private List<Product> currentProducts;
+	private List<Crop> crops;
+	private List<Livestock> livestock;
 	
 	/** 
 	 * update satisfaction and uncertainty for the farm
@@ -40,12 +44,13 @@ public class Farm implements Member {
 	 * 
 	 * @return List of Products/Actions that the farm will produce
 	 */
-	public List<Product> getAction(List<Farm> farms) {
-		updateSatisfaction(40000.00);
-		updateUncertainty(farms);
-		
+	public List<Product> getAction(List<Farm> farms, double income) {
 		// create final action array
-		List<Product> products = new ArrayList<Product>();
+	    List<Product> products = new ArrayList<Product>();
+	    TransactionCalculator cal = new TransactionCalculator(this, farms);
+		
+	    updateSatisfaction(income);
+		updateUncertainty(farms);
 		
 		if ((head.getAge() > 65)) {
 			System.out.println(ACTION.EXIT);
@@ -62,12 +67,15 @@ public class Farm implements Member {
 		else {
 			if (this.Satisfaction >= 1) {
 				System.out.println(ACTION.REPETITION);
+				products = this.getCurrentProducts();
 			}
 			else {
 				System.out.println(ACTION.OPTIMIZATION);
 				// check calculator with Q,P (no social costs)
 			}
 		}
+
+		System.out.println(products.toString());
 		return products;
 	}
 	
@@ -190,8 +198,7 @@ public class Farm implements Member {
 		Satisfaction = satisfaction;
 	}
 	
-	public void updateExperience(List<Crop> crops, List<Livestock> livestock) {
-		
+	public void updateExperience() {
 		for (int i = 0; i< this.getCurrentProducts().size(); i++) {
 			int value = this.experience.getFarmProductValue(farmName, this.getCurrentProducts().get(i).getName());
 			this.experience.setFarmProductValue(farmName, this.getCurrentProducts().get(i).getName(), value + 1);
@@ -279,5 +286,16 @@ public class Farm implements Member {
 	public List<Product> getCurrentProducts() {
 		return this.currentProducts;
 	}
-
+	public List<Livestock> getLivestock() {
+		return livestock;
+	}
+	public void setLivestock(List<Livestock> livestock) {
+		this.livestock = livestock;
+	}
+	public List<Crop> getCrops() {
+		return crops;
+	}
+	public void setCrops(List<Crop> crops) {
+		this.crops = crops;
+	}
 }

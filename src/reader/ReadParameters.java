@@ -98,7 +98,9 @@ public class ReadParameters implements Reader {
 								
 				farm.setExperience(experience);
 				farm.setPreferences(pref);
-
+				farm.setLivestock(livestock);
+				farm.setCrops(crops);
+				
 				farm.setUncertainty( 0 );
 				farm.setSatisfaction( satisfaction );
 				farm.setAspiration( aspiration );

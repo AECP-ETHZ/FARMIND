@@ -55,7 +55,13 @@ public class TransactionCalculator {
 		return prod;
 	}
 	
-	
+	/** 
+	 * Each farm has a vector with associated years of experience in the shared matrix of experience.
+	 * Scale this vector based on a parameter k. 
+	 * @param farm
+	 * @param m
+	 * @return
+	 */
 	private List<Double> getFarmExperienceVector(Farm farm, double m) {
 		List<Double> Q = new ArrayList<Double>();                              // learning by doing vector for specific farm
 		int time = 0;
@@ -71,6 +77,12 @@ public class TransactionCalculator {
 		return normalizeList(Q);
 	}
 	
+	/** 
+	 * Each farm has a preference vector and we scale this vector based on the number of products in the system
+	 * @param farm
+	 * @param m
+	 * @return
+	 */
 	private List<Double> getFarmPreferenceVector(Farm farm, double m) {
 		List<Double> P = new ArrayList<Double>();							   // rank of all product preferences for specific farm
 		Integer[] R;                           				 			   	   // Product preference vector 

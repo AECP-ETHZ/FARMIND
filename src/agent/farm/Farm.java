@@ -46,7 +46,6 @@ public class Farm {
 	 * @return List of Products/Actions that the farm will produce
 	 */
 	public List<Product> getAction(List<Farm> farms, double income) {
-		// create final action array
 	    List<Product> products = new ArrayList<Product>();
 	    TransactionCalculator cal = new TransactionCalculator(this, farms);
 		
@@ -200,6 +199,10 @@ public class Farm {
 		Satisfaction = satisfaction;
 	}
 	
+	/** 
+	 * Each time period, t, call this function to increment the experience vector of this farm. 
+	 * This experience vector is part of a shared experience matrix that all farms have
+	 */
 	public void updateExperience() {
 		for (int i = 0; i< this.getCurrentProducts().size(); i++) {
 			int value = this.experience.getFarmProductValue(farmName, this.getCurrentProducts().get(i).getName());

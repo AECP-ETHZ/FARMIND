@@ -24,6 +24,7 @@ public class TransactionCalculator {
 	List<Double> Q = new ArrayList<Double>();                              // learning by doing vector for specific farm
 	List<Double> P = new ArrayList<Double>();							   // rank of all product preferences for specific farm
 	List<Double> S = new ArrayList<Double>();							   // average social learning value for each products weighted by social network
+	Farm farm;
 
 	public TransactionCalculator(Farm farm, List<Farm> farms) {
 		double m = farm.getPreferences().getProductName().size();		       // number of products in system
@@ -31,6 +32,7 @@ public class TransactionCalculator {
 		this.Q = getFarmExperienceVector(farm,m);
 		this.P = getFarmPreferenceVector(farm,m);
 		this.S = getNetworkExperienceAverageVector(farm, m, farms);
+		this.farm = farm;
 	}
 	
 	/** 
@@ -40,8 +42,63 @@ public class TransactionCalculator {
 	public List<Product> getImitationProducts() {
 		List<Product> prod = new ArrayList<Product>();
 		
+		double[] c1 = {15,10,5,1,5};
+		double[] c2 = {6,14,10,1,5};
+		double[] c3 = {10,7,13,1,5};
 		
+		double[][] p1 = preference_matrix(c1);
+		double[][] p2 = preference_matrix(c2);
+		double[][] p3 = preference_matrix(c3);
+		
+		int len = c1.length;
+		double[][] matrix = new double[len-2][len-2];
+		 
+		for (int i = 0; i< len - 2; i++) {
+			for (int j = 0; j < len - 2; j++) {
+				matrix[i][j] = (p1[i][j] + p2[i][j] + p3[i][j] ) / 3;
+			}
+		}
+		
+		double[] ND = new double[len-2];
+		
+		for (int i = 0; i< 3; i++) {
+			for (int j = 0; j < 2; j++) {
+				if (i != j) {
+					double x = matrix[i][j];
+					double y = matrix[j][i];
+					ND[i] = x - y;
+				}
+			}
+		}
+			
 		return prod;
+	}
+	
+	private double[][] preference_matrix(double[] catagory) {
+		int len = catagory.length;
+		double q_plus = catagory[len-1];
+		double q_minus = catagory[len-2];
+		double[][] matrix = new double[len-2][len-2];
+		
+		for (int i = 0; i< len -2; i++) {
+			for (int j = 0; j < len - 2; j++) {
+				matrix[i][j] = t_rating(catagory[i],catagory[j], q_minus,q_plus);
+			}
+		}
+		
+		return matrix;
+	}
+	
+	private double t_rating(double x, double y, double q_minus, double q_plus) {
+		double rank = 0;
+		
+		if ( (x - y) > q_plus) rank = 1;
+		else if( (x - y) <= q_minus ) rank = 0;
+		else {
+			rank = ( (x - y - q_minus)/ (q_plus - q_minus));
+		}
+		
+		return rank;
 	}
 	
 	/** 
@@ -51,6 +108,7 @@ public class TransactionCalculator {
 	 */
 	public List<Product> getOptimizeProducts() {
 		List<Product> prod = new ArrayList<Product>();
+		this.farm.getCurrentProducts();
 		
 		return prod;
 	}

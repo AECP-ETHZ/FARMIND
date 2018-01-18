@@ -59,18 +59,18 @@ public class TransactionCalculator {
 			}
 		}
 		
-		double[] ND = new double[len-2];
+		List<Double> ND = new ArrayList<Double>();
 		
-		for (int i = 0; i< 3; i++) {
+		for (int i = 1; i< 3; i++) {
 			for (int j = 0; j < 2; j++) {
 				if (i != j) {
 					double x = matrix[i][j];
 					double y = matrix[j][i];
-					ND[i] = x - y;
+					ND.add( 1 - Math.abs(x - y) );
 				}
 			}
 		}
-			
+
 		return prod;
 	}
 	

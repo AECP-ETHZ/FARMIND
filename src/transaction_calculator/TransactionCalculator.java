@@ -65,7 +65,7 @@ public class TransactionCalculator {
 	private List<Double> getFarmExperienceVector(Farm farm, double m) {
 		List<Double> Q = new ArrayList<Double>();                              // learning by doing vector for specific farm
 		int time = 0;
-		int k = 1;
+		double k = 0.6;
 		double q;
 		
 		for (int i = 0; i < m; i++) {

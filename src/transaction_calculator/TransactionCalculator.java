@@ -42,9 +42,30 @@ public class TransactionCalculator {
 	public List<Product> getImitationProducts() {
 		List<Product> prod = new ArrayList<Product>();
 		
-		double[] c1 = {15,10,5,1,5};
-		double[] c2 = {6,14,10,1,5};
-		double[] c3 = {10,7,13,1,5};
+		//double[] c1 = {15,10,5,1,5};
+		//double[] c2 = {6,14,10,1,5};
+		//double[] c3 = {10,7,13,1,5};
+		
+		Q.add(0.4);
+		Q.add(0.8);
+		double[] c1 = new double[this.Q.size()];
+		for (int i = 0; i < this.Q.size(); i++) {
+			c1[i] = Q.get(i);
+		}
+		
+		P.add(0.4);
+		P.add(0.8);
+		double[] c2 = new double[this.P.size()];
+		for (int i = 0; i < this.P.size(); i++) {
+			c2[i] = P.get(i);
+		}
+		
+		S.add(0.4);
+		S.add(0.8);
+		double[] c3 = new double[this.S.size()];
+		for (int i = 0; i < this.S.size(); i++) {
+			c3[i] = S.get(i);
+		}
 		
 		double[][] p1 = preference_matrix(c1);
 		double[][] p2 = preference_matrix(c2);
@@ -60,27 +81,91 @@ public class TransactionCalculator {
 		}
 		
 		List<Double> ND = new ArrayList<Double>();
-		
-		for (int i = 1; i< 3; i++) {
-			for (int j = 0; j < 2; j++) {
-				if (i != j) {
-					double x = matrix[i][j];
-					double y = matrix[j][i];
-					ND.add( 1 - Math.abs(x - y) );
-				}
-			}
+		for (int i = 0; i< len - 2; i++) {
+			ND.add(ND(i,matrix));
 		}
+		
+		double x = ND.indexOf(max(ND));
 
 		return prod;
 	}
 	
+	/** 
+	 * Using fuzzy logic check P,Q lists to determine best product combinations.
+	 * Do not take into account social learning vector S
+	 * @return
+	 */
+	public List<Product> getOptimizeProducts() {
+		List<Product> prod = new ArrayList<Product>();
+
+		Q.add(0.4);
+		Q.add(0.8);
+		double[] c1 = new double[this.Q.size()];
+		for (int i = 0; i < this.Q.size(); i++) {
+			c1[i] = Q.get(i);
+		}
+		
+		P.add(0.4);
+		P.add(0.8);
+		double[] c2 = new double[this.P.size()];
+		for (int i = 0; i < this.P.size(); i++) {
+			c2[i] = P.get(i);
+		}
+		
+		
+		double[][] p1 = preference_matrix(c1);
+		double[][] p2 = preference_matrix(c2);
+		
+		int len = c1.length;
+		double[][] matrix = new double[len-2][len-2];
+		 
+		for (int i = 0; i< len - 2; i++) {
+			for (int j = 0; j < len - 2; j++) {
+				matrix[i][j] = (p1[i][j] + p2[i][j]  ) / 2;
+			}
+		}
+		
+		List<Double> ND = new ArrayList<Double>();
+		for (int i = 0; i< len - 2; i++) {
+			ND.add(ND(i,matrix));
+		}
+		
+		double x = ND.indexOf(max(ND));
+
+		return prod;
+	}
+	
+	/** 
+	 * Non Domination score for an 
+	 * @param index which item in the list (eg product) we want to score against the criterion matrix
+	 * @param matrix of criteria preferences for all items
+	 * @return nd score for this product
+	 */
+	private double ND(int index, double[][] matrix ) {
+		List<Double> ND = new ArrayList<Double>();
+		
+		for (int j = 0; j < matrix[0].length; j++) {
+			if (index != j) {
+				double x = matrix[j][index];
+				double y = matrix[index][j];
+				ND.add( (x - y) );
+			}
+		}	
+		return 1 - max(ND);
+	}
+	
+	/** 
+	 * Build preference matrix for a catagory based on the t score and the q range
+	 * @param catagory
+	 * @return matrix of preferences
+	 */
 	private double[][] preference_matrix(double[] catagory) {
 		int len = catagory.length;
 		double q_plus = catagory[len-1];
 		double q_minus = catagory[len-2];
 		double[][] matrix = new double[len-2][len-2];
 		
-		for (int i = 0; i< len -2; i++) {
+		for (int i = 0; i< len-2; i++) {
 			for (int j = 0; j < len - 2; j++) {
 				matrix[i][j] = t_rating(catagory[i],catagory[j], q_minus,q_plus);
 			}
@@ -89,6 +174,14 @@ public class TransactionCalculator {
 		return matrix;
 	}
 	
+	/** 
+	 * Build a rating score between x,y based on the q range
+	 * @param x
+	 * @param y
+	 * @param q_minus
+	 * @param q_plus
+	 * @return rating between x and y
+	 */
 	private double t_rating(double x, double y, double q_minus, double q_plus) {
 		double rank = 0;
 		
@@ -100,19 +193,7 @@ public class TransactionCalculator {
 		
 		return rank;
 	}
-	
-	/** 
-	 * Using fuzzy logic check P,Q lists to determine best product combinations.
-	 * Do not take into account social learning vector S
-	 * @return
-	 */
-	public List<Product> getOptimizeProducts() {
-		List<Product> prod = new ArrayList<Product>();
-		this.farm.getCurrentProducts();
 		
-		return prod;
-	}
-	
 	/** 
 	 * Each farm has a vector with associated years of experience in the shared matrix of experience.
 	 * Scale this vector based on a parameter k. 

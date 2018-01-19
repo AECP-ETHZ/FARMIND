@@ -300,7 +300,7 @@ public class TransactionCalculator {
 	}
 	
 	private double min(List<Double> list) {
-		double min = 0;
+		double min = 1;
 		double temp = 0;
 		
 		for(int i=0; i<list.size();i++) {

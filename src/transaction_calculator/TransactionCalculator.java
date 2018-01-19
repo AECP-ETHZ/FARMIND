@@ -39,12 +39,7 @@ public class TransactionCalculator {
 	 * Using fuzzy logic check S,P,Q lists to determine best product combinations
 	 * @return
 	 */
-	public List<Product> getImitationProducts() {
-		List<Product> prod = new ArrayList<Product>();
-		
-		//double[] c1 = {15,10,5,1,5};
-		//double[] c2 = {6,14,10,1,5};
-		//double[] c3 = {10,7,13,1,5};
+	public List<String> getImitationProducts() {
 		
 		Q.add(0.4);
 		Q.add(0.8);
@@ -84,10 +79,10 @@ public class TransactionCalculator {
 		for (int i = 0; i< len - 2; i++) {
 			ND.add(ND(i,matrix));
 		}
-		
-		double x = ND.indexOf(max(ND));
 
-		return prod;
+		List<String> list = productList(0.8, ND);
+
+		return list;
 	}
 	
 	/** 
@@ -95,9 +90,7 @@ public class TransactionCalculator {
 	 * Do not take into account social learning vector S
 	 * @return
 	 */
-	public List<Product> getOptimizeProducts() {
-		List<Product> prod = new ArrayList<Product>();
-
+	public List<String> getOptimizeProducts() {
 		Q.add(0.4);
 		Q.add(0.8);
 		double[] c1 = new double[this.Q.size()];
@@ -130,11 +123,23 @@ public class TransactionCalculator {
 			ND.add(ND(i,matrix));
 		}
 		
-		double x = ND.indexOf(max(ND));
+		List<String> list = productList(0.8, ND);
 
-		return prod;
+		return list;
 	}
 	
+	private List<String> productList(double threshold, List<Double> x){
+		List<String> list = new ArrayList<String>();
+		
+		for (int i = 0; i < x.size(); i++) {
+			if (x.get(i) > threshold) {
+				list.add( this.farm.getPreferences().getProductName().get(i) ); 
+			}
+		}
+		
+		return list;
+	}
+		
 	/** 
 	 * Non Domination score for an 
 	 * @param index which item in the list (eg product) we want to score against the criterion matrix

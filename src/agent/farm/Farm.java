@@ -45,8 +45,8 @@ public class Farm {
 	 * 
 	 * @return List of Products/Actions that the farm will produce
 	 */
-	public List<Product> getAction(List<Farm> farms, double income) {
-	    List<Product> products = new ArrayList<Product>();
+	public List<String> getAction(List<Farm> farms, double income) {
+	    List<String> products = new ArrayList<String>();
 	    TransactionCalculator cal = new TransactionCalculator(this, farms);
 		
 	    updateSatisfaction(income);
@@ -68,7 +68,12 @@ public class Farm {
 		else {
 			if (this.Satisfaction >= 1) {
 				System.out.println("REPETITION");
-				products = this.getCurrentProducts();
+				//products = this.getCurrentProducts();
+				
+				for (int i = 0; i < this.getCurrentProducts().size(); i++) {
+					products.add(this.getCurrentProducts().get(i).getName());
+				}
+				
 			}
 			else {
 				System.out.println("OPTIMIZATION");

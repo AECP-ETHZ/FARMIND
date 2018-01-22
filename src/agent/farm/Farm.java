@@ -243,10 +243,29 @@ public class Farm {
 	 * This experience vector is part of a shared experience matrix that all farms have
 	 */
 	public void updateExperience() {
-		for (int i = 0; i< this.getCurrentProducts().size(); i++) {
-			int value = this.experience.getFarmProductValue(farmName, this.getCurrentProducts().get(i).getName());
-			this.experience.setFarmProductValue(farmName, this.getCurrentProducts().get(i).getName(), value + 1);
-		}		
+		List<String> productNames = new ArrayList<String>();
+		
+		for (int i = 0; i<this.getCurrentProducts().size(); i++) {
+			productNames.add(this.getCurrentProducts().get(i).getName());
+		}
+		
+		for (int i = 0; i< this.experience.getProductName().size(); i++ ) {
+			
+			int value = this.experience.getFarmProductValue(farmName, this.experience.getProductName().get(i));
+			
+			if (productNames.contains(this.experience.getProductName().get(i))) {
+				value += 1;
+			}
+			else {
+				value -=1;
+			}
+			
+			if(value < 0) value = 0;
+			
+			this.experience.setFarmProductValue(farmName, this.experience.getProductName().get(i), value);
+			
+		}
+		
 	}
 	
 	public int getAge() {

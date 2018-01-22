@@ -1,6 +1,8 @@
 package transaction_calculator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -80,7 +82,7 @@ public class TransactionCalculator {
 			ND.add(ND(i,matrix));
 		}
 
-		List<String> list = productList(0.8, ND);
+		List<String> list = productList(ND);
 
 		return list;
 	}
@@ -105,7 +107,6 @@ public class TransactionCalculator {
 			c2[i] = P.get(i);
 		}
 		
-		
 		double[][] p1 = preference_matrix(c1);
 		double[][] p2 = preference_matrix(c2);
 		
@@ -123,21 +124,76 @@ public class TransactionCalculator {
 			ND.add(ND(i,matrix));
 		}
 		
-		List<String> list = productList(0.8, ND);
+		List<String> list = productList(ND);
 
 		return list;
 	}
 	
-	private List<String> productList(double threshold, List<Double> x){
+	private List<String> productList(List<Double> x){
 		List<String> list = new ArrayList<String>();
+		List<Double> original = new ArrayList<Double>();
+		List<Double> sorted = new ArrayList<Double>();
+		original = x;
+		sorted = x;
+		Collections.sort(sorted);
 		
-		for (int i = 0; i < x.size(); i++) {
-			if (x.get(i) > threshold) {
-				list.add( this.farm.getPreferences().getProductName().get(i) ); 
-			}
+		List<Double> cluster = new ArrayList<Double>();
+		cluster = cluster(sorted);
+		
+		int index =0;
+		for (int i = 0; i< cluster.size(); i++) {
+			index = original.indexOf(cluster.get(i));
+			list.add(this.farm.getPreferences().getProductName().get(index));
+			original.set(index, -1.0);
 		}
 		
 		return list;
+	}
+	
+	/** 
+	 * K-means clustering with 2 partitions
+	 * @param sorted original list to cluster
+	 * @return list of prefered products
+	 */
+	private List<Double> cluster(List<Double> sorted) {
+		double x1 = 0.75;                                                      // initial cluster
+		double x2 = 0.25;
+		double x1_old = 0;
+		double x2_old = 0;
+		double dist1, dist2 = 0.0;
+		List<Double> cluster1 = new ArrayList<Double>(); 
+		List<Double> cluster2 = new ArrayList<Double>(); 
+		
+		while ((x1 != x1_old) && (x2 != x2_old))	{
+			cluster1.clear();
+			cluster2.clear();
+			for (int i = 0; i < sorted.size(); i++) {
+				dist1 = Math.abs(sorted.get(i) - x1);
+				dist2 = Math.abs(sorted.get(i) - x2);
+				
+				if (dist1 < dist2) {
+					cluster1.add(sorted.get(i));
+				}
+				else if (dist1 >= dist2) {
+					cluster2.add(sorted.get(i));
+				}
+			}
+			x1_old = x1;
+			x2_old = x2;
+			x1 = mean(cluster1);
+			x2 = mean(cluster2);
+		}
+		return cluster1;
+	}
+	
+	private double mean(List<Double> list) {
+		double mean = 0;
+		
+		for (int i = 0; i<list.size(); i++) {
+			mean = mean + list.get(i);
+		}
+		
+		return mean / list.size();
 	}
 		
 	/** 

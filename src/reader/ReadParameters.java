@@ -102,10 +102,17 @@ public class ReadParameters implements Reader {
 				farm.setCrops(crops);
 				
 				farm.setUncertainty( 0 );
-				farm.setSatisfaction( satisfaction );
 				farm.setAspiration( aspiration );
 				farm.setTolerance(entrepreneurship);
 				farm.setCurrentProducts(currentProducts);
+				
+				List<Double> satisfactionList = new ArrayList<Double>();
+				satisfactionList.add(satisfaction);
+				for (int i = 0; i< 4; i++) {
+					satisfactionList.add(40000.00); 
+				}
+				
+				farm.setInitialSatisfaction(satisfactionList);
 				
 				List<Double> dissimilarity = new ArrayList<Double>();
 				dissimilarity.add(1.0);

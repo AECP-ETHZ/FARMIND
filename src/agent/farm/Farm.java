@@ -27,6 +27,7 @@ public class Farm {
 	private Person head;
 	private Location location;
 	private double Satisfaction;
+	private List<Double> PreviousSatisfaction;
 	private double Aspiration;
 	private double Uncertainty;
 	private double Tolerance;
@@ -164,12 +165,26 @@ public class Farm {
 	 * The farmer's income is set externally from farmdyn 
 	 */
 	private void updateSatisfaction(double income) {
+		double satisfaction = calculateSatisfaction(income);
+		
+		this.updatePreviousSatisfaction(satisfaction);
+		
+		setSatisfaction();
+	}
+	
+	/** 
+	 * Calculate satisfaction score given income value
+	 * @param income of farmer
+	 * @return satisfaction
+	 */
+	private double calculateSatisfaction(double income) {
 		double satisfaction = 0;
 		
 		double alpha_plus = 0.6;
-		double alpha_minus = -0.6;
+		double alpha_minus = 0.65;
 		double phi_plus = 0.8;
-		double phi_minus = -0.8;
+		double phi_minus = 0.8;
+		
 		double probability = 0.5;
 		double lambda = 0;
 		double v = 0;
@@ -187,7 +202,8 @@ public class Farm {
 		}
 
 		satisfaction = v*theta*lambda;
-		setSatisfaction(satisfaction);
+		
+		return satisfaction;
 	}
 	
 	public void setTolerance(double entrepreneurship) {
@@ -202,8 +218,24 @@ public class Farm {
 		Aspiration = aspiration;
 	}
 
-	public void setSatisfaction(double satisfaction) {
-		Satisfaction = satisfaction;
+	public void setSatisfaction() {
+	
+		Satisfaction = mean(this.PreviousSatisfaction);
+	}
+	
+	/** 
+	 * Return mean value of provided list 
+	 * @param list of values to calculate mean with
+	 * @return mean
+	 */
+	private double mean(List<Double> list) {
+		double mean = 0;
+		
+		for (int i = 0; i<list.size(); i++) {
+			mean = mean + list.get(i);
+		}
+		
+		return mean / list.size();
 	}
 	
 	/** 
@@ -305,4 +337,35 @@ public class Farm {
 	public void setCrops(List<Crop> crops) {
 		this.crops = crops;
 	}
+
+	public List<Double> getPreviousSatisfaction() {
+		return PreviousSatisfaction;
+	}
+
+	public void setInitialSatisfaction(List<Double> previousSatisfaction) {
+		for (int i = 0; i< previousSatisfaction.size(); i++) {
+			previousSatisfaction.set(i, calculateSatisfaction(previousSatisfaction.get(i)));
+		}
+		
+		PreviousSatisfaction = previousSatisfaction;
+	}
+	
+	public void setPreviousSatisfaction(List<Double> previousSatisfaction) {
+
+		PreviousSatisfaction = previousSatisfaction;
+	}
+	
+	public void updatePreviousSatisfaction(Double sat) {
+		List<Double> temp = new ArrayList<Double>();
+		temp.add(sat);
+		
+		for (int i = 1; i<this.getMemory(); i++) {
+			temp.add(PreviousSatisfaction.get(i-1));
+		}
+		
+		setPreviousSatisfaction(temp);
+	}
 }
+
+
+

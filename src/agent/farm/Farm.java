@@ -9,8 +9,8 @@ import java.util.Set;
 import product.Crop;
 import product.Livestock;
 import product.Product;
+import productselection_calculator.ProductSelectionCalculator;
 import reader.FarmProductMatrix;
-import transaction_calculator.TransactionCalculator;
 
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
@@ -47,7 +47,7 @@ public class Farm {
 	 */
 	public List<String> getAction(List<Farm> farms, double income) {
 	    List<String> products = new ArrayList<String>();
-	    TransactionCalculator cal = new TransactionCalculator(this, farms);
+	    ProductSelectionCalculator cal = new ProductSelectionCalculator(this, farms);
 		
 	    updateSatisfaction(income);
 		updateUncertainty(farms);

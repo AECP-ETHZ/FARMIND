@@ -1,4 +1,4 @@
-package transaction_calculator;
+package productselection_calculator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,13 +20,13 @@ import product.Livestock;
  * @author kellerke
  *
  */
-public class TransactionCalculator {
+public class ProductSelectionCalculator {
 	List<Double> Q = new ArrayList<Double>();                                  // learning by doing vector for specific farm
 	List<Double> P = new ArrayList<Double>();							       // rank of all product preferences for specific farm
 	List<Double> S = new ArrayList<Double>();							       // average social learning value for each products weighted by social network
 	Farm farm;																   // farm associated with this calculator 
 
-	public TransactionCalculator(Farm farm, List<Farm> farms) {
+	public ProductSelectionCalculator(Farm farm, List<Farm> farms) {
 		double m = farm.getPreferences().getProductName().size();		       // number of products in system
 	
 		this.Q = getFarmExperienceVector(farm,m);

@@ -3,7 +3,6 @@ package consumat;
 import java.util.List;
 
 import agent.farm.Farm;
-import product.Product;
 import reader.ReadParameters;
 
 public class Consumat {

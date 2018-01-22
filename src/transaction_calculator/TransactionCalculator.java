@@ -1,7 +1,6 @@
 package transaction_calculator;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -12,7 +11,6 @@ import org.jgrapht.graph.DefaultEdge;
 import agent.farm.Farm;
 import product.Crop;
 import product.Livestock;
-import product.Product;
 
 /** 
  * Object contains three vectors (Q,P,S) that contain normalized rankings of experience, preference, and social network experience for a specific farm. 
@@ -23,10 +21,10 @@ import product.Product;
  *
  */
 public class TransactionCalculator {
-	List<Double> Q = new ArrayList<Double>();                              // learning by doing vector for specific farm
-	List<Double> P = new ArrayList<Double>();							   // rank of all product preferences for specific farm
-	List<Double> S = new ArrayList<Double>();							   // average social learning value for each products weighted by social network
-	Farm farm;
+	List<Double> Q = new ArrayList<Double>();                                  // learning by doing vector for specific farm
+	List<Double> P = new ArrayList<Double>();							       // rank of all product preferences for specific farm
+	List<Double> S = new ArrayList<Double>();							       // average social learning value for each products weighted by social network
+	Farm farm;																   // farm associated with this calculator 
 
 	public TransactionCalculator(Farm farm, List<Farm> farms) {
 		double m = farm.getPreferences().getProductName().size();		       // number of products in system
@@ -77,13 +75,13 @@ public class TransactionCalculator {
 			}
 		}
 		
-		List<Double> ND = new ArrayList<Double>();
+		List<Double> ND = new ArrayList<Double>();                             // non-domination score vector to apply for clustering
 		for (int i = 0; i< len - 2; i++) {
 			ND.add(ND(i,matrix));
 		}
 
-		List<String> list = productList(ND);
-
+		List<String> list = productList(ND);							       // cluster algorithm returns optimal product list
+		
 		return list;
 	}
 	
@@ -119,16 +117,22 @@ public class TransactionCalculator {
 			}
 		}
 		
-		List<Double> ND = new ArrayList<Double>();
+		List<Double> ND = new ArrayList<Double>();                             // non-domination score vector to apply for clustering
 		for (int i = 0; i< len - 2; i++) {
 			ND.add(ND(i,matrix));
 		}
 		
-		List<String> list = productList(ND);
+		List<String> list = productList(ND);                                   // cluster algorithm returns optimal product list
 
 		return list;
 	}
-	
+
+	/**
+	 *  given a vector of non-domination scores return an optimized product list
+	 *  using a clustering algorithm to detect two groups within the list
+	 * @param x original ND vector
+	 * @return list of product names
+	 */
 	private List<String> productList(List<Double> x){
 		List<String> list = new ArrayList<String>();
 		List<Double> original = new ArrayList<Double>();
@@ -144,7 +148,7 @@ public class TransactionCalculator {
 		for (int i = 0; i< cluster.size(); i++) {
 			index = original.indexOf(cluster.get(i));
 			list.add(this.farm.getPreferences().getProductName().get(index));
-			original.set(index, -1.0);
+			original.set(index, -1.0);                                         // duplicate values exist in array, so 'remove' when used to get next duplicate value
 		}
 		
 		return list;
@@ -164,28 +168,33 @@ public class TransactionCalculator {
 		List<Double> cluster1 = new ArrayList<Double>(); 
 		List<Double> cluster2 = new ArrayList<Double>(); 
 		
-		while ((x1 != x1_old) && (x2 != x2_old))	{
+		while ((x1 != x1_old) && (x2 != x2_old))	{					       // when the cluster means don't change we have converged
 			cluster1.clear();
 			cluster2.clear();
 			for (int i = 0; i < sorted.size(); i++) {
 				dist1 = Math.abs(sorted.get(i) - x1);
 				dist2 = Math.abs(sorted.get(i) - x2);
 				
-				if (dist1 < dist2) {
+				if (dist1 < dist2) {										   // apply two clusters to list based on mean score
 					cluster1.add(sorted.get(i));
 				}
 				else if (dist1 >= dist2) {
 					cluster2.add(sorted.get(i));
 				}
 			}
-			x1_old = x1;
+			x1_old = x1;													   // keep old mean to compare when we converge
 			x2_old = x2;
 			x1 = mean(cluster1);
 			x2 = mean(cluster2);
 		}
-		return cluster1;
+		return cluster1;													   // higher value cluster is optimal product list values
 	}
 	
+	/** 
+	 * Return mean value of provided list 
+	 * @param list of values to calculate mean with
+	 * @return mean
+	 */
 	private double mean(List<Double> list) {
 		double mean = 0;
 		

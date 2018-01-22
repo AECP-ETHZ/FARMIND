@@ -57,7 +57,7 @@ public class Farm {
 			System.out.println("EXIT");
 		}
 		else if (this.Uncertainty >= this.Tolerance) {
-			if (this.Satisfaction >= 1) {
+			if (this.Satisfaction >= 0) {
 				System.out.println("IMITATION");
 				// check calculator with S,Q,P
 				products = cal.getImitationProducts();
@@ -67,7 +67,7 @@ public class Farm {
 			}
 		}
 		else {
-			if (this.Satisfaction >= 1) {
+			if (this.Satisfaction >= 0) {
 				System.out.println("REPETITION");
 				//products = this.getCurrentProducts();
 				
@@ -82,6 +82,30 @@ public class Farm {
 				products = cal.getOptimizeProducts();
 			}
 		}
+		
+		List<Product> current = new ArrayList<Product>();
+		
+		for (int k = 0; k < products.size(); k++) {
+			for(int i = 0; i<crops.size(); i++) {
+				if (crops.get(i).getName().equals(products.get(k) )) {
+					int ID = crops.get(i).getID();
+					Product p = new Crop(ID, products.get(k)); 
+					current.add(p);
+				}
+			}
+		}
+				
+		for (int k = 0; k < products.size(); k++) {
+			for(int i = 0; i<livestock.size(); i++) {
+				if (livestock.get(i).getName().equals(products.get(k) )) {
+					int ID = livestock.get(i).getID();
+					Product p = new Livestock(ID, products.get(k)); 
+					current.add(p);
+				}
+			}
+		}	
+		
+		this.setCurrentProducts(current);
 
 		return products;
 	}

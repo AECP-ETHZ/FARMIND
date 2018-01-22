@@ -11,21 +11,24 @@ public class Consumat {
 		
 		ReadParameters reader = new ReadParameters();
 		List<Farm>     farms = reader.getFarms();
+		double[] income = {100000,30000,100000};
 		
-		for (int years = 0; years < 1; years++) {
+		for (int years = 0; years < 3; years++) {
 			// get updated products and income from farmydyn
 			// farms.updateIncome();
 			// farms.updateProducts();
-		
+
 			// simulate all farms for time period t
 			for ( int i = 0; i < farms.size(); i++) {
-				List<String> p = farms.get(i).getAction(farms, 40000.00);
+				List<String> p = farms.get(i).getAction(farms, income[years]);
 				
 				String id = farms.get(i).getFarmName();
 				System.out.println(id + " " + p.toString());
-				System.out.println();
+
 				farms.get(i).updateExperience();                               // each time period update experience
 			}
+			System.out.println();
+
 			
 			// run farm dyn with newly generated batch files for all farms
 			System.out.println();

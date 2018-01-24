@@ -31,7 +31,6 @@ public class Farm {
 	private double Aspiration;
 	private double Uncertainty;
 	private double Tolerance;
-	private List<Double> dissimilarity;
 	private Graph<String, DefaultEdge> network; 
 	private FarmProductMatrix experience;
 	private FarmProductMatrix preferences;
@@ -69,7 +68,6 @@ public class Farm {
 		else {
 			if (this.Satisfaction >= 0) {
 				System.out.println("REPETITION");
-				//products = this.getCurrentProducts();
 				
 				for (int i = 0; i < this.getCurrentProducts().size(); i++) {
 					products.add(this.getCurrentProducts().get(i).getName());
@@ -118,12 +116,9 @@ public class Farm {
 	 * @param farms Input list of all farms in the system. 
 	 */
 	private void updateUncertainty(List<Farm> farms) {
-        double uncertainty = 0;												   // uncertainty value based on network
         double currentDissimilarity = 0;									   // similarity value of a farm 
         int EdgeCount = 0;													   // how many edges does this farm have (ie neighbors)
 		int totalFarms = 0;													   // how many total farms are there in the network
-        double sum = 0;														   // sum of previous similarities
-        double prevDissimilarityAvg = 0;									   // average of previous similarities
         List<String>  ProductNames = new ArrayList<String>();				   // intermediate variable of just names, not product objects
         Map<String, Integer> ProductMap = new HashMap<String,Integer>();       // map of all products on network, with count of often it's produced
         Double dissimilarity = 0.0;											   // dissimilarity value for farm
@@ -170,18 +165,7 @@ public class Farm {
 
         currentDissimilarity = dissimilarity/ProductNames.size();
         
-        for (int i = 0; i< this.dissimilarity.size(); i++) {
-        	sum = sum + this.dissimilarity.get(i);
-        }
-        prevDissimilarityAvg = sum / this.dissimilarity.size();                // dissimilarity average over all previous years
-        this.dissimilarity.add(currentDissimilarity);                          // add previous match
-        
-        uncertainty = (currentDissimilarity - prevDissimilarityAvg)/prevDissimilarityAvg;
-        //System.out.println(String.format("Dissimilarity value between %s and Network: %f, %f, %f", farmName, currentDissimilarity, uncertainty, prevDissimilarityAvg));
-        
-        uncertainty = (currentDissimilarity);
-        
-		setUncertainty(uncertainty);
+		setUncertainty(currentDissimilarity);
 	}
 
 	/**
@@ -356,16 +340,6 @@ public class Farm {
 	}
 	public double getSatisfaction() {
 		return Satisfaction;
-	}
-	public List<Double> getDissimilarity() {
-		return dissimilarity;
-	}
-	public void setDissimilarity(List<Double> dissimilarity) {
-		this.dissimilarity = dissimilarity;
-	}
-	public void updateMatch(double match)
-	{
-		this.dissimilarity.add(match);
 	}
 	public FarmProductMatrix getExperience() {
 		return this.experience;

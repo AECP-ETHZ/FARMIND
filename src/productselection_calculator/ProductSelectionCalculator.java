@@ -41,8 +41,8 @@ public class ProductSelectionCalculator {
 	 */
 	public List<String> getImitationProducts() {
 		
-		Q.add(0.4);
-		Q.add(0.8);
+		Q.add(0.0);
+		Q.add(0.7);
 		double[] c1 = new double[this.Q.size()];
 		for (int i = 0; i < this.Q.size(); i++) {
 			c1[i] = Q.get(i);
@@ -55,8 +55,8 @@ public class ProductSelectionCalculator {
 			c2[i] = P.get(i);
 		}
 		
-		S.add(0.4);
-		S.add(0.8);
+		S.add(0.0);
+		S.add(0.7);
 		double[] c3 = new double[this.S.size()];
 		for (int i = 0; i < this.S.size(); i++) {
 			c3[i] = S.get(i);
@@ -71,7 +71,7 @@ public class ProductSelectionCalculator {
 		 
 		for (int i = 0; i< len - 2; i++) {
 			for (int j = 0; j < len - 2; j++) {
-				matrix[i][j] = (p1[i][j] + p2[i][j] + p3[i][j] );
+				matrix[i][j] = (p1[i][j] + p2[i][j] + p3[i][j] )/3;
 			}
 		}
 		
@@ -86,7 +86,7 @@ public class ProductSelectionCalculator {
 	}
 	
 	/** 
-	 * Using fuzzy logic check P,Q lists to determine best product combinations.
+	 * Using fuzzy logic check P, Q lists to determine best product combinations.
 	 * Do not take into account social learning vector S
 	 * @return
 	 */
@@ -113,7 +113,7 @@ public class ProductSelectionCalculator {
 		 
 		for (int i = 0; i< len - 2; i++) {
 			for (int j = 0; j < len - 2; j++) {
-				matrix[i][j] = (p1[i][j] + p2[i][j]  ) / 2;
+				matrix[i][j] = ( p1[i][j] + p2[i][j] ) / 2;
 			}
 		}
 		

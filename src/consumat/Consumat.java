@@ -11,7 +11,7 @@ public class Consumat {
 		
 		ReadParameters reader = new ReadParameters();
 		List<Farm>     farms = reader.getFarms();
-		double[] income = {100000,30000,100000};
+		double[] income = {10000,30000,10000};
 		
 		for (int years = 0; years < 3; years++) {
 			// get updated products and income from farmydyn
@@ -29,7 +29,6 @@ public class Consumat {
 			}
 			System.out.println();
 
-			
 			// run farm dyn with newly generated batch files for all farms
 			System.out.println();
 		}

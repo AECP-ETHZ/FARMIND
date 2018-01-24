@@ -29,7 +29,7 @@ public class ReadParameters implements Reader {
 	public static final int MEMORY = 5;
 	public static final int ENTREPRENEURSHIP = 6;
 	public static final int INCOME_INDEX = 7;
-	public static final int START_ACTION_INDEX = 12;					       // the input spreadsheet starts the actions at column 9
+	public static final int START_ACTION_INDEX = 12;					       // the input spreadsheet starts the actions at column 12
 
 	@Override
 	public List<Farm> getFarms() {
@@ -62,6 +62,7 @@ public class ReadParameters implements Reader {
 				Farm farm = new Farm();
 				Location location = new Location();							   // create new location for each farm
 				List<Product> currentProducts = new ArrayList<Product>();
+				List<Double> income = new ArrayList<Double>();
 				double[] coordinates = {0,0};
 				
 				name = farmParameters.get(NAME);
@@ -100,27 +101,19 @@ public class ReadParameters implements Reader {
 					}
 				}	
 				
-				List<Double> income = new ArrayList<Double>();
-
 				for (int i = 0; i < memory; i++) {
 					income.add( Double.parseDouble( farmParameters.get(i+INCOME_INDEX) ) );
 				}
 				
 				farm.setIncomeHistory(income);
-								
 				farm.setExperience(experience);
 				farm.setPreferences(pref);
 				farm.setLivestock(livestock);
 				farm.setCrops(crops);
-				
 				farm.setTolerance(entrepreneurship);
 				farm.setCurrentProducts(currentProducts);
-
-				List<Double> dissimilarity = new ArrayList<Double>();
-				dissimilarity.add(1.0);
-				farm.setDissimilarity(dissimilarity);
-				
 				farm.setHead(farmHead);
+				
 				farms.add(farm);
 				farm_count_index++;	
 			}

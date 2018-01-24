@@ -27,7 +27,7 @@ public class Farm {
 	private Person head;
 	private Location location;
 	private double Satisfaction;
-	private List<Double> PreviousSatisfaction;
+	private List<Double> IncomeHistory;
 	private double Aspiration;
 	private double Uncertainty;
 	private double Tolerance;
@@ -189,11 +189,19 @@ public class Farm {
 	 * The farmer's income is set externally from farmdyn 
 	 */
 	private void updateSatisfaction(double income) {
-		double satisfaction = calculateSatisfaction(income);
+
+		this.updateIncomeHistory(income);
 		
-		this.updatePreviousSatisfaction(satisfaction);
+		setSatisfaction();                                                     // uses updated income history
+	}
+	
+	private void calculateAspiration() {
+		double aspiration = 0;
+		double alpha = 0.7;
 		
-		setSatisfaction();
+		aspiration = alpha*mean(IncomeHistory);
+		
+		setAspiration(aspiration);
 	}
 	
 	/** 
@@ -213,6 +221,8 @@ public class Farm {
 		double lambda = 0;
 		double v = 0;
 		double theta = 0; 
+		
+		calculateAspiration();
 		
 		if (income >= this.Aspiration) {
 			v = Math.pow(income, alpha_plus);
@@ -241,10 +251,15 @@ public class Farm {
 	public void setAspiration(double aspiration) {
 		Aspiration = aspiration;
 	}
-
-	public void setSatisfaction() {
 	
-		Satisfaction = mean(this.PreviousSatisfaction);
+	public void setSatisfaction() {
+		List<Double> sat = new ArrayList<Double>();
+		
+		for (int i = 0; i< this.getMemory(); i++) {
+			sat.add(calculateSatisfaction(this.IncomeHistory.get(i)));
+		}
+		
+		this.Satisfaction = mean(sat);
 	}
 	
 	/** 
@@ -381,33 +396,29 @@ public class Farm {
 	public void setCrops(List<Crop> crops) {
 		this.crops = crops;
 	}
-
-	public List<Double> getPreviousSatisfaction() {
-		return PreviousSatisfaction;
-	}
-
-	public void setInitialSatisfaction(List<Double> previousSatisfaction) {
-		for (int i = 0; i< previousSatisfaction.size(); i++) {
-			previousSatisfaction.set(i, calculateSatisfaction(previousSatisfaction.get(i)));
-		}
-		
-		PreviousSatisfaction = previousSatisfaction;
-	}
 	
-	public void setPreviousSatisfaction(List<Double> previousSatisfaction) {
-
-		PreviousSatisfaction = previousSatisfaction;
-	}
-	
-	public void updatePreviousSatisfaction(Double sat) {
+	/**
+	 * Update income history by removing 
+	 * @param income
+	 */
+	public void updateIncomeHistory (double income) {
 		List<Double> temp = new ArrayList<Double>();
-		temp.add(sat);
+		temp.add(income);
 		
-		for (int i = 1; i<this.getMemory(); i++) {
-			temp.add(PreviousSatisfaction.get(i-1));
+		for (int i = 0; i< this.getMemory() - 1; i++) {
+			temp.add(this.IncomeHistory.get(i));
 		}
+			
+		setIncomeHistory(temp); 
 		
-		setPreviousSatisfaction(temp);
+	}
+	
+	public List<Double> getIncomeHistory() {
+		return IncomeHistory;
+	}
+
+	public void setIncomeHistory(List<Double> incomeHistory) {
+		IncomeHistory = incomeHistory;
 	}
 }
 

@@ -28,7 +28,9 @@ public class ReadParameters implements Reader {
 	public static final int EDUCATION = 4;
 	public static final int MEMORY = 5;
 	public static final int ENTREPRENEURSHIP = 6;
-	
+	public static final int INCOME_INDEX = 7;
+	public static final int START_ACTION_INDEX = 12;					       // the input spreadsheet starts the actions at column 9
+
 	@Override
 	public List<Farm> getFarms() {
 		String Line;
@@ -39,9 +41,6 @@ public class ReadParameters implements Reader {
 		int education = 0;
 		int memory = 0;
 		double entrepreneurship = 0;
-		double aspiration = 0;
-		double satisfaction = 0;
-		int start_action_index = 9;											   // the input spreadsheet starts the actions at column 9
 		BufferedReader Buffer = null;	 									   // read input file
 		int farm_count_index = 0;                                              // index is used to set the actual farm id value
 		
@@ -79,12 +78,9 @@ public class ReadParameters implements Reader {
 				memory = Integer.parseInt( farmParameters.get(MEMORY));
 				entrepreneurship = Double.parseDouble( farmParameters.get(ENTREPRENEURSHIP));
 				Person farmHead = new Person(age, education, memory, entrepreneurship);          
-				
-				satisfaction = Double.parseDouble(farmParameters.get(7));
-				aspiration = Double.parseDouble(farmParameters.get(8));
-      			
+
 				currentProducts.clear();
-				for (int k = start_action_index; k < farmParameters.size(); k++) {
+				for (int k = START_ACTION_INDEX; k < farmParameters.size(); k++) {
 					for(int i = 0; i<crops.size(); i++) {
 						if (crops.get(i).getName().equals(farmParameters.get(k) )) {
 							int ID = crops.get(i).getID();
@@ -94,7 +90,7 @@ public class ReadParameters implements Reader {
 					}
 				}
 						
-				for (int k = start_action_index; k < farmParameters.size(); k++) {
+				for (int k = START_ACTION_INDEX; k < farmParameters.size(); k++) {
 					for(int i = 0; i<livestock.size(); i++) {
 						if (livestock.get(i).getName().equals(farmParameters.get(k) )) {
 							int ID = livestock.get(i).getID();
@@ -102,26 +98,24 @@ public class ReadParameters implements Reader {
 							currentProducts.add(p);
 						}
 					}
-				}		
+				}	
+				
+				List<Double> income = new ArrayList<Double>();
+
+				for (int i = 0; i < memory; i++) {
+					income.add( Double.parseDouble( farmParameters.get(i+INCOME_INDEX) ) );
+				}
+				
+				farm.setIncomeHistory(income);
 								
 				farm.setExperience(experience);
 				farm.setPreferences(pref);
 				farm.setLivestock(livestock);
 				farm.setCrops(crops);
 				
-				farm.setUncertainty( 0 );
-				farm.setAspiration( aspiration );
 				farm.setTolerance(entrepreneurship);
 				farm.setCurrentProducts(currentProducts);
-				
-				List<Double> satisfactionList = new ArrayList<Double>();
-				satisfactionList.add(satisfaction);
-				for (int i = 0; i< 4; i++) {
-					satisfactionList.add(40000.00); 
-				}
-				
-				farm.setInitialSatisfaction(satisfactionList);
-				
+
 				List<Double> dissimilarity = new ArrayList<Double>();
 				dissimilarity.add(1.0);
 				farm.setDissimilarity(dissimilarity);

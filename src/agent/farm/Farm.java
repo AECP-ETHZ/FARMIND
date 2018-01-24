@@ -284,6 +284,7 @@ public class Farm {
 				value -=1;
 			}
 			
+			if(value > this.getMemory()) value = this.getMemory();
 			if(value < 0) value = 0;
 			
 			this.experience.setFarmProductValue(farmName, this.experience.getProductName().get(i), value);

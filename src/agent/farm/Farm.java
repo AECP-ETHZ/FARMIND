@@ -11,6 +11,7 @@ import product.Livestock;
 import product.Product;
 import productselection_calculator.ProductSelectionCalculator;
 import reader.FarmProductMatrix;
+import reader.Parameters;
 
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
@@ -37,6 +38,7 @@ public class Farm {
 	private List<Product> currentProducts;
 	private List<Crop> crops;
 	private List<Livestock> livestock;
+	private Parameters parameters;
 	
 	/** 
 	 * update satisfaction and uncertainty for the farm
@@ -393,6 +395,14 @@ public class Farm {
 
 	public void setIncomeHistory(List<Double> incomeHistory) {
 		IncomeHistory = incomeHistory;
+	}
+
+	public Parameters getParameters() {
+		return parameters;
+	}
+
+	public void setParameters(Parameters parameters) {
+		this.parameters = parameters;
 	}
 }
 

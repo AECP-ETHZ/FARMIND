@@ -50,6 +50,7 @@ public class ReadParameters implements Reader {
 		List<Livestock> livestock = getLivestockList();
 		FarmProductMatrix pref = getPreferences();
 		FarmProductMatrix experience = getExperience();
+		Parameters parameters = getParameters();
 		
 		try {
 			Calendar now = Calendar.getInstance();                             // Gets the current date and time
@@ -113,6 +114,7 @@ public class ReadParameters implements Reader {
 				farm.setTolerance(entrepreneurship);
 				farm.setCurrentProducts(currentProducts);
 				farm.setHead(farmHead);
+				farm.setParameters(parameters);
 				
 				farms.add(farm);
 				farm_count_index++;	
@@ -128,6 +130,37 @@ public class ReadParameters implements Reader {
 			}
 		}
 		return farms;
+	}
+
+	private Parameters getParameters() {
+		String Line;
+		ArrayList<String> matrixRow;
+		BufferedReader Buffer = null;	
+		Parameters parameters = new Parameters();
+		
+		parameters.setTest(100.00);
+
+		try {
+			Buffer = new BufferedReader(new FileReader("./data/products_preference.csv"));
+			Line = Buffer.readLine();
+			matrixRow = CSVtoArrayList(Line);
+			matrixRow.remove(0);
+			
+			while ((Line = Buffer.readLine()) != null) {                       // Read row data
+				matrixRow = CSVtoArrayList(Line);
+			}
+				
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (Buffer != null) Buffer.close();
+			} catch (IOException Exception) {
+				Exception.printStackTrace();
+			}
+		}
+		
+		return parameters;
 	}
 
 	/**

@@ -71,7 +71,7 @@ public class ProductSelectionCalculator {
 		 
 		for (int i = 0; i< len - 2; i++) {
 			for (int j = 0; j < len - 2; j++) {
-				matrix[i][j] = (p1[i][j] + p2[i][j] + p3[i][j] ) / 3;
+				matrix[i][j] = (p1[i][j] + p2[i][j] + p3[i][j] );
 			}
 		}
 		

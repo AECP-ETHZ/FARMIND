@@ -21,6 +21,14 @@ import agent.farm.Location;
 
 public class ReadParameters implements Reader {
 
+	public static final int NAME = 0;
+	public static final int COORDINATE1 = 1;
+	public static final int COORDINATE2 = 2;
+	public static final int AGE = 3;
+	public static final int EDUCATION = 4;
+	public static final int MEMORY = 5;
+	public static final int ENTREPRENEURSHIP = 6;
+	
 	@Override
 	public List<Farm> getFarms() {
 		String Line;
@@ -57,19 +65,19 @@ public class ReadParameters implements Reader {
 				List<Product> currentProducts = new ArrayList<Product>();
 				double[] coordinates = {0,0};
 				
-				name = farmParameters.get(0);
-				coordinates[0] = Double.parseDouble(farmParameters.get(1));
-				coordinates[1] = Double.parseDouble(farmParameters.get(2));
+				name = farmParameters.get(NAME);
+				coordinates[0] = Double.parseDouble(farmParameters.get(COORDINATE1));
+				coordinates[1] = Double.parseDouble(farmParameters.get(COORDINATE2));
 				location.setCoordinates(coordinates);
 				   
 				farm.setFarmName(name);
 				farm.setLocation(location);
 				farm.setNetwork(network.get(farm_count_index));
 
-				age = currentYear - Integer.parseInt( farmParameters.get(3));
-				education = Integer.parseInt( farmParameters.get(4) );
-				memory = Integer.parseInt( farmParameters.get(5));
-				entrepreneurship = Double.parseDouble( farmParameters.get(6));
+				age = currentYear - Integer.parseInt( farmParameters.get(AGE));
+				education = Integer.parseInt( farmParameters.get(EDUCATION) );
+				memory = Integer.parseInt( farmParameters.get(MEMORY));
+				entrepreneurship = Double.parseDouble( farmParameters.get(ENTREPRENEURSHIP));
 				Person farmHead = new Person(age, education, memory, entrepreneurship);          
 				
 				satisfaction = Double.parseDouble(farmParameters.get(7));

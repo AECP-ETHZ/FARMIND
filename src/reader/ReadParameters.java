@@ -54,8 +54,6 @@ public class ReadParameters implements Reader {
 				farmParameters = CSVtoArrayList(Line);
 				Farm farm = new Farm();
 				Location location = new Location();							   // create new location for each farm
-				FarmProductMatrix preferences = new FarmProductMatrix();
-				FarmProductMatrix FarmExperience = new FarmProductMatrix();
 				List<Product> currentProducts = new ArrayList<Product>();
 				double[] coordinates = {0,0};
 				
@@ -97,21 +95,24 @@ public class ReadParameters implements Reader {
 						}
 					}
 				}		
-				
-				preferences.setProductName(pref.getProductName());
-				preferences.setProductMap(pref.getProductmap());
-				FarmExperience.setProductName(experience.getProductName());
-				FarmExperience.setProductMap(experience.getProductmap());
-
-				
+								
+				farm.setExperience(experience);
+				farm.setPreferences(pref);
+				farm.setLivestock(livestock);
+				farm.setCrops(crops);
 				
 				farm.setUncertainty( 0 );
-				farm.setSatisfaction( satisfaction );
 				farm.setAspiration( aspiration );
 				farm.setTolerance(entrepreneurship);
-				farm.setExperience(FarmExperience);
-				farm.setPreferences(preferences);
 				farm.setCurrentProducts(currentProducts);
+				
+				List<Double> satisfactionList = new ArrayList<Double>();
+				satisfactionList.add(satisfaction);
+				for (int i = 0; i< 4; i++) {
+					satisfactionList.add(40000.00); 
+				}
+				
+				farm.setInitialSatisfaction(satisfactionList);
 				
 				List<Double> dissimilarity = new ArrayList<Double>();
 				dissimilarity.add(1.0);

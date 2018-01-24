@@ -3,12 +3,6 @@ package consumat;
 import java.util.List;
 
 import agent.farm.Farm;
-import calculator.TransactionCalculator;
-import decision.DecisionResult;
-import output.BatchOutput;
-import product.Crop;
-import product.Livestock;
-import product.Product;
 import reader.ReadParameters;
 
 public class Consumat {
@@ -16,21 +10,29 @@ public class Consumat {
 	public static void main(String[] args) {
 		
 		ReadParameters reader = new ReadParameters();
-		List<Crop>        crops = reader.getCropList();
-		List<Livestock>   livestock = reader.getLivestockList();
-		List<Farm>        farms = reader.getFarms();
+		List<Farm>     farms = reader.getFarms();
+		double[] income = {100000,30000,100000};
 		
-		TransactionCalculator cal = new TransactionCalculator(farms.get(0), crops, livestock, farms);
-		
-		for ( int i = 0; i < farms.size(); i++) {
+		for (int years = 0; years < 3; years++) {
+			// get updated products and income from farmydyn
+			// farms.updateIncome();
+			// farms.updateProducts();
 
-			List<Product> p = farms.get(i).getAction(farms);
-			String id = farms.get(i).getFarmName();
+			// simulate all farms for time period t
+			for ( int i = 0; i < farms.size(); i++) {
+				List<String> p = farms.get(i).getAction(farms, income[years]);
+				
+				String id = farms.get(i).getFarmName();
+				System.out.println(id + " " + p.toString());
 
-			DecisionResult decision = new DecisionResult(id, p);
+				farms.get(i).updateExperience();                               // each time period update experience
+			}
+			System.out.println();
+
 			
-			BatchOutput batch = new BatchOutput(decision);
-			batch.write();
+			// run farm dyn with newly generated batch files for all farms
+			System.out.println();
 		}
+		
 	}
 }

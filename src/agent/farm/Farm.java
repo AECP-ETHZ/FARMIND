@@ -5,22 +5,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import product.Crop;
+import product.Livestock;
 import product.Product;
+import productselection_calculator.ProductSelectionCalculator;
 import reader.FarmProductMatrix;
+
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 
 /** 
- * Farm object contains all preferences, networks, people, and parameters associated with each farm
+ * Farm object contains people and parameters associated with each farm
+ * contains copy of crop and livestock list, preferences and experiences and network list
+ * 
  * @author kellerke
  *
  */
-public class Farm implements Member {
-	
+public class Farm {
 	private String farmName;
 	private Person head;
 	private Location location;
 	private double Satisfaction;
+	private List<Double> PreviousSatisfaction;
 	private double Aspiration;
 	private double Uncertainty;
 	private double Tolerance;
@@ -29,6 +36,8 @@ public class Farm implements Member {
 	private FarmProductMatrix experience;
 	private FarmProductMatrix preferences;
 	private List<Product> currentProducts;
+	private List<Crop> crops;
+	private List<Livestock> livestock;
 	
 	/** 
 	 * update satisfaction and uncertainty for the farm
@@ -37,34 +46,67 @@ public class Farm implements Member {
 	 * 
 	 * @return List of Products/Actions that the farm will produce
 	 */
-	public List<Product> getAction(List<Farm> farms) {
-		updateSatisfaction(50000.00);
+	public List<String> getAction(List<Farm> farms, double income) {
+	    List<String> products = new ArrayList<String>();
+	    ProductSelectionCalculator cal = new ProductSelectionCalculator(this, farms);
+		
+	    updateSatisfaction(income);
 		updateUncertainty(farms);
 		
-		// create final action array
-		List<Product> products = new ArrayList<Product>();
-		
 		if ((head.getAge() > 65)) {
-			System.out.println(ACTION.EXIT);
+			System.out.println("EXIT");
 		}
 		else if (this.Uncertainty >= this.Tolerance) {
-			if (this.Satisfaction >= 1) {
-				System.out.println(ACTION.IMITATION);
+			if (this.Satisfaction >= 0) {
+				System.out.println("IMITATION");
 				// check calculator with S,Q,P
+				products = cal.getImitationProducts();
 			}
 			else {
-				System.out.println(ACTION.OPT_OUT);
+				System.out.println("OPT_OUT");
 			}
 		}
 		else {
-			if (this.Satisfaction < 1) {
-				System.out.println(ACTION.REPETITION);
+			if (this.Satisfaction >= 0) {
+				System.out.println("REPETITION");
+				//products = this.getCurrentProducts();
+				
+				for (int i = 0; i < this.getCurrentProducts().size(); i++) {
+					products.add(this.getCurrentProducts().get(i).getName());
+				}
+				
 			}
 			else {
-				System.out.println(ACTION.OPTIMIZATION);
+				System.out.println("OPTIMIZATION");
 				// check calculator with Q,P (no social costs)
+				products = cal.getOptimizeProducts();
 			}
 		}
+		
+		List<Product> current = new ArrayList<Product>();
+		
+		for (int k = 0; k < products.size(); k++) {
+			for(int i = 0; i<crops.size(); i++) {
+				if (crops.get(i).getName().equals(products.get(k) )) {
+					int ID = crops.get(i).getID();
+					Product p = new Crop(ID, products.get(k)); 
+					current.add(p);
+				}
+			}
+		}
+				
+		for (int k = 0; k < products.size(); k++) {
+			for(int i = 0; i<livestock.size(); i++) {
+				if (livestock.get(i).getName().equals(products.get(k) )) {
+					int ID = livestock.get(i).getID();
+					Product p = new Livestock(ID, products.get(k)); 
+					current.add(p);
+				}
+			}
+		}	
+		
+		this.setCurrentProducts(current);
+
 		return products;
 	}
 	
@@ -147,28 +189,45 @@ public class Farm implements Member {
 	 * The farmer's income is set externally from farmdyn 
 	 */
 	private void updateSatisfaction(double income) {
+		double satisfaction = calculateSatisfaction(income);
+		
+		this.updatePreviousSatisfaction(satisfaction);
+		
+		setSatisfaction();
+	}
+	
+	/** 
+	 * Calculate satisfaction score given income value
+	 * @param income of farmer
+	 * @return satisfaction
+	 */
+	private double calculateSatisfaction(double income) {
 		double satisfaction = 0;
 		
-		/*double alpha_plus = 0.6;
-		double alpha_minus = -0.6;
+		double alpha_plus = 0.6;
+		double alpha_minus = 0.65;
 		double phi_plus = 0.8;
-		double phi_minus = -0.8;
+		double phi_minus = 0.8;
+		
 		double probability = 0.5;
+		double lambda = 0;
 		double v = 0;
-		double theta = 0; */
+		double theta = 0; 
 		
 		if (income >= this.Aspiration) {
-			//v = Math.pow(income, alpha_plus);
-			//theta = ( Math.pow(probability, phi_plus) ) / Math.pow( (Math.pow(probability, phi_plus) + Math.pow((1 - probability), phi_plus)), (1/phi_plus) );
-			satisfaction = 1.0;
+			v = Math.pow(income, alpha_plus);
+			theta = ( Math.pow(probability, phi_plus) ) / Math.pow( (Math.pow(probability, phi_plus) + Math.pow((1 - probability), phi_plus)), (1/phi_plus) );
+			lambda = 1;
 		}
 		else if (income < this.Aspiration) {
-			//v = Math.pow(income, alpha_minus);
-			//theta = ( Math.pow(probability, phi_minus) ) / Math.pow( (Math.pow(probability, phi_minus) + Math.pow((1 - probability), phi_minus)), (1/phi_minus) );
-			satisfaction = -1.0;
+			v = Math.pow(income, alpha_minus);
+			theta = ( Math.pow(probability, phi_minus) ) / Math.pow( (Math.pow(probability, phi_minus) + Math.pow((1 - probability), phi_minus)), (1/phi_minus) );
+			lambda = -1;
 		}
 
-		setSatisfaction(satisfaction);
+		satisfaction = v*theta*lambda;
+		
+		return satisfaction;
 	}
 	
 	public void setTolerance(double entrepreneurship) {
@@ -183,24 +242,67 @@ public class Farm implements Member {
 		Aspiration = aspiration;
 	}
 
-	public void setSatisfaction(double satisfaction) {
-		Satisfaction = satisfaction;
+	public void setSatisfaction() {
+	
+		Satisfaction = mean(this.PreviousSatisfaction);
 	}
 	
-	@Override
+	/** 
+	 * Return mean value of provided list 
+	 * @param list of values to calculate mean with
+	 * @return mean
+	 */
+	private double mean(List<Double> list) {
+		double mean = 0;
+		
+		for (int i = 0; i<list.size(); i++) {
+			mean = mean + list.get(i);
+		}
+		
+		return mean / list.size();
+	}
+	
+	/** 
+	 * Each time period, t, call this function to increment the experience vector of this farm. 
+	 * This experience vector is part of a shared experience matrix that all farms have
+	 */
+	public void updateExperience() {
+		List<String> productNames = new ArrayList<String>();
+		
+		for (int i = 0; i<this.getCurrentProducts().size(); i++) {
+			productNames.add(this.getCurrentProducts().get(i).getName());
+		}
+		
+		for (int i = 0; i< this.experience.getProductName().size(); i++ ) {
+			
+			int value = this.experience.getFarmProductValue(farmName, this.experience.getProductName().get(i));
+			
+			if (productNames.contains(this.experience.getProductName().get(i))) {
+				value += 1;
+			}
+			else {
+				value -=1;
+			}
+			
+			if(value > this.getMemory()) value = this.getMemory();
+			if(value < 0) value = 0;
+			
+			this.experience.setFarmProductValue(farmName, this.experience.getProductName().get(i), value);
+			
+		}
+		
+	}
+	
 	public int getAge() {
 		return this.head.getAge();
 	}
-	@Override
 	public int getEducation() {
 		return this.head.getEducation();
 	}
-	@Override
 	public FarmProductMatrix getPreferences() {
 		
 		return this.preferences;
 	}
-	@Override
 	public int getMemory() {
 		return this.head.getMemory();
 	}
@@ -264,9 +366,50 @@ public class Farm implements Member {
 	public void setCurrentProducts(List<Product> products) {
 		this.currentProducts = products;
 	}
-	@Override
 	public List<Product> getCurrentProducts() {
 		return this.currentProducts;
 	}
+	public List<Livestock> getLivestock() {
+		return livestock;
+	}
+	public void setLivestock(List<Livestock> livestock) {
+		this.livestock = livestock;
+	}
+	public List<Crop> getCrops() {
+		return crops;
+	}
+	public void setCrops(List<Crop> crops) {
+		this.crops = crops;
+	}
 
+	public List<Double> getPreviousSatisfaction() {
+		return PreviousSatisfaction;
+	}
+
+	public void setInitialSatisfaction(List<Double> previousSatisfaction) {
+		for (int i = 0; i< previousSatisfaction.size(); i++) {
+			previousSatisfaction.set(i, calculateSatisfaction(previousSatisfaction.get(i)));
+		}
+		
+		PreviousSatisfaction = previousSatisfaction;
+	}
+	
+	public void setPreviousSatisfaction(List<Double> previousSatisfaction) {
+
+		PreviousSatisfaction = previousSatisfaction;
+	}
+	
+	public void updatePreviousSatisfaction(Double sat) {
+		List<Double> temp = new ArrayList<Double>();
+		temp.add(sat);
+		
+		for (int i = 1; i<this.getMemory(); i++) {
+			temp.add(PreviousSatisfaction.get(i-1));
+		}
+		
+		setPreviousSatisfaction(temp);
+	}
 }
+
+
+

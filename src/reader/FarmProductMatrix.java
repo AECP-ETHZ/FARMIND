@@ -33,6 +33,21 @@ public class FarmProductMatrix {
 		return val;
 	}
 	
+	/** 
+	 * Given a farmID and a product, set the value of that cell
+	 * 
+	 * @param FarmID
+	 * @param Product
+	 * @return value of that cell in the matrix
+	 */
+	public void setFarmProductValue(String FarmID, String Product, int value) {
+		int index = productName.indexOf(Product);
+		Integer[] array = productMap.get(FarmID);
+		array[index] = value;
+		
+		productMap.replace(FarmID, array);
+	}
+	
 	public List<String> getProductName() {
 		return productName;
 	}

@@ -14,14 +14,13 @@ import product.Livestock;
 
 /** 
  * Object contains three vectors (Q,P,S) that contain normalized rankings of experience, preference, and social network experience for a specific farm. 
- * 
  * Create the calculator for each individual farm, and the calculator can be used to decide on the imitation and optimization actions
  * 
  * @author kellerke
  *
  */
 public class ProductSelectionCalculator {
-	List<Double> Q = new ArrayList<Double>();                                  // learning by doing vector for specific farm
+	List<Double> L = new ArrayList<Double>();                                  // learning by doing vector for specific farm
 	List<Double> P = new ArrayList<Double>();							       // rank of all product preferences for specific farm
 	List<Double> S = new ArrayList<Double>();							       // average social learning value for each products weighted by social network
 	Farm farm;																   // farm associated with this calculator 
@@ -29,34 +28,37 @@ public class ProductSelectionCalculator {
 	public ProductSelectionCalculator(Farm farm, List<Farm> farms) {
 		double m = farm.getPreferences().getProductName().size();		       // number of products in system
 	
-		this.Q = getFarmExperienceVector(farm,m);
-		this.P = getFarmPreferenceVector(farm,m);
+		this.L = getFarmExperienceVector(farm,m);
 		this.S = getNetworkExperienceAverageVector(farm, m, farms);
+		this.P = getFarmPreferenceVector(farm,m);
+		
+		L.add(0.6);															   // 0.6 to 0.9 corresponds to 1 to 3 years of experience
+		L.add(0.9);															   // above 3 years of experience we count it equally
+		S.add(0.6);
+		S.add(0.9);
+		
+		P.add(0.4);															   // upper and lower q range: corresponds to neutral (3) on the Likert scale
+		P.add(0.6);															   // vector normalized 0.0, 0.25, 0.5, 0.75, 1 ==> 1,2,3,4,5
 		this.farm = farm;
 	}
 	
 	/** 
 	 * Using fuzzy logic check S,P,Q lists to determine best product combinations
+	 * The len-2 part of the calculation is to account for q+ and q- minus at the start and end of the calculation
 	 * @return
 	 */
 	public List<String> getImitationProducts() {
 		
-		Q.add(0.0);
-		Q.add(0.7);
-		double[] c1 = new double[this.Q.size()];
-		for (int i = 0; i < this.Q.size(); i++) {
-			c1[i] = Q.get(i);
+		double[] c1 = new double[this.L.size()];
+		for (int i = 0; i < this.L.size(); i++) {
+			c1[i] = L.get(i);
 		}
 		
-		P.add(0.4);
-		P.add(0.8);
 		double[] c2 = new double[this.P.size()];
 		for (int i = 0; i < this.P.size(); i++) {
 			c2[i] = P.get(i);
 		}
 		
-		S.add(0.0);
-		S.add(0.7);
 		double[] c3 = new double[this.S.size()];
 		for (int i = 0; i < this.S.size(); i++) {
 			c3[i] = S.get(i);
@@ -88,18 +90,16 @@ public class ProductSelectionCalculator {
 	/** 
 	 * Using fuzzy logic check P, Q lists to determine best product combinations.
 	 * Do not take into account social learning vector S
+	 * The len-2 part of the calculation is to account for q+ and q- minus at the start and end of the calculation
 	 * @return
 	 */
 	public List<String> getOptimizeProducts() {
-		Q.add(0.4);
-		Q.add(0.8);
-		double[] c1 = new double[this.Q.size()];
-		for (int i = 0; i < this.Q.size(); i++) {
-			c1[i] = Q.get(i);
+
+		double[] c1 = new double[this.L.size()];
+		for (int i = 0; i < this.L.size(); i++) {
+			c1[i] = L.get(i);
 		}
 		
-		P.add(0.4);
-		P.add(0.8);
 		double[] c2 = new double[this.P.size()];
 		for (int i = 0; i < this.P.size(); i++) {
 			c2[i] = P.get(i);
@@ -157,7 +157,7 @@ public class ProductSelectionCalculator {
 	/** 
 	 * K-means clustering with 2 partitions
 	 * @param sorted original list to cluster
-	 * @return list of prefered products
+	 * @return list of preferred products
 	 */
 	private List<Double> cluster(List<Double> sorted) {
 		double x1 = 0.75;                                                      // initial cluster
@@ -206,7 +206,7 @@ public class ProductSelectionCalculator {
 	}
 		
 	/** 
-	 * Non Domination score for an 
+	 * Non Domination score for a fuzzy logic preference matrix
 	 * @param index which item in the list (eg product) we want to score against the criterion matrix
 	 * @param matrix of criteria preferences for all items
 	 * @return nd score for this product
@@ -225,19 +225,19 @@ public class ProductSelectionCalculator {
 	}
 	
 	/** 
-	 * Build preference matrix for a catagory based on the t score and the q range
-	 * @param catagory
+	 * Build preference matrix for a category based on the t score and the q range
+	 * @param category
 	 * @return matrix of preferences
 	 */
-	private double[][] preference_matrix(double[] catagory) {
-		int len = catagory.length;
-		double q_plus = catagory[len-1];
-		double q_minus = catagory[len-2];
+	private double[][] preference_matrix(double[] category) {
+		int len = category.length;
+		double q_plus = category[len-1];
+		double q_minus = category[len-2];
 		double[][] matrix = new double[len-2][len-2];
 		
 		for (int i = 0; i< len-2; i++) {
 			for (int j = 0; j < len - 2; j++) {
-				matrix[i][j] = t_rating(catagory[i],catagory[j], q_minus,q_plus);
+				matrix[i][j] = t_rating(category[i],category[j], q_minus,q_plus);
 			}
 		}
 		
@@ -246,11 +246,11 @@ public class ProductSelectionCalculator {
 	
 	/** 
 	 * Build a rating score between x,y based on the q range
-	 * @param x
-	 * @param y
-	 * @param q_minus
-	 * @param q_plus
-	 * @return rating between x and y
+	 * @param x first item value
+	 * @param y second item value
+	 * @param q_minus lower range of fuzzy region in set
+	 * @param q_plus upper range of fuzzy region in set
+	 * @return rating between x and y (not y and x)
 	 */
 	private double t_rating(double x, double y, double q_minus, double q_plus) {
 		double rank = 0;
@@ -267,15 +267,15 @@ public class ProductSelectionCalculator {
 	/** 
 	 * Each farm has a vector with associated years of experience in the shared matrix of experience.
 	 * Scale this vector based on a parameter k. 
-	 * @param farm
-	 * @param m
-	 * @return
+	 * @param farm that we are performing the calculations for
+	 * @param m number of products in the system
+	 * @return vector of farming experience for this farm
 	 */
 	private List<Double> getFarmExperienceVector(Farm farm, double m) {
 		List<Double> Q = new ArrayList<Double>();                              // learning by doing vector for specific farm
-		int time = 0;
-		double k = 0.6;
-		double q;
+		int time = 0;														   // years of experience
+		double k = 0.6;														   // scale factor
+		double q;															   // calculated score
 		
 		for (int i = 0; i < m; i++) {
 			time = farm.getExperience().getFarmProductValue(farm.getFarmName(), farm.getPreferences().getProductName().get(i) );
@@ -283,14 +283,15 @@ public class ProductSelectionCalculator {
 			Q.add(q);
 		}
 
-		return normalizeList(Q);
+		//return normalizeList(Q);
+		return (Q);
 	}
 	
 	/** 
 	 * Each farm has a preference vector and we scale this vector based on the number of products in the system
-	 * @param farm
-	 * @param m
-	 * @return
+	 * @param farm that we are performing the calculations for
+	 * @param m number of products in the system
+	 * @return vector of farming preference for this farm
 	 */
 	private List<Double> getFarmPreferenceVector(Farm farm, double m) {
 		List<Double> P = new ArrayList<Double>();							   // rank of all product preferences for specific farm
@@ -310,39 +311,40 @@ public class ProductSelectionCalculator {
 	 * Then take the average experience level for each product for all farms in the network 
 	 * Base this average on the social network weight between the main farm and the node farm
 	 * 
-	 * @param farm
-	 * @param m
-	 * @return
+	 * @param farm that we are performing the calculations for
+	 * @param m number of products in the system
+	 * @return vector of social farming experience for this farm
 	 */
 	private List<Double> getNetworkExperienceAverageVector(Farm farm, double m, List<Farm> farms) {
 		List<Double> S = new ArrayList<Double>();							   // rank of all product preferences for specific farm
+		int i,j = 0;														   // iterators
+        double totalFarms = 0;												   // how many total farms are there in the network
+		Set<DefaultEdge> E;													   // set of edges in the network
+		Iterator<DefaultEdge> I;											   // iterator through all edges
+        double w;															   // weight of edge between two nodes
+        double sum = 0;														   // running sum of product score
+        List<List<Double>> QForAllFarms = new ArrayList<List<Double>>();       // aggregate list of all Q lists
 
-		int i,j = 0;	
-        double totalFarms = 0;													// how many total farms are there in the network
-		Set<DefaultEdge> E;
-		Iterator<DefaultEdge> I;
-        double w;
-        double sum = 0;
-        		
 		// social learning calculation
 		E = farm.getNetwork().outgoingEdgesOf(farm.getFarmName());
         totalFarms = farms.size();
         I = E.iterator();
 
-        List<List<Double>> QForAllFarms = new ArrayList<List<Double>>();
-        
         for (i = 0; i < totalFarms; i++) {
         	if (!farms.get(i).getFarmName().equals(farm.getFarmName()) ) {
         		w = farm.getNetwork().getEdgeWeight(I.next());						   // weight of social tie between main farm and farm i
-        		List<Double> Q = new ArrayList<Double>();                              // learning by doing vector for farm i
-        		List<Double> Q_scaled = new ArrayList<Double>();                       // scaled learning by doing vector for farm i
-
-        		Q = getFarmExperienceVector(farms.get(i), m);
-        		for (j = 0; j< m; j++) {
-        			 Q_scaled.add(Q.get(j)*w);
+        		if (w > 0) {
+	        		List<Double> Q = new ArrayList<Double>();                              // learning by doing vector for farm i
+	        		List<Double> Q_scaled = new ArrayList<Double>();                       // scaled learning by doing vector for farm i
+	
+	        		Q = getFarmExperienceVector(farms.get(i), m);
+	        		for (j = 0; j< m; j++) {
+	        			 Q_scaled.add(Q.get(j)*w);
+	        		}
+	
+	        		//QForAllFarms.add(normalizeList(Q_scaled));
+	        		QForAllFarms.add((Q_scaled));
         		}
-
-        		QForAllFarms.add(normalizeList(Q_scaled));
         	}
         }
         
@@ -358,7 +360,8 @@ public class ProductSelectionCalculator {
         	S.add(sum);
         }
 
-		return normalizeList(S);
+		//return normalizeList(S);
+		return (S);
 	}
 	
 	/**
@@ -438,8 +441,13 @@ public class ProductSelectionCalculator {
 		return distance;
 	}
 	
+	/**
+	 * Create a normalized list from 0 to 1
+	 * @param list unormalized list
+	 * @return normalized list
+	 */
 	private List<Double> normalizeList(List<Double> list) {
-		List<Double> normalizedList = new ArrayList<Double>();
+		List<Double> normalizedList = new ArrayList<Double>();				   // normalized list to return
 
 		double min = min(list);
 		double max = max(list);
@@ -450,6 +458,11 @@ public class ProductSelectionCalculator {
 		return normalizedList;
 	}
 	
+	/** 
+	 * Find minimum of List of doubles
+	 * @param list of input values
+	 * @return minimum value
+	 */
 	private double min(List<Double> list) {
 		double min = 1;
 		double temp = 0;
@@ -461,6 +474,11 @@ public class ProductSelectionCalculator {
 		return min;
 	}
 	
+	/** 
+	 * Find max of List of doubles
+	 * @param list of input values
+	 * @return max value
+	 */
 	private double max(List<Double> list) {
 		double max = 0;
 		double temp = 0;

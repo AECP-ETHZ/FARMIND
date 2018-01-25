@@ -42,17 +42,23 @@ public class Farm {
 	
 	/** 
 	 * update satisfaction and uncertainty for the farm
+	 * create product selection calculator for this farm
 	 * check which option farm will pursue
-	 * return decision, and update product list
+	 * return decision from calculator and update product list
 	 * 
+	 * @param farms full list of all farms in system
+	 * @param income of this particular farm
 	 * @return List of Products/Actions that the farm will produce
 	 */
-	public List<String> getAction(List<Farm> farms, double income) {
-	    List<String> products = new ArrayList<String>();
-	    ProductSelectionCalculator cal = new ProductSelectionCalculator(this, farms);
-		
+	public List<String> getUpdatedActions(List<Farm> farms, double income) {
+	    List<String> products = new ArrayList<String>();								 // list of names of products to return
+	    ProductSelectionCalculator cal = new ProductSelectionCalculator(this, farms);    // calculator for the product selection
+		List<Product> current = new ArrayList<Product>();							     // current products (objects - not names) in system 
+
 	    updateSatisfaction(income);
 		updateUncertainty(farms);
+		updateAspiration();
+		updateTolerance();                                                     // currently does nothing
 		
 		if ((head.getAge() > 65)) {
 			System.out.println("EXIT");
@@ -71,22 +77,18 @@ public class Farm {
 			if (this.Satisfaction >= 0) {
 				System.out.println("REPETITION");
 				
-				/*for (int i = 0; i < this.getCurrentProducts().size(); i++) {
+				for (int i = 0; i < this.getCurrentProducts().size(); i++) {
 					products.add(this.getCurrentProducts().get(i).getName());
-				} */
+				} 
 				
-			    products = cal.getImitationProducts();
 			}
 			else {
 				System.out.println("OPTIMIZATION");
 				// check calculator with Q,P (no social costs)
-				//products = cal.getOptimizeProducts();
-				products = cal.getImitationProducts();
+				products = cal.getOptimizeProducts();
 
 			}
 		}
-		
-		List<Product> current = new ArrayList<Product>();
 		
 		for (int k = 0; k < products.size(); k++) {
 			for(int i = 0; i<crops.size(); i++) {
@@ -113,6 +115,7 @@ public class Farm {
 		return products;
 	}
 	
+	// update functions for farm parameters
 	/**
 	 * Using list of all current farms in the system and the social network of the main farm,
 	 * update the main farm's uncertainty value based on the social network weight and the dissimilarity 
@@ -127,15 +130,13 @@ public class Farm {
         List<String>  ProductNames = new ArrayList<String>();				   // intermediate variable of just names, not product objects
         Map<String, Integer> ProductMap = new HashMap<String,Integer>();       // map of all products on network, with count of often it's produced
         Double dissimilarity = 0.0;											   // dissimilarity value for farm
-        
-        Set<DefaultEdge> E;
+        Set<DefaultEdge> E;                                                    // set of edges in network with this farm at the head
     		
 		E = this.network.outgoingEdgesOf(this.farmName);
-
         EdgeCount = E.size();
         totalFarms = farms.size();
         
-    	for (int j = 0; j < totalFarms; j++)  						           //  loop through all farms
+    	for (int j = 0; j < totalFarms; j++)  						           //  loop through all farms and check if they have a connection to main farm
     	{
     		List<Product> p = farms.get(j).getCurrentProducts();
     		for (int i = 0; i < p.size(); i++) {
@@ -172,19 +173,20 @@ public class Farm {
         
 		setUncertainty(currentDissimilarity);
 	}
-
-	/**
+     /**
 	 * Based on the current income level of the farmer calculate new satisfaction level.
 	 * The farmer's income is set externally from farmdyn 
 	 */
 	private void updateSatisfaction(double income) {
-
-		this.updateIncomeHistory(income);
+		this.updateIncomeHistory(income);									   // add income at current time step to history log, remove oldest income
 		
-		setSatisfaction();                                                     // uses updated income history
+		double current_satisfaction = currentSatisfaction();
+		setSatisfaction(current_satisfaction);                                                     // uses updated income history
 	}
-	
-	private void calculateAspiration() {
+	/** 
+	 * Based on the historical income data, calculate the current aspiration level
+	 */
+	private void updateAspiration() {
 		double aspiration = 0;
 		double alpha = 0.7;
 		
@@ -192,7 +194,58 @@ public class Farm {
 		
 		setAspiration(aspiration);
 	}
+	/** 
+	 * Based on the historical income data, calculate the current aspiration level
+	 */
+	private void updateTolerance() {
+		// do nothing - tolerance set externally
+	}
+	/** 
+	 * Each time period, t, call this function to increment the experience vector of this farm. 
+	 * This experience vector is part of a shared experience matrix that all farms have
+	 * If the farm is currently farming a product, then increase the experience of that product for that farm.
+	 * For all other possible products in the experience vector for this farm, decrement the experience by one year.
+	 */
+	public void updateExperience() {
+		List<String> productNames = new ArrayList<String>();				   // array of names of products for comparison
+		
+		for (int i = 0; i<this.getCurrentProducts().size(); i++) {
+			productNames.add(this.getCurrentProducts().get(i).getName());
+		}
+		
+		for (int i = 0; i< this.experience.getProductName().size(); i++ ) {
+			int value = this.experience.getFarmProductValue(farmName, this.experience.getProductName().get(i));
+			
+			if (productNames.contains(this.experience.getProductName().get(i))) {
+				value += 1;
+			}
+			else {
+				value -=1;
+			}
+			
+			if(value > this.getMemory()) value = this.getMemory();
+			if(value < 0) value = 0;
+			
+			this.experience.setFarmProductValue(farmName, this.experience.getProductName().get(i), value);
+			
+		}	
+	}
+	/**
+	 * Update income history by removing oldest income and replacing with new income
+	 * @param income
+	 */
+	public void updateIncomeHistory (double income) {
+		List<Double> temp = new ArrayList<Double>();                           // update array for new incomes
+		temp.add(income);
+		
+		for (int i = 0; i< this.getMemory() - 1; i++) {
+			temp.add(this.IncomeHistory.get(i));
+		}
+			
+		setIncomeHistory(temp); 
+	}
 	
+	// helper functions
 	/** 
 	 * Calculate satisfaction score given income value
 	 * @param income of farmer
@@ -211,8 +264,6 @@ public class Farm {
 		double v = 0;
 		double theta = 0; 
 		
-		calculateAspiration();
-		
 		if (income >= this.Aspiration) {
 			v = Math.pow(income, alpha_plus);
 			theta = ( Math.pow(probability, phi_plus) ) / Math.pow( (Math.pow(probability, phi_plus) + Math.pow((1 - probability), phi_plus)), (1/phi_plus) );
@@ -228,36 +279,25 @@ public class Farm {
 		
 		return satisfaction;
 	}
-	
-	public void setTolerance(double entrepreneurship) {
-		Tolerance = entrepreneurship;
-	}
-	
-	public void setUncertainty(double uncertainty) {
-		Uncertainty = uncertainty;
-	}
-
-	public void setAspiration(double aspiration) {
-		Aspiration = aspiration;
-	}
-	
-	public void setSatisfaction() {
+	/**
+	 * From the farm income history, calculate current satisfaction level as the average of historical satisfaction
+	 * @return mean historical satisfaction
+	 */
+	private double currentSatisfaction() {
 		List<Double> sat = new ArrayList<Double>();
 		
 		for (int i = 0; i< this.getMemory(); i++) {
 			sat.add(calculateSatisfaction(this.IncomeHistory.get(i)));
 		}
-		
-		this.Satisfaction = mean(sat);
+		return mean(sat);
 	}
-	
 	/** 
 	 * Return mean value of provided list 
 	 * @param list of values to calculate mean with
 	 * @return mean
 	 */
 	private double mean(List<Double> list) {
-		double mean = 0;
+		double mean = 0;												       // mean value to return
 		
 		for (int i = 0; i<list.size(); i++) {
 			mean = mean + list.get(i);
@@ -265,38 +305,20 @@ public class Farm {
 		
 		return mean / list.size();
 	}
-	
-	/** 
-	 * Each time period, t, call this function to increment the experience vector of this farm. 
-	 * This experience vector is part of a shared experience matrix that all farms have
-	 */
-	public void updateExperience() {
-		List<String> productNames = new ArrayList<String>();
-		
-		for (int i = 0; i<this.getCurrentProducts().size(); i++) {
-			productNames.add(this.getCurrentProducts().get(i).getName());
-		}
-		
-		for (int i = 0; i< this.experience.getProductName().size(); i++ ) {
-			
-			int value = this.experience.getFarmProductValue(farmName, this.experience.getProductName().get(i));
-			
-			if (productNames.contains(this.experience.getProductName().get(i))) {
-				value += 1;
-			}
-			else {
-				value -=1;
-			}
-			
-			if(value > this.getMemory()) value = this.getMemory();
-			if(value < 0) value = 0;
-			
-			this.experience.setFarmProductValue(farmName, this.experience.getProductName().get(i), value);
-			
-		}
-		
+
+	// getters and setters for all fields
+	public void setAspiration(double aspiration) {
+		Aspiration = aspiration;
 	}
-	
+	public void setUncertainty(double uncertainty) {
+		Uncertainty = uncertainty;
+	}
+	public void setTolerance(double entrepreneurship) {
+		Tolerance = entrepreneurship;
+	}
+	public void setSatisfaction(double satisfaction) {
+		Satisfaction = satisfaction;
+	}
 	public int getAge() {
 		return this.head.getAge();
 	}
@@ -352,11 +374,9 @@ public class Farm {
 	public void setExperience(FarmProductMatrix experience) {
 		this.experience = experience;
 	}
-
 	public void setPreferences(FarmProductMatrix preferences) {
 		this.preferences = preferences;
 	}
-
 	public void setCurrentProducts(List<Product> products) {
 		this.currentProducts = products;
 	}
@@ -375,27 +395,9 @@ public class Farm {
 	public void setCrops(List<Crop> crops) {
 		this.crops = crops;
 	}
-	
-	/**
-	 * Update income history by removing 
-	 * @param income
-	 */
-	public void updateIncomeHistory (double income) {
-		List<Double> temp = new ArrayList<Double>();
-		temp.add(income);
-		
-		for (int i = 0; i< this.getMemory() - 1; i++) {
-			temp.add(this.IncomeHistory.get(i));
-		}
-			
-		setIncomeHistory(temp); 
-		
-	}
-	
 	public List<Double> getIncomeHistory() {
 		return IncomeHistory;
 	}
-
 	public void setIncomeHistory(List<Double> incomeHistory) {
 		IncomeHistory = incomeHistory;
 	}

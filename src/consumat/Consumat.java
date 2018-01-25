@@ -20,7 +20,7 @@ public class Consumat {
 
 			// simulate all farms for time period t
 			for ( int i = 0; i < farms.size(); i++) {
-				List<String> p = farms.get(i).getAction(farms, income[years]);
+				List<String> p = farms.get(i).getUpdatedActions(farms, income[years]);
 				
 				String id = farms.get(i).getFarmName();
 				System.out.println(id + " " + p.toString());

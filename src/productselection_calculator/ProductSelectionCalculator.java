@@ -56,6 +56,7 @@ public class ProductSelectionCalculator {
 		P.add(q_plus);														   
 	}
 	
+	// product calculations
 	/** 
 	 * Using fuzzy logic check S,P,Q lists to determine best product combinations
 	 * The len-2 part of the calculation is to account for q+ and q- minus at the start and end of the calculation
@@ -100,7 +101,6 @@ public class ProductSelectionCalculator {
 		
 		return list;
 	}
-	
 	/** 
 	 * Using fuzzy logic check P, Q lists to determine best product combinations.
 	 * Do not take into account social learning vector S
@@ -141,6 +141,7 @@ public class ProductSelectionCalculator {
 		return list;
 	}
 
+	// fuzzy logic and clustering functions
 	/**
 	 *  given a vector of non-domination scores return an optimized product list
 	 *  using a clustering algorithm to detect two groups within the list
@@ -148,18 +149,18 @@ public class ProductSelectionCalculator {
 	 * @return list of product names
 	 */
 	private List<String> productList(List<Double> x){
-		List<String> list = new ArrayList<String>();
-		List<Double> original = new ArrayList<Double>();
-		List<Double> sorted = new ArrayList<Double>();
+		List<String> list = new ArrayList<String>();                           // final product list
+		List<Double> original = new ArrayList<Double>();					   // backup list					
+		List<Double> sorted = new ArrayList<Double>();						   // sorted list
+		List<Double> cluster = new ArrayList<Double>();						   // final selected product values from clustering algoritm
+
 		original = normalizeList(x);
 		sorted = original;
 		Collections.sort(sorted);
-		
-		List<Double> cluster = new ArrayList<Double>();
 		cluster = cluster(sorted);
 		
-		int index =0;
-		for (int i = 0; i< cluster.size(); i++) {
+		int index = 0;
+		for (int i = 0; i< cluster.size(); i++) {							   // turn ranking values into product list
 			index = original.indexOf(cluster.get(i));
 			list.add(this.farm.getPreferences().getProductName().get(index));
 			original.set(index, -1.0);                                         // duplicate values exist in array, so 'remove' when used to get next duplicate value
@@ -175,7 +176,7 @@ public class ProductSelectionCalculator {
 	 */
 	private List<Double> cluster(List<Double> sorted) {
 		double x1 = 0.75;                                                      // initial cluster
-		double x2 = 0.25;
+		double x2 = 0.25;													   // cluster point two
 		double x1_old = 0;
 		double x2_old = 0;
 		double dist1, dist2 = 0.0;
@@ -221,12 +222,13 @@ public class ProductSelectionCalculator {
 		
 	/** 
 	 * Non Domination score for a fuzzy logic preference matrix
+	 * Calculate ND score by comparing product 'index' against all other products
 	 * @param index which item in the list (eg product) we want to score against the criterion matrix
 	 * @param matrix of criteria preferences for all items
 	 * @return nd score for this product
 	 */
 	private double ND(int index, double[][] matrix ) {
-		List<Double> ND = new ArrayList<Double>();
+		List<Double> ND = new ArrayList<Double>();                             // set of ND scores for product 'index' against all other products
 		
 		for (int j = 0; j < matrix[0].length; j++) {
 			if (index != j) {
@@ -244,10 +246,10 @@ public class ProductSelectionCalculator {
 	 * @return matrix of preferences
 	 */
 	private double[][] preference_matrix(double[] category) {
-		int len = category.length;
-		double q_plus = category[len-1];
-		double q_minus = category[len-2];
-		double[][] matrix = new double[len-2][len-2];
+		int len = category.length;											// length of matrix columns/rows
+		double q_plus = category[len-1];									// set q-
+		double q_minus = category[len-2];								    // set q+ 
+		double[][] matrix = new double[len-2][len-2];					    // cross product preference matrix
 		
 		for (int i = 0; i< len-2; i++) {
 			for (int j = 0; j < len - 2; j++) {

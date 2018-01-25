@@ -71,15 +71,18 @@ public class Farm {
 			if (this.Satisfaction >= 0) {
 				System.out.println("REPETITION");
 				
-				for (int i = 0; i < this.getCurrentProducts().size(); i++) {
+				/*for (int i = 0; i < this.getCurrentProducts().size(); i++) {
 					products.add(this.getCurrentProducts().get(i).getName());
-				}
+				} */
 				
+			    products = cal.getImitationProducts();
 			}
 			else {
 				System.out.println("OPTIMIZATION");
 				// check calculator with Q,P (no social costs)
-				products = cal.getOptimizeProducts();
+				//products = cal.getOptimizeProducts();
+				products = cal.getImitationProducts();
+
 			}
 		}
 		

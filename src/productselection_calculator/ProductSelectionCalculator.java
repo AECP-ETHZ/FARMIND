@@ -27,19 +27,33 @@ public class ProductSelectionCalculator {
 
 	public ProductSelectionCalculator(Farm farm, List<Farm> farms) {
 		double m = farm.getPreferences().getProductName().size();		       // number of products in system
-	
+		this.farm = farm;
 		this.L = getFarmExperienceVector(farm,m);
 		this.S = getNetworkExperienceAverageVector(farm, m, farms);
 		this.P = getFarmPreferenceVector(farm,m);
 		
-		L.add(0.6);															   // 0.6 to 0.9 corresponds to 1 to 3 years of experience
-		L.add(0.9);															   // above 3 years of experience we count it equally
-		S.add(0.6);
-		S.add(0.9);
+		/**
+		 *  q range shows how different two products can be based on the criteria and still be 1) equivalent, 2) weighted, 3) not equivalent
+		 *  If you take a criteria vector = [0.9, 0.1, 0.8, 0.7, 0.4] that corresponds to products [A, B, C, D, E]
+		 *  if we set the lower bound q- to 0.3 and the upper bound q+ to 0.6 we get the following difference vector 
+		 *  for A compared to all other products (one directional comparison)
+		 *  delta = [0, 0.8, 0.1, 0.2, 0.5] ie 0.5 corresponds to A-E => 0.9-0.4 = 0.5
+		 *  We can now build another vector of comparison values for A compared to all other products based on the q range
+		 *  CP = [0, 1, 0, 0, 2/3] which shows that when product A is compared to all other products in the set
+		 *  Product A is strictly preferred to Product B, and weakly preferred to product E. It is not preferred at all to C or D. 
+		 */
 		
-		P.add(0.4);															   // upper and lower q range: corresponds to neutral (3) on the Likert scale
-		P.add(0.6);															   // vector normalized 0.0, 0.25, 0.5, 0.75, 1 ==> 1,2,3,4,5
-		this.farm = farm;
+		double q_minus = 0.1;
+		double q_plus  = 0.2;  
+		L.add(q_minus);															  
+		L.add(q_plus);														   
+		S.add(q_minus);
+		S.add(q_plus);
+		
+		q_minus = 0.25;
+		q_plus  = 0.5;  
+		P.add(q_minus);														   
+		P.add(q_plus);														   
 	}
 	
 	/** 
@@ -82,7 +96,7 @@ public class ProductSelectionCalculator {
 			ND.add(ND(i,matrix));
 		}
 
-		List<String> list = productList(normalizeList(ND));							       // cluster algorithm returns optimal product list
+		List<String> list = productList((ND));							       // cluster algorithm returns optimal product list
 		
 		return list;
 	}
@@ -137,8 +151,8 @@ public class ProductSelectionCalculator {
 		List<String> list = new ArrayList<String>();
 		List<Double> original = new ArrayList<Double>();
 		List<Double> sorted = new ArrayList<Double>();
-		original = x;
-		sorted = x;
+		original = normalizeList(x);
+		sorted = original;
 		Collections.sort(sorted);
 		
 		List<Double> cluster = new ArrayList<Double>();

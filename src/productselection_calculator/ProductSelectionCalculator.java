@@ -82,7 +82,7 @@ public class ProductSelectionCalculator {
 			ND.add(ND(i,matrix));
 		}
 
-		List<String> list = productList(ND);							       // cluster algorithm returns optimal product list
+		List<String> list = productList(normalizeList(ND));							       // cluster algorithm returns optimal product list
 		
 		return list;
 	}

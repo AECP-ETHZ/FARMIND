@@ -170,11 +170,30 @@ public class ProductSelectionCalculator {
 	}
 	
 	/** 
-	 * K-means clustering with 2 partitions
+	 * clustering based on the mean
 	 * @param sorted original list to cluster
 	 * @return list of preferred products
 	 */
 	private List<Double> cluster(List<Double> sorted) {
+		List<Double> cluster = new ArrayList<Double>(); 
+		List<Double> cluster_smaller = new ArrayList<Double>(); 
+		double mean = mean(sorted);
+
+		for(int i = 0; i < sorted.size(); i++) {
+			if (sorted.get(i) > mean) {
+				cluster.add(sorted.get(i));
+			}
+		}
+		
+		if (cluster.size() > 20) {											   // limit returned cluster to 20 elements
+			for (int i = 0; i< 20; i++) {
+				cluster_smaller.add(cluster.get(cluster.size() - i - 1));
+			}
+		}
+		
+		return cluster;
+		
+		/*// k-means clustering algorithm
 		double x1 = 0.75;                                                      // initial cluster
 		double x2 = 0.25;													   // cluster point two
 		double x1_old = 0;
@@ -203,6 +222,9 @@ public class ProductSelectionCalculator {
 			x2 = mean(cluster2);
 		}
 		return cluster1;													   // higher value cluster is optimal product list values
+		
+		*/
+		
 	}
 	
 	/** 

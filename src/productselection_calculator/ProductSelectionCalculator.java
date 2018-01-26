@@ -290,7 +290,7 @@ public class ProductSelectionCalculator {
 	private List<Double> getFarmExperienceVector(Farm farm, double m) {
 		List<Double> Q = new ArrayList<Double>();                              // learning by doing vector for specific farm
 		int time = 0;														   // years of experience
-		double k = 0.6;														   // scale factor
+		double k = farm.getParameters().getK();								   // scale factor
 		double q;															   // calculated score
 		
 		for (int i = 0; i < m; i++) {

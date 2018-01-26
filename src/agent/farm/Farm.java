@@ -188,7 +188,7 @@ public class Farm {
 	 */
 	private void updateAspiration() {
 		double aspiration = 0;
-		double alpha = 0.7;
+		double alpha = this.parameters.getA();
 		
 		aspiration = alpha*mean(IncomeHistory);
 		
@@ -254,25 +254,23 @@ public class Farm {
 	private double calculateSatisfaction(double income) {
 		double satisfaction = 0;
 		
-		double alpha_plus = 0.6;
-		double alpha_minus = 0.65;
-		double phi_plus = 0.8;
-		double phi_minus = 0.8;
+		double alpha_plus = this.parameters.getAlpha_plus();
+		double alpha_minus = this.parameters.getAlpha_minus();
+		double phi_plus = this.parameters.getPhi_plus();
+		double phi_minus = this.parameters.getPhi_minus();
 		
 		double probability = 0.5;
-		double lambda = 0;
+		double lambda = this.parameters.getLambda();
 		double v = 0;
 		double theta = 0; 
 		
 		if (income >= this.Aspiration) {
 			v = Math.pow(income, alpha_plus);
 			theta = ( Math.pow(probability, phi_plus) ) / Math.pow( (Math.pow(probability, phi_plus) + Math.pow((1 - probability), phi_plus)), (1/phi_plus) );
-			lambda = 1;
 		}
 		else if (income < this.Aspiration) {
-			v = Math.pow(income, alpha_minus);
+			v = (-1)*Math.pow(income, alpha_minus);
 			theta = ( Math.pow(probability, phi_minus) ) / Math.pow( (Math.pow(probability, phi_minus) + Math.pow((1 - probability), phi_minus)), (1/phi_minus) );
-			lambda = -1;
 		}
 
 		satisfaction = v*theta*lambda;

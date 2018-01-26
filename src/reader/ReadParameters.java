@@ -132,7 +132,7 @@ public class ReadParameters implements Reader {
 		return farms;
 	}
 
-	private Parameters getParameters(int set) {
+	private Parameters getParameters(int parameterSet) {
 		String Line;
 		ArrayList<String> matrixRow;
 		BufferedReader Buffer = null;	
@@ -142,7 +142,7 @@ public class ReadParameters implements Reader {
 			Buffer = new BufferedReader(new FileReader("./data/parameters.csv"));
 			Line = Buffer.readLine();
 			
-			for(int i = 0; i < set; i++) {
+			for(int i = 0; i < parameterSet; i++) {
 				Line = Buffer.readLine();
 			}
 			

@@ -1,3 +1,6 @@
 .project
 .classpath
 /bin
+.RData
+.Rhistory
+.gitignore

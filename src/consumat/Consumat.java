@@ -10,7 +10,7 @@ public class Consumat {
 	public static void main(String[] args) {
 		
 		ReadParameters reader = new ReadParameters();
-		List<Farm>     farms = reader.getFarms();
+		List<Farm>     farms = reader.getFarms(8);
 		double[] income = {10000,30000,10000};
 		
 		for (int years = 0; years < 3; years++) {

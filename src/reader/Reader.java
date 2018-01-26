@@ -16,5 +16,5 @@ public interface Reader {
 	 * The satisfaction and uncertainty are generated initially
 	 * @return List of all farm objects from the input csv file
 	 */
-	List<Farm> getFarms();
+	List<Farm> getFarms(int parameterSet);
 }

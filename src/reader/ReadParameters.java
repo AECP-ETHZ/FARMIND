@@ -32,7 +32,7 @@ public class ReadParameters implements Reader {
 	public static final int START_ACTION_INDEX = 12;					       // the input spreadsheet starts the actions at column 12
 
 	@Override
-	public List<Farm> getFarms() {
+	public List<Farm> getFarms(int parameterSet) {
 		String Line;
 		List<Farm> farms = new ArrayList<Farm>();
 		ArrayList<String> farmParameters;
@@ -50,7 +50,7 @@ public class ReadParameters implements Reader {
 		List<Livestock> livestock = getLivestockList();
 		FarmProductMatrix pref = getPreferences();
 		FarmProductMatrix experience = getExperience();
-		Parameters parameters = getParameters();
+		Parameters parameters = getParameters(parameterSet);
 		
 		try {
 			Calendar now = Calendar.getInstance();                             // Gets the current date and time
@@ -132,23 +132,32 @@ public class ReadParameters implements Reader {
 		return farms;
 	}
 
-	private Parameters getParameters() {
+	private Parameters getParameters(int set) {
 		String Line;
 		ArrayList<String> matrixRow;
 		BufferedReader Buffer = null;	
 		Parameters parameters = new Parameters();
-		
-		parameters.setTest(100.00);
 
 		try {
-			Buffer = new BufferedReader(new FileReader("./data/products_preference.csv"));
+			Buffer = new BufferedReader(new FileReader("./data/parameters.csv"));
 			Line = Buffer.readLine();
-			matrixRow = CSVtoArrayList(Line);
-			matrixRow.remove(0);
 			
-			while ((Line = Buffer.readLine()) != null) {                       // Read row data
-				matrixRow = CSVtoArrayList(Line);
+			for(int i = 0; i < set; i++) {
+				Line = Buffer.readLine();
 			}
+			
+			matrixRow = CSVtoArrayList(Line);
+			parameters.setAlpha_plus(Double.parseDouble(matrixRow.get(1)) );
+			parameters.setAlpha_minus(Double.parseDouble(matrixRow.get(2)) );
+			
+			parameters.setLambda(Double.parseDouble(matrixRow.get(3)) );
+			
+			parameters.setPhi_plus(Double.parseDouble(matrixRow.get(4)) ); 
+			parameters.setPhi_minus(Double.parseDouble(matrixRow.get(5)) ); 
+			
+			parameters.setA(Double.parseDouble(matrixRow.get(6)) ); 
+			parameters.setK(Double.parseDouble(matrixRow.get(7)) ); 
+			parameters.setName(matrixRow.get(8));
 				
 		} catch (IOException e) {
 			e.printStackTrace();

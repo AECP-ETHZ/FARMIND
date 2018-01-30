@@ -1,6 +1,7 @@
 package consumat;
 
 import java.util.List;
+import java.util.Random;
 
 import agent.farm.Farm;
 import decision.DecisionResult;
@@ -13,23 +14,22 @@ public class Consumat {
 		for (int k = 1; k < 2; k++) {															   // sensitivity testing, loop through all parameters
 			ReadParameters reader = new ReadParameters();
 			List<Farm>     farms = reader.getFarms(k);											   // build set of farms with new parameters
+			Random rand = new Random();
 			
 			for (int years = 0; years < 3; years++) {											   // run simulation for a set of years, getting updated income and products
-				// get updated products and income from farmydyn
-				// farms.updateIncome();
-				// farms.updateProducts();
-				double[] income = {10000,30000,10000};
-	
+				
 				for ( int i = 0; i < farms.size(); i++) {                                   	   // simulate all farms for time period t
-					List<String> p = farms.get(i).getUpdatedActions(farms, income[years]);
+					double income = rand.nextGaussian()*10+50;
+					income = Math.round(income*1000);
+					
+					List<List<String>> fullAndMinSetProducts = farms.get(i).getUpdatedActions(farms, income);             // first list is full, second list is fake LP product list
 					
 					String id = farms.get(i).getFarmName();
-					System.out.println(id + " " + p.toString());
-					DecisionResult decision = new DecisionResult(id, p, years, farms.get(i).getParameters(), farms.get(i).getStrategy() );
-					decision.appendDecisionFile();
+					//System.out.println(id + " " + fullAndMinSetProducts.toString());
 					
-					// run linear programming model for farm i at this year
-	
+					DecisionResult decision = new DecisionResult(id, fullAndMinSetProducts.get(0), years, farms.get(i).getParameters(), farms.get(i).getStrategy(), fullAndMinSetProducts.get(1), income );
+					decision.appendDecisionFile();
+						
 					farms.get(i).updateExperience();                              				   // each time period update experience
 				}
 				System.out.println();

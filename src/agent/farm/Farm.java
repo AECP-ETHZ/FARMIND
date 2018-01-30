@@ -49,10 +49,11 @@ public class Farm {
 	 * 
 	 * @param farms full list of all farms in system
 	 * @param income of this particular farm
-	 * @return List of Products/Actions that the farm will produce
+	 * @return List containing the full fuzzy logic selection and a minimum list to fake the LP simulator selection
 	 */
-	public List<String> getUpdatedActions(List<Farm> farms, double income) {
-	    List<String> products = new ArrayList<String>();								 // list of names of products to return
+	public List<List<String>> getUpdatedActions(List<Farm> farms, double income) {
+	    List<String> fullProductSet = new ArrayList<String>();						     // list of names of products from fuzzy logic
+	    List<String> minProductSet = new ArrayList<String>();						     // list of names of products to return to mimic LP
 	    ProductSelectionCalculator cal = new ProductSelectionCalculator(this, farms);    // calculator for the product selection
 		List<Product> current = new ArrayList<Product>();							     // current products (objects - not names) in system 
 
@@ -69,8 +70,7 @@ public class Farm {
 			if (this.Satisfaction >= 0) {
 				System.out.println("IMITATION");
 				this.strategy = "IMITATION";
-				// check calculator with S,Q,P
-				products = cal.getImitationProducts();
+				fullProductSet = cal.getImitationProducts();
 			}
 			else {
 				System.out.println("OPT_OUT");
@@ -81,44 +81,50 @@ public class Farm {
 			if (this.Satisfaction >= 0) {
 				System.out.println("REPETITION");
 				this.strategy = "REPITITION";
-				
 				for (int i = 0; i < this.getCurrentProducts().size(); i++) {
-					products.add(this.getCurrentProducts().get(i).getName());
+					fullProductSet.add(this.getCurrentProducts().get(i).getName());
 				} 
-				products = cal.getImitationProducts();
-				
 			}
 			else {
 				System.out.println("OPTIMIZATION");
 				this.strategy = "OPTIMIZATION";
-				// check calculator with Q,P (no social costs)
-				products = cal.getOptimizeProducts();
+				fullProductSet = cal.getOptimizeProducts();
 			}
 		}
 		
-		for (int k = 0; k < products.size(); k++) {
+		double small = Math.round( (double)fullProductSet.size()/2.0) ;
+		
+		while(small > 0) {
+			minProductSet.add(fullProductSet.get((int) (fullProductSet.size() - small--)));		   // last element in fullSet is the highest rated product
+		}
+
+		for (int k = 0; k < minProductSet.size(); k++) {
 			for(int i = 0; i<crops.size(); i++) {
-				if (crops.get(i).getName().equals(products.get(k) )) {
+				if (crops.get(i).getName().equals(minProductSet.get(k) )) {
 					int ID = crops.get(i).getID();
-					Product p = new Crop(ID, products.get(k)); 
+					Product p = new Crop(ID, minProductSet.get(k)); 
 					current.add(p);
 				}
 			}
 		}
 				
-		for (int k = 0; k < products.size(); k++) {
+		for (int k = 0; k < minProductSet.size(); k++) {
 			for(int i = 0; i<livestock.size(); i++) {
-				if (livestock.get(i).getName().equals(products.get(k) )) {
+				if (livestock.get(i).getName().equals(minProductSet.get(k) )) {
 					int ID = livestock.get(i).getID();
-					Product p = new Livestock(ID, products.get(k)); 
+					Product p = new Livestock(ID, minProductSet.get(k)); 
 					current.add(p);
 				}
 			}
 		}	
 		
 		this.setCurrentProducts(current);
-
-		return products;
+		
+		List<List<String>> ret = new ArrayList<List<String>>();
+		ret.add(fullProductSet);
+		ret.add(minProductSet);
+		
+		return ret;
 	}
 	
 	// update functions for farm parameters

@@ -156,7 +156,7 @@ public class ProductSelectionCalculator {
 
 		original = normalizeList(x);
 		sorted = original;
-		Collections.sort(sorted);
+		Collections.sort(sorted);											   // returns ascending order 0->1
 		cluster = cluster(sorted);
 		
 		int index = 0;

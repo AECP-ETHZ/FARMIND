@@ -22,13 +22,17 @@ public class DecisionResult {
 	private Integer year;
 	private Parameters param;
 	private String strategy;
+	private List<String> LP_Products;
+	private double income;
 	
-	public DecisionResult(String farmId, List<String> p, Integer year, Parameters param, String strategy) {
+	public DecisionResult(String farmId, List<String> maxSet, Integer year, Parameters param, String strategy, List<String> minSet, double income) {
 		setFarmId(farmId);
-		setProducts(p);
+		setProducts(maxSet);
 		setYear(year);
 		setParam(param);
 		setStrategy(strategy);
+		setLP_Products(minSet);
+		setIncome(income);
 	}
 	
 	public void appendDecisionFile() {
@@ -43,7 +47,8 @@ public class DecisionResult {
 		PrintWriter writer = new PrintWriter(bw);
 		
 		if (file.length() == 0) {
-			writer.println("year, name, alpha_plus, alpha_minus, lambda, phi_plus, phi_minus, k, strategy, action1, action2, action3, action4, action5, action6,");
+			writer.println("year, name, alpha_plus, alpha_minus, lambda, phi_plus, phi_minus, k, strategy, fuzzy_action1, "
+					+ "fuzzy_action2, fuzzy_action3, fuzzy_action4, fuzzy_action5, fuzzy_action6, lp_action1, lp_action2, lp_action3, income");
 		}
 		
 		writer.print(String.format("%s, ",this.year));
@@ -63,7 +68,16 @@ public class DecisionResult {
 		for(int i = 0; i < 6 - this.products.size(); i++) {
 			writer.print("NA, " );
 		}
+		
+		for(int i = 0; i < this.LP_Products.size(); i++) {
+			writer.print(String.format("%s, ",this.LP_Products.get(i)) );
+		}
+		
+		for(int i = 0; i < 3 - this.LP_Products.size(); i++) {
+			writer.print("NA, " );
+		}
 	    
+		writer.print(String.format("%s, ",this.income ) );
 		
 		writer.println();
 		writer.close();
@@ -104,6 +118,22 @@ public class DecisionResult {
 
 	public void setStrategy(String strategy) {
 		this.strategy = strategy;
+	}
+
+	public List<String> getLP_Products() {
+		return LP_Products;
+	}
+
+	public void setLP_Products(List<String> lP_Products) {
+		LP_Products = lP_Products;
+	}
+
+	public double getIncome() {
+		return income;
+	}
+
+	public void setIncome(double income) {
+		this.income = income;
 	}
 
 }

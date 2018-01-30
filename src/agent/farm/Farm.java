@@ -59,7 +59,7 @@ public class Farm {
 	    updateSatisfaction(income);
 		updateUncertainty(farms);
 		updateAspiration();
-		updateTolerance();                                                     // currently does nothing
+		updateTolerance();                                                               // currently does nothing
 		
 		if ((head.getAge() > 65)) {
 			System.out.println("EXIT");

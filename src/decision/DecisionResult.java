@@ -32,7 +32,7 @@ public class DecisionResult {
 	}
 	
 	public void appendDecisionFile() {
-		File file =new File("./BatchFiles/out.txt");
+		File file =new File("./BatchFiles/out.csv");
 		FileWriter fw = null;
 		try {
 			fw = new FileWriter(file,true);
@@ -41,7 +41,11 @@ public class DecisionResult {
 		}
 		BufferedWriter bw = new BufferedWriter(fw);
 		PrintWriter writer = new PrintWriter(bw);
-		 
+		
+		if (file.length() == 0) {
+			writer.println("year, name, alpha_plus, alpha_minus, lambda, phi_plus, phi_minus, k, strategy, action1, action2, action3, action4, action5, action6,");
+		}
+		
 		writer.print(String.format("%s, ",this.year));
 		writer.print(String.format("%s, ",this.farmId));
 		writer.print(String.format("%s, ",this.param.getAlpha_plus()));
@@ -55,6 +59,11 @@ public class DecisionResult {
 		for(int i = 0; i < this.products.size(); i++) {
 			writer.print(String.format("%s, ",this.products.get(i)) );
 		}
+		
+		for(int i = 0; i < 6 - this.products.size(); i++) {
+			writer.print("NA, " );
+		}
+	    
 		
 		writer.println();
 		writer.close();

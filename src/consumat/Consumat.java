@@ -11,13 +11,10 @@ public class Consumat {
 
 	public static void main(String[] args) {
 
-<<<<<<< HEAD
 		for (int parameterSet = 1; parameterSet < 20; parameterSet++) {															   // sensitivity testing, loop through all parameters
-=======
-		for (int k = 1; k < 2; k++) {															   // sensitivity testing, loop through all parameters
->>>>>>> parent of 03471d2... full testing setup
+
 			ReadParameters reader = new ReadParameters();
-			List<Farm>     farms = reader.getFarms(k);											   // build set of farms with new parameters
+			List<Farm>     farms = reader.getFarms(parameterSet);											   // build set of farms with new parameters
 			Random rand = new Random();
 			
 			for (int years = 0; years < 3; years++) {											   // run simulation for a set of years, getting updated income and products

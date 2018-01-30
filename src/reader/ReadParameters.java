@@ -28,8 +28,8 @@ public class ReadParameters implements Reader {
 	public static final int EDUCATION = 4;
 	public static final int MEMORY = 5;
 	public static final int ENTREPRENEURSHIP = 6;
-	public static final int INCOME_INDEX = 7;
-	public static final int START_ACTION_INDEX = 12;					       // the input spreadsheet starts the actions at column 12
+	public static final int INCOME_INDEX = 10;
+	public static final int START_ACTION_INDEX = 7;					       // the input spreadsheet starts the actions at column 12
 
 	@Override
 	public List<Farm> getFarms(int parameterSet) {

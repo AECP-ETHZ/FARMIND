@@ -2,23 +2,17 @@ package output;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.List;
-
 import decision.DecisionResult;
-import product.Product;
 
 public class BatchOutput implements Output {
 	private String farmId;
-	private List<Product> p;
 	
-	public BatchOutput(String farmName, List<Product> p) {
+	public BatchOutput(String farmName) {
 		this.farmId = farmName;
-		this.p = p;
 	}
 
 	public BatchOutput(DecisionResult decision) {
 		this.farmId = decision.getFarmId();
-		this.p = decision.getProducts();
 	}
 
 	/** 

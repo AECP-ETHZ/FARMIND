@@ -39,6 +39,7 @@ public class Farm {
 	private List<Crop> crops;
 	private List<Livestock> livestock;
 	private Parameters parameters;
+	private String strategy;
 	
 	/** 
 	 * update satisfaction and uncertainty for the farm
@@ -62,20 +63,24 @@ public class Farm {
 		
 		if ((head.getAge() > 65)) {
 			System.out.println("EXIT");
+			this.strategy = "EXIT";
 		}
 		else if (this.Uncertainty >= this.Tolerance) {
 			if (this.Satisfaction >= 0) {
 				System.out.println("IMITATION");
+				this.strategy = "IMITATION";
 				// check calculator with S,Q,P
 				products = cal.getImitationProducts();
 			}
 			else {
 				System.out.println("OPT_OUT");
+				this.strategy = "OPT_OUT";
 			}
 		}
 		else {
 			if (this.Satisfaction >= 0) {
 				System.out.println("REPETITION");
+				this.strategy = "REPITITION";
 				
 				for (int i = 0; i < this.getCurrentProducts().size(); i++) {
 					products.add(this.getCurrentProducts().get(i).getName());
@@ -85,6 +90,7 @@ public class Farm {
 			}
 			else {
 				System.out.println("OPTIMIZATION");
+				this.strategy = "OPTIMIZATION";
 				// check calculator with Q,P (no social costs)
 				products = cal.getOptimizeProducts();
 			}
@@ -406,6 +412,14 @@ public class Farm {
 
 	public void setParameters(Parameters parameters) {
 		this.parameters = parameters;
+	}
+
+	public String getStrategy() {
+		return strategy;
+	}
+
+	public void setStrategy(String strategy) {
+		this.strategy = strategy;
 	}
 }
 

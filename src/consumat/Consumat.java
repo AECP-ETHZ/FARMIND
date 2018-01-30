@@ -3,12 +3,13 @@ package consumat;
 import java.util.List;
 
 import agent.farm.Farm;
+import decision.DecisionResult;
 import reader.ReadParameters;
 
 public class Consumat {
 
 	public static void main(String[] args) {
-		
+
 		for (int k = 1; k < 2; k++) {															   // sensitivity testing, loop through all parameters
 			ReadParameters reader = new ReadParameters();
 			List<Farm>     farms = reader.getFarms(k);											   // build set of farms with new parameters
@@ -24,6 +25,9 @@ public class Consumat {
 					
 					String id = farms.get(i).getFarmName();
 					System.out.println(id + " " + p.toString());
+					DecisionResult decision = new DecisionResult(id, p, years, farms.get(i).getParameters(), farms.get(i).getStrategy() );
+					decision.appendDecisionFile();
+					
 					// run linear programming model for farm i at this year
 	
 					farms.get(i).updateExperience();                              				   // each time period update experience

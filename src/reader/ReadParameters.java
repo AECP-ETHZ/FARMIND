@@ -45,6 +45,7 @@ public class ReadParameters implements Reader {
 		int farm_count_index = 0;                                              // index is used to set the actual farm id value
 		
 		// reference objects for building farm list
+		// each farm has a link to the reference object. This allows each farm to update the shared data objects
 		List<Graph<String, DefaultEdge>> network = this.getSocialNetworks();   
 		List<Crop> crops = getCropList();
 		List<Livestock> livestock = getLivestockList();
@@ -156,8 +157,9 @@ public class ReadParameters implements Reader {
 			parameters.setPhi_minus(Double.parseDouble(matrixRow.get(5)) ); 
 			
 			parameters.setA(Double.parseDouble(matrixRow.get(6)) ); 
-			parameters.setK(Double.parseDouble(matrixRow.get(7)) ); 
-			parameters.setName(matrixRow.get(8));
+			parameters.setB(Double.parseDouble(matrixRow.get(7)) ); 
+			parameters.setK(Double.parseDouble(matrixRow.get(8)) ); 
+			parameters.setName(matrixRow.get(9));
 				
 		} catch (IOException e) {
 			e.printStackTrace();

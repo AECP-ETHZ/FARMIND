@@ -11,17 +11,18 @@ public class Consumat {
 
 	public static void main(String[] args) {
 
-		for (int parameterSet = 1; parameterSet < 20; parameterSet++) {															   // sensitivity testing, loop through all parameters
+		for (int parameterSet = 1; parameterSet < 20; parameterSet++) {							   // sensitivity testing, loop through all parameters
 
 			ReadParameters reader = new ReadParameters();
-			List<Farm>     farms = reader.getFarms(parameterSet);											   // build set of farms with new parameters
-			Random rand = new Random();
+			List<Farm>     farms = reader.getFarms(parameterSet);								   // build set of farms with new parameters
+			Random         rand = new Random();													   // generate distribution of income
+			double income;																		   // actual income value
 			
 			for (int years = 0; years < 3; years++) {											   // run simulation for a set of years, getting updated income and products
 				
 				for ( int i = 0; i < farms.size(); i++) {                                   	   // simulate all farms for time period t
-					double income = rand.nextGaussian()*10+50;
-					income = Math.round(income*1000);
+					income = rand.nextGaussian()*10+50;											   // sample normal distribution, SD=10, Mean = 50
+					income = Math.round(income*1000);											   // set to thousands of francs
 					
 					List<List<String>> fullAndMinSetProducts = farms.get(i).getUpdatedActions(farms, income);             // first list is full, second list is fake LP product list
 					

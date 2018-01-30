@@ -42,25 +42,30 @@ public class Farm {
 	private String strategy;
 	
 	/** 
-	 * update satisfaction and uncertainty for the farm
-	 * create product selection calculator for this farm
-	 * check which option farm will pursue
-	 * return decision from calculator and update product list
+	 * 1. update satisfaction, uncertainty, aspiration, and tolerance for this farm
+	 * 2. create product selection calculator for this farm
+	 * 3. based on consumat model, decide which of the five decisions the farm will pursue
+	 * 
+	 * Fuzzy logic is used for optimization and imitation decisions to select a set of products to pursue. 
+	 * 
+	 * For the sensitivity testing phase, we need to 'fake' a linear programming model so we select half of the set to return as our final decision. 
+	 * We keep track of both sets for use during the sensitivity anaylsis
 	 * 
 	 * @param farms full list of all farms in system
 	 * @param income of this particular farm
-	 * @return List containing the full fuzzy logic selection and a minimum list to fake the LP simulator selection
+	 * @return List containing the 1) full fuzzy logic selection and 2) the minimum list to imitate the LP simulator selection
 	 */
 	public List<List<String>> getUpdatedActions(List<Farm> farms, double income) {
 	    List<String> fullProductSet = new ArrayList<String>();						     // list of names of products from fuzzy logic
 	    List<String> minProductSet = new ArrayList<String>();						     // list of names of products to return to mimic LP
 	    ProductSelectionCalculator cal = new ProductSelectionCalculator(this, farms);    // calculator for the product selection
 		List<Product> current = new ArrayList<Product>();							     // current products (objects - not names) in system 
-
+		double small_set = 0;
+		
 	    updateSatisfaction(income);
 		updateUncertainty(farms);
 		updateAspiration();
-		updateTolerance();                                                               // currently does nothing
+		updateTolerance();                                                               
 		
 		if ((head.getAge() > 65)) {
 			System.out.println("EXIT");
@@ -71,6 +76,11 @@ public class Farm {
 				System.out.println("IMITATION");
 				this.strategy = "IMITATION";
 				fullProductSet = cal.getImitationProducts();
+				
+				small_set = Math.round( (double)fullProductSet.size()/2.0) ;
+				while(small_set > 0) {
+					minProductSet.add(fullProductSet.get((int) (fullProductSet.size() - small_set--)));		   // last element in fullSet is the highest rated product
+				}
 			}
 			else {
 				System.out.println("OPT_OUT");
@@ -82,22 +92,21 @@ public class Farm {
 				System.out.println("REPETITION");
 				this.strategy = "REPITITION";
 				for (int i = 0; i < this.getCurrentProducts().size(); i++) {
-					fullProductSet.add(this.getCurrentProducts().get(i).getName());
+					minProductSet.add(this.getCurrentProducts().get(i).getName());
 				} 
 			}
 			else {
 				System.out.println("OPTIMIZATION");
 				this.strategy = "OPTIMIZATION";
 				fullProductSet = cal.getOptimizeProducts();
+				small_set = Math.round( (double)fullProductSet.size()/2.0) ;
+				while(small_set > 0) {
+					minProductSet.add(fullProductSet.get((int) (fullProductSet.size() - small_set--)));		   // last element in fullSet is the highest rated product
+				}
 			}
 		}
-		
-		double small = Math.round( (double)fullProductSet.size()/2.0) ;
-		
-		while(small > 0) {
-			minProductSet.add(fullProductSet.get((int) (fullProductSet.size() - small--)));		   // last element in fullSet is the highest rated product
-		}
 
+		// this is to build a list of product objects - not just names
 		for (int k = 0; k < minProductSet.size(); k++) {
 			for(int i = 0; i<crops.size(); i++) {
 				if (crops.get(i).getName().equals(minProductSet.get(k) )) {
@@ -106,8 +115,7 @@ public class Farm {
 					current.add(p);
 				}
 			}
-		}
-				
+		}	
 		for (int k = 0; k < minProductSet.size(); k++) {
 			for(int i = 0; i<livestock.size(); i++) {
 				if (livestock.get(i).getName().equals(minProductSet.get(k) )) {
@@ -118,9 +126,9 @@ public class Farm {
 			}
 		}	
 		
-		this.setCurrentProducts(current);
+		this.setCurrentProducts(current);                                      // update current products for the farm instance
 		
-		List<List<String>> ret = new ArrayList<List<String>>();
+		List<List<String>> ret = new ArrayList<List<String>>();				   // list of both sets to return for sensitivity analysis
 		ret.add(fullProductSet);
 		ret.add(minProductSet);
 		
@@ -207,10 +215,10 @@ public class Farm {
 		setAspiration(aspiration);
 	}
 	/** 
-	 * Based on the historical income data, calculate the current aspiration level
+	 * Based on the input parameter, calculate a tolerance level
 	 */
 	private void updateTolerance() {
-		// do nothing - tolerance set externally
+		this.Tolerance = this.parameters.getB() * this.Tolerance;
 	}
 	/** 
 	 * Each time period, t, call this function to increment the experience vector of this farm. 

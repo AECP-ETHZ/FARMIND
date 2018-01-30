@@ -15,7 +15,6 @@ public class Parameters {
 	private double phi_minus;
 	private double a;
 	private double k;
-	private double b;
 	private String name;
 	
 	public double getAlpha_plus() {
@@ -65,12 +64,6 @@ public class Parameters {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public double getB() {
-		return b;
-	}
-	public void setB(double b) {
-		this.b = b;
 	}
 	
 	

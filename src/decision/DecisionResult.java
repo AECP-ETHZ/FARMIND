@@ -47,7 +47,7 @@ public class DecisionResult {
 		PrintWriter writer = new PrintWriter(bw);
 		
 		if (file.length() == 0) {
-			writer.println("year, name, alpha_plus, alpha_minus, lambda, phi_plus, phi_minus, a, b, k, strategy, fuzzy_action1, "
+			writer.println("year, name, alpha_plus, alpha_minus, lambda, phi_plus, phi_minus, k, strategy, fuzzy_action1, "
 					+ "fuzzy_action2, fuzzy_action3, fuzzy_action4, fuzzy_action5, fuzzy_action6, lp_action1, lp_action2, lp_action3, income");
 		}
 		
@@ -58,8 +58,6 @@ public class DecisionResult {
 		writer.print(String.format("%s, ",this.param.getLambda()));
 		writer.print(String.format("%s, ",this.param.getPhi_plus() ));
 		writer.print(String.format("%s, ",this.param.getPhi_minus() ));
-		writer.print(String.format("%s, ",this.param.getA() ));
-		writer.print(String.format("%s, ",this.param.getB() ));
 		writer.print(String.format("%s, ",this.param.getK() ));
 		writer.print(String.format("%s, ",this.strategy) );
 		

@@ -11,7 +11,7 @@ public class Consumat {
 
 	public static void main(String[] args) {
 
-		for (int parameterSet = 1; parameterSet < 20736; parameterSet++) {															   // sensitivity testing, loop through all parameters
+		for (int parameterSet = 1; parameterSet < 20; parameterSet++) {															   // sensitivity testing, loop through all parameters
 			ReadParameters reader = new ReadParameters();
 			List<Farm>     farms = reader.getFarms(parameterSet);											   // build set of farms with new parameters
 			Random rand = new Random();

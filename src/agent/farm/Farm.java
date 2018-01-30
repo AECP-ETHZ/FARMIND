@@ -63,12 +63,10 @@ public class Farm {
 		updateTolerance();                                                               // currently does nothing
 		
 		if ((head.getAge() > 65)) {
-			System.out.println("EXIT");
 			this.strategy = "EXIT";
 		}
 		else if (this.Uncertainty >= this.Tolerance) {
 			if (this.Satisfaction >= 0) {
-				System.out.println("IMITATION");
 				this.strategy = "IMITATION";
 				fullProductSet = cal.getImitationProducts();
 			}
@@ -79,21 +77,19 @@ public class Farm {
 		}
 		else {
 			if (this.Satisfaction >= 0) {
-				System.out.println("REPETITION");
 				this.strategy = "REPITITION";
 				for (int i = 0; i < this.getCurrentProducts().size(); i++) {
 					fullProductSet.add(this.getCurrentProducts().get(i).getName());
 				} 
 			}
 			else {
-				System.out.println("OPTIMIZATION");
 				this.strategy = "OPTIMIZATION";
 				fullProductSet = cal.getOptimizeProducts();
 			}
 		}
 		
+		// fake the linear programming model product selection
 		double small = Math.round( (double)fullProductSet.size()/2.0) ;
-		
 		while(small > 0) {
 			minProductSet.add(fullProductSet.get((int) (fullProductSet.size() - small--)));		   // last element in fullSet is the highest rated product
 		}
@@ -207,10 +203,10 @@ public class Farm {
 		setAspiration(aspiration);
 	}
 	/** 
-	 * Based on the historical income data, calculate the current aspiration level
+	 * modify the tolerance level based on the b parameter
 	 */
 	private void updateTolerance() {
-		// do nothing - tolerance set externally
+		this.Tolerance = this.Tolerance*this.parameters.getB();
 	}
 	/** 
 	 * Each time period, t, call this function to increment the experience vector of this farm. 

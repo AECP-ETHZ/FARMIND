@@ -156,8 +156,9 @@ public class ReadParameters implements Reader {
 			parameters.setPhi_minus(Double.parseDouble(matrixRow.get(5)) ); 
 			
 			parameters.setA(Double.parseDouble(matrixRow.get(6)) ); 
-			parameters.setK(Double.parseDouble(matrixRow.get(7)) ); 
-			parameters.setName(matrixRow.get(8));
+			parameters.setB(Double.parseDouble(matrixRow.get(7)));
+			parameters.setK(Double.parseDouble(matrixRow.get(8)) ); 
+			parameters.setName(matrixRow.get(9));
 				
 		} catch (IOException e) {
 			e.printStackTrace();

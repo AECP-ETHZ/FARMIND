@@ -1,5 +1,9 @@
 package consumat;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 import java.util.List;
 
 import agent.farm.Farm;
@@ -11,9 +15,12 @@ import org.apache.commons.math3.distribution.NormalDistribution;
 public class Consumat {
 
 	public static void main(String[] args) {
+		
+		int max_parameter_length = getLineCount();
 
-		for (int parameterSet = 1; parameterSet < 2; parameterSet++) {							   // sensitivity testing, loop through all parameters
-
+		max_parameter_length = 2; // WARNING: don't commit resulting file if max is used - file is too large
+		for (int parameterSet = 1; parameterSet < max_parameter_length; parameterSet++) {							   // sensitivity testing, loop through all parameters
+			
 			ReadParameters reader = new ReadParameters();										   // read all input data files
 			List<Farm>     allFarms = reader.getFarms(parameterSet);							   // build set of farms with new parameters
 			double income, probability;															   // income value, and probability of income
@@ -35,4 +42,28 @@ public class Consumat {
 			}
 		}
 	}
+	
+	public static int getLineCount() {
+		BufferedReader Buffer = null;	
+		int count = 0;
+		
+		try {
+			Buffer = new BufferedReader(new FileReader("./data/parameters.csv"));
+			while(Buffer.readLine() != null) {
+				count++;
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (Buffer != null) Buffer.close();
+			} catch (IOException Exception) {
+				Exception.printStackTrace();
+			}
+		}
+		return count;
+	}
 }
+
+

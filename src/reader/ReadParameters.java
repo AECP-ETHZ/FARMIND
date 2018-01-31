@@ -216,7 +216,7 @@ public class ReadParameters implements Reader {
 		FarmProductMatrix experience = new FarmProductMatrix();
 
 		try {
-			Buffer = new BufferedReader(new FileReader("./data/products_years.csv"));
+			Buffer = new BufferedReader(new FileReader("./data/farming_years.csv"));
 			Line = Buffer.readLine();
 			matrixRow = CSVtoArrayList(Line);
 			matrixRow.remove(0);

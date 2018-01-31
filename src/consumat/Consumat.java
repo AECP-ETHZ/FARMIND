@@ -18,7 +18,7 @@ public class Consumat {
 		
 		int max_parameter_length = getLineCount();
 
-		max_parameter_length = 2; // WARNING: don't commit resulting file if max is used - file is too large
+		//max_parameter_length = 2; // WARNING: don't commit resulting file if max is used - file is too large
 		for (int parameterSet = 1; parameterSet < max_parameter_length; parameterSet++) {							   // sensitivity testing, loop through all parameters
 			
 			ReadParameters reader = new ReadParameters();										   // read all input data files
@@ -26,7 +26,7 @@ public class Consumat {
 			double income, probability;															   // income value, and probability of income
 			NormalDistribution normal = new NormalDistribution(50000.0, 10000.0);				   // distribution of possible incomes
 			
-			for (int year = 0; year < 3; year++) {											       // run simulation for a set of years, getting updated income and products	
+			for (int year = 0; year < 10; year++) {											       // run simulation for a set of years, getting updated income and products	
 				for (Farm farm : allFarms) {
 					income = (int)normal.sample();
 					probability = normal.cumulativeProbability(income);

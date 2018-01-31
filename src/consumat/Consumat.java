@@ -28,7 +28,7 @@ public class Consumat {
 			
 			for (int year = 0; year < 3; year++) {											       // run simulation for a set of years, getting updated income and products	
 				for (Farm farm : allFarms) {
-					income = normal.sample();
+					income = (int)normal.sample();
 					probability = normal.cumulativeProbability(income);
 					
 					List<List<String>> fullAndMinSetProducts = farm.makeDecision(allFarms, income, probability);             // first list is full set, second list is fake LP product list

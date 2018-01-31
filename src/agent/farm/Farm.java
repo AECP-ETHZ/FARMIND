@@ -40,6 +40,7 @@ public class Farm {
 	private List<Livestock> livestock;
 	private Parameters parameters;
 	private String strategy;
+	private double incomeProbability;
 	
 	/** 
 	 * 1. update satisfaction, uncertainty, aspiration, and tolerance for this farm
@@ -55,7 +56,7 @@ public class Farm {
 	 * @param income of this particular farm
 	 * @return List containing the 1) full fuzzy logic selection and 2) the minimum list to imitate the LP simulator selection
 	 */
-	public List<List<String>> getUpdatedActions(List<Farm> farms, double income) {
+	public List<List<String>> makeDecision(List<Farm> farms, double income, double probability) {
 	    List<String> fullProductSet = new ArrayList<String>();						     // list of names of products from fuzzy logic
 	    List<String> minProductSet = new ArrayList<String>();						     // list of names of products to return to mimic LP
 	    ProductSelectionCalculator cal = new ProductSelectionCalculator(this, farms);    // calculator for the product selection
@@ -65,7 +66,8 @@ public class Farm {
 	    updateSatisfaction(income);
 		updateUncertainty(farms);
 		updateAspiration();
-		updateTolerance();                                                               
+		updateTolerance();      
+		setIncomeProbability(probability);
 		
 		if ((head.getAge() > 65)) {
 			System.out.println("EXIT");
@@ -279,7 +281,7 @@ public class Farm {
 		double phi_plus = this.parameters.getPhi_plus();
 		double phi_minus = this.parameters.getPhi_minus();
 		
-		double probability = 0.5;
+		double probability = this.getIncomeProbability();
 		double lambda = this.parameters.getLambda();
 		double v = 0;
 		double theta = 0; 
@@ -434,6 +436,14 @@ public class Farm {
 
 	public void setStrategy(String strategy) {
 		this.strategy = strategy;
+	}
+
+	public double getIncomeProbability() {
+		return incomeProbability;
+	}
+
+	public void setIncomeProbability(double incomeProbability) {
+		this.incomeProbability = incomeProbability;
 	}
 }
 

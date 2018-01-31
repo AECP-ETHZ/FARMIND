@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Calendar;
 import java.util.List;
 
 import reader.Parameters;
@@ -36,7 +37,16 @@ public class DecisionResult {
 	}
 	
 	public void appendDecisionFile() {
-		File file =new File("./BatchFiles/out.csv");
+		Calendar now = Calendar.getInstance();                             // Gets the current date and time
+		int day = now.get(Calendar.DAY_OF_MONTH); 
+		int month = now.get(Calendar.MONTH);
+		int year = now.get(Calendar.YEAR);
+		int hour = now.get(Calendar.HOUR);
+		int minute = now.get(Calendar.MINUTE);
+		
+		String name = String.format("Results-%d-%d-%d-%d-%d", day, month, year,hour, minute);
+		
+		File file =new File( String.format("./BatchFiles/%s.csv", name));
 		FileWriter fw = null;
 		try {
 			fw = new FileWriter(file,true);

@@ -3,7 +3,7 @@ package consumat;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-
+import java.util.Calendar;
 import java.util.List;
 
 import agent.farm.Farm;
@@ -17,6 +17,14 @@ public class Consumat {
 	public static void main(String[] args) {
 		
 		int max_parameter_length = getLineCount();
+		Calendar now = Calendar.getInstance();                             // Gets the current date and time
+		int day = now.get(Calendar.DAY_OF_MONTH); 
+		int month = now.get(Calendar.MONTH) + 1;
+		int year_file = now.get(Calendar.YEAR);
+		int hour = now.get(Calendar.HOUR);
+		int minute = now.get(Calendar.MINUTE);	
+		String fileName = String.format("Results-%d-%d-%d-%d-%d", day, month, year_file,hour, minute);
+		long line_counter = 0;
 
 		//max_parameter_length = 2; // WARNING: don't commit resulting file if max is used - file is too large
 		for (int parameterSet = 1; parameterSet < max_parameter_length; parameterSet++) {							   // sensitivity testing, loop through all parameters
@@ -33,8 +41,13 @@ public class Consumat {
 					
 					List<List<String>> fullAndMinSetProducts = farm.makeDecision(allFarms, income, probability);             // first list is full set, second list is fake LP product list
 					DecisionResult decision = new DecisionResult(farm.getFarmName(), fullAndMinSetProducts.get(0), year, farm.getParameters(), farm.getStrategy(), fullAndMinSetProducts.get(1), income );
-					decision.appendDecisionFile();
-					
+					decision.appendDecisionFile(fileName);
+					line_counter++;
+					if (line_counter > 999999) {
+						fileName = String.format("Results-%d-%d-%d-%d-%d-v2", day, month, year_file,hour, minute);     // if we are over a million lines, start version 2
+						line_counter = 0;
+					}
+										
 					farm.updateExperience();                              				           // each time period update experience
 				}
 				

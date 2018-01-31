@@ -39,7 +39,7 @@ public class DecisionResult {
 	public void appendDecisionFile() {
 		Calendar now = Calendar.getInstance();                             // Gets the current date and time
 		int day = now.get(Calendar.DAY_OF_MONTH); 
-		int month = now.get(Calendar.MONTH);
+		int month = now.get(Calendar.MONTH) + 1;
 		int year = now.get(Calendar.YEAR);
 		int hour = now.get(Calendar.HOUR);
 		int minute = now.get(Calendar.MINUTE);

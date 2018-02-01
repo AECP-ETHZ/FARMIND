@@ -40,7 +40,7 @@ public class Consumat {
 					probability = normal.cumulativeProbability(income);
 					
 					List<List<String>> fullAndMinSetProducts = farm.makeDecision(allFarms, income, probability);             // first list is full set, second list is fake LP product list
-					DecisionResult decision = new DecisionResult(farm.getFarmName(), fullAndMinSetProducts.get(0), year, farm.getParameters(), farm.getStrategy(), fullAndMinSetProducts.get(1), income );
+					DecisionResult decision = new DecisionResult(farm.getPreferences().getProductName(), farm.getFarmName(), fullAndMinSetProducts.get(0), year, farm.getParameters(), farm.getStrategy(), fullAndMinSetProducts.get(1), income );
 					decision.appendDecisionFile(fileName);
 					line_counter++;
 					if (line_counter > 999999) {

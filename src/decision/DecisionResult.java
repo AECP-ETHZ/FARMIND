@@ -24,8 +24,9 @@ public class DecisionResult {
 	private int strategy;
 	private List<String> LP_Products;
 	private double income;
+	private List<String> productNames;
 	
-	public DecisionResult(String farmId, List<String> maxSet, Integer year, Parameters param, int i, List<String> minSet, double income) {
+	public DecisionResult(List<String> productNames, String farmId, List<String> maxSet, Integer year, Parameters param, int i, List<String> minSet, double income) {
 		setFarmId(farmId);
 		setProducts(maxSet);
 		setYear(year);
@@ -33,6 +34,7 @@ public class DecisionResult {
 		setStrategy(i);
 		setLP_Products(minSet);
 		setIncome(income);
+		setProductNames(productNames);
 	}
 	
 	public void appendDecisionFile(String fileName) {
@@ -42,7 +44,7 @@ public class DecisionResult {
 			directory.mkdir();
 		}
 		
-		File file =new File( String.format("./output/%s.csv", fileName));
+		File file = new File(String.format("./output/%s.csv", fileName));
 		FileWriter fw = null;
 		try {
 			fw = new FileWriter(file,true);
@@ -70,7 +72,7 @@ public class DecisionResult {
 		writer.print(String.format("%s,",this.strategy) );
 		
 		for(int i = 0; i < this.products.size(); i++) {
-			writer.print(String.format("%s,",this.products.get(i)) );
+			writer.print(String.format("%d,",  this.productNames.indexOf( this.products.get(i)) ) );
 		}
 		
 		for(int i = 0; i < 6 - this.products.size(); i++) {
@@ -78,7 +80,7 @@ public class DecisionResult {
 		}
 		
 		for(int i = 0; i < this.LP_Products.size(); i++) {
-			writer.print(String.format("%s,",this.LP_Products.get(i)) );
+			writer.print(String.format("%d,",  this.productNames.indexOf(this.LP_Products.get(i))) );
 		}
 		
 		for(int i = 0; i < 3 - this.LP_Products.size(); i++) {
@@ -142,6 +144,14 @@ public class DecisionResult {
 
 	public void setIncome(double income) {
 		this.income = income;
+	}
+
+	public List<String> getProductNames() {
+		return productNames;
+	}
+
+	public void setProductNames(List<String> productNames) {
+		this.productNames = productNames;
 	}
 
 }

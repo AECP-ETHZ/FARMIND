@@ -72,7 +72,7 @@ public class DecisionResult {
 		writer.print(String.format("%s,",this.strategy) );
 		
 		for(int i = 0; i < this.products.size(); i++) {
-			writer.print(String.format("%d,",  this.productNames.indexOf( this.products.get(i)) ) );
+			writer.print(String.format("%d,",  1 + this.productNames.indexOf( this.products.get(i)) ) );
 		}
 		
 		for(int i = 0; i < 6 - this.products.size(); i++) {
@@ -80,7 +80,7 @@ public class DecisionResult {
 		}
 		
 		for(int i = 0; i < this.LP_Products.size(); i++) {
-			writer.print(String.format("%d,",  this.productNames.indexOf(this.LP_Products.get(i))) );
+			writer.print(String.format("%d,",  1 + this.productNames.indexOf(this.LP_Products.get(i))) );
 		}
 		
 		for(int i = 0; i < 3 - this.LP_Products.size(); i++) {

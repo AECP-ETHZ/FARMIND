@@ -48,7 +48,7 @@ public class Consumat {
 						line_counter = 0;
 					}
 										
-					farm.updateExperience();                              				           // each time period update experience
+					farm.updateExperiencePlusAge();                              				           // each time period update experience
 				}
 				
 				System.out.println();

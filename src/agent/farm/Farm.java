@@ -227,9 +227,14 @@ public class Farm {
 	 * This experience vector is part of a shared experience matrix that all farms have
 	 * If the farm is currently farming a product, then increase the experience of that product for that farm.
 	 * For all other possible products in the experience vector for this farm, decrement the experience by one year.
+	 * 
+	 * Also increment the age of the farmer each time step.
 	 */
-	public void updateExperience() {
+	public void updateExperiencePlusAge() {
 		List<String> productNames = new ArrayList<String>();				   // array of names of products for comparison
+		
+		int age = this.head.getAge();
+		this.head.setAge(age + 1);                                             // increment farmers age each time period
 		
 		for (int i = 0; i<this.getCurrentProducts().size(); i++) {
 			productNames.add(this.getCurrentProducts().get(i).getName());

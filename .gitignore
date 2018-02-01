@@ -4,4 +4,4 @@
 .RData
 .Rhistory
 .gitignore
-./output
+/output

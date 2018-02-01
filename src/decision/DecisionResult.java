@@ -21,22 +21,28 @@ public class DecisionResult {
 	private List<String> products;
 	private Integer year;
 	private Parameters param;
-	private String strategy;
+	private int strategy;
 	private List<String> LP_Products;
 	private double income;
 	
-	public DecisionResult(String farmId, List<String> maxSet, Integer year, Parameters param, String strategy, List<String> minSet, double income) {
+	public DecisionResult(String farmId, List<String> maxSet, Integer year, Parameters param, int i, List<String> minSet, double income) {
 		setFarmId(farmId);
 		setProducts(maxSet);
 		setYear(year);
 		setParam(param);
-		setStrategy(strategy);
+		setStrategy(i);
 		setLP_Products(minSet);
 		setIncome(income);
 	}
 	
 	public void appendDecisionFile(String fileName) {
-		File file =new File( String.format("./BatchFiles/%s.csv", fileName));
+		String PATH = "./output";
+		File directory = new File(PATH);
+		if(!directory.exists()) {
+			directory.mkdir();
+		}
+		
+		File file =new File( String.format("./output/%s.csv", fileName));
 		FileWriter fw = null;
 		try {
 			fw = new FileWriter(file,true);
@@ -51,35 +57,35 @@ public class DecisionResult {
 					+ "fuzzy_action2, fuzzy_action3, fuzzy_action4, fuzzy_action5, fuzzy_action6, lp_action1, lp_action2, lp_action3, income");
 		}
 		
-		writer.print(String.format("%s, ",this.year));
-		writer.print(String.format("%s, ",this.farmId));
-		writer.print(String.format("%s, ",this.param.getAlpha_plus()));
-		writer.print(String.format("%s, ",this.param.getAlpha_minus()));
-		writer.print(String.format("%s, ",this.param.getLambda()));
-		writer.print(String.format("%s, ",this.param.getPhi_plus() ));
-		writer.print(String.format("%s, ",this.param.getPhi_minus() ));
-		writer.print(String.format("%s, ",this.param.getA() ));
-		writer.print(String.format("%s, ",this.param.getB() ));
-		writer.print(String.format("%s, ",this.param.getK() ));
-		writer.print(String.format("%s, ",this.strategy) );
+		writer.print(String.format("%s,",this.year));
+		writer.print(String.format("%s,",this.farmId));
+		writer.print(String.format("%s,",this.param.getAlpha_plus()));
+		writer.print(String.format("%s,",this.param.getAlpha_minus()));
+		writer.print(String.format("%s,",this.param.getLambda()));
+		writer.print(String.format("%s,",this.param.getPhi_plus() ));
+		writer.print(String.format("%s,",this.param.getPhi_minus() ));
+		writer.print(String.format("%s,",this.param.getA() ));
+		writer.print(String.format("%s,",this.param.getB() ));
+		writer.print(String.format("%s,",this.param.getK() ));
+		writer.print(String.format("%s,",this.strategy) );
 		
 		for(int i = 0; i < this.products.size(); i++) {
-			writer.print(String.format("%s, ",this.products.get(i)) );
+			writer.print(String.format("%s,",this.products.get(i)) );
 		}
 		
 		for(int i = 0; i < 6 - this.products.size(); i++) {
-			writer.print("NA, " );
+			writer.print("NA," );
 		}
 		
 		for(int i = 0; i < this.LP_Products.size(); i++) {
-			writer.print(String.format("%s, ",this.LP_Products.get(i)) );
+			writer.print(String.format("%s,",this.LP_Products.get(i)) );
 		}
 		
 		for(int i = 0; i < 3 - this.LP_Products.size(); i++) {
-			writer.print("NA, " );
+			writer.print("NA," );
 		}
 	    
-		writer.print(String.format("%s, ",this.income ) );
+		writer.print(String.format("%s,",this.income ) );
 		
 		writer.println();
 		writer.close();
@@ -114,12 +120,12 @@ public class DecisionResult {
 		this.param = param;
 	}
 
-	public String getStrategy() {
+	public int getStrategy() {
 		return strategy;
 	}
 
-	public void setStrategy(String strategy) {
-		this.strategy = strategy;
+	public void setStrategy(int i) {
+		this.strategy = i;
 	}
 
 	public List<String> getLP_Products() {

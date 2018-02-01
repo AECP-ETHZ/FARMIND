@@ -39,7 +39,7 @@ public class Farm {
 	private List<Crop> crops;
 	private List<Livestock> livestock;
 	private Parameters parameters;
-	private String strategy;
+	private int strategy;
 	private double incomeProbability;
 	
 	/** 
@@ -71,12 +71,12 @@ public class Farm {
 		
 		if ((head.getAge() > 65)) {
 			System.out.println("EXIT");
-			this.strategy = "EXIT";
+			this.strategy = 1;
 		}
 		else if (this.Uncertainty >= this.Tolerance) {
 			if (this.Satisfaction >= 0) {
 				System.out.println("IMITATION");
-				this.strategy = "IMITATION";
+				this.strategy = 2;
 				fullProductSet = cal.getImitationProducts();
 				
 				small_set = Math.round( (double)fullProductSet.size()/2.0) ;
@@ -85,21 +85,21 @@ public class Farm {
 				}
 			}
 			else {
-				System.out.println("OPT_OUT");
-				this.strategy = "OPT_OUT";
+				System.out.println("EXIT");
+				this.strategy = 1;
 			}
 		}
 		else {
 			if (this.Satisfaction >= 0) {
 				System.out.println("REPETITION");
-				this.strategy = "REPITITION";
+				this.strategy = 4;
 				for (int i = 0; i < this.getCurrentProducts().size(); i++) {
 					minProductSet.add(this.getCurrentProducts().get(i).getName());
 				} 
 			}
 			else {
 				System.out.println("OPTIMIZATION");
-				this.strategy = "OPTIMIZATION";
+				this.strategy = 3;
 				fullProductSet = cal.getOptimizeProducts();
 				small_set = Math.round( (double)fullProductSet.size()/2.0) ;
 				while(small_set > 0) {
@@ -430,11 +430,11 @@ public class Farm {
 		this.parameters = parameters;
 	}
 
-	public String getStrategy() {
+	public int getStrategy() {
 		return strategy;
 	}
 
-	public void setStrategy(String strategy) {
+	public void setStrategy(int strategy) {
 		this.strategy = strategy;
 	}
 

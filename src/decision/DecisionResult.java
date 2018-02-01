@@ -55,8 +55,8 @@ public class DecisionResult {
 		PrintWriter writer = new PrintWriter(bw);
 		
 		if (file.length() == 0) {
-			writer.println("year, name, alpha_plus, alpha_minus, lambda, phi_plus, phi_minus, a, b, k, strategy, fuzzy_action1, "
-					+ "fuzzy_action2, fuzzy_action3, fuzzy_action4, fuzzy_action5, fuzzy_action6, lp_action1, lp_action2, lp_action3, income");
+			writer.println("year,name,alpha_plus,alpha_minus,lambda,phi_plus,phi_minus,a,b,k,strategy,fuzzy_action1,"
+					+ "fuzzy_action2,fuzzy_action3,fuzzy_action4,fuzzy_action5,fuzzy_action6,lp_action1,lp_action2,lp_action3,income");
 		}
 		
 		writer.print(String.format("%s,",this.year));
@@ -87,9 +87,9 @@ public class DecisionResult {
 			writer.print("NA," );
 		}
 	    
-		writer.print(String.format("%s,",this.income ) );
+		writer.print(String.format("%s",this.income ) );
 		
-		writer.println();
+		writer.print("\n");
 		writer.close();
 	}
 	

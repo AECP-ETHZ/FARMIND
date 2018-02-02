@@ -75,13 +75,13 @@ public class Farm {
 		updateTolerance();      
 		setIncomeProbability(probability);
 		
-		if ((head.getAge() > 65)) {
-			System.out.println("EXIT");
+		if ((head.getAge() > 650)) {
+			//System.out.println("EXIT");
 			this.strategy = 1;
 		}
 		else if (this.Uncertainty >= this.Tolerance) {
 			if (this.Satisfaction >= 0) {
-				System.out.println("IMITATION");
+				//System.out.println("IMITATION");
 				this.strategy = 2;
 				fullProductSet = cal.getImitationProducts();
 				
@@ -91,20 +91,20 @@ public class Farm {
 				}
 			}
 			else {
-				System.out.println("EXIT");
+				//System.out.println("EXIT");
 				this.strategy = 1;
 			}
 		}
 		else {
 			if (this.Satisfaction >= 0) {
-				System.out.println("REPETITION");
+				//System.out.println("REPETITION");
 				this.strategy = 4;
 				for (int i = 0; i < this.getCurrentProducts().size(); i++) {
 					minProductSet.add(this.getCurrentProducts().get(i).getName());
 				} 
 			}
 			else {
-				System.out.println("OPTIMIZATION");
+				//System.out.println("OPTIMIZATION");
 				this.strategy = 3;
 				fullProductSet = cal.getOptimizeProducts();
 				small_set = Math.round( (double)fullProductSet.size()/2.0) ;

@@ -21,17 +21,11 @@ public class Consumat {
 		String origFileName = createFileName();
 		String FileName = "";
 		long line_counter = 0;
-<<<<<<< HEAD
 		int file_counter = 1;
-		max_parameter_length = 2;
 		
+		max_parameter_length = 2;
 		for (int parameterSet = 1; parameterSet < max_parameter_length; parameterSet++) {		   // sensitivity testing, loop through all parameters
-=======
 
-		//max_parameter_length = 2; // WARNING: don't commit resulting file if max is used - file is too large
-		for (int parameterSet = 1; parameterSet < max_parameter_length; parameterSet++) {							   // sensitivity testing, loop through all parameters
-			
->>>>>>> ed24becf7d3936f5391dde9924d9db5abbdadf64
 			ReadParameters reader = new ReadParameters();										   // read all input data files
 			List<Farm>     allFarms = reader.getFarms(parameterSet);							   // build set of farms with new parameters
 			setNetworkAverageIncome(allFarms);

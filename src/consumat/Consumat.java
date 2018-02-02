@@ -26,7 +26,7 @@ public class Consumat {
 		String fileName = String.format("Results-%d-%d-%d-%d-%d", day, month, year_file,hour, minute);
 		long line_counter = 0;
 
-		max_parameter_length = 2; // WARNING: don't commit resulting file if max is used - file is too large
+		//max_parameter_length = 2; // WARNING: don't commit resulting file if max is used - file is too large
 		for (int parameterSet = 1; parameterSet < max_parameter_length; parameterSet++) {							   // sensitivity testing, loop through all parameters
 			
 			ReadParameters reader = new ReadParameters();										   // read all input data files

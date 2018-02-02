@@ -64,7 +64,7 @@ public class ProductSelectionCalculator {
 	 */
 	public List<String> getImitationProducts() {
 		
-		double[] c1 = new double[this.L.size()];
+		double[] c1 = new double[this.L.size()];	
 		for (int i = 0; i < this.L.size(); i++) {
 			c1[i] = L.get(i);
 		}

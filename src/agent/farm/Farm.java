@@ -31,6 +31,7 @@ public class Farm {
 	private List<Double> IncomeHistory;
 	private double Aspiration;
 	private double Uncertainty;
+	private double IncomeUncertainty;
 	private double Tolerance;
 	private Graph<String, DefaultEdge> network; 
 	private FarmProductMatrix experience;
@@ -41,6 +42,8 @@ public class Farm {
 	private Parameters parameters;
 	private int strategy;
 	private double incomeProbability;
+	private double lastYearNetworkIncomeAverage;
+	private double lastYearPersonalIncomeAverage;
 	
 	/** 
 	 * 1. update satisfaction, uncertainty, aspiration, and tolerance for this farm
@@ -62,10 +65,13 @@ public class Farm {
 	    ProductSelectionCalculator cal = new ProductSelectionCalculator(this, farms);    // calculator for the product selection
 		List<Product> current = new ArrayList<Product>();							     // current products (objects - not names) in system 
 		double small_set = 0;
-		
-	    updateSatisfaction(income);
+
+		updateIncomeHistory(income);									       // add income at current time step to history log, remove oldest income
+																			   // income is not updated at year 1 
+	    //updateIncomeUncertainty(farms);
+		updateSatisfaction();									
 		updateUncertainty(farms);
-		updateAspiration();
+	    updateAspiration();
 		updateTolerance();      
 		setIncomeProbability(probability);
 		
@@ -199,9 +205,7 @@ public class Farm {
 	 * Based on the current income level of the farmer calculate new satisfaction level.
 	 * The farmer's income is set externally from farmdyn 
 	 */
-	private void updateSatisfaction(double income) {
-		this.updateIncomeHistory(income);									   // add income at current time step to history log, remove oldest income
-		
+	private void updateSatisfaction() {		
 		double current_satisfaction = currentSatisfaction();
 		setSatisfaction(current_satisfaction);                                                     // uses updated income history
 	}
@@ -259,17 +263,39 @@ public class Farm {
 	}
 	/**
 	 * Update income history by removing oldest income and replacing with new income
+	 * IncomeHistory = [1,2,3,4,5]
+	 * where year 1 is the most recent income and year 5 is the oldest income
 	 * @param income
 	 */
 	public void updateIncomeHistory (double income) {
+		
+		if(income < 0) return;												   // income is negative for the first year due to initialization
+		
 		List<Double> temp = new ArrayList<Double>();                           // update array for new incomes
 		temp.add(income);
 		
 		for (int i = 0; i< this.getMemory() - 1; i++) {
 			temp.add(this.IncomeHistory.get(i));
 		}
+		
+		List<Double> avgIncome = new ArrayList<Double>(temp);
+		avgIncome.remove(0);                                                   // remove first element
+		double personalIncomeAverage = mean(avgIncome);
 			
 		setIncomeHistory(temp); 
+		setLastYearPersonalIncomeAverage(personalIncomeAverage);
+	}
+	
+	private void updateIncomeUncertainty(List<Farm> farms) {
+		double networkDiff = Math.abs(IncomeHistory.get(0) - lastYearNetworkIncomeAverage) / lastYearNetworkIncomeAverage;
+		double personalDiff = Math.abs(IncomeHistory.get(0) - lastYearPersonalIncomeAverage) /lastYearPersonalIncomeAverage;
+		
+		if (networkDiff > personalDiff) {
+			this.IncomeUncertainty = 1;
+		}
+		else {
+			this.IncomeUncertainty = 0;
+		}
 	}
 	
 	// helper functions
@@ -426,29 +452,43 @@ public class Farm {
 	public void setIncomeHistory(List<Double> incomeHistory) {
 		IncomeHistory = incomeHistory;
 	}
-
 	public Parameters getParameters() {
 		return parameters;
 	}
-
 	public void setParameters(Parameters parameters) {
 		this.parameters = parameters;
 	}
-
 	public int getStrategy() {
 		return strategy;
 	}
-
 	public void setStrategy(int strategy) {
 		this.strategy = strategy;
 	}
-
 	public double getIncomeProbability() {
 		return incomeProbability;
 	}
-
 	public void setIncomeProbability(double incomeProbability) {
 		this.incomeProbability = incomeProbability;
+	}
+
+	public double getIncomeUncertainty() {
+		return IncomeUncertainty;
+	}
+
+	public void setIncomeUncertainty(double incomeUncertainty) {
+		IncomeUncertainty = incomeUncertainty;
+	}
+	public double getLastYearNetworkIncomeAverage() {
+		return lastYearNetworkIncomeAverage;
+	}
+	public void setLastYearNetworkIncomeAverage(double lastYearNetworkIncomeAverage) {
+		this.lastYearNetworkIncomeAverage = lastYearNetworkIncomeAverage;
+	}
+	public double getLastYearPersonalIncomeAverage() {
+		return lastYearPersonalIncomeAverage;
+	}
+	public void setLastYearPersonalIncomeAverage(double lastYearPersonalIncomeAverage) {
+		this.lastYearPersonalIncomeAverage = lastYearPersonalIncomeAverage;
 	}
 }
 

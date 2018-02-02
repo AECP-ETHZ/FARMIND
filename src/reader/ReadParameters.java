@@ -107,7 +107,11 @@ public class ReadParameters implements Reader {
 					income.add( Double.parseDouble( farmParameters.get(i+INCOME_INDEX) ) );
 				}
 				
+				List<Double> avgIncome = new ArrayList<Double>(income);
+				avgIncome.remove(0);                                           // remove first element
+				double personalIncomeAverage = mean(avgIncome);
 				farm.setIncomeHistory(income);
+				farm.setLastYearPersonalIncomeAverage(personalIncomeAverage);
 				farm.setExperience(experience);
 				farm.setPreferences(pref);
 				farm.setLivestock(livestock);
@@ -388,6 +392,21 @@ public class ReadParameters implements Reader {
 			}
 		}
 		return Result;
+	}
+	
+	/** 
+	 * Return mean value of provided list 
+	 * @param list of values to calculate mean with
+	 * @return mean
+	 */
+	private double mean(List<Double> list) {
+		double mean = 0;												       // mean value to return
+		
+		for (int i = 0; i<list.size(); i++) {
+			mean = mean + list.get(i);
+		}
+		
+		return mean / list.size();
 	}
 
 }

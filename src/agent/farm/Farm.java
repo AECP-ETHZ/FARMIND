@@ -69,7 +69,7 @@ public class Farm {
 		updateTolerance();      
 		setIncomeProbability(probability);
 		
-		if ((head.getAge() > 65)) {
+		if ((head.getAge() > 650)) {
 			//System.out.println("EXIT");
 			this.strategy = 1;
 		}

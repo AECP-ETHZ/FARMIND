@@ -28,7 +28,7 @@ public class Consumat {
 			ReadParameters reader = new ReadParameters();										   // read all input data files
 			List<Farm>     allFarms = reader.getFarms(parameterSet);							   // build set of farms with new parameters
 			double income, probability;
-			initializeRegionIncomeChangePercent(allFarms);
+			initializeRegionIncomeChangePercent(allFarms);										   // only take into account the preset values
 
 			for (int year = 1; year <= 10; year++) {											   // run simulation for a set of years, getting updated income and products	
 				List<List<Double>> incomes = new ArrayList<List<Double>>();
@@ -59,7 +59,7 @@ public class Consumat {
 					farm.updateExperiencePlusAge();                              				           // each time period update experience
 				}
 				
-				updateRegionIncomeChangePercent(allFarms,incomes.get(0));
+				updateRegionIncomeChangePercent(allFarms,incomes.get(0));						   // after time step update the percent change for population
 			}
 		}
 	}

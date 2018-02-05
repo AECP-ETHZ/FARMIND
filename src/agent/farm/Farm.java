@@ -42,7 +42,7 @@ public class Farm {
 	private Parameters parameters;
 	private int strategy;
 	private double incomeProbability;
-	private double lastYearNetworkIncomeAverage;
+	private double regionIncomeChangePercent;
 	private double lastYearPersonalIncomeAverage;
 	
 	/** 
@@ -55,27 +55,26 @@ public class Farm {
 	 * For the sensitivity testing phase, we need to 'fake' a linear programming model so we select half of the set to return as our final decision. 
 	 * We keep track of both sets for use during the sensitivity anaylsis
 	 * 
-	 * @param farms full list of all farms in system
+	 * @param allFarms full list of all farms in system
 	 * @param income of this particular farm
 	 * @return List containing the 1) full fuzzy logic selection and 2) the minimum list to imitate the LP simulator selection
 	 */
-	public List<List<String>> makeDecision(List<Farm> farms, double income, double probability) {
+	public List<List<String>> makeDecision(List<Farm> allFarms, double income, double probability) {
 	    List<String> fullProductSet = new ArrayList<String>();						     // list of names of products from fuzzy logic
 	    List<String> minProductSet = new ArrayList<String>();						     // list of names of products to return to mimic LP
-	    ProductSelectionCalculator cal = new ProductSelectionCalculator(this, farms);    // calculator for the product selection
+	    ProductSelectionCalculator cal = new ProductSelectionCalculator(this, allFarms); // calculator for the product selection
 		List<Product> current = new ArrayList<Product>();							     // current products (objects - not names) in system 
 		double small_set = 0;
 
-		updateIncomeHistory(income);									       // add income at current time step to history log, remove oldest income
-																			   // income is not updated at year 1 
-	    //updateIncomeUncertainty(farms);
+		updateIncomeHistory(income);									       // update income history list, remove oldest income. Not applicable for first time step due to init
+	    updateIncomeUncertainty(allFarms);
 		updateSatisfaction();									
-		updateUncertainty(farms);
+		updateUncertainty(allFarms);
 	    updateAspiration();
 		updateTolerance();      
 		setIncomeProbability(probability);
 		
-		if ((head.getAge() > 650)) {
+		if ((head.getAge() > 65)) {
 			//System.out.println("EXIT");
 			this.strategy = 1;
 		}
@@ -268,8 +267,7 @@ public class Farm {
 	 * @param income
 	 */
 	public void updateIncomeHistory (double income) {
-		
-		if(income < 0) return;												   // income is negative for the first year due to initialization
+		if(income == -1) return;												   // income is -1 for the first year due to initialization
 		
 		List<Double> temp = new ArrayList<Double>();                           // update array for new incomes
 		temp.add(income);
@@ -287,10 +285,9 @@ public class Farm {
 	}
 	
 	private void updateIncomeUncertainty(List<Farm> farms) {
-		double networkDiff = Math.abs(IncomeHistory.get(0) - lastYearNetworkIncomeAverage) / lastYearNetworkIncomeAverage;
-		double personalDiff = Math.abs(IncomeHistory.get(0) - lastYearPersonalIncomeAverage) /lastYearPersonalIncomeAverage;
+		double personalIncomeChangePercent = (IncomeHistory.get(0) - lastYearPersonalIncomeAverage) /lastYearPersonalIncomeAverage;
 		
-		if (networkDiff > personalDiff) {
+		if ( (this.regionIncomeChangePercent - personalIncomeChangePercent) > 0 ) {
 			this.IncomeUncertainty = 1;
 		}
 		else {
@@ -470,19 +467,17 @@ public class Farm {
 	public void setIncomeProbability(double incomeProbability) {
 		this.incomeProbability = incomeProbability;
 	}
-
 	public double getIncomeUncertainty() {
 		return IncomeUncertainty;
 	}
-
 	public void setIncomeUncertainty(double incomeUncertainty) {
 		IncomeUncertainty = incomeUncertainty;
 	}
-	public double getLastYearNetworkIncomeAverage() {
-		return lastYearNetworkIncomeAverage;
+	public double getRegionIncomeChangePercent() {
+		return regionIncomeChangePercent;
 	}
-	public void setLastYearNetworkIncomeAverage(double lastYearNetworkIncomeAverage) {
-		this.lastYearNetworkIncomeAverage = lastYearNetworkIncomeAverage;
+	public void setRegionIncomeChangePercent(double regionIncomeChangePercent) {
+		this.regionIncomeChangePercent = regionIncomeChangePercent;
 	}
 	public double getLastYearPersonalIncomeAverage() {
 		return lastYearPersonalIncomeAverage;

@@ -17,29 +17,31 @@ public class Consumat {
 
 	public static void main(String[] args) {
 		
-		int max_parameter_length = getLineCount();
+		int max_parameter_length = getParameterCount();
 		String origFileName = createFileName();
-		String FileName = "";
+		String FileName = origFileName;
 		long line_counter = 0;
 		int file_counter = 1;
 		
-		max_parameter_length = 2;
+		max_parameter_length = 10;
 		for (int parameterSet = 1; parameterSet < max_parameter_length; parameterSet++) {		   // sensitivity testing, loop through all parameters
-
 			ReadParameters reader = new ReadParameters();										   // read all input data files
 			List<Farm>     allFarms = reader.getFarms(parameterSet);							   // build set of farms with new parameters
-			setNetworkAverageIncome(allFarms);
-			double income, probability;															   // income value, and probability of income
-			NormalDistribution normal = new NormalDistribution(50000.0, 10000.0);				   // distribution of possible incomes
-			
+			double income, probability;
+			initializeRegionIncomeChangePercent(allFarms);
+
 			for (int year = 1; year <= 10; year++) {											   // run simulation for a set of years, getting updated income and products	
+				List<List<Double>> incomes = new ArrayList<List<Double>>();
+				incomes = generateIncomes(allFarms.size());
+				int farmIncomeCounter = 0;
+				
 				for (Farm farm : allFarms) {
-					income = (int)normal.sample();
-					probability = normal.cumulativeProbability(income);
-					
 					if (year == 1) {															   // ignore first year as we already have that initialized with farmdata input file
 						income = -1;
 						probability = 0.5;
+					} else {
+						income = incomes.get(0).get(farmIncomeCounter);
+						probability = incomes.get(1).get(farmIncomeCounter++);
 					}
 					
 					List<List<String>> fullAndMinSetProducts = farm.makeDecision(allFarms, income, probability);             // first list is full set, second list is fake LP product list
@@ -54,28 +56,83 @@ public class Consumat {
 						FileName = origFileName + String.format("%d",0);
 					}
 					decision.appendDecisionFile(FileName);
-					
 					farm.updateExperiencePlusAge();                              				           // each time period update experience
 				}
 				
-				setNetworkAverageIncome(allFarms);				
-				System.out.println();
+				updateRegionIncomeChangePercent(allFarms,incomes.get(0));
 			}
 		}
 	}
 	
-	private static void setNetworkAverageIncome(List<Farm> allFarms) {
-		double average = 0;
+	/**
+	 * Automatically generate list of income values for each farm
+	 * @param year is number of farms in income list
+	 * @return
+	 */
+	private static List<List<Double>> generateIncomes(int year) {													 
+		NormalDistribution normal = new NormalDistribution(50000.0, 10000.0);				       // distribution of possible incomes
+		List<List<Double>> ret = new ArrayList<List<Double>>();
+		List<Double> year_income = new ArrayList<Double>();
+		List<Double> income_prob = new ArrayList<Double>();
+		
+		while(year > 0) {
+			double inc = (int)normal.sample();
+			year_income.add(inc);
+			income_prob.add( normal.cumulativeProbability(inc) );
+			year--;
+		}
+		ret.add(year_income);
+		ret.add(income_prob);
+		return ret;
+	}
+
+	/** 
+	 * Initialize regional income change for this year based on initial income data
+	 * @param allFarms is list of all farms in region
+	 */
+	private static void initializeRegionIncomeChangePercent(List<Farm> allFarms) {
+		double historicalRegionAverage = 0;
+		List<Double> initIncome = new ArrayList<Double>();
+		double thisYearAverage = 0;
+		double percentChange;
+		
+		for (Farm farm: allFarms) {
+			List<Double> income = new ArrayList<Double>(farm.getIncomeHistory());
+			initIncome.add(income.get(0));
+			income.remove(0);
+			historicalRegionAverage = historicalRegionAverage + mean(income);
+		}
+		historicalRegionAverage = historicalRegionAverage/allFarms.size();
+		thisYearAverage = mean(initIncome);
+		
+		percentChange = (thisYearAverage - historicalRegionAverage) / historicalRegionAverage;
+		
+		for (Farm farm: allFarms) {
+			farm.setRegionIncomeChangePercent(percentChange);
+		}
+	}
+	
+	/** 
+	 * Calculate regional income change for this year based on historical income data
+	 * @param allFarms is list of all farms in region
+	 * @param thisYearIncome is list of income values for each farm
+	 */
+	private static void updateRegionIncomeChangePercent(List<Farm> allFarms, List<Double> thisYearIncome) {
+		double historicalRegionAverage = 0;
+		double thisYearAverage = mean(thisYearIncome);
+		double percentChange;
 		
 		for (Farm farm: allFarms) {
 			List<Double> income = new ArrayList<Double>(farm.getIncomeHistory());
 			income.remove(0);
-			average = average + mean(income);
+			historicalRegionAverage = historicalRegionAverage + mean(income);
 		}
-		average = average/allFarms.size();
+		historicalRegionAverage = historicalRegionAverage/allFarms.size();
+		
+		percentChange = (thisYearAverage - historicalRegionAverage) / historicalRegionAverage;
 		
 		for (Farm farm: allFarms) {
-			farm.setLastYearNetworkIncomeAverage(average);
+			farm.setRegionIncomeChangePercent(percentChange);
 		}
 	}
 	
@@ -94,6 +151,10 @@ public class Consumat {
 		return mean / list.size();
 	}
 
+	/** 
+	 * Create generic file name so version number can be appended to end
+	 * @return fileName
+	 */
 	public static String createFileName() {
 		Calendar now = Calendar.getInstance();                             // Gets the current date and time
 		int day = now.get(Calendar.DAY_OF_MONTH); 
@@ -106,7 +167,11 @@ public class Consumat {
 		return fileName;
 	}
 	
-	public static int getLineCount() {
+	/** 
+	 * Get number of parameter options in input parameter file
+	 * @return number of possible parameter options
+	 */
+	public static int getParameterCount() {
 		BufferedReader Buffer = null;	
 		int count = 0;
 		

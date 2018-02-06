@@ -2,6 +2,7 @@ package agent.farm;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -154,49 +155,66 @@ public class Farm {
         double currentDissimilarity = 0;									   // similarity value of a farm 
         int EdgeCount = 0;													   // how many edges does this farm have (ie neighbors)
 		int totalFarms = 0;													   // how many total farms are there in the network
-        List<String>  ProductNames = new ArrayList<String>();				   // intermediate variable of just names, not product objects
+        List<String>  networkProductList = new ArrayList<String>();			   // intermediate variable of just names, not product objects
         Map<String, Integer> ProductMap = new HashMap<String,Integer>();       // map of all products on network, with count of often it's produced
         Double dissimilarity = 0.0;											   // dissimilarity value for farm
         Set<DefaultEdge> E;                                                    // set of edges in network with this farm at the head
     		
 		E = this.network.outgoingEdgesOf(this.farmName);
-        EdgeCount = E.size();
         totalFarms = farms.size();
         
-    	for (int j = 0; j < totalFarms; j++)  						           //  loop through all farms and check if they have a connection to main farm
+		Iterator<DefaultEdge> I;											   // iterator through all edges
+        I = E.iterator();
+        double w;
+        
+        for (int k = 0; k < totalFarms; k++) {
+        	if (!farms.get(k).getFarmName().equals(this.getFarmName()) ) {
+        		w = this.getNetwork().getEdgeWeight(I.next());						   // weight of social tie between main farm and farm i
+        		if (w > 0) {
+        			EdgeCount++;
+            		List<Product> p = farms.get(k).getCurrentProducts();
+            		for (int i = 0; i < p.size(); i++) {
+            			if (!networkProductList.contains(p.get(i).getName())) 
+            			{
+            				networkProductList.add(p.get(i).getName());
+            				ProductMap.put(p.get(i).getName(), 1);
+            			} else {
+            				ProductMap.put(p.get(i).getName(), ProductMap.get(p.get(i).getName()) + 1);    // increment map
+            			}
+            		}
+        			
+        		}
+        	}
+        }
+    	
+    	List<String> mainFarmProduct = new ArrayList<String>();
+    	for (int i = 0; i < this.getCurrentProducts().size(); i++)
     	{
-    		List<Product> p = farms.get(j).getCurrentProducts();
-    		for (int i = 0; i < p.size(); i++) {
-    			if (!ProductNames.contains(p.get(i).getName())) 
-    			{
-    				ProductNames.add(p.get(i).getName());
-    				ProductMap.put(p.get(i).getName(), 1);
-    			} else {
-    				ProductMap.put(p.get(i).getName(), ProductMap.get(p.get(i).getName()) + 1);    // increment map
-    			}
+    		String name = this.getCurrentProducts().get(i).getName();
+    		mainFarmProduct.add(name);
+    		
+    		if(!networkProductList.contains(name) ) {
+    			networkProductList.add(name);
+    			ProductMap.put(name, 1);                                       // add product to map
+    		} else {
+    			ProductMap.put(name, ProductMap.get(name) + 1);                    // increment map
     		}
     	}
     	
-    	List<String> mainProduct = new ArrayList<String>();
-    	for (int i = 0; i < this.getCurrentProducts().size(); i++)
-    	{
-    		mainProduct.add(this.getCurrentProducts().get(i).getName());
-    	}
-    	
     	// ACTUAL DISSIMILARITY CALULATION
-    	for (int i = 0; i < ProductNames.size(); i++)
+    	for (int i = 0; i < networkProductList.size(); i++)
     	{
     		// if the product is produced by the main farmer ignore that product in the dissimilarity
-    		if (mainProduct.contains(ProductNames.get(i))) {
+    		if (mainFarmProduct.contains(networkProductList.get(i))) {
     			continue;
     			
     		} else {
     			// these products are not grown by the main farmer so it counts for the dissimilarity
-    			dissimilarity = dissimilarity + (ProductMap.get(ProductNames.get(i)) / ((double)EdgeCount) );
+    			dissimilarity = dissimilarity + (ProductMap.get(networkProductList.get(i)) / ((double)EdgeCount) );
     		}
     	}
 
-        currentDissimilarity = dissimilarity/ProductNames.size();
+        currentDissimilarity = dissimilarity/networkProductList.size();
         
 		setUncertainty(currentDissimilarity);
 	}

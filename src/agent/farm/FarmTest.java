@@ -3,7 +3,6 @@ package agent.farm;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -67,12 +66,29 @@ class FarmTest {
 	void testUpdateIncomeHistory() {
 		allFarms.get(0).updateIncomeHistory(100);
 		
-		Double[] verify = {100.00, 63300.0,	52200.0,	48600.0,	56400.0};
+		Double[] verify = {100.00, 63300.0,	52200.0, 48600.0, 56400.0};
 		List<Double> y_list = allFarms.get(0).getIncomeHistory();
-		Double[] array = y_list.toArray(new Double[0]);
-	 	assertArrayEquals(array, verify );
-		
+		Double[] y = y_list.toArray(new Double[0]);
+	 	assertArrayEquals(y, verify);
 	}
+	
+	@Test
+	void testUpdateUncertaintyFarm1() {
+		Farm farm = allFarms.get(0);
+		farm.updateUncertainty(allFarms);
+		double unc = farm.getUncertainty();
+		assertEquals(unc, 0.4);                                                // hand calculation
+	}
+	
+	
+	@Test
+	void testUpdateUncertaintyFarm2() {
+		Farm farm = allFarms.get(1);
+		farm.updateUncertainty(allFarms);
+		double unc = farm.getUncertainty();
+		assertEquals(unc, 0.25);                                                // hand calculation
+	}
+	
 	
 
 	public static final String TestDataFile = "./test_data/farm_data.csv";

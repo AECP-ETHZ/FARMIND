@@ -53,7 +53,7 @@ public class Farm {
 	 * Fuzzy logic is used for optimization and imitation decisions to select a set of products to pursue. 
 	 * 
 	 * For the sensitivity testing phase, we need to 'fake' a linear programming model so we select half of the set to return as our final decision. 
-	 * We keep track of both sets for use during the sensitivity anaylsis
+	 * We keep track of both sets for use during the sensitivity analysis
 	 * 
 	 * @param allFarms full list of all farms in system
 	 * @param income of this particular farm

@@ -2,37 +2,76 @@ package agent.farm;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import reader.FarmProductMatrix;
 import reader.ReadParameters;
 
 class FarmTest {
-
+	List<Farm>     allFarms = new ArrayList<Farm>();
+	
+	@BeforeEach 
+	void setup() {
+		ReadParameters reader = new ReadParameters();						   // read all input data files
+		useTestData(reader);
+		allFarms = reader.getFarms(1);						                   // build set of farms with new parameters
+	}
+	
 	@Test
 	void testCreateFarm() {
 		Farm farm = new Farm();
 		assertNotEquals(farm, null);
 	}
+
+	@Test
+	void testUpdateAge() {
+		allFarms.get(0).updateExperiencePlusAge();
+		allFarms.get(1).updateExperiencePlusAge();
+		
+		assertEquals(allFarms.get(0).getAge(), 57);
+		assertEquals(allFarms.get(1).getAge(), 55);
+	}
+
+	@Test
+	void testUpdateExperience() {
+		allFarms.get(0).updateExperiencePlusAge();
+		
+		Collection<Integer[]> year = allFarms.get(0).getExperience().getProductmap().values();
+		List<Integer[]> y = new ArrayList<Integer[]>(year);
+		Integer[] verify = {3,4,5,3,5,1};
+		Integer[] y_list = y.get(2);
+		
+	 	assertArrayEquals(y_list, verify );
+	}
 	
 	@Test
-	void testMakeDecision() {
-		ReadParameters reader = new ReadParameters();						   // read all input data files
-		useTestData(reader);
-		List<Farm>     allFarms = reader.getFarms(1);						   // build set of farms with new parameters
-		assertNotEquals(allFarms, null);
+	void testUpdateExperienceTwoYears() {
+		// test experience array after two years
+		allFarms.get(0).updateExperiencePlusAge();
+		allFarms.get(0).updateExperiencePlusAge();
+		
+		Collection<Integer[]> year = allFarms.get(0).getExperience().getProductmap().values();
+		List<Integer[]> y = new ArrayList<Integer[]>(year);
+		Integer[] verify = {4, 3, 4, 2, 5, 0};
+		Integer[] y_list = y.get(2);
+		
+	 	assertArrayEquals(y_list, verify );
 	}
-
-	@Test
-	void testUpdateExperiencePlusAge() {
-		fail("Not yet implemented");
-	}
-
+	
 	@Test
 	void testUpdateIncomeHistory() {
-		fail("Not yet implemented");
+		allFarms.get(0).updateIncomeHistory(100);
+		
+		Double[] verify = {100.00, 63300.0,	52200.0,	48600.0,	56400.0};
+		List<Double> y_list = allFarms.get(0).getIncomeHistory();
+		Double[] array = y_list.toArray(new Double[0]);
+	 	assertArrayEquals(array, verify );
+		
 	}
 	
 

@@ -150,7 +150,7 @@ public class Farm {
 	 * 
 	 * @param farms Input list of all farms in the system. 
 	 */
-	private void updateUncertainty(List<Farm> farms) {
+	public void updateUncertainty(List<Farm> farms) {
         double currentDissimilarity = 0;									   // similarity value of a farm 
         int EdgeCount = 0;													   // how many edges does this farm have (ie neighbors)
 		int totalFarms = 0;													   // how many total farms are there in the network
@@ -267,7 +267,7 @@ public class Farm {
 	 * @param income
 	 */
 	public void updateIncomeHistory (double income) {
-		if(income == -1) return;												   // income is -1 for the first year due to initialization
+		if(income == -1) return;											   // income is -1 for the first year due to initialization
 		
 		List<Double> temp = new ArrayList<Double>();                           // update array for new incomes
 		temp.add(income);
@@ -283,7 +283,6 @@ public class Farm {
 		setIncomeHistory(temp); 
 		setLastYearPersonalIncomeAverage(personalIncomeAverage);
 	}
-	
 	private void updateIncomeUncertainty(List<Farm> farms) {
 		double personalIncomeChangePercent = (IncomeHistory.get(0) - lastYearPersonalIncomeAverage) /lastYearPersonalIncomeAverage;
 		
@@ -486,6 +485,3 @@ public class Farm {
 		this.lastYearPersonalIncomeAverage = lastYearPersonalIncomeAverage;
 	}
 }
-
-
-

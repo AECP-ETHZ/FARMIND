@@ -31,6 +31,13 @@ public class ReadParameters implements Reader {
 	public static final int INCOME_INDEX = 10;
 	public static final int START_ACTION_INDEX = 7;					       // the input spreadsheet starts the actions at column 12
 
+	public static final String FarmDataFile = "./data/farm_data.csv";
+	public static final String FarmParameterFile = "./data/parameters.csv";
+	public static final String FarmPreferenceFile = "./data/products_preference.csv";
+	public static final String FarmYearsFile = "./data/farming_years.csv";
+	public static final String FarmSocialNetworkFile = "./data/social_networks.csv";
+	public static final String FarmCropFile = "./data/crop_classification.csv";
+	
 	@Override
 	public List<Farm> getFarms(int parameterSet) {
 		String Line;
@@ -56,7 +63,7 @@ public class ReadParameters implements Reader {
 		try {
 			Calendar now = Calendar.getInstance();                             // Gets the current date and time
 			int currentYear = now.get(Calendar.YEAR); 
-			Buffer = new BufferedReader(new FileReader("./data/farm_data.csv"));
+			Buffer = new BufferedReader(new FileReader(FarmDataFile));
 			Line = Buffer.readLine();									       // first line to throw away
 			
 			while ((Line = Buffer.readLine()) != null) {                       // Read farm's parameters line by line
@@ -144,7 +151,7 @@ public class ReadParameters implements Reader {
 		Parameters parameters = new Parameters();
 
 		try {
-			Buffer = new BufferedReader(new FileReader("./data/parameters.csv"));
+			Buffer = new BufferedReader(new FileReader(FarmParameterFile));
 			Line = Buffer.readLine();
 			
 			for(int i = 0; i < parameterSet; i++) {
@@ -189,7 +196,7 @@ public class ReadParameters implements Reader {
 		FarmProductMatrix preferences = new FarmProductMatrix();
 
 		try {
-			Buffer = new BufferedReader(new FileReader("./data/products_preference.csv"));
+			Buffer = new BufferedReader(new FileReader(FarmPreferenceFile));
 			Line = Buffer.readLine();
 			matrixRow = CSVtoArrayList(Line);
 			matrixRow.remove(0);
@@ -220,7 +227,7 @@ public class ReadParameters implements Reader {
 		FarmProductMatrix experience = new FarmProductMatrix();
 
 		try {
-			Buffer = new BufferedReader(new FileReader("./data/farming_years.csv"));
+			Buffer = new BufferedReader(new FileReader(FarmYearsFile));
 			Line = Buffer.readLine();
 			matrixRow = CSVtoArrayList(Line);
 			matrixRow.remove(0);
@@ -261,7 +268,7 @@ public class ReadParameters implements Reader {
 		DefaultEdge edge;
 		
 		try {
-			Buffer = new BufferedReader(new FileReader("./data/social_networks.csv"));
+			Buffer = new BufferedReader(new FileReader(FarmSocialNetworkFile));
 			Line = Buffer.readLine();	
 			FarmNames = CSVtoArrayList(Line);
 			FarmNames.remove(0);
@@ -311,7 +318,7 @@ public class ReadParameters implements Reader {
 		BufferedReader Buffer = null;	
 
 		try {
-			Buffer = new BufferedReader(new FileReader("./data/crop_classification.csv"));
+			Buffer = new BufferedReader(new FileReader(FarmCropFile));
 			Line = Buffer.readLine();									       // first line to throw away
 			
 			while ((Line = Buffer.readLine()) != null) {                       // Read crop data

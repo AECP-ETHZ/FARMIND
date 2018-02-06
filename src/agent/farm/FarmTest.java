@@ -5,19 +5,24 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import reader.FarmProductMatrix;
+import reader.ReadParameters;
 
 class FarmTest {
 
 	@Test
 	void testCreateFarm() {
 		Farm farm = new Farm();
-		assertNotEquals(farm, null);
+		assertEquals(farm, farm);
 	}
 	
 	@Test
 	void testMakeDecision() {
+		ReadParameters reader = new ReadParameters();										   // read all input data files
+		
 		Farm farm = new Farm();
-		assertNotEquals(farm, null);
+		//assertNotEquals(farm, null);
+		
+		assertEquals(farm.getAge(), 50);
 	}
 
 	@Test

@@ -26,6 +26,16 @@ class FarmTest {
 		Farm farm = new Farm();
 		assertNotEquals(farm, null);
 	}
+	
+	@Test
+	void testAgeExitDecision() {
+		Farm farm = allFarms.get(0);
+		farm.getHead().setAge(70);
+		farm.makeDecision(allFarms, 100, 0.5);
+		
+		int strat = farm.getStrategy();
+		assertEquals(strat, 1);	// exit
+	}
 
 	@Test
 	void testUpdateAge() {
@@ -88,6 +98,16 @@ class FarmTest {
 		double unc = farm.getUncertainty();
 		assertEquals(unc, 0.25);                                                // hand calculation
 	}
+	
+	/*
+	@Test
+	void testUpdateSatisfactionFarm1() {
+		Farm farm = allFarms.get(0);
+		farm.updateAspiration();
+		farm.updateSatisfaction();
+		double unc = farm.getSatisfaction();
+		assertEquals(unc, 0.25);                                                // hand calculation
+	} */
 	
 	
 

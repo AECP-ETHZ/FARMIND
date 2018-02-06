@@ -69,9 +69,9 @@ public class Farm {
 
 		updateIncomeHistory(income);									       // update income history list, remove oldest income. Not applicable for first time step due to init
 	    updateIncomeUncertainty(allFarms);
-		updateSatisfaction();									
-		updateUncertainty(allFarms);
 	    updateAspiration();
+	    updateSatisfaction();									
+		updateUncertainty(allFarms);
 		updateTolerance();      
 		setIncomeProbability(probability);
 		
@@ -222,14 +222,14 @@ public class Farm {
 	 * Based on the current income level of the farmer calculate new satisfaction level.
 	 * The farmer's income is set externally from farmdyn 
 	 */
-	private void updateSatisfaction() {		
+	public void updateSatisfaction() {		
 		double current_satisfaction = currentSatisfaction();
 		setSatisfaction(current_satisfaction);                                                     // uses updated income history
 	}
 	/** 
 	 * Based on the historical income data, calculate the current aspiration level
 	 */
-	private void updateAspiration() {
+	public void updateAspiration() {
 		double aspiration = 0;
 		double alpha = this.parameters.getA();
 		

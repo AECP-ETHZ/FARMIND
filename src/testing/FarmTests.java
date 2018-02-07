@@ -1,4 +1,4 @@
-package agent.farm;
+package testing;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,9 +9,10 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import agent.farm.Farm;
 import reader.ReadParameters;
 
-class FarmTest {
+public class FarmTests {
 	List<Farm>     allFarms = new ArrayList<Farm>();
 	
 	@BeforeEach 

@@ -30,11 +30,63 @@ class FarmTest {
 	@Test
 	void testAgeExitDecision() {
 		Farm farm = allFarms.get(0);
-		farm.getHead().setAge(70);
-		farm.makeDecision(allFarms, 100, 0.5);
+		farm.getHead().setAge(700);
+		farm.makeDecision(allFarms);
 		
 		int strat = farm.getStrategy();
 		assertEquals(strat, 1);	// exit
+	}
+	
+	@Test
+	void testImitationDecision() {
+		Farm farm = allFarms.get(0);
+		
+		farm.setSatisfaction(100);
+		farm.setUncertainty(100);
+		farm.setTolerance(0);
+		farm.makeDecision(allFarms);
+		
+		int strat = farm.getStrategy();
+		assertEquals(strat, 2);	
+	}
+	
+	@Test
+	void testRepetionDecision() {
+		Farm farm = allFarms.get(0);
+		
+		farm.setSatisfaction(100);
+		farm.setUncertainty(0);
+		farm.setTolerance(10);
+		farm.makeDecision(allFarms);
+		
+		int strat = farm.getStrategy();
+		assertEquals(strat, 4);	
+	}
+	
+	@Test
+	void testOptimizationDecision() {
+		Farm farm = allFarms.get(0);
+		
+		farm.setSatisfaction(-1);
+		farm.setUncertainty(0);
+		farm.setTolerance(10);
+		farm.makeDecision(allFarms);
+		
+		int strat = farm.getStrategy();
+		assertEquals(strat, 3);	
+	}
+	
+	@Test
+	void testOptOutDecision() {
+		Farm farm = allFarms.get(0);
+		
+		farm.setSatisfaction(-1);
+		farm.setUncertainty(10);
+		farm.setTolerance(0);
+		farm.makeDecision(allFarms);
+		
+		int strat = farm.getStrategy();
+		assertEquals(strat, 1);	
 	}
 
 	@Test
@@ -74,9 +126,9 @@ class FarmTest {
 	
 	@Test
 	void testUpdateIncomeHistory() {
-		allFarms.get(0).updateIncomeHistory(100);
+		allFarms.get(0).updateIncomeHistoryList(100);
 		
-		Double[] verify = {100.00, 63300.0,	52200.0, 48600.0, 56400.0};
+		Double[] verify = {100.00, 63300.0,	52200.0, 48600.0, 56400.0};		   // manually created based on input file
 		List<Double> y_list = allFarms.get(0).getIncomeHistory();
 		Double[] y = y_list.toArray(new Double[0]);
 	 	assertArrayEquals(y, verify);
@@ -90,13 +142,24 @@ class FarmTest {
 		assertEquals(unc, 0.4);                                                // hand calculation
 	}
 	
-	
 	@Test
 	void testUpdateUncertaintyFarm2() {
 		Farm farm = allFarms.get(1);
 		farm.updateUncertainty(allFarms);
 		double unc = farm.getUncertainty();
 		assertEquals(unc, 0.25);                                                // hand calculation
+	}
+	
+	@Test
+	void testIncomeUncertaintyBetweenClasses() {
+		initializeRegionIncomeChangePercent(allFarms);
+		
+		assertEquals(allFarms.get(0).getRegionIncomeChangePercent(), allFarms.get(1).getRegionIncomeChangePercent());
+	}
+	
+	@Test
+	void testIncomeUncertainty() {
+		
 	}
 	
 	/*
@@ -132,5 +195,42 @@ class FarmTest {
 			reader.CropFile = TestCropFile;
 			reader.LivestockFile = TestLivestockFile;
 	} 
+	
+	private void initializeRegionIncomeChangePercent(List<Farm> allFarms) {
+		double historicalRegionAverage = 0;
+		List<Double> initIncome = new ArrayList<Double>();
+		double thisYearAverage = 0;
+		double percentChange;
+		
+		for (Farm farm: allFarms) {
+			List<Double> income = new ArrayList<Double>(farm.getIncomeHistory());
+			initIncome.add(income.get(0));
+			income.remove(0);
+			historicalRegionAverage = historicalRegionAverage + mean(income);
+		}
+		historicalRegionAverage = historicalRegionAverage/allFarms.size();
+		thisYearAverage = mean(initIncome);
+		
+		percentChange = (thisYearAverage - historicalRegionAverage) / historicalRegionAverage;
+		
+		for (Farm farm: allFarms) {
+			farm.setRegionIncomeChangePercent(percentChange);
+		}
+	}
+	
+	/** 
+	 * Return mean value of provided list 
+	 * @param list of values to calculate mean with
+	 * @return mean
+	 */
+	private static double mean(List<Double> list) {
+		double mean = 0;												       // mean value to return
+		
+		for (int i = 0; i<list.size(); i++) {
+			mean = mean + list.get(i);
+		}
+		
+		return mean / list.size();
+	}
 
 }

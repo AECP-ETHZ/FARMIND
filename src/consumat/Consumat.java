@@ -44,17 +44,18 @@ public class Consumat {
 						probability = incomes.get(1).get(farmIncomeCounter++);
 					}
 					
-					List<List<String>> fullAndMinSetProducts = farm.makeDecision(allFarms, income, probability);             // first list is full set, second list is fake LP product list
+					farm.updateFarmData(allFarms, income, probability);
+					List<List<String>> fullAndMinSetProducts = farm.makeDecision(allFarms);             // first list is full set, second list is fake LP product list
 					DecisionResult decision = new DecisionResult(farm.getPreferences().getProductName(), farm.getFarmName(), fullAndMinSetProducts.get(0), year, farm.getParameters(), farm.getStrategy(), fullAndMinSetProducts.get(1), income );
 
 					line_counter++;
-					if (line_counter > 9999) {
+					if (line_counter > 999999) {
 						FileName = origFileName + String.format("%d",file_counter);
 						file_counter++;
 						line_counter = 0;
 					} 
 					decision.appendDecisionFile(FileName);
-					farm.updateExperiencePlusAge();                              				           // each time period update experience
+					farm.updateExperiencePlusAge();                              				   // each time period update experience
 				}
 				
 				updateRegionIncomeChangePercent(allFarms,incomes.get(0));						   // after time step update the percent change for population

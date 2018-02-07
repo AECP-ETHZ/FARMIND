@@ -47,9 +47,26 @@ public class Farm {
 	private double lastYearPersonalIncomeAverage;
 	
 	/** 
-	 * 1. update satisfaction, uncertainty, aspiration, and tolerance for this farm
-	 * 2. create product selection calculator for this farm
-	 * 3. based on consumat model, decide which of the five decisions the farm will pursue
+	 * Update all parameters of the farm data
+	 * @param allFarms list of all the input farms
+	 * @param income input values of farm
+	 * @param probability of an income occurring in our distribution
+	 */
+	public void updateFarmData(List<Farm> allFarms, double income, double probability) {
+		updateIncomeHistoryList(income);									       // for year = 1, we pass in -1 for income so we don't update the income
+	    updateIncomeAverage();
+	    setIncomeProbability(probability);
+
+	    updateIncomeUncertainty();
+	    updateAspiration();
+	    updateSatisfaction();									
+		updateUncertainty(allFarms);
+		updateTolerance();      
+	}
+	
+	/** 
+	 * 1. create product selection calculator for this farm
+	 * 2. based on consumat model, decide which of the five decisions the farm will pursue
 	 * 
 	 * Fuzzy logic is used for optimization and imitation decisions to select a set of products to pursue. 
 	 * 
@@ -60,21 +77,13 @@ public class Farm {
 	 * @param income of this particular farm
 	 * @return List containing the 1) full fuzzy logic selection and 2) the minimum list to imitate the LP simulator selection
 	 */
-	public List<List<String>> makeDecision(List<Farm> allFarms, double income, double probability) {
+	public List<List<String>> makeDecision(List<Farm> allFarms) {
 	    List<String> fullProductSet = new ArrayList<String>();						     // list of names of products from fuzzy logic
 	    List<String> minProductSet = new ArrayList<String>();						     // list of names of products to return to mimic LP
-	    ProductSelectionCalculator cal = new ProductSelectionCalculator(this, allFarms); // calculator for the product selection
 		List<Product> current = new ArrayList<Product>();							     // current products (objects - not names) in system 
+		ProductSelectionCalculator cal = new ProductSelectionCalculator(this, allFarms); // calculator for the product selection
 		double small_set = 0;
 
-		updateIncomeHistory(income);									       // update income history list, remove oldest income. Not applicable for first time step due to init
-	    updateIncomeUncertainty(allFarms);
-	    updateAspiration();
-	    updateSatisfaction();									
-		updateUncertainty(allFarms);
-		updateTolerance();      
-		setIncomeProbability(probability);
-		
 		if ((head.getAge() > 650)) {
 			//System.out.println("EXIT");
 			this.strategy = 1;
@@ -284,7 +293,7 @@ public class Farm {
 	 * where year 1 is the most recent income and year 5 is the oldest income
 	 * @param income
 	 */
-	public void updateIncomeHistory (double income) {
+	public void updateIncomeHistoryList (double income) {
 		if(income == -1) return;											   // income is -1 for the first year due to initialization
 		
 		List<Double> temp = new ArrayList<Double>();                           // update array for new incomes
@@ -294,14 +303,25 @@ public class Farm {
 			temp.add(this.IncomeHistory.get(i));
 		}
 		
-		List<Double> avgIncome = new ArrayList<Double>(temp);
+		setIncomeHistory(temp); 
+	}
+	
+	/** 
+	 * Set average income over the previous time periods.
+	 * Exclude the first income period
+	 */
+	private void updateIncomeAverage() {
+		List<Double> avgIncome = new ArrayList<Double>(this.IncomeHistory);
 		avgIncome.remove(0);                                                   // remove first element
 		double personalIncomeAverage = mean(avgIncome);
-			
-		setIncomeHistory(temp); 
 		setLastYearPersonalIncomeAverage(personalIncomeAverage);
 	}
-	private void updateIncomeUncertainty(List<Farm> farms) {
+	
+	/**
+	 * update income uncertainty value
+	 * @param farms
+	 */
+	private void updateIncomeUncertainty() {
 		double personalIncomeChangePercent = (IncomeHistory.get(0) - lastYearPersonalIncomeAverage) /lastYearPersonalIncomeAverage;
 		
 		if ( (this.regionIncomeChangePercent - personalIncomeChangePercent) > 0 ) {

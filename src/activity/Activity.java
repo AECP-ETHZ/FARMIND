@@ -13,7 +13,7 @@ public class Activity {
 
 	/**
 	 * Plant product for the farm
-	 * Check name in master list of activites before object creation
+	 * Check name in master list of activities before object creation
 	 * @param ID
 	 * @param name
 	 */

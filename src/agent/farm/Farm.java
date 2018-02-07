@@ -144,7 +144,7 @@ public class Farm {
 	/**
 	 * Using list of all current farms in the system and the social network of the main farm,
 	 * update the main farm's uncertainty value based on the social network weight and the dissimilarity 
-	 * between neighbor's product types 
+	 * between neighbor's activity types 
 	 * 
 	 * @param farms Input list of all farms in the system. 
 	 */
@@ -152,8 +152,8 @@ public class Farm {
         double currentDissimilarity = 0;									   // similarity value of a farm 
         int EdgeCount = 0;													   // how many edges does this farm have (ie neighbors)
 		int totalFarms = 0;													   // how many total farms are there in the network
-        List<String>  networkProductList = new ArrayList<String>();			   // intermediate variable of just names, not product objects
-        Map<String, Integer> ProductMap = new HashMap<String,Integer>();       // map of all products on network, with count of often it's produced
+        List<String>  networkActivityList = new ArrayList<String>();		   // intermediate variable of just names, not product objects
+        Map<String, Integer> activityMap = new HashMap<String,Integer>();      // map of all activities on network, with count of often it's produced
         Double dissimilarity = 0.0;											   // dissimilarity value for farm
         Set<DefaultEdge> E;                                                    // set of edges in network with this farm at the head
     		
@@ -171,12 +171,12 @@ public class Farm {
         			EdgeCount++;
             		List<Activity> p = farms.get(k).getCurrentActivities();
             		for (int i = 0; i < p.size(); i++) {
-            			if (!networkProductList.contains(p.get(i).getName())) 
+            			if (!networkActivityList.contains(p.get(i).getName())) 
             			{
-            				networkProductList.add(p.get(i).getName());
-            				ProductMap.put(p.get(i).getName(), 1);
+            				networkActivityList.add(p.get(i).getName());
+            				activityMap.put(p.get(i).getName(), 1);
             			} else {
-            				ProductMap.put(p.get(i).getName(), ProductMap.get(p.get(i).getName()) + 1);    // increment map
+            				activityMap.put(p.get(i).getName(), activityMap.get(p.get(i).getName()) + 1);    // increment map
             			}
             		}
         			
@@ -184,34 +184,34 @@ public class Farm {
         	}
         }
     	
-    	List<String> mainFarmProduct = new ArrayList<String>();
+    	List<String> mainFarmActivity = new ArrayList<String>();
     	for (int i = 0; i < this.getCurrentActivities().size(); i++)
     	{
     		String name = this.getCurrentActivities().get(i).getName();
-    		mainFarmProduct.add(name);
+    		mainFarmActivity.add(name);
     		
-    		if(!networkProductList.contains(name) ) {
-    			networkProductList.add(name);
-    			ProductMap.put(name, 1);                                       // add product to map
+    		if(!networkActivityList.contains(name) ) {
+    			networkActivityList.add(name);
+    			activityMap.put(name, 1);                                       // add product to map
     		} else {
-    			ProductMap.put(name, ProductMap.get(name) + 1);                    // increment map
+    			activityMap.put(name, activityMap.get(name) + 1);                    // increment map
     		}
     	}
     	
     	// ACTUAL DISSIMILARITY CALULATION
-    	for (int i = 0; i < networkProductList.size(); i++)
+    	for (int i = 0; i < networkActivityList.size(); i++)
     	{
-    		// if the product is produced by the main farmer ignore that product in the dissimilarity
-    		if (mainFarmProduct.contains(networkProductList.get(i))) {
+    		// if the activity is done by the main farmer ignore that product in the dissimilarity
+    		if (mainFarmActivity.contains(networkActivityList.get(i))) {
     			continue;
     			
     		} else {
     			// these products are not grown by the main farmer so it counts for the dissimilarity
-    			dissimilarity = dissimilarity + (ProductMap.get(networkProductList.get(i)) / ((double)EdgeCount) );
+    			dissimilarity = dissimilarity + (activityMap.get(networkActivityList.get(i)) / ((double)EdgeCount) );
     		}
     	}
 
-        currentDissimilarity = dissimilarity/networkProductList.size();
+        currentDissimilarity = dissimilarity/networkActivityList.size();
         
 		setUncertainty(currentDissimilarity);
 	}

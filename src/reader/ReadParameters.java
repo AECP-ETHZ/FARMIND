@@ -49,7 +49,6 @@ public class ReadParameters implements Reader {
 		BufferedReader Buffer = null;	 									   // read input file
 		int farm_count_index = 0;                                              // index is used to set the actual farm id value
 		
-		// reference objects for building farm list
 		// each farm has a link to the reference object. This allows each farm to update the shared data objects
 		List<Graph<String, DefaultEdge>> network = this.getSocialNetworks();   
 		List<Activity> activities = getActivityList();

@@ -23,7 +23,7 @@ public class Consumat {
 		long line_counter = 0;
 		int file_counter = 1;
 		
-		max_parameter_length = 10;
+		//max_parameter_length = 10;
 		for (int parameterSet = 1; parameterSet < max_parameter_length; parameterSet++) {		   // sensitivity testing, loop through all parameters
 			ReadParameters reader = new ReadParameters();										   // read all input data files
 			List<Farm>     allFarms = reader.getFarms(parameterSet);							   // build set of farms with new parameters

@@ -49,7 +49,7 @@ public class Farm {
 	/** 
 	 * Update all parameters of the farm data
 	 * @param allFarms list of all the input farms
-	 * @param income input values of farm
+	 * @param income input value of farm
 	 * @param probability of an income occurring in our distribution
 	 */
 	public void updateFarmData(List<Farm> allFarms, double income, double probability) {
@@ -63,7 +63,6 @@ public class Farm {
 		updateUncertainty(allFarms);
 		updateTolerance();      
 	}
-	
 	/** 
 	 * 1. create product selection calculator for this farm
 	 * 2. based on consumat model, decide which of the five decisions the farm will pursue
@@ -231,14 +230,14 @@ public class Farm {
 	 * Based on the current income level of the farmer calculate new satisfaction level.
 	 * The farmer's income is set externally from farmdyn 
 	 */
-	public void updateSatisfaction() {		
+	private void updateSatisfaction() {		
 		double current_satisfaction = currentSatisfaction();
 		setSatisfaction(current_satisfaction);                                                     // uses updated income history
 	}
 	/** 
 	 * Based on the historical income data, calculate the current aspiration level
 	 */
-	public void updateAspiration() {
+	private void updateAspiration() {
 		double aspiration = 0;
 		double alpha = this.parameters.getA();
 		
@@ -293,7 +292,7 @@ public class Farm {
 	 * where year 1 is the most recent income and year 5 is the oldest income
 	 * @param income
 	 */
-	public void updateIncomeHistoryList (double income) {
+	private void updateIncomeHistoryList (double income) {
 		if(income == -1) return;											   // income is -1 for the first year due to initialization
 		
 		List<Double> temp = new ArrayList<Double>();                           // update array for new incomes
@@ -305,7 +304,6 @@ public class Farm {
 		
 		setIncomeHistory(temp); 
 	}
-	
 	/** 
 	 * Set average income over the previous time periods.
 	 * Exclude the first income period
@@ -316,7 +314,6 @@ public class Farm {
 		double personalIncomeAverage = mean(avgIncome);
 		setLastYearPersonalIncomeAverage(personalIncomeAverage);
 	}
-	
 	/**
 	 * update income uncertainty value
 	 * @param farms

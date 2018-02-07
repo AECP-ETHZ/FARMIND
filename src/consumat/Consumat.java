@@ -23,7 +23,7 @@ public class Consumat {
 		long line_counter = 0;
 		int file_counter = 1;
 		
-		//max_parameter_length = 10;
+		//max_parameter_length = 100;
 		for (int parameterSet = 1; parameterSet < max_parameter_length; parameterSet++) {		   // sensitivity testing, loop through all parameters
 			ReadParameters reader = new ReadParameters();										   // read all input data files
 			List<Farm>     allFarms = reader.getFarms(parameterSet);							   // build set of farms with new parameters
@@ -46,7 +46,7 @@ public class Consumat {
 					
 					farm.updateFarmData(allFarms, income, probability);
 					List<List<String>> fullAndMinSetProducts = farm.makeDecision(allFarms);             // first list is full set, second list is fake LP product list
-					DecisionResult decision = new DecisionResult(farm.getPreferences().getProductName(), farm.getFarmName(), fullAndMinSetProducts.get(0), year, farm.getParameters(), farm.getStrategy(), fullAndMinSetProducts.get(1), income );
+					DecisionResult decision = new DecisionResult(farm.getPreferences().getProductName(), farm.getFarmName(), fullAndMinSetProducts.get(0), year, farm.getParameters(), farm.getStrategy(), fullAndMinSetProducts.get(1), farm.getIncomeHistory().get(0) );
 
 					line_counter++;
 					if (line_counter > 999999) {

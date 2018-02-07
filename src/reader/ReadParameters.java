@@ -31,21 +31,13 @@ public class ReadParameters implements Reader {
 	public static final int INCOME_INDEX = 10;
 	public static final int START_ACTION_INDEX = 7;					       // the input spreadsheet starts the actions at column 12
 
-	public static final String FarmDataFile = "./data/farm_data.csv";
-	public static final String FarmParameterFile = "./data/parameters.csv";
-	public static final String FarmPreferenceFile = "./data/products_preference.csv";
-	public static final String FarmYearsFile = "./data/farming_years.csv";
-	public static final String FarmSocialNetworkFile = "./data/social_networks.csv";
-	public static final String FarmCropFile = "./data/crop_classification.csv";
-	public static final String FarmLivestockFile = "./data/livestock_classification.csv";
-	
-	public String DataFile = FarmDataFile;								       // this is used so that externally these can be changed to allow unit testing
-	public String ParameterFile = FarmParameterFile;
-	public String PreferenceFile = FarmPreferenceFile;
-	public String YearsFile = FarmYearsFile;
-	public String SocialNetworkFile = FarmSocialNetworkFile;
-	public String CropFile = FarmCropFile;
-	public String LivestockFile = FarmLivestockFile;
+	public String DataFile = "./data/farm_data.csv";					       // allow external function to set data files for testing
+	public String ParameterFile = "./data/parameters.csv";
+	public String PreferenceFile = "./data/products_preference.csv";
+	public String YearsFile = "./data/farming_years.csv";
+	public String SocialNetworkFile = "./data/social_networks.csv";
+	public String CropFile = "./data/crop_classification.csv";
+	public String LivestockFile = "./data/livestock_classification.csv";
 	
 	@Override
 	public List<Farm> getFarms(int parameterSet) {

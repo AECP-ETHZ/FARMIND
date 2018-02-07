@@ -19,6 +19,7 @@ class FarmTest {
 		ReadParameters reader = new ReadParameters();						   // read all input data files
 		useTestData(reader);
 		allFarms = reader.getFarms(1);						                   // build set of farms with new parameters
+		initializeRegionIncomeChangePercent(allFarms);
 	}
 	
 	@Test
@@ -126,7 +127,8 @@ class FarmTest {
 	
 	@Test
 	void testUpdateIncomeHistory() {
-		allFarms.get(0).updateIncomeHistoryList(100);
+		Farm farm = allFarms.get(0);
+		farm.updateFarmData(allFarms, 100.00, 0.5);
 		
 		Double[] verify = {100.00, 63300.0,	52200.0, 48600.0, 56400.0};		   // manually created based on input file
 		List<Double> y_list = allFarms.get(0).getIncomeHistory();
@@ -151,33 +153,52 @@ class FarmTest {
 	}
 	
 	@Test
-	void testIncomeUncertaintyBetweenClasses() {
-		initializeRegionIncomeChangePercent(allFarms);
-		
+	void testIncomeUncertaintyBetweenClasses() {		
 		assertEquals(allFarms.get(0).getRegionIncomeChangePercent(), allFarms.get(1).getRegionIncomeChangePercent());
 	}
 	
 	@Test
-	void testIncomeUncertainty() {
+	void testInitialIncomeUncertainty() {
+		Farm farm = allFarms.get(0);
 		
+		farm.updateFarmData(allFarms, -1, 0.5);
+		double personalIncomeChangePercent = (farm.getIncomeHistory().get(0) - farm.getLastYearPersonalIncomeAverage()) /farm.getLastYearPersonalIncomeAverage();
+
+		assertEquals(0.17712691771269176, personalIncomeChangePercent);							   // excel calculation
 	}
 	
-	/*
+	@Test
+	void testUpdatedIncomeUncertainty() {
+		Farm farm = allFarms.get(0);
+		
+		farm.updateFarmData(allFarms, 60000, 0.5);
+		double personalIncomeChangePercent = (farm.getIncomeHistory().get(0) - farm.getLastYearPersonalIncomeAverage()) /farm.getLastYearPersonalIncomeAverage();
+
+		assertEquals(0.08843537414965986, personalIncomeChangePercent);							   // excel calculation
+		assertEquals(farm.getIncomeUncertainty(), 0.0);
+	}
+	
+	@Test
+	void testUpdatedIncomeUncertaintyTwo() {
+		Farm farm = allFarms.get(0);
+		
+		farm.updateFarmData(allFarms, 30000, 0.5);
+		double personalIncomeChangePercent = (farm.getIncomeHistory().get(0) - farm.getLastYearPersonalIncomeAverage()) /farm.getLastYearPersonalIncomeAverage();
+
+		assertEquals(-0.4557823129251701, personalIncomeChangePercent);							   // excel calculation
+		assertEquals(farm.getIncomeUncertainty(), 1.0);
+	}
+	
 	@Test
 	void testUpdateSatisfactionFarm1() {
 		Farm farm = allFarms.get(0);
-		farm.updateAspiration();
-		farm.updateSatisfaction();
-		double unc = farm.getSatisfaction();
-		assertEquals(unc, 0.25);                                                // hand calculation
-	} */
+		farm.updateFarmData(allFarms, -1, 0.5);
+		double sat = farm.getSatisfaction();
+		assertEquals(sat, 0.38692024958500437);                                // hand calculation
+	} 
 	
 	// satisfaction tests
-	// income uncertainty tests
 	
-	
-	
-
 	public static final String TestDataFile = "./test_data/farm_data.csv";
 	public static final String TestParameterFile = "./test_data/parameters.csv";
 	public static final String TestPreferenceFile = "./test_data/products_preference.csv";

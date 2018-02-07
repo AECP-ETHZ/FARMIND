@@ -105,7 +105,7 @@ class FarmTest {
 		
 		Collection<Integer[]> year = allFarms.get(0).getExperience().getProductmap().values();
 		List<Integer[]> y = new ArrayList<Integer[]>(year);
-		Integer[] verify = {3,4,5,3,5,1};
+		Integer[] verify = {3,5,5,3,5,1};
 		Integer[] y_list = y.get(2);
 		
 	 	assertArrayEquals(y_list, verify );
@@ -119,7 +119,7 @@ class FarmTest {
 		
 		Collection<Integer[]> year = allFarms.get(0).getExperience().getProductmap().values();
 		List<Integer[]> y = new ArrayList<Integer[]>(year);
-		Integer[] verify = {4, 3, 4, 2, 5, 0};
+		Integer[] verify = {4, 5, 4, 2, 5, 0};
 		Integer[] y_list = y.get(2);
 		
 	 	assertArrayEquals(y_list, verify );
@@ -204,8 +204,7 @@ class FarmTest {
 	public static final String TestPreferenceFile = "./test_data/products_preference.csv";
 	public static final String TestYearsFile = "./test_data/farming_years.csv";
 	public static final String TestSocialNetworkFile = "./test_data/social_networks.csv";
-	public static final String TestCropFile = "./test_data/crop_classification.csv";
-	public static final String TestLivestockFile = "./test_data/livestock_classification.csv";
+	public static final String TestActivityFile = "./test_data/activities.csv";
 	
 	private void useTestData(ReadParameters reader) {
 			reader.DataFile = TestDataFile;
@@ -213,8 +212,7 @@ class FarmTest {
 			reader.PreferenceFile = TestPreferenceFile;
 			reader.YearsFile = TestYearsFile;
 			reader.SocialNetworkFile = TestSocialNetworkFile;
-			reader.CropFile = TestCropFile;
-			reader.LivestockFile = TestLivestockFile;
+			reader.ActivityFile = TestActivityFile;
 	} 
 	
 	private void initializeRegionIncomeChangePercent(List<Farm> allFarms) {

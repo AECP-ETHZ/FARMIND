@@ -7,9 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import product.Crop;
-import product.Livestock;
-import product.Product;
 import productselection_calculator.ProductSelectionCalculator;
 import reader.FarmProductMatrix;
 import reader.Parameters;
@@ -17,9 +14,11 @@ import reader.Parameters;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 
+import activity.Activity;
+
 /** 
  * Farm object contains people and parameters associated with each farm
- * contains copy of crop and livestock list, preferences and experiences and network list
+ * contains copy of activity list, preferences and experiences and network list
  * 
  * @author kellerke
  *
@@ -37,9 +36,8 @@ public class Farm {
 	private Graph<String, DefaultEdge> network; 
 	private FarmProductMatrix experience;
 	private FarmProductMatrix preferences;
-	private List<Product> currentProducts;
-	private List<Crop> crops;
-	private List<Livestock> livestock;
+	private List<Activity> currentActivities;
+	private List<Activity> allActivities;
 	private Parameters parameters;
 	private int strategy;
 	private double incomeProbability;
@@ -79,7 +77,7 @@ public class Farm {
 	public List<List<String>> makeDecision(List<Farm> allFarms) {
 	    List<String> fullProductSet = new ArrayList<String>();						     // list of names of products from fuzzy logic
 	    List<String> minProductSet = new ArrayList<String>();						     // list of names of products to return to mimic LP
-		List<Product> current = new ArrayList<Product>();							     // current products (objects - not names) in system 
+		List<Activity> current = new ArrayList<Activity>();							     // current activities (objects - not names) in system 
 		ProductSelectionCalculator cal = new ProductSelectionCalculator(this, allFarms); // calculator for the product selection
 		double small_set = 0;
 
@@ -107,8 +105,8 @@ public class Farm {
 			if (this.Satisfaction >= 0) {
 				//System.out.println("REPETITION");
 				this.strategy = 4;
-				for (int i = 0; i < this.getCurrentProducts().size(); i++) {
-					minProductSet.add(this.getCurrentProducts().get(i).getName());
+				for (int i = 0; i < this.getCurrentActivities().size(); i++) {
+					minProductSet.add(this.getCurrentActivities().get(i).getName());
 				} 
 			}
 			else {
@@ -124,25 +122,16 @@ public class Farm {
 
 		// this is to build a list of product objects - not just names
 		for (int k = 0; k < minProductSet.size(); k++) {
-			for(int i = 0; i<crops.size(); i++) {
-				if (crops.get(i).getName().equals(minProductSet.get(k) )) {
-					int ID = crops.get(i).getID();
-					Product p = new Crop(ID, minProductSet.get(k)); 
+			for(int i = 0; i<allActivities.size(); i++) {
+				if (allActivities.get(i).getName().equals(minProductSet.get(k) )) {
+					int ID = allActivities.get(i).getID();
+					Activity p = new Activity(ID, minProductSet.get(k)); 
 					current.add(p);
 				}
 			}
-		}	
-		for (int k = 0; k < minProductSet.size(); k++) {
-			for(int i = 0; i<livestock.size(); i++) {
-				if (livestock.get(i).getName().equals(minProductSet.get(k) )) {
-					int ID = livestock.get(i).getID();
-					Product p = new Livestock(ID, minProductSet.get(k)); 
-					current.add(p);
-				}
-			}
-		}	
+		}		
 		
-		this.setCurrentProducts(current);                                      // update current products for the farm instance
+		this.setCurrentActivites(current);                                      // update current products for the farm instance
 		
 		List<List<String>> ret = new ArrayList<List<String>>();				   // list of both sets to return for sensitivity analysis
 		ret.add(fullProductSet);
@@ -180,7 +169,7 @@ public class Farm {
         		w = this.getNetwork().getEdgeWeight(I.next());						   // weight of social tie between main farm and farm i
         		if (w > 0) {
         			EdgeCount++;
-            		List<Product> p = farms.get(k).getCurrentProducts();
+            		List<Activity> p = farms.get(k).getCurrentActivities();
             		for (int i = 0; i < p.size(); i++) {
             			if (!networkProductList.contains(p.get(i).getName())) 
             			{
@@ -196,9 +185,9 @@ public class Farm {
         }
     	
     	List<String> mainFarmProduct = new ArrayList<String>();
-    	for (int i = 0; i < this.getCurrentProducts().size(); i++)
+    	for (int i = 0; i < this.getCurrentActivities().size(); i++)
     	{
-    		String name = this.getCurrentProducts().get(i).getName();
+    		String name = this.getCurrentActivities().get(i).getName();
     		mainFarmProduct.add(name);
     		
     		if(!networkProductList.contains(name) ) {
@@ -265,8 +254,8 @@ public class Farm {
 		int age = this.head.getAge();
 		this.head.setAge(age + 1);                                             // increment farmers age each time period
 		
-		for (int i = 0; i<this.getCurrentProducts().size(); i++) {
-			productNames.add(this.getCurrentProducts().get(i).getName());
+		for (int i = 0; i<this.getCurrentActivities().size(); i++) {
+			productNames.add(this.getCurrentActivities().get(i).getName());
 		}
 		
 		for (int i = 0; i< this.experience.getProductName().size(); i++ ) {
@@ -459,23 +448,17 @@ public class Farm {
 	public void setPreferences(FarmProductMatrix preferences) {
 		this.preferences = preferences;
 	}
-	public void setCurrentProducts(List<Product> products) {
-		this.currentProducts = products;
+	public void setCurrentActivites(List<Activity> activities) {
+		this.currentActivities = activities;
 	}
-	public List<Product> getCurrentProducts() {
-		return this.currentProducts;
+	public List<Activity> getCurrentActivities() {
+		return this.currentActivities;
 	}
-	public List<Livestock> getLivestock() {
-		return livestock;
+	public List<Activity> getActivities() {
+		return allActivities;
 	}
-	public void setLivestock(List<Livestock> livestock) {
-		this.livestock = livestock;
-	}
-	public List<Crop> getCrops() {
-		return crops;
-	}
-	public void setCrops(List<Crop> crops) {
-		this.crops = crops;
+	public void setActivities(List<Activity> activities) {
+		this.allActivities = activities;
 	}
 	public List<Double> getIncomeHistory() {
 		return IncomeHistory;

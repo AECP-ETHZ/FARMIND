@@ -11,10 +11,8 @@ import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleWeightedGraph;
 
+import activity.Activity;
 import agent.farm.Person;
-import product.Crop;
-import product.Livestock;
-import product.Product;
 import agent.farm.Farm;
 import agent.farm.Location;
 
@@ -36,8 +34,7 @@ public class ReadParameters implements Reader {
 	public String PreferenceFile = "./data/products_preference.csv";
 	public String YearsFile = "./data/farming_years.csv";
 	public String SocialNetworkFile = "./data/social_networks.csv";
-	public String CropFile = "./data/crop_classification.csv";
-	public String LivestockFile = "./data/livestock_classification.csv";
+	public String ActivityFile = "./data/activities.csv";
 	
 	@Override
 	public List<Farm> getFarms(int parameterSet) {
@@ -55,8 +52,7 @@ public class ReadParameters implements Reader {
 		// reference objects for building farm list
 		// each farm has a link to the reference object. This allows each farm to update the shared data objects
 		List<Graph<String, DefaultEdge>> network = this.getSocialNetworks();   
-		List<Crop> crops = getCropList();
-		List<Livestock> livestock = getLivestockList();
+		List<Activity> activities = getActivityList();
 		FarmProductMatrix pref = getPreferences();
 		FarmProductMatrix experience = getExperience();
 		Parameters parameters = getParameters(parameterSet);
@@ -71,7 +67,7 @@ public class ReadParameters implements Reader {
 				farmParameters = CSVtoArrayList(Line);
 				Farm farm = new Farm();
 				Location location = new Location();							   // create new location for each farm
-				List<Product> currentProducts = new ArrayList<Product>();
+				List<Activity> currentProducts = new ArrayList<Activity>();
 				List<Double> income = new ArrayList<Double>();
 				double[] coordinates = {0,0};
 				
@@ -92,24 +88,14 @@ public class ReadParameters implements Reader {
 
 				currentProducts.clear();
 				for (int k = START_ACTION_INDEX; k < farmParameters.size(); k++) {
-					for(int i = 0; i<crops.size(); i++) {
-						if (crops.get(i).getName().equals(farmParameters.get(k) )) {
-							int ID = crops.get(i).getID();
-							Product p = new Crop(ID, farmParameters.get(k)); 
+					for(int i = 0; i<activities.size(); i++) {
+						if (activities.get(i).getName().equals(farmParameters.get(k) )) {
+							int ID = activities.get(i).getID();
+							Activity p = new Activity(ID, farmParameters.get(k)); 
 							currentProducts.add(p);
 						}
 					}
 				}
-						
-				for (int k = START_ACTION_INDEX; k < farmParameters.size(); k++) {
-					for(int i = 0; i<livestock.size(); i++) {
-						if (livestock.get(i).getName().equals(farmParameters.get(k) )) {
-							int ID = livestock.get(i).getID();
-							Product p = new Livestock(ID, farmParameters.get(k)); 
-							currentProducts.add(p);
-						}
-					}
-				}	
 				
 				for (int i = 0; i < memory; i++) {
 					income.add( Double.parseDouble( farmParameters.get(i+INCOME_INDEX) ) );
@@ -122,10 +108,9 @@ public class ReadParameters implements Reader {
 				farm.setLastYearPersonalIncomeAverage(personalIncomeAverage);
 				farm.setExperience(experience);
 				farm.setPreferences(pref);
-				farm.setLivestock(livestock);
-				farm.setCrops(crops);
+				farm.setActivities(activities);
 				farm.setTolerance(entrepreneurship);
-				farm.setCurrentProducts(currentProducts);
+				farm.setCurrentActivites(currentProducts);
 				farm.setHead(farmHead);
 				farm.setParameters(parameters);
 				
@@ -187,7 +172,7 @@ public class ReadParameters implements Reader {
 	}
 
 	/**
-	 * Read preferences of each farm for each crop and build preference object
+	 * Read preferences of each farm for each activity and build preference object
 	 * @return
 	 */
 	public FarmProductMatrix getPreferences() {
@@ -308,29 +293,29 @@ public class ReadParameters implements Reader {
 	}
 
 	/**
-	 * Create list of crop type/category from master CSV list
+	 * Create list of activity type/category from master CSV list
 	 * This is used to generate the individual farm product lists
-	 * @return List of crops in the master CSV file
+	 * @return List of activities in the master CSV file
 	 */
-	public List<Crop> getCropList() {
+	public List<Activity> getActivityList() {
 		String Line;
-		List<Crop> crops = new ArrayList<Crop>();
-		ArrayList<String> cropRow;
+		List<Activity> activities = new ArrayList<Activity>();
+		ArrayList<String> activityRow;
 		BufferedReader Buffer = null;	
 
 		try {
-			Buffer = new BufferedReader(new FileReader(CropFile));
+			Buffer = new BufferedReader(new FileReader(ActivityFile));
 			Line = Buffer.readLine();									       // first line to throw away
 			
-			while ((Line = Buffer.readLine()) != null) {                       // Read crop data
-				cropRow = CSVtoArrayList(Line);
+			while ((Line = Buffer.readLine()) != null) {                       // Read activity data
+				activityRow = CSVtoArrayList(Line);
 				
-				int ID = Integer.parseInt(cropRow.get(0));
-				String name = cropRow.get(1);
+				int ID = Integer.parseInt(activityRow.get(0));
+				String name = activityRow.get(1);
 				
-				Crop crop = new Crop(ID, name);
+				Activity activity = new Activity(ID, name);
 				
-				crops.add(crop);
+				activities.add(activity);
 			}
 				
 		} catch (IOException e) {
@@ -342,45 +327,7 @@ public class ReadParameters implements Reader {
 				Exception.printStackTrace();
 			}
 		}
-		return crops;
-	}
-	
-	/**
-	 * Create list of livestock type/category from master CSV list
-	 * This is used to generate the individual farm product lists
-	 * @return List of livestock in the master CSV file
-	 */
-	public List<Livestock> getLivestockList() {
-		String Line;
-		List<Livestock> livestock = new ArrayList<Livestock>();
-		ArrayList<String> livestockRow;
-		BufferedReader Buffer = null;	
-
-		try {
-			Buffer = new BufferedReader(new FileReader(LivestockFile));
-			Line = Buffer.readLine();									       // first line to throw away
-			
-			while ((Line = Buffer.readLine()) != null) {                       // Read livestock data
-				livestockRow = CSVtoArrayList(Line);
-				
-				int ID = Integer.parseInt(livestockRow.get(0));
-				String name = livestockRow.get(1);
-				
-				Livestock stock = new Livestock(ID, name);
-				
-				livestock.add(stock);
-			}
-				
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (Buffer != null) Buffer.close();
-			} catch (IOException Exception) {
-				Exception.printStackTrace();
-			}
-		}
-		return livestock;
+		return activities;
 	}
 	
 	/**

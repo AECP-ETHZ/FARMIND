@@ -9,8 +9,6 @@ import java.util.Set;
 import org.jgrapht.graph.DefaultEdge;
 
 import agent.farm.Farm;
-import product.Crop;
-import product.Livestock;
 
 /** 
  * Object contains three vectors (Q,P,S) that contain normalized rankings of experience, preference, and social network experience for a specific farm. 
@@ -58,7 +56,7 @@ public class ProductSelectionCalculator {
 	
 	// product calculations
 	/** 
-	 * Using fuzzy logic check S,P,Q lists to determine best product combinations
+	 * Using fuzzy logic check S,P,L lists to determine best product combinations
 	 * The len-2 part of the calculation is to account for q+ and q- minus at the start and end of the calculation
 	 * @return
 	 */
@@ -102,7 +100,7 @@ public class ProductSelectionCalculator {
 		return list;
 	}
 	/** 
-	 * Using fuzzy logic check P, Q lists to determine best product combinations.
+	 * Using fuzzy logic check P, L lists to determine best product combinations.
 	 * Do not take into account social learning vector S
 	 * The len-2 part of the calculation is to account for q+ and q- minus at the start and end of the calculation
 	 * @return
@@ -400,83 +398,6 @@ public class ProductSelectionCalculator {
 
 		//return normalizeList(S);
 		return (S);
-	}
-	
-	/**
-	 * @param p1 product name one
-	 * @param p2 product name two
-	 * @param crops list of all crops in system
-	 * @param livestock list of all livestock in system
-	 * @return technological distance between crops
-	 */
-	public Integer getTechDistance(String p1, String p2, List<Crop> crops, List<Livestock> livestock) {
-		int distance = 0;
-		List<String> cropName = new ArrayList<String>();
-		List<Integer> cropID = new ArrayList<Integer>();
-		List<String> liveName = new ArrayList<String>();
-		List<Integer> liveID = new ArrayList<Integer>();
-		
-		// get list of names and ID values to compare
-		for (int i = 0; i<crops.size(); i++) {
-			cropName.add(crops.get(i).getName());
-			cropID.add(crops.get(i).getID());
-		}
-		
-		for (int i = 0; i<livestock.size(); i++) {
-			liveName.add(livestock.get(i).getName());
-			liveID.add(livestock.get(i).getID());
-		}
-		
-		// if product types are different, return 10
-		if (liveName.contains(p1) && !liveName.contains(p2))
-		{
-			distance = 10;
-		}
-		else if (cropName.contains(p1) && !cropName.contains(p2))
-		{
-			distance = 10;
-		}
-		
-		// if both crop or both livestock than check ID values
-		else if (cropName.contains(p1) && cropName.contains(p2))
-		{
-			int index = cropName.indexOf(p1);
-			double d1 = cropID.get(index);
-			index = cropName.indexOf(p2);
-			double d2 = cropID.get(index);
-			
-			if ( Math.abs(d1 - d2) > 1000.00) {
-				distance = 4;
-			} else if ( Math.abs(d1 - d2) > 100.00) {
-				distance = 3;
-			}
-			else if ( Math.abs(d1 - d2) > 10.00) {
-				distance = 3;
-			} else {
-				distance = 1;
-			}
-		}
-		
-		else if (liveName.contains(p1) && liveName.contains(p2))
-		{
-			int index = liveName.indexOf(p1);
-			double d1 = liveID.get(index);
-			index = liveName.indexOf(p2);
-			double d2 = liveID.get(index);
-			
-			if ( Math.abs(d1 - d2) > 1000.00) {
-				distance = 4;
-			} else if ( Math.abs(d1 - d2) > 100.00) {
-				distance = 3;
-			}
-			else if ( Math.abs(d1 - d2) > 10.00) {
-				distance = 3;
-			} else {
-				distance = 1;
-			}
-		}
-		
-		return distance;
 	}
 	
 	/**

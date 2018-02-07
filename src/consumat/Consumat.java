@@ -19,7 +19,7 @@ public class Consumat {
 		
 		int max_parameter_length = getParameterCount();
 		String origFileName = createFileName();
-		String FileName = origFileName;
+		String FileName = origFileName + String.format("%d",0);
 		long line_counter = 0;
 		int file_counter = 1;
 		
@@ -48,13 +48,11 @@ public class Consumat {
 					DecisionResult decision = new DecisionResult(farm.getPreferences().getProductName(), farm.getFarmName(), fullAndMinSetProducts.get(0), year, farm.getParameters(), farm.getStrategy(), fullAndMinSetProducts.get(1), income );
 
 					line_counter++;
-					if (line_counter > 999999) {
+					if (line_counter > 9999) {
 						FileName = origFileName + String.format("%d",file_counter);
 						file_counter++;
 						line_counter = 0;
-					} else {
-						FileName = origFileName + String.format("%d",0);
-					}
+					} 
 					decision.appendDecisionFile(FileName);
 					farm.updateExperiencePlusAge();                              				           // each time period update experience
 				}

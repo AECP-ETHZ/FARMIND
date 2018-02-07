@@ -109,6 +109,10 @@ class FarmTest {
 		assertEquals(unc, 0.25);                                                // hand calculation
 	} */
 	
+	// satisfaction tests
+	// income uncertainty tests
+	
+	
 	
 
 	public static final String TestDataFile = "./test_data/farm_data.csv";

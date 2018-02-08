@@ -1,13 +1,11 @@
 package testing;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;		
 
 import agent.farm.Farm;
 import reader.ReadParameters;
@@ -15,8 +13,8 @@ import reader.ReadParameters;
 public class FarmTests {
 	List<Farm>     allFarms = new ArrayList<Farm>();
 	
-	@BeforeEach 
-	void setup() {
+	@Before 
+	public void setup() {
 		ReadParameters reader = new ReadParameters();						   // read all input data files
 		useTestData(reader);
 		allFarms = reader.getFarms(1);						                   // build set of farms with new parameters
@@ -24,13 +22,13 @@ public class FarmTests {
 	}
 	
 	@Test
-	void testCreateFarm() {
+	public void testCreateFarm() {
 		Farm farm = new Farm();
 		assertNotEquals(farm, null);
 	}
 	
 	@Test
-	void testAgeExitDecision() {
+	public void testAgeExitDecision() {
 		Farm farm = allFarms.get(0);
 		farm.getHead().setAge(700);
 		farm.makeDecision(allFarms);
@@ -40,7 +38,7 @@ public class FarmTests {
 	}
 	
 	@Test
-	void testImitationDecision() {
+	public void testImitationDecision() {
 		Farm farm = allFarms.get(0);
 		
 		farm.setSatisfaction(100);
@@ -53,7 +51,7 @@ public class FarmTests {
 	}
 	
 	@Test
-	void testRepetionDecision() {
+	public void testRepetionDecision() {
 		Farm farm = allFarms.get(0);
 		
 		farm.setSatisfaction(100);
@@ -66,7 +64,7 @@ public class FarmTests {
 	}
 	
 	@Test
-	void testOptimizationDecision() {
+	public void testOptimizationDecision() {
 		Farm farm = allFarms.get(0);
 		
 		farm.setSatisfaction(-1);
@@ -79,7 +77,7 @@ public class FarmTests {
 	}
 	
 	@Test
-	void testOptOutDecision() {
+	public void testOptOutDecision() {
 		Farm farm = allFarms.get(0);
 		
 		farm.setSatisfaction(-1);
@@ -92,7 +90,7 @@ public class FarmTests {
 	}
 
 	@Test
-	void testUpdateAge() {
+	public void testUpdateAge() {
 		allFarms.get(0).updateExperiencePlusAge();
 		allFarms.get(1).updateExperiencePlusAge();
 		
@@ -101,7 +99,7 @@ public class FarmTests {
 	}
 
 	@Test
-	void testUpdateExperience() {
+	public void testUpdateExperience() {
 		allFarms.get(0).updateExperiencePlusAge();
 		
 		Collection<Integer[]> year = allFarms.get(0).getExperience().getProductmap().values();
@@ -113,7 +111,7 @@ public class FarmTests {
 	}
 	
 	@Test
-	void testUpdateExperienceTwoYears() {
+	public void testUpdateExperienceTwoYears() {
 		// test experience array after two years
 		allFarms.get(0).updateExperiencePlusAge();
 		allFarms.get(0).updateExperiencePlusAge();
@@ -127,7 +125,7 @@ public class FarmTests {
 	}
 	
 	@Test
-	void testUpdateIncomeHistory() {
+	public void testUpdateIncomeHistory() {
 		Farm farm = allFarms.get(0);
 		farm.updateFarmData(allFarms, 100.00, 0.5);
 		
@@ -138,7 +136,7 @@ public class FarmTests {
 	}
 	
 	@Test
-	void testUpdateUncertaintyFarm1() {
+	public void testUpdateUncertaintyFarm1() {
 		Farm farm = allFarms.get(0);
 		farm.updateUncertainty(allFarms);
 		double unc = farm.getUncertainty();
@@ -146,7 +144,7 @@ public class FarmTests {
 	}
 	
 	@Test
-	void testUpdateUncertaintyFarm2() {
+	public void testUpdateUncertaintyFarm2() {
 		Farm farm = allFarms.get(1);
 		farm.updateUncertainty(allFarms);
 		double unc = farm.getUncertainty();
@@ -154,12 +152,12 @@ public class FarmTests {
 	}
 	
 	@Test
-	void testIncomeUncertaintyBetweenClasses() {		
+	public void testIncomeUncertaintyBetweenClasses() {		
 		assertEquals(allFarms.get(0).getRegionIncomeChangePercent(), allFarms.get(1).getRegionIncomeChangePercent());
 	}
 	
 	@Test
-	void testInitialIncomeUncertainty() {
+	public void testInitialIncomeUncertainty() {
 		Farm farm = allFarms.get(0);
 		
 		farm.updateFarmData(allFarms, -1, 0.5);
@@ -169,7 +167,7 @@ public class FarmTests {
 	}
 	
 	@Test
-	void testUpdatedIncomeUncertainty() {
+	public void testUpdatedIncomeUncertainty() {
 		Farm farm = allFarms.get(0);
 		
 		farm.updateFarmData(allFarms, 60000, 0.5);
@@ -180,7 +178,7 @@ public class FarmTests {
 	}
 	
 	@Test
-	void testUpdatedIncomeUncertaintyTwo() {
+	public void testUpdatedIncomeUncertaintyTwo() {
 		Farm farm = allFarms.get(0);
 		
 		farm.updateFarmData(allFarms, 30000, 0.5);
@@ -191,7 +189,7 @@ public class FarmTests {
 	}
 	
 	@Test
-	void testUpdateSatisfactionFarm1() {
+	public void testUpdateSatisfactionFarm1() {
 		Farm farm = allFarms.get(0);
 		farm.updateFarmData(allFarms, -1, 0.5);
 		double sat = farm.getSatisfaction();

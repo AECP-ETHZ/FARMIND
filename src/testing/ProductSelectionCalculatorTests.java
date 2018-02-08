@@ -1,23 +1,22 @@
 package testing;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.Test;
+import org.junit.Test;		
 
 public class ProductSelectionCalculatorTests {
 
 	@Test
-	void testProductSelectionCalculator() {
+	public void testProductSelectionCalculator() {
 		fail("Not yet implemented");
 	}
 
 	@Test
-	void testGetImitationProducts() {
+	public void testGetImitationProducts() {
 		fail("Not yet implemented");
 	}
 
 	@Test
-	void testGetOptimizeProducts() {
+	public void testGetOptimizeProducts() {
 		fail("Not yet implemented");
 	}
 

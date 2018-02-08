@@ -1,12 +1,12 @@
 package testing;
 
-import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite.SuiteClasses;
+import org.junit.runners.Suite;
 
-@RunWith(JUnitPlatform.class)
-@SuiteClasses({FarmTests.class, ProductSelectionCalculatorTests.class})
+@RunWith(Suite.class)
+@Suite.SuiteClasses({	
+	  ProductSelectionCalculatorTests.class,
+	  FarmTests.class
+	})	
 public class AllTests {
-	
-
 }

@@ -22,8 +22,8 @@ public class FarmProductMatrix {
 	/** 
 	 * Given a farmID and a product, return the value of that matrix cell
 	 * 
-	 * @param FarmID
-	 * @param Product
+	 * @param FarmID of the specific farm
+	 * @param Product name to get value of from matrix
 	 * @return value of that cell in the matrix
 	 */
 	public int getFarmProductValue(String FarmID, String Product) {
@@ -36,9 +36,9 @@ public class FarmProductMatrix {
 	/** 
 	 * Given a farmID and a product, set the value of that cell
 	 * 
-	 * @param FarmID
-	 * @param Product
-	 * @return value of that cell in the matrix
+	 * @param FarmID of the specific farm
+	 * @param Product name 
+	 * @param value to set for farm and product combination
 	 */
 	public void setFarmProductValue(String FarmID, String Product, int value) {
 		int index = productName.indexOf(Product);

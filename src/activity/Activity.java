@@ -2,7 +2,6 @@ package activity;
 
 /**
  * Activity object for use in farm 
- * @see Product
  * @author kellerke
  *
  */
@@ -14,8 +13,8 @@ public class Activity {
 	/**
 	 * Plant product for the farm
 	 * Check name in master list of activities before object creation
-	 * @param ID
-	 * @param name
+	 * @param ID of the specific activity
+	 * @param name of the activity (cattle, pigs, etc)
 	 */
 	public Activity(int ID, String name) {
 		this.name = name;

@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import agent.farm.Farm;
-import productselection_calculator.ProductSelectionCalculator;
+import decision.DecisionCalculator;
 import reader.ReadParameters;		
 
 public class ProductSelectionCalculatorTests {
@@ -26,14 +26,14 @@ public class ProductSelectionCalculatorTests {
 	@Test
 	public void testProductSelectionCalculator() {
 		Farm farm = allFarms.get(0);
-		ProductSelectionCalculator cal = new ProductSelectionCalculator(farm, allFarms);
+		DecisionCalculator cal = new DecisionCalculator(farm, allFarms);
 		assertNotEquals(cal, null);
 	}
 
 	@Test
 	public void testLearningVector() {
 		Farm farm = allFarms.get(0);
-		ProductSelectionCalculator cal = new ProductSelectionCalculator(farm, allFarms);
+		DecisionCalculator cal = new DecisionCalculator(farm, allFarms);
 		double m = farm.getPreferences().getProductName().size();		       // number of products in system
 
 		List<Double> Q = new ArrayList<Double>();                              // learning by doing vector for specific farm
@@ -57,7 +57,7 @@ public class ProductSelectionCalculatorTests {
 	@Test
 	public void testPreferenceVector() {
 		Farm farm = allFarms.get(0);
-		ProductSelectionCalculator cal = new ProductSelectionCalculator(farm, allFarms);
+		DecisionCalculator cal = new DecisionCalculator(farm, allFarms);
 		double m = farm.getPreferences().getProductName().size();		       // number of products in system
 		List<Double> P = new ArrayList<Double>();							   // rank of all product preferences for specific farm
 		Integer[] R;                           				 			   	   // Product preference vector 
@@ -79,7 +79,7 @@ public class ProductSelectionCalculatorTests {
 	@Test
 	public void testNDSelection() {
 		Farm farm = allFarms.get(0);
-		ProductSelectionCalculator cal = new ProductSelectionCalculator(farm, allFarms);
+		DecisionCalculator cal = new DecisionCalculator(farm, allFarms);
 		List<Double> crit1 = Arrays.asList(15.0,10.0,5.0,1.0,5.0);	           // sample from document
 		List<Double> crit2 = Arrays.asList(6.0,14.0,10.0,1.0,5.0);
 		List<Double> crit3 = Arrays.asList(10.0,7.0,13.0,1.0,5.0);

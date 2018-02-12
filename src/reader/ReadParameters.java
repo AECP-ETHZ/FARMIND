@@ -16,10 +16,14 @@ import agent.farm.Person;
 import agent.farm.Farm;
 import agent.farm.Location;
 
+/** 
+ * Read input parameters from configuration text files
+ * @author kellerke
+ *
+ */
+public class ReadParameters {
 
-public class ReadParameters implements Reader {
-
-	public static final int NAME = 0;
+	public static final int NAME = 0;										   
 	public static final int COORDINATE1 = 1;
 	public static final int COORDINATE2 = 2;
 	public static final int AGE = 3;
@@ -36,7 +40,12 @@ public class ReadParameters implements Reader {
 	public String SocialNetworkFile = "./data/social_networks.csv";
 	public String ActivityFile = "./data/activities.csv";
 	
-	@Override
+	/**
+	 * Each farm in the list contains a social network, the associated people, and preferred activities
+	 * The satisfaction and uncertainty are generated initially
+	 * @return List of all farm objects from the input csv file
+	 * @param parameterSet indicates which row (or set) of parameters should be used for the configuration
+	 */
 	public List<Farm> getFarms(int parameterSet) {
 		String Line;
 		List<Farm> farms = new ArrayList<Farm>();
@@ -172,7 +181,7 @@ public class ReadParameters implements Reader {
 
 	/**
 	 * Read preferences of each farm for each activity and build preference object
-	 * @return
+	 * @return matrix of the farm region preferences
 	 */
 	public FarmProductMatrix getPreferences() {
 		String Line;

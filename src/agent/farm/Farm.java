@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import productselection_calculator.ProductSelectionCalculator;
 import reader.FarmProductMatrix;
 import reader.Parameters;
 
@@ -15,6 +14,7 @@ import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 
 import activity.Activity;
+import decision.DecisionCalculator;
 
 /** 
  * Farm object contains people and parameters associated with each farm
@@ -77,7 +77,7 @@ public class Farm {
 	    List<String> fullProductSet = new ArrayList<String>();						     // list of names of products from fuzzy logic
 	    List<String> minProductSet = new ArrayList<String>();						     // list of names of products to return to mimic LP
 		List<Activity> current = new ArrayList<Activity>();							     // current activities (objects - not names) in system 
-		ProductSelectionCalculator cal = new ProductSelectionCalculator(this, allFarms); // calculator for the product selection
+		DecisionCalculator cal = new DecisionCalculator(this, allFarms); // calculator for the product selection
 		double small_set = 0;
 
 		if ((head.getAge() > 650)) {

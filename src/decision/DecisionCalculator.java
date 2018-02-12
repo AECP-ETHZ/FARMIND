@@ -1,4 +1,4 @@
-package productselection_calculator;
+package decision;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,14 +17,14 @@ import agent.farm.Farm;
  * @author kellerke
  *
  */
-public class ProductSelectionCalculator {
+public class DecisionCalculator {
 	public List<Double> L = new ArrayList<Double>();                                  // learning by doing vector for specific farm
 	public List<Double> P = new ArrayList<Double>();							       // rank of all product preferences for specific farm
 	public List<Double> S = new ArrayList<Double>();							       // average social learning value for each products weighted by social network
 	Farm farm;																   // farm associated with this calculator 
 	public List<Double> ND = new ArrayList<Double>();                             // non-domination score vector to apply for clustering
 
-	public ProductSelectionCalculator(Farm farm, List<Farm> farms) {
+	public DecisionCalculator(Farm farm, List<Farm> farms) {
 		double m = farm.getPreferences().getProductName().size();		       // number of products in system
 		this.farm = farm;
 		this.L = getFarmExperienceVector(farm,m);
@@ -59,7 +59,7 @@ public class ProductSelectionCalculator {
 	/** 
 	 * Using fuzzy logic check S,P,L lists to determine best product combinations
 	 * The len-2 part of the calculation is to account for q+ and q- minus at the start and end of the calculation
-	 * @return
+	 * @return list of products from the product selection calculator
 	 */
 	public List<String> getImitationProducts() {
 		
@@ -103,7 +103,7 @@ public class ProductSelectionCalculator {
 	 * Using fuzzy logic check P, L lists to determine best product combinations.
 	 * Do not take into account social learning vector S
 	 * The len-2 part of the calculation is to account for q+ and q- minus at the start and end of the calculation
-	 * @return
+	 * @return list of products from the product selection calculator
 	 */
 	public List<String> getOptimizeProducts() {
 

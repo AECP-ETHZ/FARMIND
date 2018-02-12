@@ -10,33 +10,48 @@ import java.util.List;
 import reader.Parameters;
 
 /**
- * Decision object with unique information for each farm 
+ * Decision object with unique information for each farm. 
  * Can be used to append to the final output list
  * @author kellerke
  *
  */
 public class DecisionResult {
 
-	private String farmId;
-	private List<String> products;
-	private Integer year;
-	private Parameters param;
-	private int strategy;
-	private List<String> LP_Products;
-	private double income;
-	private List<String> productNames;
+	private String farmId;													   // unique farm id
+	private List<String> activities;										   // activity list
+	private Integer year;													   // which time step this decision was made in
+	private Parameters param;												   // which parameter set was used
+	private int strategy;													   // farm strategy
+	private List<String> LP_Products;										   // fake LP activity selection
+	private double income;													   // income of time step
+	private List<String> productNames;										   // full activity list
 	
-	public DecisionResult(List<String> productNames, String farmId, List<String> maxSet, Integer year, Parameters param, int i, List<String> minSet, double income) {
+	/** 
+	 * 
+	 * @param productNames	full set of activities
+	 * @param farmId		ID of the farm
+	 * @param maxSet		full product set
+	 * @param year			time period
+	 * @param param			which parameters were used
+	 * @param strat			strategy
+	 * @param minSet		LP selected set
+	 * @param income		income of farm
+	 */
+	public DecisionResult(List<String> productNames, String farmId, List<String> maxSet, Integer year, Parameters param, int strat, List<String> minSet, double income) {
 		setFarmId(farmId);
 		setProducts(maxSet);
 		setYear(year);
 		setParam(param);
-		setStrategy(i);
+		setStrategy(strat);
 		setLP_Products(minSet);
 		setIncome(income);
 		setProductNames(productNames);
 	}
 	
+	/** 
+	 * write output CSV file based on decision object
+	 * @param fileName of output file
+	 */
 	public void appendDecisionFile(String fileName) {
 		String PATH = "./output";
 		File directory = new File(PATH);
@@ -71,11 +86,11 @@ public class DecisionResult {
 		writer.print(String.format("%s,",this.param.getK() ));
 		writer.print(String.format("%s,",this.strategy) );
 		
-		for(int i = 0; i < this.products.size(); i++) {
-			writer.print(String.format("%d,",  1 + this.productNames.indexOf( this.products.get(i)) ) );
+		for(int i = 0; i < this.activities.size(); i++) {
+			writer.print(String.format("%d,",  1 + this.productNames.indexOf( this.activities.get(i)) ) );
 		}
 		
-		for(int i = 0; i < 6 - this.products.size(); i++) {
+		for(int i = 0; i < 6 - this.activities.size(); i++) {
 			writer.print("NA," );
 		}
 		
@@ -100,56 +115,44 @@ public class DecisionResult {
 		this.farmId = farmId;
 	}
 	public List<String> getProducts() {
-		return products;
+		return activities;
 	}
 	public void setProducts(List<String> products) {
-		this.products = products;
+		this.activities = products;
 	}
-
 	public Integer getYear() {
 		return year;
 	}
-
 	public void setYear(Integer year) {
 		this.year = year;
 	}
-
 	public Parameters getParam() {
 		return param;
 	}
-
 	public void setParam(Parameters param) {
 		this.param = param;
 	}
-
 	public int getStrategy() {
 		return strategy;
 	}
-
 	public void setStrategy(int i) {
 		this.strategy = i;
 	}
-
 	public List<String> getLP_Products() {
 		return LP_Products;
 	}
-
 	public void setLP_Products(List<String> lP_Products) {
 		LP_Products = lP_Products;
 	}
-
 	public double getIncome() {
 		return income;
 	}
-
 	public void setIncome(double income) {
 		this.income = income;
 	}
-
 	public List<String> getProductNames() {
 		return productNames;
 	}
-
 	public void setProductNames(List<String> productNames) {
 		this.productNames = productNames;
 	}

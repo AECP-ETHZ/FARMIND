@@ -8,48 +8,52 @@ import java.util.Set;
 
 import org.jgrapht.graph.DefaultEdge;
 
-import agent.farm.Farm;
+import agent.Farm;
 
 /** 
- * Object contains three vectors (Q,P,S) that contain normalized rankings of experience, preference, and social network experience for a specific farm. 
- * Create the calculator for each individual farm, and the calculator can be used to decide on the imitation and optimization actions
+ * Object contains three vectors (L,P,S) that contain normalized rankings of experience, preference, and social network experience for a specific farm. <br>
+ * Create the calculator for each individual farm, and the calculator can be used to decide on the imitation and optimization actions using fuzzy preference. <br>
+ * <br>
+ *  q range shows how different two products can be based on the criteria and still be 1) equivalent, 2) weighted, 3) not equivalent<br>
+ *  If you take a criteria vector = [0.9, 0.1, 0.8, 0.7, 0.4] that corresponds to products [A, B, C, D, E] and<br>
+ *  if we set the lower bound q- to 0.3 and the upper bound q+ to 0.6 we get the following difference vector <br>
+ *  for A compared to all other products (one directional comparison):<br>
+ *  delta = [0, 0.8, 0.1, 0.2, 0.5] ie 0.5 corresponds to A-E :: 0.9-0.4 = 0.5 <br>
+ *  We can now build another vector of comparison values for A compared to all other products based on the q ranges: <br>
+ *  CP = [0, 1, 0, 0, 2/3] which shows that when product A is compared to all other products in the set which shows<br>
+ *  Product A is strictly preferred to Product B, and weakly preferred to product E. It is not preferred at all to C or D. <br>
  * 
  * @author kellerke
  *
  */
 public class DecisionCalculator {
-	public List<Double> L = new ArrayList<Double>();                                  // learning by doing vector for specific farm
-	public List<Double> P = new ArrayList<Double>();							       // rank of all product preferences for specific farm
-	public List<Double> S = new ArrayList<Double>();							       // average social learning value for each products weighted by social network
+	
+	public List<Double> L = new ArrayList<Double>();                           // learning by doing vector for specific farm 
+	public List<Double> P = new ArrayList<Double>();						   // rank of all product preferences for specific farm 
+	public List<Double> S = new ArrayList<Double>();						   // average social learning value for each products weighted by social network 
+	public List<Double> ND = new ArrayList<Double>();                          // non-domination score vector to apply for clustering 
 	Farm farm;																   // farm associated with this calculator 
-	public List<Double> ND = new ArrayList<Double>();                             // non-domination score vector to apply for clustering
 
+	/** 
+	 * Constructor for decision calculator for a specific farm based on the network.
+	 * @param farm - specific farm to study
+	 * @param farms - list of all farms in the region for network information
+	 */
 	public DecisionCalculator(Farm farm, List<Farm> farms) {
 		double m = farm.getPreferences().getProductName().size();		       // number of products in system
-		this.farm = farm;
 		this.L = getFarmExperienceVector(farm,m);
 		this.S = getNetworkExperienceAverageVector(farm, m, farms);
 		this.P = getFarmPreferenceVector(farm,m);
+		this.farm = farm;
 		
-		/**
-		 *  q range shows how different two products can be based on the criteria and still be 1) equivalent, 2) weighted, 3) not equivalent
-		 *  If you take a criteria vector = [0.9, 0.1, 0.8, 0.7, 0.4] that corresponds to products [A, B, C, D, E]
-		 *  if we set the lower bound q- to 0.3 and the upper bound q+ to 0.6 we get the following difference vector 
-		 *  for A compared to all other products (one directional comparison)
-		 *  delta = [0, 0.8, 0.1, 0.2, 0.5] ie 0.5 corresponds to A-E => 0.9-0.4 = 0.5
-		 *  We can now build another vector of comparison values for A compared to all other products based on the q range
-		 *  CP = [0, 1, 0, 0, 2/3] which shows that when product A is compared to all other products in the set
-		 *  Product A is strictly preferred to Product B, and weakly preferred to product E. It is not preferred at all to C or D. 
-		 */
-		
-		double q_minus = 0.1;
+		double q_minus = 0.1;												   // set upper and lower q range for experience
 		double q_plus  = 0.2;  
 		L.add(q_minus);															  
 		L.add(q_plus);														   
 		S.add(q_minus);
 		S.add(q_plus);
 		
-		q_minus = 0.25;
+		q_minus = 0.25;														   // set upper and lower q range for preference
 		q_plus  = 0.5;  
 		P.add(q_minus);														   
 		P.add(q_plus);														   
@@ -57,7 +61,7 @@ public class DecisionCalculator {
 	
 	// product calculations
 	/** 
-	 * Using fuzzy logic check S,P,L lists to determine best product combinations
+	 * Using fuzzy logic check S,P,L lists to determine best product combinations. 
 	 * The len-2 part of the calculation is to account for q+ and q- minus at the start and end of the calculation
 	 * @return list of products from the product selection calculator
 	 */
@@ -101,7 +105,7 @@ public class DecisionCalculator {
 	}
 	/** 
 	 * Using fuzzy logic check P, L lists to determine best product combinations.
-	 * Do not take into account social learning vector S
+	 * Do not take into account social learning vector S. 
 	 * The len-2 part of the calculation is to account for q+ and q- minus at the start and end of the calculation
 	 * @return list of products from the product selection calculator
 	 */

@@ -2,10 +2,14 @@ package testing;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-
+/** 
+ * Testing suite for all possible unit tests.
+ * @author kellerke
+ *
+ */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({	
-	  ProductSelectionCalculatorTests.class,
+	  DecisionCalculatorTests.class,
 	  FarmTests.class
 	})	
 public class AllTests {

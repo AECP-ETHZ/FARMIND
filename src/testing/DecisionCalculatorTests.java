@@ -9,11 +9,16 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import agent.farm.Farm;
+import agent.Farm;
 import decision.DecisionCalculator;
 import reader.ReadParameters;		
 
-public class ProductSelectionCalculatorTests {
+/**
+ * Test decision calculator. 
+ * @author kellerke
+ *
+ */
+public class DecisionCalculatorTests {
 	List<Farm>     allFarms = new ArrayList<Farm>();
 	
 	@Before 

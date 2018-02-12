@@ -5,11 +5,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import org.junit.Before;
-import org.junit.Test;		
+import org.junit.Test;
 
-import agent.farm.Farm;
+import agent.Farm;
 import reader.ReadParameters;
 
+/** 
+ * Test farm agent object.
+ * @author kellerke
+ *
+ */
 public class FarmTests {
 	List<Farm>     allFarms = new ArrayList<Farm>();
 	

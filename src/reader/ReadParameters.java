@@ -12,9 +12,9 @@ import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleWeightedGraph;
 
 import activity.Activity;
-import agent.farm.Person;
-import agent.farm.Farm;
-import agent.farm.Location;
+import agent.Farm;
+import agent.Location;
+import agent.Person;
 
 /** 
  * Read input parameters from configuration text files

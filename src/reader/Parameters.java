@@ -2,21 +2,21 @@ package reader;
 
 /**
  * For sensitivity testing, load various parameters for functions and models in the system.
- * Each farm will share the global parameters
+ * Each farm will share the global parameters. 
  * @author kellerke
  *
  */
 public class Parameters {
 	
-	private double alpha_plus;
-	private double alpha_minus;
-	private double lambda;
-	private double phi_plus;
-	private double phi_minus;
-	private double a;
-	private double k;
-	private double b;
-	private String name;
+	private double alpha_plus;												   // used in satisfaction calc
+	private double alpha_minus;										           // used in satisfaction calc
+	private double lambda;													   // used in satisfaction calc
+	private double phi_plus;												   // used in satisfaction calc
+	private double phi_minus;												   // used in satisfaction calc
+	private double a;														   // used in aspiration calc
+	private double k;														   // scale factor for experience vector
+	private double b;														   // used to set tolerance
+	private String name;													   // name of farm
 	
 	public double getAlpha_plus() {
 		return alpha_plus;

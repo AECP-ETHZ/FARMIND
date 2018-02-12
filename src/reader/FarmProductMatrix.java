@@ -6,18 +6,18 @@ import java.util.List;
 import java.util.Map;
 
 /** 
- * Contains a name and ID list for all products with a matching hashmap for each individual farm with the matching products
- * row 1: Vector of product names
- * row 2: Farm1: [values for each product] vector of values associated with farm and product
- * row 3: Farm2: [values for each product] 
- * Each farm contains a copy of this list
- * These values for could be product preference, years of experience, or a different metric
+ * Contains a name and ID list for all products with a matching hashmap for each individual farm with the matching products<br>
+ * row 1: Vector of product names <br>
+ * row 2: Farm1: [values for each product] vector of values associated with farm and product <br>
+ * row 3: Farm2: [values for each product] <br>
+ * Each farm contains a copy of this list<br>
+ * These values for could be product preference, years of experience, or a different metric<br>
  * @author kellerke
  */
 
 public class FarmProductMatrix {
-	private List<String> productName = new ArrayList<String>();
-	private Map<String,Integer[]> productMap = new HashMap<String,Integer[]>();
+	private List<String> productName = new ArrayList<String>();				   			 // top row of matrix, usually the full list of activities (products)
+	private Map<String,Integer[]> productMap = new HashMap<String,Integer[]>();			 // map that links farm and activity to specific value
 
 	/** 
 	 * Given a farmID and a product, return the value of that matrix cell

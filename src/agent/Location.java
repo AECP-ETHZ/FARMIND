@@ -1,4 +1,4 @@
-package agent.farm;
+package agent;
 
 /**
  * Object that contains coordinates of the farm

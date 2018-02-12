@@ -7,12 +7,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import agent.farm.Farm;
 import decision.DecisionResult;
 import reader.ReadParameters;
 
 import org.apache.commons.math3.distribution.NormalDistribution;
 
+import agent.Farm;
+
+/** 
+ * Full ABM simulation runs inside of main by creating farm objects and making decisions for each farm.
+ * @author kellerke
+ *
+ */
 public class Consumat {
 
 	public static void main(String[] args) {

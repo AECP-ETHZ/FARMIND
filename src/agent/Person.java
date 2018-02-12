@@ -1,16 +1,17 @@
-package agent.farm;
+package agent;
 
 /** 
- * Person object to go inside farm object. Contains parameters such as age, preferences, memory..
+ * Person object to go inside farm object. Contains parameters such as age, preferences, memory.
+ * 
  * @author kellerke
  *
  */
 public class Person {
 
-	private int age;
-	private int education;
-	private int memory;
-	private double entrepreneurship;
+	private int age;														   // age of farmer
+	private int education;													   // years of formal education
+	private int memory;														   // number of years that farmer can remember experiences or income
+	private double entrepreneurship;										   // tolerance to change level
 	
 	public Person(int age, int education, int memory, double entrepreneurship) {
 		this.age = age;

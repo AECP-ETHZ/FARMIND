@@ -1,4 +1,4 @@
-package agent.farm;
+package agent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,32 +17,31 @@ import activity.Activity;
 import decision.DecisionCalculator;
 
 /** 
- * Farm object contains people and parameters associated with each farm
- * contains copy of activity list, preferences and experiences and network list
+ * Farm object contains people and parameters associated with each farm, as well as a copy of activity list, preferences and experiences, and network connections
  * 
  * @author kellerke
  *
  */
 public class Farm {
-	private String farmName;
-	private Person head;
-	private Location location;
-	private double Satisfaction;
-	private List<Double> IncomeHistory;
-	private double Aspiration;
-	private double Uncertainty;
-	private double IncomeUncertainty;
-	private double Tolerance;
-	private Graph<String, DefaultEdge> network; 
-	private FarmProductMatrix experience;
-	private FarmProductMatrix preferences;
-	private List<Activity> currentActivities;
-	private List<Activity> allActivities;
-	private Parameters parameters;
-	private int strategy;
-	private double incomeProbability;
-	private double regionIncomeChangePercent;
-	private double lastYearPersonalIncomeAverage;
+	private String farmName;												   // name of farm
+	private Person head;													   // person object indicating head of farm
+	private Location location;												   // geographic location of farm
+	private double Satisfaction;											   // Satisfaction level of farm
+	private List<Double> IncomeHistory;										   // list of previous income values
+	private double Aspiration;												   // Aspiration level of the farm
+	private double Uncertainty;												   // Information Seeking level
+	private double IncomeUncertainty;										   // Information seeking level based on income change
+	private double Tolerance;												   // Individual level of tolerance to uncertain future
+	private Graph<String, DefaultEdge> network; 							   // Social network of farmers
+	private FarmProductMatrix experience;									   // experience (in years) of the each farm for each activity
+	private FarmProductMatrix preferences;									   // preference (between 1 to 5) of each farm for each activity
+	private List<Activity> currentActivities;								   // list of current activities each farm is engaged in
+	private List<Activity> allActivities;									   // list of all possible activities
+	private Parameters parameters;											   // simulation parameters
+	private int strategy;													   // selected strategy (opt-out, optimize, imitate, repeat)
+	private double incomeProbability;										   // for a region (list of farms) income is distributed normally. We can determine the probability of an income occuring in this distribution (CPD)
+	private double regionIncomeChangePercent;								   // the percentage that the income of a region change (current_avg - historical_avg)/historical_avg
+	private double lastYearPersonalIncomeAverage;							   // excluding most recent time period, average income of the specific farm
 	
 	/** 
 	 * Update all parameters of the farm data
@@ -62,8 +61,7 @@ public class Farm {
 		updateTolerance();      
 	}
 	/** 
-	 * 1. create product selection calculator for this farm
-	 * 2. based on consumat model, decide which of the five decisions the farm will pursue
+	 * create product selection calculator for this farm based on consumat model, decide which of the five decisions the farm will pursue
 	 * 
 	 * Fuzzy logic is used for optimization and imitation decisions to select a set of products to pursue. 
 	 * 
@@ -74,11 +72,12 @@ public class Farm {
 	 * @return List containing the 1) full fuzzy logic selection and 2) the minimum list to imitate the LP simulator selection
 	 */
 	public List<List<String>> makeDecision(List<Farm> allFarms) {
-	    List<String> fullProductSet = new ArrayList<String>();						     // list of names of products from fuzzy logic
-	    List<String> minProductSet = new ArrayList<String>();						     // list of names of products to return to mimic LP
-		List<Activity> current = new ArrayList<Activity>();							     // current activities (objects - not names) in system 
-		DecisionCalculator cal = new DecisionCalculator(this, allFarms); // calculator for the product selection
-		double small_set = 0;
+	    List<String> fullProductSet = new ArrayList<String>();				   // list of names of products from fuzzy logic
+	    List<String> minProductSet = new ArrayList<String>();		     	   // list of names of products to return to mimic LP
+		List<Activity> current = new ArrayList<Activity>();					   // current activities (objects - not names) in system 
+		DecisionCalculator cal = new DecisionCalculator(this, allFarms);       // calculator for the product selection
+		double small_set = 0;												   // number of items to return from LP 'simulation'
+		List<List<String>> ret = new ArrayList<List<String>>();				   // list of both sets to return for sensitivity analysis
 
 		if ((head.getAge() > 650)) {
 			//System.out.println("EXIT");
@@ -131,8 +130,6 @@ public class Farm {
 		}		
 		
 		this.setCurrentActivites(current);                                      // update current products for the farm instance
-		
-		List<List<String>> ret = new ArrayList<List<String>>();				   // list of both sets to return for sensitivity analysis
 		ret.add(fullProductSet);
 		ret.add(minProductSet);
 		
@@ -155,13 +152,13 @@ public class Farm {
         Map<String, Integer> activityMap = new HashMap<String,Integer>();      // map of all activities on network, with count of often it's produced
         Double dissimilarity = 0.0;											   // dissimilarity value for farm
         Set<DefaultEdge> E;                                                    // set of edges in network with this farm at the head
+        double w = 0;														   // weight of each network connection
+        Iterator<DefaultEdge> I;											   // iterator through all edges
+        List<String> mainFarmActivity = new ArrayList<String>();			   // the main farm's list of activities for comparison to network activities
     		
 		E = this.network.outgoingEdgesOf(this.farmName);
         totalFarms = farms.size();
-        
-		Iterator<DefaultEdge> I;											   // iterator through all edges
         I = E.iterator();
-        double w;
         
         for (int k = 0; k < totalFarms; k++) {
         	if (!farms.get(k).getFarmName().equals(this.getFarmName()) ) {
@@ -175,7 +172,7 @@ public class Farm {
             				networkActivityList.add(p.get(i).getName());
             				activityMap.put(p.get(i).getName(), 1);
             			} else {
-            				activityMap.put(p.get(i).getName(), activityMap.get(p.get(i).getName()) + 1);    // increment map
+            				activityMap.put(p.get(i).getName(), activityMap.get(p.get(i).getName()) + 1);    // increment map that tracks how often a product occurs in the network (ie Maize occurs 5 times in network -> Maize, 5)
             			}
             		}
         			
@@ -183,7 +180,6 @@ public class Farm {
         	}
         }
     	
-    	List<String> mainFarmActivity = new ArrayList<String>();
     	for (int i = 0; i < this.getCurrentActivities().size(); i++)
     	{
     		String name = this.getCurrentActivities().get(i).getName();
@@ -191,13 +187,13 @@ public class Farm {
     		
     		if(!networkActivityList.contains(name) ) {
     			networkActivityList.add(name);
-    			activityMap.put(name, 1);                                       // add product to map
+    			activityMap.put(name, 1);                                       // add product to map of entire network (
     		} else {
-    			activityMap.put(name, activityMap.get(name) + 1);                    // increment map
+    			activityMap.put(name, activityMap.get(name) + 1);              // increment map
     		}
     	}
     	
-    	// ACTUAL DISSIMILARITY CALULATION
+    	// dissimilarity calculation based on difference in neighbor vs main farm product sets
     	for (int i = 0; i < networkActivityList.size(); i++)
     	{
     		// if the activity is done by the main farmer ignore that product in the dissimilarity
@@ -211,46 +207,44 @@ public class Farm {
     	}
 
         currentDissimilarity = dissimilarity/networkActivityList.size();
-        
 		setUncertainty(currentDissimilarity);
 	}
      /**
 	 * Based on the current income level of the farmer calculate new satisfaction level.
-	 * The farmer's income is set externally from farmdyn 
+	 * The farmer's income is set externally from LP simulation tool, or randomly generated from distribution
 	 */
 	private void updateSatisfaction() {		
-		double current_satisfaction = currentSatisfaction();
-		setSatisfaction(current_satisfaction);                                                     // uses updated income history
+		double current_satisfaction = currentSatisfaction();			       // current satisfaction level
+		setSatisfaction(current_satisfaction);                                 // uses updated income history
 	}
 	/** 
-	 * Based on the historical income data, calculate the current aspiration level
+	 * Based on the historical income data, calculate the aspiration level as a percentage of historical income.
 	 */
 	private void updateAspiration() {
-		double aspiration = 0;
-		double alpha = this.parameters.getA();
+		double aspiration = 0;												   // calculated aspiration level
+		double alpha = this.parameters.getA();								   // alpha is the percentage of historical average
 		
 		aspiration = alpha*mean(IncomeHistory);
 		
 		setAspiration(aspiration);
 	}
 	/** 
-	 * Based on the input parameter, calculate a tolerance level
+	 * Based on the input parameter, calculate a tolerance level. Percent of exogenously derived tolerance level. 
 	 */
 	private void updateTolerance() {
 		this.Tolerance = this.parameters.getB() * this.Tolerance;
 	}
 	/** 
 	 * Each time period, t, call this function to increment the experience vector of this farm. 
-	 * This experience vector is part of a shared experience matrix that all farms have
+	 * This experience vector is part of a shared experience matrix that all farms contain. 
 	 * If the farm is currently farming a product, then increase the experience of that product for that farm.
 	 * For all other possible products in the experience vector for this farm, decrement the experience by one year.
-	 * 
-	 * Also increment the age of the farmer each time step.
+	 * <br>
+	 * Increment the age of the farmer each time step.
 	 */
 	public void updateExperiencePlusAge() {
 		List<String> productNames = new ArrayList<String>();				   // array of names of products for comparison
-		
-		int age = this.head.getAge();
+		int age = this.head.getAge();										   // age of the farmer
 		this.head.setAge(age + 1);                                             // increment farmers age each time period
 		
 		for (int i = 0; i<this.getCurrentActivities().size(); i++) {
@@ -264,14 +258,13 @@ public class Farm {
 				value += 1;
 			}
 			else {
-				value -=1;
+				value -= 1;
 			}
 			
 			if(value > this.getMemory()) value = this.getMemory();
 			if(value < 0) value = 0;
 			
 			this.experience.setFarmProductValue(farmName, this.experience.getProductName().get(i), value);
-			
 		}	
 	}
 	/**
@@ -281,13 +274,12 @@ public class Farm {
 	 * @param income
 	 */
 	private void updateIncomeHistoryList (double income) {
+		List<Double> temp = new ArrayList<Double>();                           // update array for new incomes
 		if(income == -1) return;											   // income is -1 for the first year due to initialization
 		
-		List<Double> temp = new ArrayList<Double>();                           // update array for new incomes
-		temp.add(income);
-		
+		temp.add(income);													   // start income list with updated income
 		for (int i = 0; i< this.getMemory() - 1; i++) {
-			temp.add(this.IncomeHistory.get(i));
+			temp.add(this.IncomeHistory.get(i));							   // add all but oldest income to income list
 		}
 		
 		setIncomeHistory(temp); 
@@ -297,17 +289,18 @@ public class Farm {
 	 * Exclude the first income period
 	 */
 	private void updateIncomeAverage() {
-		List<Double> avgIncome = new ArrayList<Double>(this.IncomeHistory);
-		avgIncome.remove(0);                                                   // remove first element
-		double personalIncomeAverage = mean(avgIncome);
+		List<Double> avgIncome = new ArrayList<Double>(this.IncomeHistory);    // copy of income history
+		avgIncome.remove(0);                                                   // remove most recent year from historical avg. Most recent year is used to calculate percent change compared to avg. 
+		double personalIncomeAverage = mean(avgIncome);						   // average of historical income
 		setLastYearPersonalIncomeAverage(personalIncomeAverage);
 	}
 	/**
-	 * update income uncertainty value
-	 * @param farms
+	 * update income uncertainty value based on personal income change and regional income change at a specific time period
 	 */
 	private void updateIncomeUncertainty() {
-		double personalIncomeChangePercent = (IncomeHistory.get(0) - lastYearPersonalIncomeAverage) /lastYearPersonalIncomeAverage;
+		double personalIncomeChangePercent = 0;								   // percent change in personal income
+		
+		personalIncomeChangePercent = (IncomeHistory.get(0) - lastYearPersonalIncomeAverage) /lastYearPersonalIncomeAverage;
 		
 		if ( (this.regionIncomeChangePercent - personalIncomeChangePercent) > 0 ) {
 			this.IncomeUncertainty = 1;
@@ -354,7 +347,7 @@ public class Farm {
 	 * @return mean historical satisfaction
 	 */
 	private double currentSatisfaction() {
-		List<Double> sat = new ArrayList<Double>();
+		List<Double> sat = new ArrayList<Double>();						       // calculate satisfaction for each individual income in income history
 		
 		for (int i = 0; i< this.getMemory(); i++) {
 			sat.add(calculateSatisfaction(this.IncomeHistory.get(i)));

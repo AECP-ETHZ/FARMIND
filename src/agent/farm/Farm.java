@@ -71,7 +71,6 @@ public class Farm {
 	 * We keep track of both sets for use during the sensitivity analysis
 	 * 
 	 * @param allFarms full list of all farms in system
-	 * @param income of this particular farm
 	 * @return List containing the 1) full fuzzy logic selection and 2) the minimum list to imitate the LP simulator selection
 	 */
 	public List<List<String>> makeDecision(List<Farm> allFarms) {

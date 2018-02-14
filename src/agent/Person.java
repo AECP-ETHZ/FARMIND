@@ -11,13 +11,11 @@ public class Person {
 	private int age;														   // age of farmer
 	private int education;													   // years of formal education
 	private int memory;														   // number of years that farmer can remember experiences or income
-	private double entrepreneurship;										   // tolerance to change level
 	
-	public Person(int age, int education, int memory, double entrepreneurship) {
+	public Person(int age, int education, int memory) {
 		this.age = age;
 		this.education = education;
 		this.memory = memory;
-		this.entrepreneurship = entrepreneurship;
 	}
 	
 	public int getAge() {
@@ -43,13 +41,4 @@ public class Person {
 	public void setMemory(int memory) {
 		this.memory = memory;
 	}
-
-	public double getEntrepreneurship() {
-		return entrepreneurship;
-	}
-
-	public void setEntrepreneurship(double entrepreneurship2) {
-		this.entrepreneurship = entrepreneurship2;
-	}
-
 }

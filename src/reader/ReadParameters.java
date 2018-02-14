@@ -54,16 +54,15 @@ public class ReadParameters {
 		int age = 0;
 		int education = 0;
 		int memory = 0;
-		double entrepreneurship = 0;
+		double tolerance = 0;
 		BufferedReader Buffer = null;	 									   // read input file
 		int farm_count_index = 0;                                              // index is used to set the actual farm id value
 		
-		// each farm has a link to the reference object. This allows each farm to update the shared data objects
+		Parameters parameters = getParameters(parameterSet);
 		List<Graph<String, DefaultEdge>> network = this.getSocialNetworks();   
 		List<Activity> activities = getActivityList();
 		FarmProductMatrix pref = getPreferences();
 		FarmProductMatrix experience = getExperience();
-		Parameters parameters = getParameters(parameterSet);
 		
 		try {
 			Calendar now = Calendar.getInstance();                             // Gets the current date and time
@@ -71,36 +70,30 @@ public class ReadParameters {
 			Buffer = new BufferedReader(new FileReader(DataFile));
 			Line = Buffer.readLine();									       // first line to throw away
 			
-			while ((Line = Buffer.readLine()) != null) {                       // Read farm's parameters line by line
-				farmParameters = CSVtoArrayList(Line);
-				Farm farm = new Farm();
+			while ((Line = Buffer.readLine()) != null) {                       
+				farmParameters = CSVtoArrayList(Line);						   // Read farm's parameters line by line
 				Location location = new Location();							   // create new location for each farm
-				List<Activity> currentProducts = new ArrayList<Activity>();
-				List<Double> income = new ArrayList<Double>();
-				double[] coordinates = {0,0};
+				List<Activity> currentActivities = new ArrayList<Activity>();  // each farm has list of activities
+				List<Double> income = new ArrayList<Double>();				   // each farm has income history records
+				double[] coordinates = {0,0};								   // location of farm
+				double personalIncomeAverage = 0;					           // personal income average
 				
 				name = farmParameters.get(NAME);
 				coordinates[0] = Double.parseDouble(farmParameters.get(COORDINATE1));
 				coordinates[1] = Double.parseDouble(farmParameters.get(COORDINATE2));
 				location.setCoordinates(coordinates);
-				   
-				farm.setFarmName(name);
-				farm.setLocation(location);
-				farm.setNetwork(network.get(farm_count_index));
-
 				age = currentYear - Integer.parseInt( farmParameters.get(AGE));
 				education = Integer.parseInt( farmParameters.get(EDUCATION) );
 				memory = Integer.parseInt( farmParameters.get(MEMORY));
-				entrepreneurship = Double.parseDouble( farmParameters.get(ENTREPRENEURSHIP));
-				Person farmHead = new Person(age, education, memory, entrepreneurship);          
-
-				currentProducts.clear();
+				tolerance = Double.parseDouble( farmParameters.get(ENTREPRENEURSHIP));
+				
+				currentActivities.clear();
 				for (int k = START_ACTION_INDEX; k < farmParameters.size(); k++) {
 					for(int i = 0; i<activities.size(); i++) {
 						if (activities.get(i).getName().equals(farmParameters.get(k) )) {
 							int ID = activities.get(i).getID();
 							Activity p = new Activity(ID, farmParameters.get(k)); 
-							currentProducts.add(p);
+							currentActivities.add(p);
 						}
 					}
 				}
@@ -110,17 +103,11 @@ public class ReadParameters {
 				}
 				
 				List<Double> avgIncome = new ArrayList<Double>(income);
-				avgIncome.remove(0);                                           // remove first element
-				double personalIncomeAverage = mean(avgIncome);
-				farm.setIncomeHistory(income);
-				farm.setLastYearPersonalIncomeAverage(personalIncomeAverage);
-				farm.setExperience(experience);
-				farm.setPreferences(pref);
-				farm.setActivities(activities);
-				farm.setTolerance(entrepreneurship);
-				farm.setCurrentActivites(currentProducts);
-				farm.setHead(farmHead);
-				farm.setParameters(parameters);
+				avgIncome.remove(0);                                           // remove income of first time period
+				personalIncomeAverage = mean(avgIncome);
+
+				Person farmHead = new Person(age, education, memory);        
+				Farm farm = new Farm(name, location, network.get(farm_count_index), income, personalIncomeAverage, experience, pref, activities, tolerance, currentActivities, farmHead, parameters);
 				
 				farms.add(farm);
 				farm_count_index++;	
@@ -138,6 +125,11 @@ public class ReadParameters {
 		return farms;
 	}
 
+	/** 
+	 * Read input parameter file and set all parameters in object
+	 * @param parameterSet which set of parameters to read from input file
+	 * @return parameter object for agent creation
+	 */
 	private Parameters getParameters(int parameterSet) {
 		String Line;
 		ArrayList<String> matrixRow;
@@ -155,12 +147,9 @@ public class ReadParameters {
 			matrixRow = CSVtoArrayList(Line);
 			parameters.setAlpha_plus(Double.parseDouble(matrixRow.get(1)) );
 			parameters.setAlpha_minus(Double.parseDouble(matrixRow.get(2)) );
-			
 			parameters.setLambda(Double.parseDouble(matrixRow.get(3)) );
-			
 			parameters.setPhi_plus(Double.parseDouble(matrixRow.get(4)) ); 
 			parameters.setPhi_minus(Double.parseDouble(matrixRow.get(5)) ); 
-			
 			parameters.setA(Double.parseDouble(matrixRow.get(6)) ); 
 			parameters.setB(Double.parseDouble(matrixRow.get(7)) ); 
 			parameters.setK(Double.parseDouble(matrixRow.get(8)) ); 
@@ -214,6 +203,10 @@ public class ReadParameters {
 		return preferences;
 	}
 	
+	/** 
+	 * read years of experience file 
+	 * @return object corresponding to years performing activity for each farm
+	 */
 	public FarmProductMatrix getExperience() {
 		String Line;
 		ArrayList<String> matrixRow;
@@ -271,7 +264,6 @@ public class ReadParameters {
 				data = CSVtoArrayList(Line);
 				Graph<String, DefaultEdge> g = new SimpleWeightedGraph<String, DefaultEdge>(DefaultEdge.class);
 	
-				
 				// build graph with all nodes
 				for (int i = 0; i<FarmNames.size(); i++)
 				{

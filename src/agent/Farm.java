@@ -44,6 +44,45 @@ public class Farm {
 	private double lastYearPersonalIncomeAverage;							   // excluding most recent time period, average income of the specific farm
 	
 	/** 
+	 * Constructor method for farm object
+	 * @param name	of the farm
+	 * @param location	of the farm
+	 * @param socialNetwork		social network of the farm
+	 * @param incomeHistory	history to initialize farm
+	 * @param personalIncomeAverage	average of income except most recent time period
+	 * @param farmingExperience	shared experience matrix
+	 * @param preferences			activity preference
+	 * @param activities	full activity list
+	 * @param tolerance	tolerance to uncertainty
+	 * @param currentActivities	list of current farm activities during initalization
+	 * @param farmHead	person object to lead farm
+	 * @param parameters	simulation parameters
+	 */
+	public Farm(String name, Location location, Graph<String, DefaultEdge> socialNetwork, List<Double> incomeHistory,
+			double personalIncomeAverage, FarmProductMatrix farmingExperience, FarmProductMatrix preferences,
+			List<Activity> activities, double tolerance, List<Activity> currentActivities, Person farmHead,
+			Parameters parameters) {
+
+		this.setFarmName(name);
+		this.setLocation(location);
+		this.setNetwork(socialNetwork);
+		this.setIncomeHistory(incomeHistory);
+		this.setLastYearPersonalIncomeAverage(personalIncomeAverage);
+		this.setExperience(farmingExperience);
+		this.setPreferences(preferences);
+		this.setActivities(activities);
+		this.setTolerance(tolerance);
+		this.setCurrentActivites(currentActivities);
+		this.setHead(farmHead);
+		this.setParameters(parameters);
+	}
+	/**
+	 * Alternative constructor
+	 */
+	public Farm() {
+		// TODO Auto-generated constructor stub
+	}
+	/** 
 	 * Update all parameters of the farm data
 	 * @param allFarms list of all the input farms
 	 * @param income input value of farm

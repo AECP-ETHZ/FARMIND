@@ -23,19 +23,26 @@ public class Consumat {
 
 	public static void main(String[] args) {
 		
-		int max_parameter_length = getParameterCount();
+		double max_parameter_length = getParameterCount();
 		String origFileName = createFileName();
 		String FileName = origFileName + String.format("%d",0);
 		long line_counter = 0;
 		int file_counter = 1;
 		
-		max_parameter_length = 10;
-		for (int parameterSet = 1; parameterSet < max_parameter_length; parameterSet++) {		   // sensitivity testing, loop through all parameters
+		System.out.println("Starting Model");
+		System.out.print("[");
+		
+		//max_parameter_length = 100;
+		for (double parameterSet = 1; parameterSet < max_parameter_length; parameterSet++) {		   // sensitivity testing, loop through all parameters
 			ReadParameters reader = new ReadParameters();										   // read all input data files
-			List<Farm>     allFarms = reader.getFarms(parameterSet);							   // build set of farms with new parameters
+			List<Farm>     allFarms = reader.getFarms((int)parameterSet);							   // build set of farms with new parameters
 			double income, probability;
 			initializeRegionIncomeChangePercent(allFarms);										   // only take into account the preset values
-
+			
+			if( (parameterSet % Math.round((max_parameter_length/10))) == 0) {
+				System.out.print("|");
+			}
+			
 			for (int year = 1; year <= 10; year++) {											   // run simulation for a set of years, getting updated income and products	
 				List<List<Double>> incomes = new ArrayList<List<Double>>();
 				incomes = generateIncomes(allFarms.size());
@@ -67,6 +74,8 @@ public class Consumat {
 				updateRegionIncomeChangePercent(allFarms,incomes.get(0));						   // after time step update the percent change for population
 			}
 		}
+		System.out.println("]");
+		System.out.println("Complete");
 	}
 	
 	/**

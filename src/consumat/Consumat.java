@@ -62,7 +62,7 @@ public class Consumat {
 					
 					farm.updateFarmData(allFarms, income, probability);
 					List<String> actionSet = farm.makeDecision(allFarms);             
-					DecisionResult decision = new DecisionResult(farm.getPreferences().getProductName(), farm.getFarmName(), actionSet, year, farm.getParameters(), farm.getStrategy(), farm.getIncomeHistory().get(0), farm.getCurrentActivities() );
+					DecisionResult decision = new DecisionResult(farm.getPreferences().getProductName(), farm.getFarmName(), year, farm.getParameters(), farm.getStrategy(), farm.getIncomeHistory().get(0), farm.getCurrentActivities() , actionSet);
 
 					line_counter++;
 					if (line_counter > 999999) {
@@ -72,6 +72,7 @@ public class Consumat {
 					} 
 					farmIncomeCounter++;
 					decision.appendDecisionFile(FileName);
+					decision.writeGamsFile();
 					farm.updateExperiencePlusAge();                              				   // each time period update experience
 				}
 				List<Object> data = readIncome(allFarms.size());

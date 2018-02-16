@@ -19,34 +19,69 @@ import reader.Parameters;
 public class DecisionResult {
 
 	private String farmId;													   // unique farm id
-	private List<String> activities;										   // activity list
 	private Integer year;													   // which time step this decision was made in
 	private Parameters param;												   // which parameter set was used
 	private int strategy;													   // farm strategy
-	private List<Activity> currentActions;									   // optimizer activity set
 	private double income;													   // income of time step
-	private List<String> productNames;										   // full activity list
+	private List<String> allActivity;										   // All possible activities in the model
+	private List<Activity> currentActivity;
+	private List<String> possibleActivity;
 	
 	/** 
 	 * 
-	 * @param productNames	full set of activities
+	 * @param allActivities	full set of activities
 	 * @param farmId		ID of the farm
-	 * @param maxSet		full product set
+	 * @param possibleActivities		full product set
 	 * @param year			time period
 	 * @param param			which parameters were used
 	 * @param strat			strategy
-	 * @param currentActions		current actions in system
+	 * @param currentActivities		current actions in system
 	 * @param income		income of farm
 	 */
-	public DecisionResult(List<String> productNames, String farmId, List<String> maxSet, Integer year, Parameters param, int strat, double income, List<Activity> currentActions) {
+	public DecisionResult(List<String> allActivities, String farmId, Integer year, Parameters param, int strat, double income, List<Activity> currentActivities, List<String> possibleActivities) {
 		setFarmId(farmId);
-		setProducts(maxSet);
 		setYear(year);
 		setParam(param);
 		setStrategy(strat);
 		setIncome(income);
-		setProductNames(productNames);
-		setCurrentActions(currentActions);
+		setCurrentActivity(currentActivities);
+		setPossibleActivity(possibleActivities);
+		setAllActivity(allActivities);
+	}
+
+	public void writeGamsFile() {
+		String PATH = "./output";
+		File directory = new File(PATH);
+		if(!directory.exists()) {
+			directory.mkdir();
+		}
+		
+		File file = new File("./output/p_allowedStrat.csv");
+		FileWriter fw = null;
+		try {
+			fw = new FileWriter(file,true);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		BufferedWriter bw = new BufferedWriter(fw);
+		PrintWriter writer = new PrintWriter(bw);
+		
+		if (file.length() == 0) {
+			writer.println("gn,spre,normal,GlyBan");
+		}
+		
+		int gly = 0;
+		for(int i = 1; i < 22; i++) {
+			if (i == 17) i = i+2;
+			String act = String.format("spre%d", i);
+			if(possibleActivity.contains(act)) {
+				gly = 1;
+			} else {gly = 0;}
+			if (i == 1) gly = 1;	
+			
+			writer.println(String.format("%s,spre%d,1,%d", farmId, i, gly));
+		}
+		writer.close();
 	}
 	
 	/** 
@@ -71,8 +106,8 @@ public class DecisionResult {
 		PrintWriter writer = new PrintWriter(bw);
 		
 		if (file.length() == 0) {
-			writer.println("year,name,alpha_plus,alpha_minus,lambda,phi_plus,phi_minus,a,b,k,strategy,fuzzy_action1,"
-					+ "fuzzy_action2,fuzzy_action3,fuzzy_action4,fuzzy_action5,fuzzy_action6, income, lp_action1,lp_action2,lp_action3");
+			writer.println("year,name,alpha_plus,alpha_minus,lambda,phi_plus,phi_minus,a,b,k,strategy,possible_action1,"
+					+ "possible_action2,possible_action3,possible_action4,possible_action5,possible_action6,income,current_action1,current_action2,current_action3");
 		}
 		
 		writer.print(String.format("%s,",this.year));
@@ -87,24 +122,23 @@ public class DecisionResult {
 		writer.print(String.format("%s,",this.param.getK() ));
 		writer.print(String.format("%s,",this.strategy) );
 		
-		for(int i = 0; i < this.activities.size(); i++) {
-			writer.print(String.format("%d,",  1 + this.productNames.indexOf( this.activities.get(i)) ) );
+		for(int i = 0; i < this.possibleActivity.size(); i++) {
+			writer.print(String.format("%d,",  1 + this.allActivity.indexOf( this.possibleActivity.get(i)) ) );
 		}
 		
-		for(int i = 0; i < 6 - this.activities.size(); i++) {
+		for(int i = 0; i < 6 - this.possibleActivity.size(); i++) {
 			writer.print("NA," );
 		}
 
 		writer.print(String.format("%s",this.income ) );
 		
-		for(int i = 0; i < this.currentActions.size(); i++) {
-			writer.print(String.format("%d,",  1 + this.productNames.indexOf(this.currentActions.get(i).getName() )) );
+		for(int i = 0; i < this.currentActivity.size(); i++) {
+			writer.print(String.format("%d,",  1 + this.allActivity.indexOf(this.currentActivity.get(i).getName() )) );
 		}
 		
-		for(int i = 0; i < 3 - this.currentActions.size(); i++) {
+		for(int i = 0; i < 3 - this.currentActivity.size(); i++) {
 			writer.print("NA," );
 		}
-	    
 		
 		writer.print("\n");
 		writer.close();
@@ -115,12 +149,6 @@ public class DecisionResult {
 	}
 	public void setFarmId(String farmId) {
 		this.farmId = farmId;
-	}
-	public List<String> getProducts() {
-		return activities;
-	}
-	public void setProducts(List<String> products) {
-		this.activities = products;
 	}
 	public Integer getYear() {
 		return year;
@@ -146,19 +174,28 @@ public class DecisionResult {
 	public void setIncome(double income) {
 		this.income = income;
 	}
-	public List<String> getProductNames() {
-		return productNames;
-	}
-	public void setProductNames(List<String> productNames) {
-		this.productNames = productNames;
+
+	public List<Activity> getCurrentActivity() {
+		return currentActivity;
 	}
 
-	public List<Activity> getCurrentActions() {
-		return currentActions;
+	public void setCurrentActivity(List<Activity> currentActivity) {
+		this.currentActivity = currentActivity;
 	}
 
-	public void setCurrentActions(List<Activity> currentActions) {
-		this.currentActions = currentActions;
+	public List<String> getPossibleActivity() {
+		return possibleActivity;
 	}
 
+	public void setPossibleActivity(List<String> possibleActivity) {
+		this.possibleActivity = possibleActivity;
+	}
+
+	public List<String> getAllActivity() {
+		return allActivity;
+	}
+
+	public void setAllActivity(List<String> allActivity) {
+		this.allActivity = allActivity;
+	}
 }

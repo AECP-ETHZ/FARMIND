@@ -108,15 +108,12 @@ public class Farm {
 	 * We keep track of both sets for use during the sensitivity analysis
 	 * 
 	 * @param allFarms full list of all farms in system
-	 * @return List containing the 1) full fuzzy logic selection and 2) the minimum list to imitate the LP simulator selection
+	 * @return List containing the full fuzzy logic selection 
 	 */
-	public List<List<String>> makeDecision(List<Farm> allFarms) {
-	    List<String> fullProductSet = new ArrayList<String>();				   // list of names of products from fuzzy logic
-	    List<String> minProductSet = new ArrayList<String>();		     	   // list of names of products to return to mimic LP
-		List<Activity> current = new ArrayList<Activity>();					   // current activities (objects - not names) in system 
+	public List<String> makeDecision(List<Farm> allFarms) {
+	    List<String> fuzzyActionSet = new ArrayList<String>();				   // list of names of products from fuzzy logic
+		//List<Activity> current = new ArrayList<Activity>();					   // current activities (objects - not names) in system 
 		DecisionCalculator cal = new DecisionCalculator(this, allFarms);       // calculator for the product selection
-		double small_set = 0;												   // number of items to return from LP 'simulation'
-		List<List<String>> ret = new ArrayList<List<String>>();				   // list of both sets to return for sensitivity analysis
 
 		if ((head.getAge() > 650)) {
 			//System.out.println("EXIT");
@@ -126,12 +123,7 @@ public class Farm {
 			if (this.Satisfaction >= 0) {
 				//System.out.println("IMITATION");
 				this.strategy = 2;
-				fullProductSet = cal.getImitationProducts();
-				
-				small_set = Math.round( (double)fullProductSet.size()/2.0) ;
-				while(small_set > 0) {
-					minProductSet.add(fullProductSet.get((int) (fullProductSet.size() - small_set--)));		   // last element in fullSet is the highest rated product
-				}
+				fuzzyActionSet = cal.getImitationProducts();
 			}
 			else {
 				//System.out.println("EXIT");
@@ -143,20 +135,17 @@ public class Farm {
 				//System.out.println("REPETITION");
 				this.strategy = 4;
 				for (int i = 0; i < this.getCurrentActivities().size(); i++) {
-					minProductSet.add(this.getCurrentActivities().get(i).getName());
+					fuzzyActionSet.add(this.getCurrentActivities().get(i).getName());
 				} 
 			}
 			else {
 				//System.out.println("OPTIMIZATION");
 				this.strategy = 3;
-				fullProductSet = cal.getOptimizeProducts();
-				small_set = Math.round( (double)fullProductSet.size()/2.0) ;
-				while(small_set > 0) {
-					minProductSet.add(fullProductSet.get((int) (fullProductSet.size() - small_set--)));		   // last element in fullSet is the highest rated product
-				}
+				fuzzyActionSet = cal.getOptimizeProducts();
 			}
 		}
 
+		/*
 		// this is to build a list of product objects - not just names
 		for (int k = 0; k < minProductSet.size(); k++) {
 			for(int i = 0; i<allActivities.size(); i++) {
@@ -169,10 +158,8 @@ public class Farm {
 		}		
 		
 		this.setCurrentActivites(current);                                      // update current products for the farm instance
-		ret.add(fullProductSet);
-		ret.add(minProductSet);
-		
-		return ret;
+		*/
+		return fuzzyActionSet;
 	}
 	
 	// update functions for farm parameters

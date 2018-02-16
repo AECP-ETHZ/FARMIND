@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import activity.Activity;
 import reader.Parameters;
 
 /**
@@ -22,7 +23,7 @@ public class DecisionResult {
 	private Integer year;													   // which time step this decision was made in
 	private Parameters param;												   // which parameter set was used
 	private int strategy;													   // farm strategy
-	private List<String> LP_Products;										   // fake LP activity selection
+	private List<Activity> currentActions;									   // optimizer activity set
 	private double income;													   // income of time step
 	private List<String> productNames;										   // full activity list
 	
@@ -34,18 +35,18 @@ public class DecisionResult {
 	 * @param year			time period
 	 * @param param			which parameters were used
 	 * @param strat			strategy
-	 * @param minSet		LP selected set
+	 * @param currentActions		current actions in system
 	 * @param income		income of farm
 	 */
-	public DecisionResult(List<String> productNames, String farmId, List<String> maxSet, Integer year, Parameters param, int strat, List<String> minSet, double income) {
+	public DecisionResult(List<String> productNames, String farmId, List<String> maxSet, Integer year, Parameters param, int strat, double income, List<Activity> currentActions) {
 		setFarmId(farmId);
 		setProducts(maxSet);
 		setYear(year);
 		setParam(param);
 		setStrategy(strat);
-		setLP_Products(minSet);
 		setIncome(income);
 		setProductNames(productNames);
+		setCurrentActions(currentActions);
 	}
 	
 	/** 
@@ -71,7 +72,7 @@ public class DecisionResult {
 		
 		if (file.length() == 0) {
 			writer.println("year,name,alpha_plus,alpha_minus,lambda,phi_plus,phi_minus,a,b,k,strategy,fuzzy_action1,"
-					+ "fuzzy_action2,fuzzy_action3,fuzzy_action4,fuzzy_action5,fuzzy_action6,lp_action1,lp_action2,lp_action3,income");
+					+ "fuzzy_action2,fuzzy_action3,fuzzy_action4,fuzzy_action5,fuzzy_action6, income, lp_action1,lp_action2,lp_action3");
 		}
 		
 		writer.print(String.format("%s,",this.year));
@@ -93,16 +94,17 @@ public class DecisionResult {
 		for(int i = 0; i < 6 - this.activities.size(); i++) {
 			writer.print("NA," );
 		}
+
+		writer.print(String.format("%s",this.income ) );
 		
-		for(int i = 0; i < this.LP_Products.size(); i++) {
-			writer.print(String.format("%d,",  1 + this.productNames.indexOf(this.LP_Products.get(i))) );
+		for(int i = 0; i < this.currentActions.size(); i++) {
+			writer.print(String.format("%d,",  1 + this.productNames.indexOf(this.currentActions.get(i).getName() )) );
 		}
 		
-		for(int i = 0; i < 3 - this.LP_Products.size(); i++) {
+		for(int i = 0; i < 3 - this.currentActions.size(); i++) {
 			writer.print("NA," );
 		}
 	    
-		writer.print(String.format("%s",this.income ) );
 		
 		writer.print("\n");
 		writer.close();
@@ -138,12 +140,6 @@ public class DecisionResult {
 	public void setStrategy(int i) {
 		this.strategy = i;
 	}
-	public List<String> getLP_Products() {
-		return LP_Products;
-	}
-	public void setLP_Products(List<String> lP_Products) {
-		LP_Products = lP_Products;
-	}
 	public double getIncome() {
 		return income;
 	}
@@ -155,6 +151,14 @@ public class DecisionResult {
 	}
 	public void setProductNames(List<String> productNames) {
 		this.productNames = productNames;
+	}
+
+	public List<Activity> getCurrentActions() {
+		return currentActions;
+	}
+
+	public void setCurrentActions(List<Activity> currentActions) {
+		this.currentActions = currentActions;
 	}
 
 }

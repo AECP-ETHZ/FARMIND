@@ -12,6 +12,7 @@ import reader.ReadParameters;
 
 import org.apache.commons.math3.distribution.NormalDistribution;
 
+import activity.Activity;
 import agent.Farm;
 
 /** 
@@ -21,6 +22,7 @@ import agent.Farm;
  */
 public class Consumat {
 
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
 		
 		double max_parameter_length = getParameterCount();
@@ -32,34 +34,35 @@ public class Consumat {
 		System.out.println("Starting Model");
 		System.out.print("[");
 		
-		//max_parameter_length = 100;
-		for (double parameterSet = 1; parameterSet < max_parameter_length; parameterSet++) {		   // sensitivity testing, loop through all parameters
+		max_parameter_length = 2;
+		for (double parameterSet = 1; parameterSet < max_parameter_length; parameterSet++) {	   // sensitivity testing, loop through all parameters
 			ReadParameters reader = new ReadParameters();										   // read all input data files
-			List<Farm>     allFarms = reader.getFarms((int)parameterSet);							   // build set of farms with new parameters
-			double income, probability;
+			List<Farm>     allFarms = reader.getFarms((int)parameterSet);					       // build set of farms with new parameters
+			double income = 0;																	   // specific income of farm 
+			double probability = 0;																   // probability of income occurring
+			List<Double> incomes = new ArrayList<Double>();										   // list of all farm incomes
 			initializeRegionIncomeChangePercent(allFarms);										   // only take into account the preset values
 			
-			if( (parameterSet % Math.round((max_parameter_length/10))) == 0) {
+			if( (parameterSet % Math.round((max_parameter_length/10))) == 0) {					   // output status
 				System.out.print("|");
 			}
 			
-			for (int year = 1; year <= 10; year++) {											   // run simulation for a set of years, getting updated income and products	
-				List<List<Double>> incomes = new ArrayList<List<Double>>();
-				incomes = generateIncomes(allFarms.size());
+			for (int year = 1; year <= 3; year++) {											   // run simulation for a set of years, getting updated income and products	
 				int farmIncomeCounter = 0;
+				NormalDistribution normal = new NormalDistribution(50000.0, 10000.0);			   // distribution of possible incomes
 				
 				for (Farm farm : allFarms) {
 					if (year == 1) {															   // ignore first year as we already have that initialized with farmdata input file
 						income = -1;
 						probability = 0.5;
 					} else {
-						income = incomes.get(0).get(farmIncomeCounter);
-						probability = incomes.get(1).get(farmIncomeCounter++);
+						income = incomes.get(farmIncomeCounter)*100;
+						probability = normal.cumulativeProbability(income);
 					}
 					
 					farm.updateFarmData(allFarms, income, probability);
-					List<List<String>> fullAndMinSetProducts = farm.makeDecision(allFarms);             // first list is full set, second list is fake LP product list
-					DecisionResult decision = new DecisionResult(farm.getPreferences().getProductName(), farm.getFarmName(), fullAndMinSetProducts.get(0), year, farm.getParameters(), farm.getStrategy(), fullAndMinSetProducts.get(1), farm.getIncomeHistory().get(0) );
+					List<String> actionSet = farm.makeDecision(allFarms);             
+					DecisionResult decision = new DecisionResult(farm.getPreferences().getProductName(), farm.getFarmName(), actionSet, year, farm.getParameters(), farm.getStrategy(), farm.getIncomeHistory().get(0), farm.getCurrentActivities() );
 
 					line_counter++;
 					if (line_counter > 999999) {
@@ -67,11 +70,17 @@ public class Consumat {
 						file_counter++;
 						line_counter = 0;
 					} 
+					farmIncomeCounter++;
 					decision.appendDecisionFile(FileName);
 					farm.updateExperiencePlusAge();                              				   // each time period update experience
 				}
-				
-				updateRegionIncomeChangePercent(allFarms,incomes.get(0));						   // after time step update the percent change for population
+				List<Object> data = readIncome(allFarms.size());
+				incomes = (List<Double>) data.get(0);
+				for (Farm farm : allFarms) {
+					farm.setCurrentActivites((List<Activity>) data.get(1));
+				}
+
+				updateRegionIncomeChangePercent(allFarms,incomes);						   // after time step update the percent change for population
 			}
 		}
 		System.out.println("]");
@@ -80,24 +89,13 @@ public class Consumat {
 	
 	/**
 	 * Automatically generate list of income values for each farm
-	 * @param year is number of farms in income list
-	 * @return
+	 * @param numberOfFarms is number of farms in income list
+	 * @return list of incomes and actions
 	 */
-	private static List<List<Double>> generateIncomes(int year) {													 
-		NormalDistribution normal = new NormalDistribution(50000.0, 10000.0);				       // distribution of possible incomes
-		List<List<Double>> ret = new ArrayList<List<Double>>();
-		List<Double> year_income = new ArrayList<Double>();
-		List<Double> income_prob = new ArrayList<Double>();
-		
-		while(year > 0) {
-			double inc = (int)normal.sample();
-			year_income.add(inc);
-			income_prob.add( normal.cumulativeProbability(inc) );
-			year--;
-		}
-		ret.add(year_income);
-		ret.add(income_prob);
-		return ret;
+	private static List<Object> readIncome(int numberOfFarms) {													 
+		ReadParameters reader = new ReadParameters();										   // read all input data files
+		List<Object> data = reader.readIncomeResults();
+		return data;
 	}
 
 	/** 

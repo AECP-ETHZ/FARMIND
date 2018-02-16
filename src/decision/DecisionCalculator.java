@@ -186,10 +186,11 @@ public class DecisionCalculator {
 			}
 		}
 		
-		if (cluster.size() > 20) {											   // limit returned cluster to 20 elements
-			for (int i = 0; i< 20; i++) {
+		if (cluster.size() > 6) {											   // limit returned cluster to 20 elements
+			for (int i = 0; i< 6; i++) {
 				cluster_smaller.add(cluster.get(cluster.size() - i - 1));
 			}
+			return cluster_smaller;
 		}
 		
 		return cluster;

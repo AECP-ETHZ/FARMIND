@@ -40,6 +40,45 @@ public class ReadParameters {
 	public String SocialNetworkFile = "./data/social_networks.csv";
 	public String ActivityFile = "./data/activities.csv";
 	
+	/** 
+	 * Read the income data from 
+	 * @return
+	 */
+	public List<Object> readIncomeResults() {
+		List<Double> incomes = new ArrayList<Double>();
+		List<Activity> strat = new ArrayList<Activity>();
+		List<Object> ret = new ArrayList<Object>();
+		BufferedReader Buffer = null;	 									   // read input file
+		String Line;
+		ArrayList<String> dataArray;
+		List<Activity> activities = getActivityList();
+
+		try {
+			Buffer = new BufferedReader(new FileReader("./data/Grossmargin_P4,00.csv"));
+			Line = Buffer.readLine();
+			while ((Line = Buffer.readLine()) != null) {                       
+				dataArray = CSVtoArrayList(Line);						   // Read farm's parameters line by line
+				incomes.add( Double.parseDouble(dataArray.get(1)) );
+				
+				for(int i = 0; i < activities.size(); i++) {
+					if (activities.get(i).getName().equals(dataArray.get(2) )) {
+						int ID = activities.get(i).getID();
+						Activity p = new Activity(ID, dataArray.get(2)); 
+						strat.add(p);
+					}
+				}
+				
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}									       // first line to throw away
+
+		ret.add(incomes);
+		ret.add(strat);
+		return ret;
+	}
+	
 	/**
 	 * Each farm in the list contains a social network, the associated people, and preferred activities
 	 * The satisfaction and uncertainty are generated initially

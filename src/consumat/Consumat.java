@@ -1,6 +1,7 @@
 package consumat;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,7 +23,6 @@ import agent.Farm;
  */
 public class Consumat {
 
-	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
 		
 		double max_parameter_length = getParameterCount();
@@ -44,12 +44,16 @@ public class Consumat {
 			initializeRegionIncomeChangePercent(allFarms);										   // only take into account the preset values
 			
 			if( (parameterSet % Math.round((max_parameter_length/10))) == 0) {					   // output status
-				System.out.print("|");
+				//System.out.print("|");
 			}
 			
-			for (int year = 1; year <= 3; year++) {											   // run simulation for a set of years, getting updated income and products	
+			for (int year = 1; year <= 4; year++) {											   // run simulation for a set of years, getting updated income and products	
 				int farmIncomeCounter = 0;
 				NormalDistribution normal = new NormalDistribution(50000.0, 10000.0);			   // distribution of possible incomes
+				System.out.println(String.format("year %d", year));
+				
+				File f = new File("p_allowedStrat.csv");
+				if (f.exists()) {f.delete();}
 				
 				for (Farm farm : allFarms) {
 					if (year == 1) {															   // ignore first year as we already have that initialized with farmdata input file
@@ -72,20 +76,40 @@ public class Consumat {
 					} 
 					farmIncomeCounter++;
 					decision.appendDecisionFile(FileName);
-					decision.writeGamsFile();
+					decision.appendGamsFile();
 					farm.updateExperiencePlusAge();                              				   // each time period update experience
 				}
-				List<Object> data = readIncome(allFarms.size());
-				incomes = (List<Double>) data.get(0);
-				for (Farm farm : allFarms) {
-					farm.setCurrentActivites((List<Activity>) data.get(1));
-				}
-
+				
+				incomes = RunGams(allFarms, year);
+				
 				updateRegionIncomeChangePercent(allFarms,incomes);						   // after time step update the percent change for population
 			}
 		}
-		System.out.println("]");
+		//System.out.println("]");
 		System.out.println("Complete");
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static List<Double> RunGams(List<Farm> allFarms, int year) {
+		Runtime runtime = Runtime.getRuntime();
+		List<Double> incomes = new ArrayList<Double>();										   // list of all farm incomes
+		
+		File f = new File("Grossmargin_P4,00.csv");
+		f.delete();
+		
+		try {
+			runtime.exec("cmd /C" + "run_gams.bat");
+			System.out.println("Running gams model");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		List<Object> data = readIncome(allFarms.size());
+		incomes = (List<Double>) data.get(0);
+		for (Farm farm : allFarms) {
+			farm.setCurrentActivites((List<Activity>) data.get(1));
+		}
+		
+		return incomes;
 	}
 	
 	/**

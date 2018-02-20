@@ -1,6 +1,7 @@
 package reader;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,9 +53,17 @@ public class ReadParameters {
 		String Line;
 		ArrayList<String> dataArray;
 		List<Activity> activities = getActivityList();
+		
+		File f = new File("Grossmargin_P4,00.csv");
+		while (!f.exists()) {try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}}
 
 		try {
-			Buffer = new BufferedReader(new FileReader("./data/Grossmargin_P4,00.csv"));
+			Buffer = new BufferedReader(new FileReader("Grossmargin_P4,00.csv"));
+			System.out.println("read margin values");
 			Line = Buffer.readLine();
 			while ((Line = Buffer.readLine()) != null) {                       
 				dataArray = CSVtoArrayList(Line);						   // Read farm's parameters line by line
@@ -73,6 +82,12 @@ public class ReadParameters {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}									       // first line to throw away
+
+		try {
+			Buffer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		ret.add(incomes);
 		ret.add(strat);

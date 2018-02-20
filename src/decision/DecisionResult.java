@@ -49,14 +49,15 @@ public class DecisionResult {
 		setAllActivity(allActivities);
 	}
 
-	public void writeGamsFile() {
+	public void appendGamsFile() {
 		String PATH = "./output";
 		File directory = new File(PATH);
 		if(!directory.exists()) {
 			directory.mkdir();
 		}
 		
-		File file = new File("./output/p_allowedStrat.csv");
+		File file = new File("p_allowedStrat.csv");
+
 		FileWriter fw = null;
 		try {
 			fw = new FileWriter(file,true);
@@ -134,6 +135,7 @@ public class DecisionResult {
 		
 		for(int i = 0; i < this.currentActivity.size(); i++) {
 			writer.print(String.format("%d,",  1 + this.allActivity.indexOf(this.currentActivity.get(i).getName() )) );
+			System.out.println(this.farmId + " " + this.currentActivity.get(i).getName());
 		}
 		
 		for(int i = 0; i < 3 - this.currentActivity.size(); i++) {

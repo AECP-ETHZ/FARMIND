@@ -40,7 +40,7 @@ public class DecisionCalculator {
 	 * @param farms - list of all farms in the region for network information
 	 */
 	public DecisionCalculator(Farm farm, List<Farm> farms) {
-		double m = farm.getPreferences().getProductName().size();		       // number of products in system
+		double m = farm.getPreferences().getActivityName().size();		       // number of products in system
 		this.L = getFarmExperienceVector(farm,m);
 		this.S = getNetworkExperienceAverageVector(farm, m, farms);
 		this.P = getFarmPreferenceVector(farm,m);
@@ -163,7 +163,7 @@ public class DecisionCalculator {
 		int index = 0;
 		for (int i = 0; i< cluster.size(); i++) {							   // turn ranking values into product list
 			index = original.indexOf(cluster.get(i));
-			list.add(this.farm.getPreferences().getProductName().get(index));
+			list.add(this.farm.getPreferences().getActivityName().get(index));
 			original.set(index, -1.0);                                         // duplicate values exist in array, so 'remove' when used to get next duplicate value
 		}
 		
@@ -318,7 +318,7 @@ public class DecisionCalculator {
 		double q;															   // calculated score
 		
 		for (int i = 0; i < m; i++) {
-			time = farm.getExperience().getFarmProductValue(farm.getFarmName(), farm.getPreferences().getProductName().get(i) );
+			time = farm.getExperience().getFarmProductValue(farm.getFarmName(), farm.getPreferences().getActivityName().get(i) );
 			q = 1 / ( 1 +  Math.exp( (-k*time) ));
 			Q.add(q);
 		}

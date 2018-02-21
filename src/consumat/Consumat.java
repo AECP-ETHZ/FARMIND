@@ -22,77 +22,89 @@ import agent.Farm;
  *
  */
 public class Consumat {
-
+	static long line_counter = 0;
+	static int file_counter = 1;
+	
 	public static void main(String[] args) {
 		
 		double max_parameter_length = getParameterCount();
-		String origFileName = createFileName();
-		String FileName = origFileName + String.format("%d",0);
-		long line_counter = 0;
-		int file_counter = 1;
 		
 		System.out.println("Starting Model");
-		System.out.print("[");
 		
 		max_parameter_length = 2;
 		for (double parameterSet = 1; parameterSet < max_parameter_length; parameterSet++) {	   // sensitivity testing, loop through all parameters
 			ReadParameters reader = new ReadParameters();										   // read all input data files
 			List<Farm>     allFarms = reader.getFarms((int)parameterSet);					       // build set of farms with new parameters
-			double income = 0;																	   // specific income of farm 
-			double probability = 0;																   // probability of income occurring
-			List<Double> incomes = new ArrayList<Double>();										   // list of all farm incomes
+			List<Double> simulatedIncomeForFarms = new ArrayList<Double>();						   // list of all farm incomes
+			
 			initializeRegionIncomeChangePercent(allFarms);										   // only take into account the preset values
 			
-			if( (parameterSet % Math.round((max_parameter_length/10))) == 0) {					   // output status
-				//System.out.print("|");
-			}
-			
-			for (int year = 1; year <= 4; year++) {											   // run simulation for a set of years, getting updated income and products	
-				int farmIncomeCounter = 0;
-				NormalDistribution normal = new NormalDistribution(50000.0, 10000.0);			   // distribution of possible incomes
-				System.out.println(String.format("year %d", year));
-				
-				File f = new File("p_allowedStrat.csv");
+			for (int year = 1; year <= 4; year++) {											       // run simulation for a set of years, getting updated income and products	
+				System.out.println(String.format("year %d", year));				
+				File f = new File("p_allowedStrat.csv");										   // delete last time period's simulation file
 				if (f.exists()) {f.delete();}
 				
-				for (Farm farm : allFarms) {
-					if (year == 1) {															   // ignore first year as we already have that initialized with farmdata input file
-						income = -1;
-						probability = 0.5;
-					} else {
-						income = incomes.get(farmIncomeCounter)*100;
-						probability = normal.cumulativeProbability(income);
-					}
-					
-					farm.updateFarmData(allFarms, income, probability);
-					List<String> actionSet = farm.makeDecision(allFarms);             
-					DecisionResult decision = new DecisionResult(farm.getPreferences().getProductName(), farm.getFarmName(), year, farm.getParameters(), farm.getStrategy(), farm.getIncomeHistory().get(0), farm.getCurrentActivities() , actionSet);
-
-					line_counter++;
-					if (line_counter > 999999) {
-						FileName = origFileName + String.format("%d",file_counter);
-						file_counter++;
-						line_counter = 0;
-					} 
-					farmIncomeCounter++;
-					decision.appendDecisionFile(FileName);
-					decision.appendGamsFile();
-					farm.updateExperiencePlusAge();                              				   // each time period update experience
-				}
-				
-				incomes = RunGams(allFarms, year);
-				
-				updateRegionIncomeChangePercent(allFarms,incomes);						   // after time step update the percent change for population
+				CreateGamsFile(allFarms, year, simulatedIncomeForFarms);
+				RunGams(allFarms);
+				simulatedIncomeForFarms = readGamsResults(allFarms);
+				updateRegionIncomeChangePercent(allFarms,simulatedIncomeForFarms);				   // after time step update the percent change for population
 			}
 		}
-		//System.out.println("]");
+
 		System.out.println("Complete");
 	}
 	
-	@SuppressWarnings("unchecked")
-	private static List<Double> RunGams(List<Farm> allFarms, int year) {
+	private static void CreateGamsFile(List<Farm> allFarms, int year, List<Double> simulatedIncomeForFarms) {
+		double income = 0;																	   // specific income of farm 
+		double probability = 0;																   // probability of income occurring
+		NormalDistribution normal = new NormalDistribution(50000.0, 10000.0);			       // distribution of possible incomes
+		int farmIndex = 0;
+		String origFileName = createFileName();
+		String FileName = origFileName + String.format("%d",0);
+		
+		for (Farm farm : allFarms) {
+			if (year == 1) {															   // ignore first year as we already have that initialized with farmdata input file
+				income = -1;
+				probability = 0.5;
+			} else {
+				income = simulatedIncomeForFarms.get(farmIndex)*100;
+				probability = normal.cumulativeProbability(income);
+			}
+			
+			farm.updateFarmData(allFarms, income, probability);
+			List<String> possibleActivitySet = farm.makeDecision(allFarms);      
+			
+			System.out.print(farm.getFarmName() + " current activity: ");
+			for (Activity act: farm.getCurrentActivities() ) System.out.print(act.getName() + " ");
+			System.out.print("\n");
+			
+			System.out.print(farm.getFarmName() + " possible activity: ");
+			for (String act: possibleActivitySet) System.out.print(act + " ");
+			System.out.print("\n");
+			
+			DecisionResult decision = new DecisionResult(farm.getPreferences().getActivityName(), farm.getFarmName(), year, farm.getParameters(), farm.getStrategy(), farm.getIncomeHistory().get(0), farm.getCurrentActivities(), possibleActivitySet);
+
+			line_counter++;
+			if (line_counter > 999999) {
+				FileName = origFileName + String.format("%d",file_counter);
+				file_counter++;
+				line_counter = 0;
+			} 
+			decision.appendDecisionFile(FileName);
+			decision.appendGamsFile();													   // create a file 'p_allowedStrat' which contains the gams options for each farm
+			farm.updateExperiencePlusAge();                              				   // each time period update experience
+			farmIndex++;
+		}
+		
+		System.out.println("Created Gams simulation file");
+	}
+	
+	/** 
+	 * Runs gams simulation based on input file created while looping through all farms.
+	 * @param allFarms list of all farms in system
+	 */
+	private static void RunGams(List<Farm> allFarms) {
 		Runtime runtime = Runtime.getRuntime();
-		List<Double> incomes = new ArrayList<Double>();										   // list of all farm incomes
 		
 		File f = new File("Grossmargin_P4,00.csv");
 		f.delete();
@@ -103,8 +115,20 @@ public class Consumat {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/** 
+	 * Read gams file and set the income and activities based on that file
+	 * @param allFarms list of all farms in system
+	 * @return incomes is a list of all incomes for each farm
+	 */
+	@SuppressWarnings("unchecked")
+	private static List<Double> readGamsResults(List<Farm> allFarms) {
+		List<Double> incomes = new ArrayList<Double>();										   // list of all farm incomes
+				
 		List<Object> data = readIncome(allFarms.size());
 		incomes = (List<Double>) data.get(0);
+		
 		for (Farm farm : allFarms) {
 			farm.setCurrentActivites((List<Activity>) data.get(1));
 		}

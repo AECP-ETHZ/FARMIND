@@ -39,7 +39,7 @@ public class DecisionCalculatorTests {
 	public void testLearningVector() {
 		Farm farm = allFarms.get(0);
 		DecisionCalculator cal = new DecisionCalculator(farm, allFarms);
-		double m = farm.getPreferences().getProductName().size();		       // number of products in system
+		double m = farm.getPreferences().getActivityName().size();		       // number of products in system
 
 		List<Double> Q = new ArrayList<Double>();                              // learning by doing vector for specific farm
 		int time = 0;														   // years of experience
@@ -47,7 +47,7 @@ public class DecisionCalculatorTests {
 		double q;															   // calculated score
 		
 		for (int i = 0; i < m; i++) {
-			time = farm.getExperience().getFarmProductValue(farm.getFarmName(), farm.getPreferences().getProductName().get(i) );
+			time = farm.getExperience().getFarmProductValue(farm.getFarmName(), farm.getPreferences().getActivityName().get(i) );
 			q = 1 / ( 1 +  Math.exp( (-k*time) ));
 			Q.add(q);
 		}
@@ -63,7 +63,7 @@ public class DecisionCalculatorTests {
 	public void testPreferenceVector() {
 		Farm farm = allFarms.get(0);
 		DecisionCalculator cal = new DecisionCalculator(farm, allFarms);
-		double m = farm.getPreferences().getProductName().size();		       // number of products in system
+		double m = farm.getPreferences().getActivityName().size();		       // number of products in system
 		List<Double> P = new ArrayList<Double>();							   // rank of all product preferences for specific farm
 		Integer[] R;                           				 			   	   // Product preference vector 
 

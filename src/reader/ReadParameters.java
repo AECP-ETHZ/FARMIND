@@ -56,7 +56,7 @@ public class ReadParameters {
 		
 		File f = new File("Grossmargin_P4,00.csv");
 		while (!f.exists()) {try {
-			Thread.sleep(1000);
+			Thread.sleep(1000);												   // wait until simulation finishes running
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}}

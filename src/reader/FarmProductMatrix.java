@@ -48,7 +48,7 @@ public class FarmProductMatrix {
 		productMap.replace(FarmID, array);
 	}
 	
-	public List<String> getProductName() {
+	public List<String> getActivityName() {
 		return productName;
 	}
 

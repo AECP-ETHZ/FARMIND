@@ -49,40 +49,36 @@ public class DecisionResult {
 		setAllActivity(allActivities);
 	}
 
+	/** 
+	 * Create a file that contains the parameters required to run the gams simulation
+	 */
 	public void appendGamsFile() {
-		String PATH = "./output";
-		File directory = new File(PATH);
-		if(!directory.exists()) {
-			directory.mkdir();
-		}
-		
 		File file = new File("p_allowedStrat.csv");
 
-		FileWriter fw = null;
 		try {
-			fw = new FileWriter(file,true);
+			FileWriter fw = new FileWriter(file,true);
+			BufferedWriter bw = new BufferedWriter(fw);
+			PrintWriter writer = new PrintWriter(bw);
+			if (file.length() == 0) {
+				writer.println("gn,spre,normal,GlyBan");
+			}
+			
+			int gly = 0;
+			for(int i = 1; i < 22; i++) {
+				if (i == 17) i = i+2;
+				String act = String.format("spre%d", i);
+				if(possibleActivity.contains(act)) {
+					gly = 1;
+				} else {gly = 0;}
+				if (i == 1) gly = 1;	
+				
+				writer.println(String.format("%s,spre%d,1,%d", farmId, i, gly));
+			}
+			writer.close();
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		BufferedWriter bw = new BufferedWriter(fw);
-		PrintWriter writer = new PrintWriter(bw);
-		
-		if (file.length() == 0) {
-			writer.println("gn,spre,normal,GlyBan");
-		}
-		
-		int gly = 0;
-		for(int i = 1; i < 22; i++) {
-			if (i == 17) i = i+2;
-			String act = String.format("spre%d", i);
-			if(possibleActivity.contains(act)) {
-				gly = 1;
-			} else {gly = 0;}
-			if (i == 1) gly = 1;	
-			
-			writer.println(String.format("%s,spre%d,1,%d", farmId, i, gly));
-		}
-		writer.close();
 	}
 	
 	/** 
@@ -135,7 +131,6 @@ public class DecisionResult {
 		
 		for(int i = 0; i < this.currentActivity.size(); i++) {
 			writer.print(String.format("%d,",  1 + this.allActivity.indexOf(this.currentActivity.get(i).getName() )) );
-			System.out.println(this.farmId + " " + this.currentActivity.get(i).getName());
 		}
 		
 		for(int i = 0; i < 3 - this.currentActivity.size(); i++) {

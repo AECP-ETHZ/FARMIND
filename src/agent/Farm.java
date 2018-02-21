@@ -277,10 +277,10 @@ public class Farm {
 			productNames.add(this.getCurrentActivities().get(i).getName());
 		}
 		
-		for (int i = 0; i< this.experience.getProductName().size(); i++ ) {
-			int value = this.experience.getFarmProductValue(farmName, this.experience.getProductName().get(i));
+		for (int i = 0; i< this.experience.getActivityName().size(); i++ ) {
+			int value = this.experience.getFarmProductValue(farmName, this.experience.getActivityName().get(i));
 			
-			if (productNames.contains(this.experience.getProductName().get(i))) {
+			if (productNames.contains(this.experience.getActivityName().get(i))) {
 				value += 1;
 			}
 			else {
@@ -290,7 +290,7 @@ public class Farm {
 			if(value > this.getMemory()) value = this.getMemory();
 			if(value < 0) value = 0;
 			
-			this.experience.setFarmProductValue(farmName, this.experience.getProductName().get(i), value);
+			this.experience.setFarmProductValue(farmName, this.experience.getActivityName().get(i), value);
 		}	
 	}
 	/**

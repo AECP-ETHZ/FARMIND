@@ -28,7 +28,7 @@ public class DecisionResult {
 	private List<String> possibleActivity;
 	
 	/** 
-	 * 
+	 * Constructor for the Decision Result
 	 * @param allActivities	full set of activities
 	 * @param farmId		ID of the farm
 	 * @param possibleActivities		full product set

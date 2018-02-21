@@ -42,8 +42,8 @@ public class ReadParameters {
 	public String ActivityFile = "./data/activities.csv";
 	
 	/** 
-	 * Read the income data from 
-	 * @return
+	 * Read the income and activity data from the gams output simulation file
+	 * @return List that contains the income for all farms, and the activity for all farms (two lists)
 	 */
 	public List<Object> readIncomeResults() {
 		List<Double> incomes = new ArrayList<Double>();

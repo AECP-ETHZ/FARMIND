@@ -104,7 +104,7 @@ public class DecisionResult {
 		
 		if (file.length() == 0) {
 			writer.println("year,name,alpha_plus,alpha_minus,lambda,phi_plus,phi_minus,a,b,k,strategy,possible_action1,"
-					+ "possible_action2,possible_action3,possible_action4,possible_action5,possible_action6,income,current_action1,current_action2,current_action3");
+					+ "possible_action2,possible_action3,possible_action4,possible_action5,possible_action6,income,current_action1");
 		}
 		
 		writer.print(String.format("%s,",this.year));
@@ -120,21 +120,19 @@ public class DecisionResult {
 		writer.print(String.format("%s,",this.strategy) );
 		
 		for(int i = 0; i < this.possibleActivity.size(); i++) {
-			writer.print(String.format("%d,",  1 + this.allActivity.indexOf( this.possibleActivity.get(i)) ) );
+			//writer.print(String.format("%d,",  1 + this.allActivity.indexOf( this.possibleActivity.get(i)) ) );
+			writer.print(String.format("%s,",   this.possibleActivity.get(i)) );
 		}
 		
 		for(int i = 0; i < 6 - this.possibleActivity.size(); i++) {
 			writer.print("NA," );
 		}
 
-		writer.print(String.format("%s",this.income ) );
+		writer.print(String.format("%s,",this.income ) );
 		
 		for(int i = 0; i < this.currentActivity.size(); i++) {
-			writer.print(String.format("%d,",  1 + this.allActivity.indexOf(this.currentActivity.get(i).getName() )) );
-		}
-		
-		for(int i = 0; i < 3 - this.currentActivity.size(); i++) {
-			writer.print("NA," );
+			//writer.print(String.format("%d,",  1 + this.allActivity.indexOf(this.currentActivity.get(i).getName() )) );
+			writer.print(String.format("%s,",  this.currentActivity.get(i).getName()) );
 		}
 		
 		writer.print("\n");

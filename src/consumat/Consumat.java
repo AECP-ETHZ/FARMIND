@@ -24,8 +24,8 @@ import agent.Farm;
 public class Consumat {
 	static long line_counter = 0;
 	static int file_counter = 1;
-	static String origFileName = createFileName();										               // file name for logging
-	static String FileName = origFileName + String.format("%d",0);									   // given enough lines in the log file, we need to start a new file
+	static String origFileName = createFileName();										           // file name for logging
+	static String FileName = origFileName + String.format("%d",0);								   // given enough lines in the log file, we need to start a new file
 		
 	public static void main(String[] args) {
 		double max_parameter_length = getParameterCount();
@@ -110,13 +110,13 @@ public class Consumat {
 	 * @param allFarms list of all farms in system
 	 */
 	private static void RunGams(List<Farm> allFarms) {
-		Runtime runtime = Runtime.getRuntime();
+		Runtime runtime = Runtime.getRuntime();								   // java runtime to run commands
 		
 		File f = new File("Grossmargin_P4,00.csv");							   // delete previous results file before new run
 		f.delete();
 		
 		try {
-			runtime.exec("cmd /C" + "run_gams.bat");
+			runtime.exec("cmd /C" + "run_gams.bat");						   // actually run command
 			System.out.println("Running gams model");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -151,7 +151,7 @@ public class Consumat {
 	 */
 	private static List<Object> readIncome() {													 
 		ReadParameters reader = new ReadParameters();										   // read all input data files
-		List<Object> data = reader.readIncomeResults();
+		List<Object> data = reader.readIncomeResults();									
 		return data;
 	}
 

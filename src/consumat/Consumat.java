@@ -24,12 +24,14 @@ import agent.Farm;
 public class Consumat {
 	static long line_counter = 0;
 	static int file_counter = 1;
-	
+	static String origFileName = createFileName();										               // file name for logging
+	static String FileName = origFileName + String.format("%d",0);									   // given enough lines in the log file, we need to start a new file
+		
 	public static void main(String[] args) {
 		double max_parameter_length = getParameterCount();
 		System.out.println("Starting Model");
 		
-		max_parameter_length = 2;
+		//max_parameter_length = 2;
 		for (double parameterSet = 1; parameterSet < max_parameter_length; parameterSet++) {	   // sensitivity testing, loop through all parameters
 			ReadParameters reader = new ReadParameters();										   // read all input data files
 			List<Farm>     allFarms = reader.getFarms((int)parameterSet);					       // build set of farms with new parameters
@@ -62,9 +64,7 @@ public class Consumat {
 		double probability = 0;																       // probability of income occurring
 		NormalDistribution normal = new NormalDistribution(50000.0, 10000.0);			           // distribution of possible incomes
 		int farmIndex = 0;																		   // index of specific farm in list
-		String origFileName = createFileName();										               // file name for logging
-		String FileName = origFileName + String.format("%d",0);									   // given enough lines in the log file, we need to start a new file
-		
+
 		File f = new File("p_allowedStrat.csv");										           // delete last time period's simulation file
 		if (f.exists()) {f.delete();}
 		
@@ -112,7 +112,7 @@ public class Consumat {
 	private static void RunGams(List<Farm> allFarms) {
 		Runtime runtime = Runtime.getRuntime();
 		
-		File f = new File("Grossmargin_P4,00.csv");
+		File f = new File("Grossmargin_P4,00.csv");							   // delete previous results file before new run
 		f.delete();
 		
 		try {
@@ -130,10 +130,10 @@ public class Consumat {
 	 */
 	@SuppressWarnings("unchecked")
 	private static List<Double> readGamsResults(List<Farm> allFarms) {
-		List<Double> incomes = new ArrayList<Double>();										   // list of all farm incomes
-		List<Activity> activity = new ArrayList<Activity>();
+		List<Double> incomes = new ArrayList<Double>();						   // list of all farm incomes
+		List<Activity> activity = new ArrayList<Activity>();	   	 	       // list of all farm activities selected by LP model
 		
-		List<Object> data = readIncome(allFarms.size());
+		List<Object> data = readIncome();            					       // read all results data
 		incomes = (List<Double>) data.get(0);
 		activity = (List<Activity>) data.get(1);
 		
@@ -147,17 +147,16 @@ public class Consumat {
 	
 	/**
 	 * Automatically generate list of income values for each farm
-	 * @param numberOfFarms is number of farms in income list
 	 * @return list of incomes and actions
 	 */
-	private static List<Object> readIncome(int numberOfFarms) {													 
+	private static List<Object> readIncome() {													 
 		ReadParameters reader = new ReadParameters();										   // read all input data files
 		List<Object> data = reader.readIncomeResults();
 		return data;
 	}
 
 	/** 
-	 * Initialize regional income change for this year based on initial income data
+	 * Initialize regional income change for this year based on initial income data.
 	 * @param allFarms is list of all farms in region
 	 */
 	private static void initializeRegionIncomeChangePercent(List<Farm> allFarms) {

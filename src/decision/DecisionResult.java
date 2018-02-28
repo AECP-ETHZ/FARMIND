@@ -94,7 +94,7 @@ public class DecisionResult {
 				String act = String.format("spost%d", i);
 				if(possibleActivity.contains(act)) {
 					gly = 1;
-				} else {gly = 0;}
+				} else {gly = 1;}
 				if (i == 1) gly = 1;	
 				
 				writer.println(String.format("%s,spost%d,1,%d", farmId, i, gly));

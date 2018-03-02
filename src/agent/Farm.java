@@ -119,7 +119,7 @@ public class Farm {
 			//System.out.println("EXIT");
 			this.strategy = 1;
 		}
-		else if (this.Uncertainty >= this.Tolerance) {
+		else if (this.Uncertainty >= this.Tolerance) {  // set to be OR with income uncertainty 
 			if (this.Satisfaction >= 0) {
 				//System.out.println("IMITATION");
 				this.strategy = 2;
@@ -144,21 +144,7 @@ public class Farm {
 				fuzzyActionSet = cal.getOptimizeProducts();
 			}
 		}
-
-		/*
-		// this is to build a list of product objects - not just names
-		for (int k = 0; k < minProductSet.size(); k++) {
-			for(int i = 0; i<allActivities.size(); i++) {
-				if (allActivities.get(i).getName().equals(minProductSet.get(k) )) {
-					int ID = allActivities.get(i).getID();
-					Activity p = new Activity(ID, minProductSet.get(k)); 
-					current.add(p);
-				}
-			}
-		}		
 		
-		this.setCurrentActivites(current);                                      // update current products for the farm instance
-		*/
 		return fuzzyActionSet;
 	}
 	

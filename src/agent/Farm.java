@@ -83,7 +83,7 @@ public class Farm {
 	 * Alternative constructor
 	 */
 	public Farm() {
-		// TODO Auto-generated constructor stub
+		// used for testing
 	}
 	/** 
 	 * After the gams model has returned the simulation results. We update the individual farms with the new income values. 

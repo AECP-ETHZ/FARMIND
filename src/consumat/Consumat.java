@@ -119,7 +119,8 @@ public class Consumat {
 		
 		try {
 			runtime.exec("cmd /C" + "run_gams.bat");						   // actually run command
-			System.out.println("Running gams model");
+			System.out.println("Starting gams model");
+			System.out.println("Waiting for gams results to be generated");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

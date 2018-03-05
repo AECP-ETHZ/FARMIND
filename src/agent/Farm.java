@@ -86,7 +86,9 @@ public class Farm {
 		// TODO Auto-generated constructor stub
 	}
 	/** 
-	 * Update all parameters of the farm data
+	 * After the gams model has returned the simulation results. We update the individual farms with the new income values. 
+	 * This allows the next stage of the ABM to run - we make a new activity set selection based on the ISB and the satisfaction levels. 
+	 * 
 	 * @param allFarms list of all the input farms
 	 * @param income input value of farm
 	 * @param probability of an income occurring in our distribution
@@ -103,47 +105,39 @@ public class Farm {
 		updateISB_Tolerances();      
 	}
 	/** 
-	 * create product selection calculator for this farm based on consumat model, decide which of the five decisions the farm will pursue
-	 * 
-	 * Fuzzy logic is used for optimization and imitation decisions to select a set of products to pursue. 
-	 * 
-	 * For the sensitivity testing phase, we need to 'fake' a linear programming model so we select half of the set to return as our final decision. 
-	 * We keep track of both sets for use during the sensitivity analysis
+	 * When each agent makes a decision about which activity set to pursue, we take into account the neighboring farms, the income from last year, and the current activities. 
+	 * We use this information to decide which of the four decisions the agent will pursue: exit, imitation, repetition, or optimization. 
+	 * <br>
+	 * Fuzzy logic is used for the optimization and imitation decisions to select a set of possible activities. These activities are then passed to a linear optimizer to get the best option. 
 	 * 
 	 * @param allFarms full list of all farms in system
 	 * @return List containing the full fuzzy logic selection 
 	 */
 	public List<String> makeDecision(List<Farm> allFarms) {
 	    List<String> fuzzyActionSet = new ArrayList<String>();				   // list of names of products from fuzzy logic
-		//List<Activity> current = new ArrayList<Activity>();					   // current activities (objects - not names) in system 
 		DecisionCalculator cal = new DecisionCalculator(this, allFarms);       // calculator for the product selection
 
 		if ((head.getAge() > 650)) {
-			//System.out.println("EXIT");
-			this.strategy = 1;
+			this.strategy = 1; //EXIT
 		}
 		else if ( (this.Dissimilarity_ISB >= this.Dissimilarity_Tolerance) || (this.Income_ISB >= this.Income_Tolerance) ) {  
 			if (this.Satisfaction >= 0) {
-				//System.out.println("IMITATION");
-				this.strategy = 2;
+				this.strategy = 2; //IMITATION
 				fuzzyActionSet = cal.getImitationProducts();
 			}
 			else {
-				//System.out.println("EXIT");
-				this.strategy = 1;
+				this.strategy = 1; //EXIT
 			}
 		}
 		else {
 			if (this.Satisfaction >= 0) {
-				//System.out.println("REPETITION");
-				this.strategy = 4;
+				this.strategy = 4; //REPETITION
 				for (int i = 0; i < this.getCurrentActivities().size(); i++) {
 					fuzzyActionSet.add(this.getCurrentActivities().get(i).getName());
 				} 
 			}
 			else {
-				//System.out.println("OPTIMIZATION");
-				this.strategy = 3;
+				this.strategy = 3; //OPTIMIZATION
 				fuzzyActionSet = cal.getOptimizeProducts();
 			}
 		}

@@ -30,9 +30,10 @@ public class ReadParameters {
 	public static final int AGE = 3;
 	public static final int EDUCATION = 4;
 	public static final int MEMORY = 5;
-	public static final int ENTREPRENEURSHIP = 6;
-	public static final int INCOME_INDEX = 10;
-	public static final int START_ACTION_INDEX = 7;					       // the input spreadsheet starts the actions at column 12
+	public static final int DISS_TOLERANCE = 6;
+	public static final int INCOME_TOLERANCE = 7;
+	public static final int START_ACTION_INDEX = 8;					       // the input spreadsheet starts the actions at column 12
+	public static final int INCOME_INDEX = 11;
 
 	public String DataFile = "./data/farm_data.csv";					       // allow external function to set data files for testing
 	public String ParameterFile = "./data/parameters.csv";
@@ -96,7 +97,7 @@ public class ReadParameters {
 	
 	/**
 	 * Each farm in the list contains a social network, the associated people, and preferred activities
-	 * The satisfaction and uncertainty are generated initially
+	 * The satisfaction and Information Seeking Behavior (ISB) are generated initially
 	 * @return List of all farm objects from the input csv file
 	 * @param parameterSet indicates which row (or set) of parameters should be used for the configuration
 	 */
@@ -108,7 +109,8 @@ public class ReadParameters {
 		int age = 0;
 		int education = 0;
 		int memory = 0;
-		double tolerance = 0;
+		double diss_tolerance = 0;
+		double income_tolerance =0;
 		BufferedReader Buffer = null;	 									   // read input file
 		int farm_count_index = 0;                                              // index is used to set the actual farm id value
 		
@@ -139,7 +141,8 @@ public class ReadParameters {
 				age = currentYear - Integer.parseInt( farmParameters.get(AGE));
 				education = Integer.parseInt( farmParameters.get(EDUCATION) );
 				memory = Integer.parseInt( farmParameters.get(MEMORY));
-				tolerance = Double.parseDouble( farmParameters.get(ENTREPRENEURSHIP));
+				diss_tolerance = Double.parseDouble( farmParameters.get(DISS_TOLERANCE));
+				income_tolerance = Double.parseDouble( farmParameters.get(INCOME_TOLERANCE));
 				
 				currentActivities.clear();
 				for (int k = START_ACTION_INDEX; k < farmParameters.size(); k++) {
@@ -161,7 +164,7 @@ public class ReadParameters {
 				personalIncomeAverage = mean(avgIncome);
 
 				Person farmHead = new Person(age, education, memory);        
-				Farm farm = new Farm(name, location, network.get(farm_count_index), income, personalIncomeAverage, experience, pref, activities, tolerance, currentActivities, farmHead, parameters);
+				Farm farm = new Farm(name, location, network.get(farm_count_index), income, personalIncomeAverage, experience, pref, activities, diss_tolerance, income_tolerance, currentActivities, farmHead, parameters);
 				
 				farms.add(farm);
 				farm_count_index++;	
@@ -207,7 +210,8 @@ public class ReadParameters {
 			parameters.setA(Double.parseDouble(matrixRow.get(6)) ); 
 			parameters.setB(Double.parseDouble(matrixRow.get(7)) ); 
 			parameters.setK(Double.parseDouble(matrixRow.get(8)) ); 
-			parameters.setName(matrixRow.get(9));
+			parameters.setM(Double.parseDouble(matrixRow.get(9)) ); 
+			parameters.setName(matrixRow.get(10));
 				
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -29,9 +29,10 @@ public class Farm {
 	private double Satisfaction;											   // Satisfaction level of farm
 	private List<Double> IncomeHistory;										   // list of previous income values
 	private double Aspiration;												   // Aspiration level of the farm
-	private double Uncertainty;												   // Information Seeking level
-	private double IncomeUncertainty;										   // Information seeking level based on income change
-	private double Tolerance;												   // Individual level of tolerance to uncertain future
+	private double Dissimilarity_ISB;										   // Dissimilarity Information Seeking Behavior (ISB)
+	private double Income_ISB;										           // Income based Information Seeking Behavior (ISB)
+	private double Dissimilarity_Tolerance;									   // Individual level of tolerance to differences in activities on the network
+	private double Income_Tolerance;									       // Individual level of tolerance to differences in personal vs regional income changes
 	private Graph<String, DefaultEdge> network; 							   // Social network of farmers
 	private FarmProductMatrix experience;									   // experience (in years) of the each farm for each activity
 	private FarmProductMatrix preferences;									   // preference (between 1 to 5) of each farm for each activity
@@ -53,14 +54,15 @@ public class Farm {
 	 * @param farmingExperience	shared experience matrix
 	 * @param preferences			activity preference
 	 * @param activities	full activity list
-	 * @param tolerance	tolerance to uncertainty
+	 * @param diss_tolerance	tolerance to dissimilarity
+	 * @param income_tolerance  tolerance to differences in income
 	 * @param currentActivities	list of current farm activities during initalization
 	 * @param farmHead	person object to lead farm
 	 * @param parameters	simulation parameters
 	 */
 	public Farm(String name, Location location, Graph<String, DefaultEdge> socialNetwork, List<Double> incomeHistory,
 			double personalIncomeAverage, FarmProductMatrix farmingExperience, FarmProductMatrix preferences,
-			List<Activity> activities, double tolerance, List<Activity> currentActivities, Person farmHead,
+			List<Activity> activities, double diss_tolerance, double income_tolerance, List<Activity> currentActivities, Person farmHead,
 			Parameters parameters) {
 
 		this.setFarmName(name);
@@ -71,7 +73,8 @@ public class Farm {
 		this.setExperience(farmingExperience);
 		this.setPreferences(preferences);
 		this.setActivities(activities);
-		this.setTolerance(tolerance);
+		this.setDissimilarity_Tolerance(diss_tolerance);
+		this.setIncome_Tolerance(income_tolerance);
 		this.setCurrentActivites(currentActivities);
 		this.setHead(farmHead);
 		this.setParameters(parameters);
@@ -93,11 +96,11 @@ public class Farm {
 	    updateIncomeAverage();
 	    setIncomeProbability(probability);
 
-	    updateIncomeUncertainty();
 	    updateAspiration();
 	    updateSatisfaction();									
-		updateUncertainty(allFarms);
-		updateTolerance();      
+	    updateIncome_ISB();
+		updateDissimilarity_ISB(allFarms);
+		updateISB_Tolerances();      
 	}
 	/** 
 	 * create product selection calculator for this farm based on consumat model, decide which of the five decisions the farm will pursue
@@ -119,7 +122,7 @@ public class Farm {
 			//System.out.println("EXIT");
 			this.strategy = 1;
 		}
-		else if (this.Uncertainty >= this.Tolerance) {  // set to be OR with income uncertainty 
+		else if ( (this.Dissimilarity_ISB >= this.Dissimilarity_Tolerance) || (this.Income_ISB >= this.Income_Tolerance) ) {  
 			if (this.Satisfaction >= 0) {
 				//System.out.println("IMITATION");
 				this.strategy = 2;
@@ -151,12 +154,12 @@ public class Farm {
 	// update functions for farm parameters
 	/**
 	 * Using list of all current farms in the system and the social network of the main farm,
-	 * update the main farm's uncertainty value based on the social network weight and the dissimilarity 
+	 * update the main farm's Information Seeking Behavior (ISB) value based on the social network weight and the dissimilarity 
 	 * between neighbor's activity types 
 	 * 
 	 * @param farms Input list of all farms in the system. 
 	 */
-	public void updateUncertainty(List<Farm> farms) {
+	public void updateDissimilarity_ISB(List<Farm> farms) {
         double currentDissimilarity = 0;									   // similarity value of a farm 
         int EdgeCount = 0;													   // how many edges does this farm have (ie neighbors)
 		int totalFarms = 0;													   // how many total farms are there in the network
@@ -219,7 +222,7 @@ public class Farm {
     	}
 
         currentDissimilarity = dissimilarity/networkActivityList.size();
-		setUncertainty(currentDissimilarity);
+		setDissimilarity_ISB(currentDissimilarity);
 	}
      /**
 	 * Based on the current income level of the farmer calculate new satisfaction level.
@@ -241,10 +244,11 @@ public class Farm {
 		setAspiration(aspiration);
 	}
 	/** 
-	 * Based on the input parameter, calculate a tolerance level. Percent of exogenously derived tolerance level. 
+	 * Based on the input parameter, calculate a tolerance level for dissimilarity and income. Percent of exogenously input tolerance levels. 
 	 */
-	private void updateTolerance() {
-		this.Tolerance = this.parameters.getB() * this.Tolerance;
+	private void updateISB_Tolerances() {
+		this.Dissimilarity_Tolerance = this.parameters.getB() * this.Dissimilarity_Tolerance;
+		this.Income_Tolerance        = this.parameters.getM() * this.Income_Tolerance;
 	}
 	/** 
 	 * Each time period, t, call this function to increment the experience vector of this farm. 
@@ -307,19 +311,13 @@ public class Farm {
 		setLastYearPersonalIncomeAverage(personalIncomeAverage);
 	}
 	/**
-	 * update income uncertainty value based on personal income change and regional income change at a specific time period
+	 * update income Information Seeking Behavior (ISB) value based on personal income change and regional income change at a specific time period
 	 */
-	private void updateIncomeUncertainty() {
+	private void updateIncome_ISB() {
 		double personalIncomeChangePercent = 0;								   // percent change in personal income
-		
 		personalIncomeChangePercent = (IncomeHistory.get(0) - lastYearPersonalIncomeAverage) /lastYearPersonalIncomeAverage;
 		
-		if ( (this.regionIncomeChangePercent - personalIncomeChangePercent) > 0 ) {
-			this.IncomeUncertainty = 1;
-		}
-		else {
-			this.IncomeUncertainty = 0;
-		}
+		this.Income_ISB = this.regionIncomeChangePercent - personalIncomeChangePercent;
 	}
 	
 	// helper functions
@@ -385,11 +383,11 @@ public class Farm {
 	public void setAspiration(double aspiration) {
 		Aspiration = aspiration;
 	}
-	public void setUncertainty(double uncertainty) {
-		Uncertainty = uncertainty;
+	public void setDissimilarity_ISB(double dissimilarityISB) {
+		Dissimilarity_ISB = dissimilarityISB;
 	}
-	public void setTolerance(double entrepreneurship) {
-		Tolerance = entrepreneurship;
+	public void setDissimilarity_Tolerance(double tolerance) {
+		Dissimilarity_Tolerance = tolerance;
 	}
 	public void setSatisfaction(double satisfaction) {
 		Satisfaction = satisfaction;
@@ -431,11 +429,11 @@ public class Farm {
 	public void setNetwork(Graph<String, DefaultEdge> network) {
 		this.network = network;
 	}
-	public double getTolerance() {
-		return Tolerance;
+	public double getDissimilarity_Tolerance() {
+		return Dissimilarity_Tolerance;
 	}
-	public double getUncertainty() {
-		return Uncertainty;
+	public double getDissimilarity_ISB() {
+		return Dissimilarity_ISB;
 	}
 	public double getAspiration() {
 		return Aspiration;
@@ -488,11 +486,11 @@ public class Farm {
 	public void setIncomeProbability(double incomeProbability) {
 		this.incomeProbability = incomeProbability;
 	}
-	public double getIncomeUncertainty() {
-		return IncomeUncertainty;
+	public double getIncome_ISB() {
+		return Income_ISB;
 	}
-	public void setIncomeUncertainty(double incomeUncertainty) {
-		IncomeUncertainty = incomeUncertainty;
+	public void setIncome_ISB(double incomeISB) {
+		Income_ISB = incomeISB;
 	}
 	public double getRegionIncomeChangePercent() {
 		return regionIncomeChangePercent;
@@ -505,5 +503,11 @@ public class Farm {
 	}
 	public void setLastYearPersonalIncomeAverage(double lastYearPersonalIncomeAverage) {
 		this.lastYearPersonalIncomeAverage = lastYearPersonalIncomeAverage;
+	}
+	public double getIncome_Tolerance() {
+		return Income_Tolerance;
+	}
+	public void setIncome_Tolerance(double income_Tolerance) {
+		Income_Tolerance = income_Tolerance;
 	}
 }

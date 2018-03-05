@@ -47,8 +47,8 @@ public class FarmTests {
 		Farm farm = allFarms.get(0);
 		
 		farm.setSatisfaction(100);
-		farm.setUncertainty(100);
-		farm.setTolerance(0);
+		farm.setDissimilarity_ISB(100);
+		farm.setDissimilarity_Tolerance(0);
 		farm.makeDecision(allFarms);
 		
 		int strat = farm.getStrategy();
@@ -60,8 +60,8 @@ public class FarmTests {
 		Farm farm = allFarms.get(0);
 		
 		farm.setSatisfaction(100);
-		farm.setUncertainty(0);
-		farm.setTolerance(10);
+		farm.setDissimilarity_ISB(0);
+		farm.setDissimilarity_Tolerance(10);
 		farm.makeDecision(allFarms);
 		
 		int strat = farm.getStrategy();
@@ -73,8 +73,8 @@ public class FarmTests {
 		Farm farm = allFarms.get(0);
 		
 		farm.setSatisfaction(-1);
-		farm.setUncertainty(0);
-		farm.setTolerance(10);
+		farm.setDissimilarity_ISB(0);
+		farm.setDissimilarity_Tolerance(10);
 		farm.makeDecision(allFarms);
 		
 		int strat = farm.getStrategy();
@@ -86,8 +86,8 @@ public class FarmTests {
 		Farm farm = allFarms.get(0);
 		
 		farm.setSatisfaction(-1);
-		farm.setUncertainty(10);
-		farm.setTolerance(0);
+		farm.setDissimilarity_ISB(10);
+		farm.setDissimilarity_Tolerance(0);
 		farm.makeDecision(allFarms);
 		
 		int strat = farm.getStrategy();
@@ -143,16 +143,16 @@ public class FarmTests {
 	@Test
 	public void testUpdateUncertaintyFarm1() {
 		Farm farm = allFarms.get(0);
-		farm.updateUncertainty(allFarms);
-		double unc = farm.getUncertainty();
+		farm.updateDissimilarity_ISB(allFarms);
+		double unc = farm.getDissimilarity_ISB();
 		assertEquals(unc, 0.4);                                                // hand calculation
 	}
 	
 	@Test
 	public void testUpdateUncertaintyFarm2() {
 		Farm farm = allFarms.get(1);
-		farm.updateUncertainty(allFarms);
-		double unc = farm.getUncertainty();
+		farm.updateDissimilarity_ISB(allFarms);
+		double unc = farm.getDissimilarity_ISB();
 		assertEquals(unc, 0.25);                                                // hand calculation
 	}
 	
@@ -179,7 +179,7 @@ public class FarmTests {
 		double personalIncomeChangePercent = (farm.getIncomeHistory().get(0) - farm.getLastYearPersonalIncomeAverage()) /farm.getLastYearPersonalIncomeAverage();
 
 		assertEquals(0.08843537414965986, personalIncomeChangePercent);							   // excel calculation
-		assertEquals(farm.getIncomeUncertainty(), 0.0);
+		assertEquals(farm.getIncome_ISB(), 0.0);
 	}
 	
 	@Test
@@ -190,7 +190,7 @@ public class FarmTests {
 		double personalIncomeChangePercent = (farm.getIncomeHistory().get(0) - farm.getLastYearPersonalIncomeAverage()) /farm.getLastYearPersonalIncomeAverage();
 
 		assertEquals(-0.4557823129251701, personalIncomeChangePercent);							   // excel calculation
-		assertEquals(farm.getIncomeUncertainty(), 1.0);
+		assertEquals(farm.getIncome_ISB(), 1.0);
 	}
 	
 	@Test

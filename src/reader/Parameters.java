@@ -15,7 +15,8 @@ public class Parameters {
 	private double phi_minus;												   // used in satisfaction calc
 	private double a;														   // used in aspiration calc
 	private double k;														   // scale factor for experience vector
-	private double b;														   // used to set tolerance
+	private double b;														   // used to set tolerance for dissimilarity
+	private double m;														   // used to set tolerance for income changes
 	private String name;													   // name of farm
 	
 	public double getAlpha_plus() {
@@ -72,10 +73,10 @@ public class Parameters {
 	public void setB(double b) {
 		this.b = b;
 	}
-	
-	
-
-
-	
-
+	public double getM() {
+		return m;
+	}
+	public void setM(double m) {
+		this.m = m;
+	}
 }

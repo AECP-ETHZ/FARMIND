@@ -53,51 +53,18 @@ public class DecisionResult {
 	 * Create the files that contain the parameters required to run the gams simulation.
 	 */
 	public void appendGamsFile() {
-		File file = new File("p_allowedStrat.csv");
-		File filePost = new File("p_allowedStratPost.csv");
-
+		File file = new File("p_allowedStratPrePost.csv");
+		
 		try {
 			FileWriter fw = new FileWriter(file,true);
 			BufferedWriter bw = new BufferedWriter(fw);
 			PrintWriter writer = new PrintWriter(bw);
 			if (file.length() == 0) {
-				writer.println("gn,spre,normal,GlyBan");
+				writer.println(",,spre1,spre2,spre3,spre4,spre5,spre6");
 			}
 			
-			int gly = 0;
-			for(int i = 1; i < 22; i++) {
-				if (i == 17) i = i+2;
-				String act = String.format("spre%d", i);
-				if(possibleActivity.contains(act)) {
-					gly = 1;
-				} else {gly = 0;}
-				if (i == 1) gly = 1;	
-				
-				writer.println(String.format("%s,spre%d,1,%d", farmId, i, gly));
-			}
-			writer.close();
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		try {
-			FileWriter fw = new FileWriter(filePost,true);
-			BufferedWriter bw = new BufferedWriter(fw);
-			PrintWriter writer = new PrintWriter(bw);
-			if (filePost.length() == 0) {
-				writer.println("gn,spost,normal,GlyBan");
-			}
-			
-			int gly = 0;
-			for(int i = 1; i < 56; i++) {
-				String act = String.format("spost%d", i);
-				if(possibleActivity.contains(act)) {
-					gly = 1;
-				} else {gly = 1;}
-				if (i == 1) gly = 1;	
-				
-				writer.println(String.format("%s,spost%d,1,%d", farmId, i, gly));
+			for(int i = 1; i < 66; i++) {	
+				writer.println(String.format("%s,spost%d,1,1,1,1,1,1", farmId, i));
 			}
 			writer.close();
 			

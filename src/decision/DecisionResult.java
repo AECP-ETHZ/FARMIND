@@ -51,9 +51,12 @@ public class DecisionResult {
 
 	/** 
 	 * Create the files that contain the parameters required to run the gams simulation.
+	 * Use the prebuilt 'options' matrix that is 55x6 elements and set a specific bit pattern based on the selected strategy.
+	 * Each strategy corresponds to a index value which sets the correct 1 in the matrix.
 	 */
 	public void appendGamsFile() {
 		File file = new File("p_allowedStratPrePost.csv");
+		int[][] output = options;									       // copy empty matrix
 		
 		try {
 			FileWriter fw = new FileWriter(file,true);
@@ -62,9 +65,19 @@ public class DecisionResult {
 			if (file.length() == 0) {
 				writer.println(",,spre1,spre2,spre3,spre4,spre5,spre6");
 			}
+						
+			for(int i = 1; i < 67; i++) {
+				if (this.possibleActivity.contains(String.format("strat%d", i))) {
+					int[] ind = index[i-1];
+					int row = ind[0];
+					int column = ind[1];
+					output[row-1][column-1] = 1;							   // set proper bit to 1 if this strategy is selected
+				}
+			}
 			
-			for(int i = 1; i < 66; i++) {	
-				writer.println(String.format("%s,spost%d,1,1,1,1,1,1", farmId, i));
+			for(int i = 1; i < 56; i++) {	
+				int[] row = output[i-1];									   // print each output row to build full gams file
+				writer.println(String.format("%s,spost%d,%d,%d,%d,%d,%d,%d", farmId, i, row[0],row[1],row[2],row[3],row[4],row[5]));
 			}
 			writer.close();
 			
@@ -185,4 +198,140 @@ public class DecisionResult {
 	public void setAllActivity(List<String> allActivity) {
 		this.allActivity = allActivity;
 	}
+	
+	// We have 66 strategies in the system, and these tuples correspond to each strategy
+	// first element in the tuple is a row
+	// second element is the column
+	// set the corresponding bit in the output matrix to 1 for each strategy
+	private int[][] index = 
+		{
+				{3,2},
+				{3,3},
+				{3,4},
+				{3,5},
+				{3,6},
+				{5,3},
+				{5,4},
+				{5,5},
+				{7,3},
+				{7,4},
+				{7,5},
+				{12,2},
+				{12,3},
+				{12,4},
+				{12,5},
+				{12,6},
+				{13,3},
+				{13,4},
+				{13,5},
+				{14,3},
+				{14,4},
+				{14,5},
+				{16,3},
+				{16,4},
+				{16,5},
+				{18,2},
+				{18,3},
+				{18,4},
+				{18,5},
+				{18,6},
+				{21,3},
+				{21,4},
+				{21,5},
+				{22,3},
+				{22,4},
+				{22,5},
+				{23,2},
+				{23,3},
+				{23,6},
+				{28,2},
+				{28,3},
+				{28,6},
+				{33,2},
+				{33,3},
+				{33,6},
+				{36,3},
+				{36,4},
+				{36,5},
+				{37,3},
+				{37,4},
+				{37,5},
+				{39,3},
+				{39,4},
+				{39,5},
+				{51,2},
+				{51,3},
+				{51,4},
+				{52,2},
+				{52,3},
+				{52,4},
+				{53,2},
+				{53,3},
+				{53,4},
+				{54,2},
+				{54,3},
+				{54,4}
+		};
+	
+	// empty matrix for the output file
+	// note first row should always be 1s
+	private int[][] options = 
+		{
+				{1,1,1,1,1,1},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0},
+				{0,0,0,0,0,0}
+		};
+	
 }

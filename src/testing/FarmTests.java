@@ -179,7 +179,7 @@ public class FarmTests {
 		double personalIncomeChangePercent = (farm.getIncomeHistory().get(0) - farm.getLastYearPersonalIncomeAverage()) /farm.getLastYearPersonalIncomeAverage();
 
 		assertEquals(0.08843537414965986, personalIncomeChangePercent);							   // excel calculation
-		assertEquals(farm.getIncome_ISB(), 0.0);
+		assertEquals(farm.getIncome_ISB(), -0.013503276370462003);
 	}
 	
 	@Test
@@ -190,7 +190,7 @@ public class FarmTests {
 		double personalIncomeChangePercent = (farm.getIncomeHistory().get(0) - farm.getLastYearPersonalIncomeAverage()) /farm.getLastYearPersonalIncomeAverage();
 
 		assertEquals(-0.4557823129251701, personalIncomeChangePercent);							   // excel calculation
-		assertEquals(farm.getIncome_ISB(), 1.0);
+		assertEquals(farm.getIncome_ISB(), 0.530714410704368);
 	}
 	
 	@Test

@@ -37,7 +37,7 @@ Ahaus,spost35,0,0,0,0,0,0
 Ahaus,spost36,0,0,0,0,0,0
 Ahaus,spost37,0,0,0,0,0,0
 Ahaus,spost38,0,0,0,0,0,0
-Ahaus,spost39,0,0,0,0,0,0
+Ahaus,spost39,0,0,0,0,1,0
 Ahaus,spost40,0,0,0,0,0,0
 Ahaus,spost41,0,0,0,0,0,0
 Ahaus,spost42,0,0,0,0,0,0
@@ -49,9 +49,9 @@ Ahaus,spost47,0,0,0,0,0,0
 Ahaus,spost48,0,0,0,0,0,0
 Ahaus,spost49,0,0,0,0,0,0
 Ahaus,spost50,0,0,0,0,0,0
-Ahaus,spost51,0,0,1,1,0,0
-Ahaus,spost52,0,1,1,1,0,0
-Ahaus,spost53,0,1,0,0,0,0
+Ahaus,spost51,0,1,1,1,0,0
+Ahaus,spost52,0,1,1,0,0,0
+Ahaus,spost53,0,0,0,0,0,0
 Ahaus,spost54,0,0,0,0,0,0
 Ahaus,spost55,0,0,0,0,0,0
 Beckum,spost1,1,1,1,1,1,1
@@ -92,7 +92,7 @@ Beckum,spost35,0,0,0,0,0,0
 Beckum,spost36,0,0,0,0,0,0
 Beckum,spost37,0,0,0,0,0,0
 Beckum,spost38,0,0,0,0,0,0
-Beckum,spost39,0,0,1,1,1,0
+Beckum,spost39,0,0,0,1,1,0
 Beckum,spost40,0,0,0,0,0,0
 Beckum,spost41,0,0,0,0,0,0
 Beckum,spost42,0,0,0,0,0,0
@@ -104,8 +104,8 @@ Beckum,spost47,0,0,0,0,0,0
 Beckum,spost48,0,0,0,0,0,0
 Beckum,spost49,0,0,0,0,0,0
 Beckum,spost50,0,0,0,0,0,0
-Beckum,spost51,0,1,1,1,0,0
-Beckum,spost52,0,0,0,0,0,0
+Beckum,spost51,0,0,0,1,0,0
+Beckum,spost52,0,1,1,1,0,0
 Beckum,spost53,0,0,0,0,0,0
 Beckum,spost54,0,0,0,0,0,0
 Beckum,spost55,0,0,0,0,0,0
@@ -113,9 +113,9 @@ Bruehl,spost1,1,1,1,1,1,1
 Bruehl,spost2,0,0,0,0,0,0
 Bruehl,spost3,0,0,0,0,0,0
 Bruehl,spost4,0,0,0,0,0,0
-Bruehl,spost5,0,0,0,0,0,0
+Bruehl,spost5,0,0,0,0,1,0
 Bruehl,spost6,0,0,0,0,0,0
-Bruehl,spost7,0,0,1,0,0,0
+Bruehl,spost7,0,0,0,0,0,0
 Bruehl,spost8,0,0,0,0,0,0
 Bruehl,spost9,0,0,0,0,0,0
 Bruehl,spost10,0,0,0,0,0,0
@@ -168,7 +168,7 @@ Hoevelhof,spost1,1,1,1,1,1,1
 Hoevelhof,spost2,0,0,0,0,0,0
 Hoevelhof,spost3,0,0,0,0,0,0
 Hoevelhof,spost4,0,0,0,0,0,0
-Hoevelhof,spost5,0,0,0,0,1,0
+Hoevelhof,spost5,0,0,0,0,0,0
 Hoevelhof,spost6,0,0,0,0,0,0
 Hoevelhof,spost7,0,0,0,0,0,0
 Hoevelhof,spost8,0,0,0,0,0,0
@@ -230,7 +230,7 @@ Hopsten,spost8,0,0,0,0,0,0
 Hopsten,spost9,0,0,0,0,0,0
 Hopsten,spost10,0,0,0,0,0,0
 Hopsten,spost11,0,0,0,0,0,0
-Hopsten,spost12,0,0,0,1,0,0
+Hopsten,spost12,0,0,0,0,0,0
 Hopsten,spost13,0,0,0,0,0,0
 Hopsten,spost14,0,0,0,0,0,0
 Hopsten,spost15,0,0,0,0,0,0

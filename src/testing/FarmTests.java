@@ -201,8 +201,6 @@ public class FarmTests {
 		assertEquals(sat, 0.38692024958500437);                                // hand calculation
 	} 
 	
-	// satisfaction tests
-	
 	public static final String TestDataFile = "./test_data/farm_data.csv";
 	public static final String TestParameterFile = "./test_data/parameters.csv";
 	public static final String TestPreferenceFile = "./test_data/products_preference.csv";

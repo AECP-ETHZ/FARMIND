@@ -11,8 +11,8 @@ import activity.Activity;
 import reader.Parameters;
 
 /**
- * Decision object with unique information for each farm. 
- * Can be used to append to the final output list
+ * Decision object with unique information for each farm. This object can output a gams compatible simulation file, as well as output a log of all decisions and parameters during the model execution. 
+ * This object contains a public 2d array of the pre/post sowing strategies that correspond to the 72 strategies in the model. 
  * @author kellerke
  *
  */
@@ -24,8 +24,8 @@ public class DecisionResult {
 	private int strategy;													   // farm strategy
 	private double income;													   // income of time step
 	private List<String> allActivity;										   // All possible activities in the model
-	private List<Activity> currentActivity;
-	private List<String> possibleActivity;
+	private List<Activity> currentActivity;									   // current activity of the agent
+	private List<String> possibleActivity;								       // set of possible activities by the agent
 	
 	/** 
 	 * Constructor for the Decision Result
@@ -50,13 +50,13 @@ public class DecisionResult {
 	}
 
 	/** 
-	 * Create the files that contain the parameters required to run the gams simulation.
-	 * Use the prebuilt 'options' matrix that is 55x6 elements and set a specific bit pattern based on the selected strategy.
-	 * Each strategy corresponds to a index value which sets the correct 1 in the matrix.
+	 * Create the files that contain the parameters required to run the gams simulation. <br>
+	 * Use the strategy matrix variable that is 55x6 elements and set a specific bit pattern based on the selected strategy. Each strategy corresponds to a StrategySet tuple value which sets the correct 1 in the matrix.
+	 * 
 	 */
 	public void appendGamsFile() {
 		File file = new File("p_allowedStratPrePost.csv");
-		int[][] output = options;									       // copy empty matrix
+		int[][] output = strategy_matrix;									   // copy empty matrix
 		
 		try {
 			FileWriter fw = new FileWriter(file,true);
@@ -66,12 +66,12 @@ public class DecisionResult {
 				writer.println(",,spre1,spre2,spre3,spre4,spre5,spre6");
 			}
 						
-			for(int i = 1; i < 67; i++) {
+			for(int i = 1; i < strategySets.length + 1; i++) {
 				if (this.possibleActivity.contains(String.format("strat%d", i))) {
-					int[] ind = index[i-1];
+					int[] ind = strategySets[i-1];
 					int row = ind[0];
 					int column = ind[1];
-					output[row-1][column-1] = 1;							   // set proper bit to 1 if this strategy is selected
+					output[row-1][column-1] = 1;							   // set correct bit to 1 in output matrix if this strategy is selected
 				}
 			}
 			
@@ -87,8 +87,8 @@ public class DecisionResult {
 	}
 	
 	/** 
-	 * write output CSV file based on decision object
-	 * @param fileName of output file
+	 * write output CSV log file based on decision object. This log file can be updated each time period for each agent. 
+	 * @param fileName of output file which is previously checked to ensure we will not exceed 1 million lines of data. 
 	 */
 	public void appendDecisionFile(String fileName) {
 		String PATH = "./output";
@@ -108,8 +108,8 @@ public class DecisionResult {
 		PrintWriter writer = new PrintWriter(bw);
 		
 		if (file.length() == 0) {
-			writer.println("year,name,alpha_plus,alpha_minus,lambda,phi_plus,phi_minus,a,b,k,strategy,possible_action1,"
-					+ "possible_action2,possible_action3,possible_action4,possible_action5,possible_action6,income,current_action1");
+			writer.println("year,name,alpha_plus,alpha_minus,lambda,phi_plus,phi_minus,a,b,k,m,strategy,possible_action1,"
+					+ "possible_action2,possible_action3,possible_action4,possible_action5,possible_action6,income,current_action");
 		}
 		
 		writer.print(String.format("%s,",this.year));
@@ -122,6 +122,7 @@ public class DecisionResult {
 		writer.print(String.format("%s,",this.param.getA() ));
 		writer.print(String.format("%s,",this.param.getB() ));
 		writer.print(String.format("%s,",this.param.getK() ));
+		writer.print(String.format("%s,",this.param.getM() ));
 		writer.print(String.format("%s,",this.strategy) );
 		
 		for(int i = 0; i < this.possibleActivity.size(); i++) {
@@ -174,39 +175,39 @@ public class DecisionResult {
 	public void setIncome(double income) {
 		this.income = income;
 	}
-
 	public List<Activity> getCurrentActivity() {
 		return currentActivity;
 	}
-
 	public void setCurrentActivity(List<Activity> currentActivity) {
 		this.currentActivity = currentActivity;
 	}
-
 	public List<String> getPossibleActivity() {
 		return possibleActivity;
 	}
-
 	public void setPossibleActivity(List<String> possibleActivity) {
 		this.possibleActivity = possibleActivity;
 	}
-
 	public List<String> getAllActivity() {
 		return allActivity;
 	}
-
 	public void setAllActivity(List<String> allActivity) {
 		this.allActivity = allActivity;
 	}
 	
-	// We have 66 strategies in the system, and these tuples correspond to each strategy
-	// first element in the tuple is a row
-	// second element is the column
-	// set the corresponding bit in the output matrix to 1 for each strategy
-	private int[][] index = 
+	/**
+	 *  We have 72 strategies in the system, and these tuples correspond to each strategy.  first element in the tuple is a row in the strategy matrix, and the second element is the column.
+	 *  Each row element corresponds to a post sowing strategy, and each column is a pre sowing strategy. So [53,2] corresponds to post 53, and pre 2 strategy set.  
+	 */
+	public static int[][] strategySets = 
 		{
-				{3,2},
-				{3,3},
+				{1,1},												           // strategy 1 is post sowing 1, pre sowing 1											    
+				{1,2},														   // strategy 2 is post 1, pre 2
+				{1,3},														   // strategy 3 is post 1, pre 3
+				{1,4},													       // strategy 4 is post 1, pre 4
+				{1,5},														   // strategy 5 is post 1, pre 5
+				{1,6},														   // strategy 6 is post 1, pre 6
+				{3,2},														   // strategy 7 is post 3, pre 2
+				{3,3},														   // strategy 8 is post 3, pre 2
 				{3,4},
 				{3,5},
 				{3,6},
@@ -270,12 +271,13 @@ public class DecisionResult {
 				{53,4},
 				{54,2},
 				{54,3},
-				{54,4}
+				{54,4}														   // strategy 66, post sowing 54, pre sowing 4
 		};
 	
-	// empty matrix for the output file
-	// note first row should always be 1s
-	private int[][] options = 
+	/**
+	 *  empty matrix for the output gams file. The matrix corresponds to a 55 row by 6 column matrix where each row is a post strategy and the columns are a pre strategy 
+	 */
+	private int[][] strategy_matrix = 
 		{
 				{1,1,1,1,1,1},
 				{0,0,0,0,0,0},

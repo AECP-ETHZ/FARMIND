@@ -65,10 +65,9 @@ public class Consumat {
 		NormalDistribution normal = new NormalDistribution(50000.0, 10000.0);			           // distribution of possible incomes
 		int farmIndex = 0;																		   // index of specific farm in list
 
-		File f = new File("p_allowedStrat.csv");										           // delete last time period's simulation file
+		File f = new File("p_allowedStratPrePost.csv");										       // delete last time period's simulation file
 		if (f.exists()) {f.delete();}
-		File fp = new File("p_allowedStratPost.csv");										       // delete last time period's simulation file
-		if (fp.exists()) {fp.delete();}
+
 		
 		for (Farm farm : allFarms) {
 			if (year == 1) {															           // ignore first year as we already have that initialized with input file

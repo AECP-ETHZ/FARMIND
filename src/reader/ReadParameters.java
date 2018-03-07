@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -16,9 +17,10 @@ import activity.Activity;
 import agent.Farm;
 import agent.Location;
 import agent.Person;
+import static decision.DecisionResult.strategySets;                            
 
 /** 
- * Read input parameters from configuration text files
+ * Read input parameters from configuration text files for each agent, as well as read results data from gams simulations
  * @author kellerke
  *
  */
@@ -32,7 +34,7 @@ public class ReadParameters {
 	public static final int MEMORY = 5;
 	public static final int DISS_TOLERANCE = 6;
 	public static final int INCOME_TOLERANCE = 7;
-	public static final int START_ACTION_INDEX = 8;					       // the input spreadsheet starts the actions at column 12
+	public static final int START_ACTION_INDEX = 8;					       
 	public static final int INCOME_INDEX = 11;
 
 	public String DataFile = "./data/farm_data.csv";					       // allow external function to set data files for testing
@@ -43,19 +45,20 @@ public class ReadParameters {
 	public String ActivityFile = "./data/activities.csv";
 	
 	/** 
-	 * Read the income and activity data from the gams output simulation file
+	 * Read the income and activity data from the gams output simulation file after each gams simulation. Use the StrategySet matrix defined in DecisionResult to get correct combinations. 
+	 * @see decision.DecisionResult
 	 * @return List that contains the income for all farms, and the activity for all farms (two lists)
 	 */
 	public List<Object> readIncomeResults() {
-		List<Double> incomes = new ArrayList<Double>();
-		List<Activity> strat = new ArrayList<Activity>();
-		List<Object> ret = new ArrayList<Object>();
+		List<Double> incomes = new ArrayList<Double>();						   // list of incomes from result file
+		List<Activity> strat = new ArrayList<Activity>();					   // list of selected strategies for each agent (one per agent)
+		List<Object> ret = new ArrayList<Object>();							   // object to return
 		BufferedReader Buffer = null;	 									   // read input file
-		String Line;
-		ArrayList<String> dataArray;
-		List<Activity> activities = getActivityList();
+		String Line;														   // read each line of the file individually
+		ArrayList<String> dataArray;										   // separate data line
+		List<Activity> activities = getActivityList();						   // generated activity list with ID and name 
 		
-		File f = new File("Grossmargin_P4,00.csv");
+		File f = new File("Grossmargin_P4,00.csv");							   // actual results file
 		while (!f.exists()) {try {
 			Thread.sleep(1000);												   // wait until simulation finishes running
 		} catch (InterruptedException e) {
@@ -67,22 +70,35 @@ public class ReadParameters {
 			System.out.println("read margin values");
 			Line = Buffer.readLine();
 			while ((Line = Buffer.readLine()) != null) {                       
-				dataArray = CSVtoArrayList(Line);						   // Read farm's parameters line by line
+				dataArray = CSVtoArrayList(Line);						       // Read farm's parameters line by line
 				incomes.add( Double.parseDouble(dataArray.get(1)) );
 				
-				for(int i = 0; i < activities.size(); i++) {
-					if (activities.get(i).getName().equals(dataArray.get(2) )) {
-						int ID = activities.get(i).getID();
-						Activity p = new Activity(ID, dataArray.get(2)); 
-						strat.add(p);
+				String pre = dataArray.get(2);								   // we need to break the results file which has pre and post strategies
+				pre = pre.substring(4);										   // into corresponding strategy values in our system based on the defined strategies
+				String post = dataArray.get(3);
+				post = post.substring(5);
+				
+				int[] strategy = {Integer.valueOf(post),Integer.valueOf(pre)};
+				int index = 0;
+				for(int i = 0; i < strategySets.length; i++) {				   // strategySets were defined in DecisionResult to allow the correct output combinations to be set for gams
+					int[] test = {strategySets[i][0],strategySets[i][1]};
+					if (Arrays.equals(strategy, test)) {
+						index = i;
 					}
 				}
 				
+				for(int i = 0; i < activities.size(); i++) {
+					if (activities.get(i).getName().equals(String.format("strat%d", index) )) {
+						int ID = activities.get(i).getID();
+						Activity p = new Activity(ID, String.format("strat%d", index)); 
+						strat.add(p);
+					}
+				}
 			}
+			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}									       // first line to throw away
+		}									       
 
 		try {
 			Buffer.close();

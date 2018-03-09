@@ -6,7 +6,7 @@ The ABM uses a set of agents to represent farms, and uses the farm's behavioral 
 The ABM integrates into a gams linear programming model to select the optimal strategy from the set of ABM options and generate an income value for the year. 
 
 # Program Overview
-For the complete system documentation download the [documentation](../blob/master/documentation). 
+For the complete system documentation download the [documentation](../tree/master/documentation). 
 
 # Library Installation in Eclipse
 

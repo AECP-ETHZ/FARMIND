@@ -5,19 +5,22 @@ The ABM uses a set of agents to represent farms, and uses the farm's behavioral 
 
 The ABM integrates into a gams linear programming model to select the optimal strategy from the set of ABM options and generate an income value for the year. 
 
+# Program Overview
+For the complete system documentation download the [documentation](../documentation). 
+
 # Library Installation in Eclipse
 
 Required libraries:
 1. Download jgrapht-1.1.0.zip file from here: http://jgrapht.org/
 2. Download commons-math3-3.6.1-bin.zip from here: http://commons.apache.org/proper/commons-math/download_math.cgi
 
-Both of the those libraries should already be downloaded and included in the /lib/ directory. 
+Both of the those libraries **should** already be downloaded and included in the /lib/ directory. 
 
 1. In Eclipse Open:
 	Window->Preferences->java->Build Path->User Libraries 
 
 2. Select "New" and input the name of the library:
-	Either jgrapht or commons-math3-3.6.1
+	Either *jgrapht* or *commons-math3-3.6.1*
 	
 3. After creating the library, link the new library with the jar files.
 	Select "Add JAR" and select the JAR files from the /lib/ folder in the project that correspond to the library name. 
@@ -53,6 +56,7 @@ If the issue persists, try removing the libraries and reinstalling them again.
 
 	This is the expected program operation. It has generated the gams file and started the gams simulation. 
 	The gams program will produce a results file for the ABM to process. Until then it will wait. 
+	
 	When the ABM is running in test mode, the batch file 'run_gams.bat' will copy a results file (stored in /data/ folder as 'Grossmargin_P4,00') to simulate the gams output. 
 	
 

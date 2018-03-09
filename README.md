@@ -50,8 +50,9 @@ To fix this issue ensure that you have installed all libraries as shown in the *
 If the issue persists, try removing the libraries and reinstalling them again.
 	
 2. Program hangs after printing "Waiting for gams results to be generated":
+
 	This is the expected program operation. It has generated the gams file and started the gams simulation. 
 	The gams program will produce a results file for the ABM to process. Until then it will wait. 
-	Manually copy a results file into the main Farmade director (stored in /data/ folder as 'Grossmargin_P4,00') to simulate the gams output. 
+	When the ABM is running in test mode, the batch file 'run_gams.bat' will copy a results file (stored in /data/ folder as 'Grossmargin_P4,00') to simulate the gams output. 
 	
 

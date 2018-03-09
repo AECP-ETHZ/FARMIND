@@ -1,2 +1,1 @@
-echo "meow"
-echo "x">meow.txt
+copy ".\data\Grossmargin_P4,00.csv" .\

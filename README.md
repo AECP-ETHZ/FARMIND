@@ -11,7 +11,6 @@ The initial conditions of the agents with all parameters need to be specified in
 For the complete system documentation download the [documentation](../blob/tree/master/documentation). 
 
 # Library Installation in Eclipse
-
 Required libraries:
 1. Download jgrapht-1.1.0.zip file from here: http://jgrapht.org/
 2. Download commons-math3-3.6.1-bin.zip from here: http://commons.apache.org/proper/commons-math/download_math.cgi

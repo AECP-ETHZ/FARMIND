@@ -116,7 +116,7 @@ public class Farm {
 	public List<String> makeDecision(List<Farm> allFarms) {
 	    List<String> fuzzyActionSet = new ArrayList<String>();				   // list of names of products from fuzzy logic
 		DecisionCalculator cal = new DecisionCalculator(this, allFarms);       // calculator for the product selection
-
+		
 		if ((head.getAge() > 650)) {
 			this.strategy = 1; //EXIT
 		}
@@ -127,6 +127,7 @@ public class Farm {
 			}
 			else {
 				this.strategy = 1; //EXIT
+				System.out.println("exit: empty set");
 			}
 		}
 		else {
@@ -140,6 +141,10 @@ public class Farm {
 				this.strategy = 3; //OPTIMIZATION
 				fuzzyActionSet = cal.getOptimizeProducts();
 			}
+		}
+		
+		if (fuzzyActionSet.size() == 0) {
+			System.out.println(this.strategy);
 		}
 		
 		return fuzzyActionSet;

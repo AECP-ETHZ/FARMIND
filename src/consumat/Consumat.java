@@ -121,7 +121,7 @@ public class Consumat {
 				runtime.exec("cmd /C" + "run_gams.bat");						   // actually run command
 			}
 			if (name.startsWith("mac")) {
-				runtime.exec("/bin/bash -c run_gams_mac.command");				   // actually run command
+				runtime.exec("/bin/bash -c ./run_gams_mac.command");				   // actually run command
 			}
 			System.out.println("Starting gams model");
 			System.out.println("Waiting for gams results to be generated");

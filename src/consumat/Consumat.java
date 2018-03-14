@@ -116,7 +116,14 @@ public class Consumat {
 		f.delete();
 		
 		try {
-			runtime.exec("cmd /C" + "run_gams.bat");						   // actually run command
+			String name = System.getProperty("os.name").toLowerCase();;
+			System.out.println(name);
+			if (name.startsWith("win") ){
+				runtime.exec("cmd /C" + "run_gams.bat");						   // actually run command
+			}
+			if (name.startsWith("mac")) {
+				runtime.exec("/bin/bash -c run_gams_mac.command");				   // actually run command
+			}
 			System.out.println("Starting gams model");
 			System.out.println("Waiting for gams results to be generated");
 		} catch (IOException e) {

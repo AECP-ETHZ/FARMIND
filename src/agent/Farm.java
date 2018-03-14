@@ -143,10 +143,6 @@ public class Farm {
 			}
 		}
 		
-		if (fuzzyActionSet.size() == 0) {
-			System.out.println(this.strategy);
-		}
-		
 		return fuzzyActionSet;
 	}
 	

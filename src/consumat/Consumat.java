@@ -67,7 +67,6 @@ public class Consumat {
 
 		File f = new File("p_allowedStratPrePost.csv");										       // delete last time period's simulation file
 		if (f.exists()) {f.delete();}
-
 		
 		for (Farm farm : allFarms) {
 			if (year == 1) {															           // ignore first year as we already have that initialized with input file

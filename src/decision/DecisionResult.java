@@ -271,7 +271,7 @@ public class DecisionResult {
 				{53,4},
 				{54,2},
 				{54,3},
-				{54,4}														   // strategy 66, post sowing 54, pre sowing 4
+				{54,4}														   // strategy 72, post sowing 54, pre sowing 4
 		};
 	
 	/**

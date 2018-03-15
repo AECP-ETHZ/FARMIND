@@ -24,7 +24,7 @@ import static decision.DecisionResult.strategySets;
  * @author kellerke
  *
  */
-public class ReadParameters {
+public class ReadData {
 
 	public static final int NAME = 0;										   
 	public static final int COORDINATE1 = 1;
@@ -246,7 +246,7 @@ public class ReadParameters {
 	 * Read preferences of each farm for each activity and build preference object
 	 * @return matrix of the farm region preferences
 	 */
-	public FarmDataMatrix getPreferences() {
+	private FarmDataMatrix getPreferences() {
 		String Line;
 		ArrayList<String> matrixRow;
 		BufferedReader Buffer = null;	
@@ -281,7 +281,7 @@ public class ReadParameters {
 	 * read years of experience file 
 	 * @return object corresponding to years performing activity for each farm
 	 */
-	public FarmDataMatrix getExperience() {
+	private FarmDataMatrix getExperience() {
 		String Line;
 		ArrayList<String> matrixRow;
 		BufferedReader Buffer = null;	
@@ -371,7 +371,7 @@ public class ReadParameters {
 	 * This is used to generate the individual farm product lists
 	 * @return List of activities in the master CSV file
 	 */
-	public List<Activity> getActivityList() {
+	private List<Activity> getActivityList() {
 		String Line;
 		List<Activity> activities = new ArrayList<Activity>();
 		ArrayList<String> activityRow;

@@ -186,47 +186,14 @@ public class DecisionCalculator {
 			}
 		}
 		
-		if (cluster.size() > 6) {											   // limit returned cluster to 20 elements
+		if (cluster.size() > 6) {											   // limit returned cluster to 6 elements
 			for (int i = 0; i< 6; i++) {
 				cluster_smaller.add(cluster.get(cluster.size() - i - 1));
 			}
 			return cluster_smaller;
 		}
 		
-		return cluster;
-		
-		/*// k-means clustering algorithm
-		double x1 = 0.75;                                                      // initial cluster
-		double x2 = 0.25;													   // cluster point two
-		double x1_old = 0;
-		double x2_old = 0;
-		double dist1, dist2 = 0.0;
-		List<Double> cluster1 = new ArrayList<Double>(); 
-		List<Double> cluster2 = new ArrayList<Double>(); 
-		
-		while ((x1 != x1_old) && (x2 != x2_old))	{					       // when the cluster means don't change we have converged
-			cluster1.clear();
-			cluster2.clear();
-			for (int i = 0; i < sorted.size(); i++) {
-				dist1 = Math.abs(sorted.get(i) - x1);
-				dist2 = Math.abs(sorted.get(i) - x2);
-				
-				if (dist1 < dist2) {										   // apply two clusters to list based on mean score
-					cluster1.add(sorted.get(i));
-				}
-				else if (dist1 >= dist2) {
-					cluster2.add(sorted.get(i));
-				}
-			}
-			x1_old = x1;													   // keep old mean to compare when we converge
-			x2_old = x2;
-			x1 = mean(cluster1);
-			x2 = mean(cluster2);
-		}
-		return cluster1;													   // higher value cluster is optimal product list values
-		
-		*/
-		
+		return cluster;		
 	}
 	
 	/** 

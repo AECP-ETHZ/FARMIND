@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import agent.Farm;
-import reader.ReadParameters;
+import reader.ReadData;
 
 /** 
  * Test farm agent object.
@@ -20,7 +20,7 @@ public class FarmTests {
 	
 	@Before 
 	public void setup() {
-		ReadParameters reader = new ReadParameters();						   // read all input data files
+		ReadData reader = new ReadData();						   // read all input data files
 		useTestData(reader);
 		allFarms = reader.getFarms(1);						                   // build set of farms with new parameters
 		initializeRegionIncomeChangePercent(allFarms);
@@ -208,7 +208,7 @@ public class FarmTests {
 	public static final String TestSocialNetworkFile = "./test_data/social_networks.csv";
 	public static final String TestActivityFile = "./test_data/activities.csv";
 	
-	private void useTestData(ReadParameters reader) {
+	public static final void useTestData(ReadData reader) {
 			reader.DataFile = TestDataFile;
 			reader.ParameterFile = TestParameterFile;
 			reader.PreferenceFile = TestPreferenceFile;

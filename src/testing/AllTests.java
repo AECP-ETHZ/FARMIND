@@ -10,7 +10,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({	
 	  DecisionCalculatorTests.class,
-	  FarmTests.class
+	  FarmTests.class,
+	  ReadDataTests.class
 	})	
 public class AllTests {
 }

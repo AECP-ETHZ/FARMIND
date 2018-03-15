@@ -9,7 +9,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import decision.DecisionResult;
-import reader.ReadParameters;
+import reader.ReadData;
 
 import org.apache.commons.math3.distribution.NormalDistribution;
 
@@ -33,7 +33,7 @@ public class Consumat {
 		
 		//max_parameter_length = 2;
 		for (double parameterSet = 1; parameterSet < max_parameter_length; parameterSet++) {	   // sensitivity testing, loop through all parameters
-			ReadParameters reader = new ReadParameters();										   // read all input data files
+			ReadData reader = new ReadData();										   // read all input data files
 			List<Farm>     allFarms = reader.getFarms((int)parameterSet);					       // build set of farms with new parameters
 			List<Double> simulatedIncomeForFarms = new ArrayList<Double>();						   // list of all farm incomes
 			
@@ -165,7 +165,7 @@ public class Consumat {
 	 * @return list of incomes and actions
 	 */
 	private static List<Object> readIncome() {													 
-		ReadParameters reader = new ReadParameters();										   // read all input data files
+		ReadData reader = new ReadData();										   // read all input data files
 		List<Object> data = reader.readIncomeResults();									
 		return data;
 	}

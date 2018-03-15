@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import reader.FarmProductMatrix;
+import reader.FarmDataMatrix;
 import reader.Parameters;
 
 import org.jgrapht.Graph;
@@ -34,8 +34,8 @@ public class Farm {
 	private double Dissimilarity_Tolerance;									   // Individual level of tolerance to differences in activities on the network
 	private double Income_Tolerance;									       // Individual level of tolerance to differences in personal vs regional income changes
 	private Graph<String, DefaultEdge> network; 							   // Social network of farmers
-	private FarmProductMatrix experience;									   // experience (in years) of the each farm for each activity
-	private FarmProductMatrix preferences;									   // preference (between 1 to 5) of each farm for each activity
+	private FarmDataMatrix experience;									   // experience (in years) of the each farm for each activity
+	private FarmDataMatrix preferences;									   // preference (between 1 to 5) of each farm for each activity
 	private List<Activity> currentActivities;								   // list of current activities each farm is engaged in
 	private List<Activity> allActivities;									   // list of all possible activities
 	private Parameters parameters;											   // simulation parameters
@@ -61,7 +61,7 @@ public class Farm {
 	 * @param parameters	simulation parameters
 	 */
 	public Farm(String name, Location location, Graph<String, DefaultEdge> socialNetwork, List<Double> incomeHistory,
-			double personalIncomeAverage, FarmProductMatrix farmingExperience, FarmProductMatrix preferences,
+			double personalIncomeAverage, FarmDataMatrix farmingExperience, FarmDataMatrix preferences,
 			List<Activity> activities, double diss_tolerance, double income_tolerance, List<Activity> currentActivities, Person farmHead,
 			Parameters parameters) {
 
@@ -262,10 +262,10 @@ public class Farm {
 			productNames.add(this.getCurrentActivities().get(i).getName());
 		}
 		
-		for (int i = 0; i< this.experience.getActivityName().size(); i++ ) {
-			int value = this.experience.getFarmProductValue(farmName, this.experience.getActivityName().get(i));
+		for (int i = 0; i< this.experience.getDataElementName().size(); i++ ) {
+			int value = this.experience.getFarmDataElementValue(farmName, this.experience.getDataElementName().get(i));
 			
-			if (productNames.contains(this.experience.getActivityName().get(i))) {
+			if (productNames.contains(this.experience.getDataElementName().get(i))) {
 				value += 1;
 			}
 			else {
@@ -275,7 +275,7 @@ public class Farm {
 			if(value > this.getMemory()) value = this.getMemory();
 			if(value < 0) value = 0;
 			
-			this.experience.setFarmProductValue(farmName, this.experience.getActivityName().get(i), value);
+			this.experience.setFarmDataElementValue(farmName, this.experience.getDataElementName().get(i), value);
 		}	
 	}
 	/**
@@ -393,7 +393,7 @@ public class Farm {
 	public int getEducation() {
 		return this.head.getEducation();
 	}
-	public FarmProductMatrix getPreferences() {
+	public FarmDataMatrix getPreferences() {
 		
 		return this.preferences;
 	}
@@ -436,13 +436,13 @@ public class Farm {
 	public double getSatisfaction() {
 		return Satisfaction;
 	}
-	public FarmProductMatrix getExperience() {
+	public FarmDataMatrix getExperience() {
 		return this.experience;
 	}
-	public void setExperience(FarmProductMatrix experience) {
+	public void setExperience(FarmDataMatrix experience) {
 		this.experience = experience;
 	}
-	public void setPreferences(FarmProductMatrix preferences) {
+	public void setPreferences(FarmDataMatrix preferences) {
 		this.preferences = preferences;
 	}
 	public void setCurrentActivites(List<Activity> activities) {

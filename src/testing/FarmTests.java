@@ -107,7 +107,7 @@ public class FarmTests {
 	public void testUpdateExperience() {
 		allFarms.get(0).updateExperiencePlusAge();
 		
-		Collection<Integer[]> year = allFarms.get(0).getExperience().getProductmap().values();
+		Collection<Integer[]> year = allFarms.get(0).getExperience().getFarmMap().values();
 		List<Integer[]> y = new ArrayList<Integer[]>(year);
 		Integer[] verify = {3,5,5,3,5,1};
 		Integer[] y_list = y.get(2);
@@ -121,7 +121,7 @@ public class FarmTests {
 		allFarms.get(0).updateExperiencePlusAge();
 		allFarms.get(0).updateExperiencePlusAge();
 		
-		Collection<Integer[]> year = allFarms.get(0).getExperience().getProductmap().values();
+		Collection<Integer[]> year = allFarms.get(0).getExperience().getFarmMap().values();
 		List<Integer[]> y = new ArrayList<Integer[]>(year);
 		Integer[] verify = {4, 5, 4, 2, 5, 0};
 		Integer[] y_list = y.get(2);

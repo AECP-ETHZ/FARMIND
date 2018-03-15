@@ -133,8 +133,8 @@ public class ReadParameters {
 		Parameters parameters = getParameters(parameterSet);
 		List<Graph<String, DefaultEdge>> network = this.getSocialNetworks();   
 		List<Activity> activities = getActivityList();
-		FarmProductMatrix pref = getPreferences();
-		FarmProductMatrix experience = getExperience();
+		FarmDataMatrix pref = getPreferences();
+		FarmDataMatrix experience = getExperience();
 		
 		try {
 			Calendar now = Calendar.getInstance();                             // Gets the current date and time
@@ -246,22 +246,22 @@ public class ReadParameters {
 	 * Read preferences of each farm for each activity and build preference object
 	 * @return matrix of the farm region preferences
 	 */
-	public FarmProductMatrix getPreferences() {
+	public FarmDataMatrix getPreferences() {
 		String Line;
 		ArrayList<String> matrixRow;
 		BufferedReader Buffer = null;	
-		FarmProductMatrix preferences = new FarmProductMatrix();
+		FarmDataMatrix preferences = new FarmDataMatrix();
 
 		try {
 			Buffer = new BufferedReader(new FileReader(PreferenceFile));
 			Line = Buffer.readLine();
 			matrixRow = CSVtoArrayList(Line);
 			matrixRow.remove(0);
-			preferences.setProductName(matrixRow);
+			preferences.setDataElementName(matrixRow);
 			
 			while ((Line = Buffer.readLine()) != null) {                       // Read row data
 				matrixRow = CSVtoArrayList(Line);
-				preferences.setProductMap(matrixRow);
+				preferences.setFarmMap(matrixRow);
 			}
 				
 		} catch (IOException e) {
@@ -281,22 +281,22 @@ public class ReadParameters {
 	 * read years of experience file 
 	 * @return object corresponding to years performing activity for each farm
 	 */
-	public FarmProductMatrix getExperience() {
+	public FarmDataMatrix getExperience() {
 		String Line;
 		ArrayList<String> matrixRow;
 		BufferedReader Buffer = null;	
-		FarmProductMatrix experience = new FarmProductMatrix();
+		FarmDataMatrix experience = new FarmDataMatrix();
 
 		try {
 			Buffer = new BufferedReader(new FileReader(YearsFile));
 			Line = Buffer.readLine();
 			matrixRow = CSVtoArrayList(Line);
 			matrixRow.remove(0);
-			experience.setProductName(matrixRow);
+			experience.setDataElementName(matrixRow);
 			
 			while ((Line = Buffer.readLine()) != null) {                       // Read row data
 				matrixRow = CSVtoArrayList(Line);
-				experience.setProductMap(matrixRow);
+				experience.setFarmMap(matrixRow);
 			}
 				
 		} catch (IOException e) {

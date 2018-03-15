@@ -88,7 +88,7 @@ public class Consumat {
 			for (String act: possibleActivitySet) System.out.print(act + " ");
 			System.out.print("\n");
 			
-			DecisionResult decision = new DecisionResult(farm.getPreferences().getActivityName(), farm.getFarmName(), year, farm.getParameters(), farm.getStrategy(), farm.getIncomeHistory().get(0), farm.getCurrentActivities(), possibleActivitySet);
+			DecisionResult decision = new DecisionResult(farm.getPreferences().getDataElementName(), farm.getFarmName(), year, farm.getParameters(), farm.getStrategy(), farm.getIncomeHistory().get(0), farm.getCurrentActivities(), possibleActivitySet);
 
 			line_counter++;
 			if (line_counter > 999999) {

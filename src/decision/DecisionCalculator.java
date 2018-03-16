@@ -92,6 +92,7 @@ public class DecisionCalculator {
 		for (int i = 0; i< len - 2; i++) {
 			for (int j = 0; j < len - 2; j++) {
 				matrix[i][j] = (p1[i][j] + p2[i][j] + p3[i][j] )/3;
+				//matrix[i][j] = (beta1)*p1[i][j] + (beta2)*p2[i][j] + (beta3)*p3[i][j];
 			}
 		}
 		
@@ -130,6 +131,7 @@ public class DecisionCalculator {
 		for (int i = 0; i< len - 2; i++) {
 			for (int j = 0; j < len - 2; j++) {
 				matrix[i][j] = ( p1[i][j] + p2[i][j] ) / 2;
+				//matrix[i][j] = (beta1)p1[i][j] + beta2p2[i][j]
 			}
 		}
 		

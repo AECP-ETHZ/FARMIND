@@ -139,18 +139,10 @@ public class Consumat {
 	private static List<Double> readGamsResults(List<Farm> allFarms) {
 		List<Double> incomes = new ArrayList<Double>();						   // list of all farm incomes
 		List<Activity> activity = new ArrayList<Activity>();	   	 	       // list of all farm activities selected by LP model
-		NormalDistribution normal = new NormalDistribution(0, 0.2);			   // distribution of variance to income for all farms
-
-		double incomeVariance = normal.sample();							   // vary reported income by sampled amount
 		
 		List<Object> data = readIncome();            					       // read all results data
 		incomes = (List<Double>) data.get(0);
 		activity = (List<Activity>) data.get(1);
-		
-		for (int i = 0; i<incomes.size(); i++) {
-			double newIncome = incomes.get(i) + incomes.get(i)*incomeVariance; // vary by equal amount for all regions
-			incomes.set(i, newIncome);
-		}
 		
 		for (int i = 0; i < allFarms.size(); i++) {
 			List<Activity> act = new ArrayList<Activity>();

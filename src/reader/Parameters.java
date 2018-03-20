@@ -20,7 +20,7 @@ public class Parameters {
 	private double beta1;													   // used to set percentage of criteria in fuzzy selection
 	private double beta2;													   // used to set percentage of criteria in fuzzy selection
 	private double beta3;													   // used to set percentage of criteria in fuzzy selection
-	private String name;													   // name of farm
+	private String name;													   // name of parameter set
 	
 	public double getAlpha_plus() {
 		return alpha_plus;

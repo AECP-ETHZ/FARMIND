@@ -66,17 +66,16 @@ public class DecisionCalculator {
 	 * @return list of products from the product selection calculator
 	 */
 	public List<String> getImitationProducts() {
-		
-		double[] c1 = new double[this.L.size()];	
-		for (int i = 0; i < this.L.size(); i++) {
-			c1[i] = L.get(i);
-		}
-		
-		double[] c2 = new double[this.P.size()];
+		double[] c1 = new double[this.P.size()];
 		for (int i = 0; i < this.P.size(); i++) {
-			c2[i] = P.get(i);
+			c1[i] = P.get(i);
 		}
 		
+		double[] c2 = new double[this.L.size()];	
+		for (int i = 0; i < this.L.size(); i++) {
+			c2[i] = L.get(i);
+		}
+				
 		double[] c3 = new double[this.S.size()];
 		for (int i = 0; i < this.S.size(); i++) {
 			c3[i] = S.get(i);
@@ -91,7 +90,6 @@ public class DecisionCalculator {
 		 
 		for (int i = 0; i< len - 2; i++) {
 			for (int j = 0; j < len - 2; j++) {
-				//matrix[i][j] = (p1[i][j] + p2[i][j] + p3[i][j] )/3;
 				matrix[i][j] = (farm.getParameters().getBeta1())*p1[i][j] + (farm.getParameters().getBeta2())*p2[i][j] + (farm.getParameters().getBeta3())*p3[i][j];
 			}
 		}
@@ -111,15 +109,14 @@ public class DecisionCalculator {
 	 * @return list of products from the product selection calculator
 	 */
 	public List<String> getOptimizeProducts() {
-
-		double[] c1 = new double[this.L.size()];
-		for (int i = 0; i < this.L.size(); i++) {
-			c1[i] = L.get(i);
+		double[] c1 = new double[this.P.size()];
+		for (int i = 0; i < this.P.size(); i++) {
+			c1[i] = P.get(i);
 		}
 		
-		double[] c2 = new double[this.P.size()];
-		for (int i = 0; i < this.P.size(); i++) {
-			c2[i] = P.get(i);
+		double[] c2 = new double[this.L.size()];	
+		for (int i = 0; i < this.L.size(); i++) {
+			c2[i] = L.get(i);
 		}
 		
 		double[][] p1 = preference_matrix(c1);
@@ -130,7 +127,6 @@ public class DecisionCalculator {
 		 
 		for (int i = 0; i< len - 2; i++) {
 			for (int j = 0; j < len - 2; j++) {
-				//matrix[i][j] = ( p1[i][j] + p2[i][j] ) / 2;
 				matrix[i][j] = (farm.getParameters().getBeta1())*p1[i][j] + (farm.getParameters().getBeta2())*p2[i][j];
 			}
 		}

@@ -34,8 +34,8 @@ public class Farm {
 	private double Dissimilarity_Tolerance;									   // Individual level of tolerance to differences in activities on the network
 	private double Income_Tolerance;									       // Individual level of tolerance to differences in personal vs regional income changes
 	private Graph<String, DefaultEdge> network; 							   // Social network of farmers
-	private FarmDataMatrix experience;									   // experience (in years) of the each farm for each activity
-	private FarmDataMatrix preferences;									   // preference (between 1 to 5) of each farm for each activity
+	private FarmDataMatrix experience;									       // experience (in years) of the each farm for each activity
+	private FarmDataMatrix preferences;									       // preference (between 1 to 5) of each farm for each activity
 	private List<Activity> currentActivities;								   // list of current activities each farm is engaged in
 	private List<Activity> allActivities;									   // list of all possible activities
 	private Parameters parameters;											   // simulation parameters
@@ -43,6 +43,8 @@ public class Farm {
 	private double incomeProbability;										   // for a region (list of farms) income is distributed normally. We can determine the probability of an income occuring in this distribution (CPD)
 	private double regionIncomeChangePercent;								   // the percentage that the income of a region change (current_avg - historical_avg)/historical_avg
 	private double lastYearPersonalIncomeAverage;							   // excluding most recent time period, average income of the specific farm
+	private double k;														   // learning rate for specific farm. Calculated based on education level
+	private List<Double> q_range;											   // q range (+,- values) for the learning rate vectors for the individual farm
 	
 	/** 
 	 * Constructor method for farm object
@@ -504,5 +506,19 @@ public class Farm {
 	}
 	public void setIncome_Tolerance(double income_Tolerance) {
 		Income_Tolerance = income_Tolerance;
+	}
+	public List<Double> getQ_range() {
+		// actually calculate q based on k value
+		return q_range;
+	}
+	public void setQ_range(List<Double> q_range) {
+		this.q_range = q_range;
+	}
+	public double getK() {
+		// actually calculate k based on this.education
+		return k;
+	}
+	public void setK(double k) {
+		this.k = k;
 	}
 }

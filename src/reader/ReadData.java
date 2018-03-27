@@ -227,10 +227,9 @@ public class ReadData {
 			parameters.setB(Double.parseDouble(matrixRow.get(7)) ); 
 			parameters.setK(Double.parseDouble(matrixRow.get(8)) ); 
 			parameters.setM(Double.parseDouble(matrixRow.get(9)) ); 
-			parameters.setBeta1(Double.parseDouble(matrixRow.get(10)) );
-			parameters.setBeta2(Double.parseDouble(matrixRow.get(11)) );
-			parameters.setBeta3(Double.parseDouble(matrixRow.get(12)) );
-			parameters.setName(matrixRow.get(13));
+			parameters.setBeta_s(Double.parseDouble(matrixRow.get(10)) );
+			parameters.setBeta_q(Double.parseDouble(matrixRow.get(11)) );
+			parameters.setName(matrixRow.get(12));
 				
 		} catch (IOException e) {
 			e.printStackTrace();

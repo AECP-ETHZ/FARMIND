@@ -81,16 +81,16 @@ public class DecisionCalculator {
 			c3[i] = S.get(i);
 		}
 		
-		double[][] p1 = preference_matrix(c1);
-		double[][] p2 = preference_matrix(c2);
-		double[][] p3 = preference_matrix(c3);
+		double[][] p_p = preference_matrix(c1);
+		double[][] p_l = preference_matrix(c2);
+		double[][] p_s = preference_matrix(c3);
 		
 		int len = c1.length;
 		double[][] matrix = new double[len-2][len-2];
 		 
 		for (int i = 0; i< len - 2; i++) {
 			for (int j = 0; j < len - 2; j++) {
-				matrix[i][j] = (farm.getParameters().getBeta1())*p1[i][j] + (farm.getParameters().getBeta2())*p2[i][j] + (farm.getParameters().getBeta3())*p3[i][j];
+				matrix[i][j] = p_p[i][j] + farm.getParameters().getBeta_q() * ( p_l[i][j] + farm.getParameters().getBeta_s()*p_s[i][j] );
 			}
 		}
 		
@@ -119,15 +119,15 @@ public class DecisionCalculator {
 			c2[i] = L.get(i);
 		}
 		
-		double[][] p1 = preference_matrix(c1);
-		double[][] p2 = preference_matrix(c2);
+		double[][] p_p = preference_matrix(c1);
+		double[][] p_l = preference_matrix(c2);
 		
 		int len = c1.length;
 		double[][] matrix = new double[len-2][len-2];
 		 
 		for (int i = 0; i< len - 2; i++) {
 			for (int j = 0; j < len - 2; j++) {
-				matrix[i][j] = (farm.getParameters().getBeta1())*p1[i][j] + (farm.getParameters().getBeta2())*p2[i][j];
+				matrix[i][j] = p_p[i][j] + farm.getParameters().getBeta_q() * ( p_l[i][j] );
 			}
 		}
 		

@@ -108,7 +108,7 @@ public class DecisionResult {
 		PrintWriter writer = new PrintWriter(bw);
 		
 		if (file.length() == 0) {
-			writer.println("year,name,alpha_plus,alpha_minus,lambda,phi_plus,phi_minus,a,b,k,m,beta1,beta2,beta3,strategy,possible_action1,"
+			writer.println("year,name,alpha_plus,alpha_minus,lambda,phi_plus,phi_minus,a,b,k,m,beta_s,beta_q,strategy,possible_action1,"
 					+ "possible_action2,possible_action3,possible_action4,possible_action5,possible_action6,income,current_action");
 		}
 		
@@ -123,9 +123,8 @@ public class DecisionResult {
 		writer.print(String.format("%s,",this.param.getB() ));
 		writer.print(String.format("%s,",this.param.getK() ));
 		writer.print(String.format("%s,",this.param.getM() ));
-		writer.print(String.format("%s,",this.param.getBeta1() ));
-		writer.print(String.format("%s,",this.param.getBeta2() ));
-		writer.print(String.format("%s,",this.param.getBeta3() ));
+		writer.print(String.format("%s,",this.param.getBeta_s() ));
+		writer.print(String.format("%s,",this.param.getBeta_q() ));
 		writer.print(String.format("%s,",this.strategy) );
 		
 		for(int i = 0; i < this.possibleActivity.size(); i++) {

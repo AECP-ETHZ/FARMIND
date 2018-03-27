@@ -17,9 +17,8 @@ public class Parameters {
 	private double k;														   // scale factor for experience vector
 	private double b;														   // used to set tolerance for dissimilarity
 	private double m;														   // used to set tolerance for income changes
-	private double beta1;													   // used to set percentage of criteria in fuzzy selection
-	private double beta2;													   // used to set percentage of criteria in fuzzy selection
-	private double beta3;													   // used to set percentage of criteria in fuzzy selection
+	private double beta_s;													   // used to set percentage of criteria in fuzzy selection
+	private double beta_q;													   // used to set percentage of criteria in fuzzy selection
 	private String name;													   // name of parameter set
 	
 	public double getAlpha_plus() {
@@ -82,22 +81,16 @@ public class Parameters {
 	public void setM(double m) {
 		this.m = m;
 	}
-	public double getBeta1() {
-		return beta1;
+	public double getBeta_s() {
+		return beta_s;
 	}
-	public void setBeta1(double beta1) {
-		this.beta1 = beta1;
+	public void setBeta_s(double beta_s) {
+		this.beta_s = beta_s;
 	}
-	public double getBeta2() {
-		return beta2;
+	public double getBeta_q() {
+		return beta_q;
 	}
-	public void setBeta2(double beta2) {
-		this.beta2 = beta2;
-	}
-	public double getBeta3() {
-		return beta3;
-	}
-	public void setBeta3(double beta3) {
-		this.beta3 = beta3;
+	public void setBeta_q(double beta_q) {
+		this.beta_q = beta_q;
 	}
 }

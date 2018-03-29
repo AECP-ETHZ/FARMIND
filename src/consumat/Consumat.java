@@ -31,7 +31,7 @@ public class Consumat {
 		double max_parameter_length = getParameterCount();
 		System.out.println("Starting Model");
 		
-		//max_parameter_length = 2;
+		max_parameter_length = 2;
 		for (double parameterSet = 1; parameterSet < max_parameter_length; parameterSet++) {	   // sensitivity testing, loop through all parameters
 			ReadData reader = new ReadData();										   // read all input data files
 			List<Farm>     allFarms = reader.getFarms((int)parameterSet);					       // build set of farms with new parameters
@@ -88,7 +88,7 @@ public class Consumat {
 			for (String act: possibleActivitySet) System.out.print(act + " ");
 			System.out.print("\n");
 			
-			DecisionResult decision = new DecisionResult(farm.getPreferences().getDataElementName(), farm.getFarmName(), year, farm.getParameters(), farm.getStrategy(), farm.getIncomeHistory().get(0), farm.getCurrentActivities(), possibleActivitySet);
+			DecisionResult decision = new DecisionResult(farm.getPreferences().getDataElementName(), farm.getFarmName(), year, farm.getParameters(), farm.getK(), farm.getStrategy(), farm.getIncomeHistory().get(0), farm.getCurrentActivities(), possibleActivitySet);
 
 			line_counter++;
 			if (line_counter > 999999) {

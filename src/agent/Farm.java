@@ -1,6 +1,7 @@
 package agent;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -509,13 +510,38 @@ public class Farm {
 	}
 	public List<Double> getQ_range() {
 		// actually calculate q based on k value
+		List<Double> std = Arrays.asList(0.11, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.1, 0.09, 0.06 );
+		
+		double q = std.get(this.getEducation() - 1);
+		List<Double> q_range = Arrays.asList(q, 2*q); // first value is lower range, second is upper range
+		
 		return q_range;
 	}
 	public void setQ_range(List<Double> q_range) {
 		this.q_range = q_range;
 	}
+	/** 
+	 * the k value is individually set for each agent based on the years of education. <br>
+	 * For an agent with 1 year of education, we can subtract that from maximum years of education (13) and solve for k. 
+	 * Then calculate each k value
+	 *  education 1, k value: 0.25, std: 0.11 : [0.56, 0.62, 0.68, 0.73, 0.78, 0.82, 0.85, 0.88, 0.9]<br>
+		education 2, k value: 0.27, std: 0.12 : [0.57, 0.63, 0.69, 0.75, 0.79, 0.83, 0.87, 0.9, 0.92]<br>
+		education 3, k value: 0.3, std: 0.12 : [0.57, 0.65, 0.71, 0.77, 0.82, 0.86, 0.89, 0.92, 0.94]<br>
+		education 4, k value: 0.33, std: 0.12 : [0.58, 0.66, 0.73, 0.79, 0.84, 0.88, 0.91, 0.93, 0.95]<br>
+		education 5, k value: 0.37, std: 0.12 : [0.59, 0.68, 0.75, 0.81, 0.86, 0.9, 0.93, 0.95, 0.97]<br>
+		education 6, k value: 0.42, std: 0.12 : [0.6, 0.7, 0.78, 0.84, 0.89, 0.93, 0.95, 0.97, 0.98]<br>
+		education 7, k value: 0.49, std: 0.12 : [0.62, 0.73, 0.81, 0.88, 0.92, 0.95, 0.97, 0.98, 0.99]<br>
+		education 8, k value: 0.59, std: 0.12 : [0.64, 0.76, 0.85, 0.91, 0.95, 0.97, 0.98, 0.99, 1.0]<br>
+		education 9, k value: 0.74, std: 0.1 : [0.68, 0.81, 0.9, 0.95, 0.98, 0.99, 0.99, 1.0, 1.0]<br>
+		education 10, k value: 0.98, std: 0.09 : [0.73, 0.88, 0.95, 0.98, 0.99, 1.0, 1.0, 1.0, 1.0]<br>
+		education 11, k value: 1.48, std: 0.06 : [0.81, 0.95, 0.99, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]<br>
+	 * @return
+	 */
 	public double getK() {
-		// actually calculate k based on this.education
+		List<Double> education = Arrays.asList( 0.25, 0.27, 0.3, 0.33, 0.37, 0.42, 0.49, 0.59, 0.74, 0.98, 1.48 ); // education from 1 to 11 years
+		
+		double k = education.get(this.getEducation() - 1);
+		
 		return k;
 	}
 	public void setK(double k) {

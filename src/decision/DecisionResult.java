@@ -23,6 +23,7 @@ public class DecisionResult {
 	private Parameters param;												   // which parameter set was used
 	private int strategy;													   // farm strategy
 	private double income;													   // income of time step
+	private double k;													       // income of time step
 	private List<String> allActivity;										   // All possible activities in the model
 	private List<Activity> currentActivity;									   // current activity of the agent
 	private List<String> possibleActivity;								       // set of possible activities by the agent
@@ -38,7 +39,7 @@ public class DecisionResult {
 	 * @param currentActivities		current actions in system
 	 * @param income		income of farm
 	 */
-	public DecisionResult(List<String> allActivities, String farmId, Integer year, Parameters param, int strat, double income, List<Activity> currentActivities, List<String> possibleActivities) {
+	public DecisionResult(List<String> allActivities, String farmId, Integer year, Parameters param, Double k, int strat, double income, List<Activity> currentActivities, List<String> possibleActivities) {
 		setFarmId(farmId);
 		setYear(year);
 		setParam(param);
@@ -47,6 +48,7 @@ public class DecisionResult {
 		setCurrentActivity(currentActivities);
 		setPossibleActivity(possibleActivities);
 		setAllActivity(allActivities);
+		setK(k);
 	}
 
 	/** 
@@ -121,7 +123,7 @@ public class DecisionResult {
 		writer.print(String.format("%s,",this.param.getPhi_minus() ));
 		writer.print(String.format("%s,",this.param.getA() ));
 		writer.print(String.format("%s,",this.param.getB() ));
-		writer.print(String.format("%s,",this.param.getK() ));
+		writer.print(String.format("%s,",this.getK() ));
 		writer.print(String.format("%s,",this.param.getM() ));
 		writer.print(String.format("%s,",this.param.getBeta_s() ));
 		writer.print(String.format("%s,",this.param.getBeta_q() ));
@@ -196,6 +198,14 @@ public class DecisionResult {
 		this.allActivity = allActivity;
 	}
 	
+	public double getK() {
+		return k;
+	}
+
+	public void setK(double k) {
+		this.k = k;
+	}
+
 	/**
 	 *  We have 72 strategies in the system, and these tuples correspond to each strategy.  first element in the tuple is a row in the strategy matrix, and the second element is the column.
 	 *  Each row element corresponds to a post sowing strategy, and each column is a pre sowing strategy. So [53,2] corresponds to post 53, and pre 2 strategy set.  

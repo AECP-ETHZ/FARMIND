@@ -14,7 +14,6 @@ public class Parameters {
 	private double phi_plus;												   // used in satisfaction calc
 	private double phi_minus;												   // used in satisfaction calc
 	private double a;														   // used in aspiration calc
-	private double k;														   // scale factor for experience vector
 	private double b;														   // used to set tolerance for dissimilarity
 	private double m;														   // used to set tolerance for income changes
 	private double beta_s;													   // used to set percentage of criteria in fuzzy selection
@@ -56,12 +55,6 @@ public class Parameters {
 	}
 	public void setA(double a) {
 		this.a = a;
-	}
-	public double getK() {
-		return k;
-	}
-	public void setK(double k) {
-		this.k = k;
 	}
 	public String getName() {
 		return name;

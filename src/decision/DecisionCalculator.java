@@ -46,8 +46,8 @@ public class DecisionCalculator {
 		this.P = getFarmPreferenceVector(farm,m);
 		this.farm = farm;
 		
-		double q_minus = 0.1;												   // set upper and lower q range for experience
-		double q_plus  = 0.2;  
+		double q_minus = farm.getQ_range().get(0);												   // set upper and lower q range for experience
+		double q_plus  =  farm.getQ_range().get(1);  
 		L.add(q_minus);															  
 		L.add(q_plus);														   
 		S.add(q_minus);
@@ -279,7 +279,7 @@ public class DecisionCalculator {
 	private List<Double> getFarmExperienceVector(Farm farm, double m) {
 		List<Double> Q = new ArrayList<Double>();                              // learning by doing vector for specific farm
 		int time = 0;														   // years of experience
-		double k = farm.getParameters().getK();								   // scale factor
+		double k = farm.getK();								                   // scale factor
 		double q;															   // calculated score
 		
 		for (int i = 0; i < m; i++) {

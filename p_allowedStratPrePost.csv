@@ -31,11 +31,11 @@ Ahaus,spost29,0,0,0,0,0,0
 Ahaus,spost30,0,0,0,0,0,0
 Ahaus,spost31,0,0,0,0,0,0
 Ahaus,spost32,0,0,0,0,0,0
-Ahaus,spost33,0,0,0,0,0,0
+Ahaus,spost33,0,0,1,0,0,1
 Ahaus,spost34,0,0,0,0,0,0
 Ahaus,spost35,0,0,0,0,0,0
-Ahaus,spost36,0,0,0,0,0,0
-Ahaus,spost37,0,0,0,0,0,0
+Ahaus,spost36,0,0,1,1,1,0
+Ahaus,spost37,0,0,1,0,0,0
 Ahaus,spost38,0,0,0,0,0,0
 Ahaus,spost39,0,0,0,0,0,0
 Ahaus,spost40,0,0,0,0,0,0
@@ -50,9 +50,9 @@ Ahaus,spost48,0,0,0,0,0,0
 Ahaus,spost49,0,0,0,0,0,0
 Ahaus,spost50,0,0,0,0,0,0
 Ahaus,spost51,0,0,0,0,0,0
-Ahaus,spost52,0,0,0,1,0,0
-Ahaus,spost53,0,1,1,1,0,0
-Ahaus,spost54,0,1,1,0,0,0
+Ahaus,spost52,0,0,0,0,0,0
+Ahaus,spost53,0,0,0,0,0,0
+Ahaus,spost54,0,0,0,0,0,0
 Ahaus,spost55,0,0,0,0,0,0
 Beckum,spost1,1,1,1,1,1,1
 Beckum,spost2,0,0,0,0,0,0
@@ -92,7 +92,7 @@ Beckum,spost35,0,0,0,0,0,0
 Beckum,spost36,0,0,0,0,0,0
 Beckum,spost37,0,0,0,0,0,0
 Beckum,spost38,0,0,0,0,0,0
-Beckum,spost39,0,0,0,0,0,0
+Beckum,spost39,0,0,1,1,1,0
 Beckum,spost40,0,0,0,0,0,0
 Beckum,spost41,0,0,0,0,0,0
 Beckum,spost42,0,0,0,0,0,0
@@ -104,7 +104,7 @@ Beckum,spost47,0,0,0,0,0,0
 Beckum,spost48,0,0,0,0,0,0
 Beckum,spost49,0,0,0,0,0,0
 Beckum,spost50,0,0,0,0,0,0
-Beckum,spost51,0,0,0,0,0,0
+Beckum,spost51,0,1,1,1,0,0
 Beckum,spost52,0,0,0,0,0,0
 Beckum,spost53,0,0,0,0,0,0
 Beckum,spost54,0,0,0,0,0,0
@@ -144,8 +144,8 @@ Bruehl,spost32,0,0,0,0,0,0
 Bruehl,spost33,0,0,0,0,0,0
 Bruehl,spost34,0,0,0,0,0,0
 Bruehl,spost35,0,0,0,0,0,0
-Bruehl,spost36,0,0,0,0,1,0
-Bruehl,spost37,0,0,1,0,0,0
+Bruehl,spost36,0,0,0,0,0,0
+Bruehl,spost37,0,0,0,0,0,0
 Bruehl,spost38,0,0,0,0,0,0
 Bruehl,spost39,0,0,0,0,0,0
 Bruehl,spost40,0,0,0,0,0,0
@@ -161,8 +161,8 @@ Bruehl,spost49,0,0,0,0,0,0
 Bruehl,spost50,0,0,0,0,0,0
 Bruehl,spost51,0,0,0,0,0,0
 Bruehl,spost52,0,0,0,0,0,0
-Bruehl,spost53,0,0,0,1,0,0
-Bruehl,spost54,0,1,1,1,0,0
+Bruehl,spost53,0,0,0,0,0,0
+Bruehl,spost54,0,0,0,0,0,0
 Bruehl,spost55,0,0,0,0,0,0
 Hoevelhof,spost1,1,1,1,1,1,1
 Hoevelhof,spost2,0,0,0,0,0,0
@@ -312,7 +312,7 @@ Lippetal,spost35,0,0,0,0,0,0
 Lippetal,spost36,0,0,0,0,0,0
 Lippetal,spost37,0,0,0,0,0,0
 Lippetal,spost38,0,0,0,0,0,0
-Lippetal,spost39,0,0,1,1,1,0
+Lippetal,spost39,0,0,0,0,0,0
 Lippetal,spost40,0,0,0,0,0,0
 Lippetal,spost41,0,0,0,0,0,0
 Lippetal,spost42,0,0,0,0,0,0
@@ -324,8 +324,8 @@ Lippetal,spost47,0,0,0,0,0,0
 Lippetal,spost48,0,0,0,0,0,0
 Lippetal,spost49,0,0,0,0,0,0
 Lippetal,spost50,0,0,0,0,0,0
-Lippetal,spost51,0,1,0,0,0,0
+Lippetal,spost51,0,0,0,0,0,0
 Lippetal,spost52,0,0,0,0,0,0
 Lippetal,spost53,0,0,0,0,0,0
-Lippetal,spost54,0,0,1,1,0,0
+Lippetal,spost54,0,0,0,0,0,0
 Lippetal,spost55,0,0,0,0,0,0

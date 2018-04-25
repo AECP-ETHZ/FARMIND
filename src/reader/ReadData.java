@@ -171,8 +171,8 @@ public class ReadData {
 					}
 				}
 				
-				for (int i = 0; i < memory; i++) {
-					income.add( Double.parseDouble( farmParameters.get(i+INCOME_INDEX) ) );
+				for (int i = INCOME_INDEX; i < (farmParameters.size()); i++) {
+					income.add( Double.parseDouble( farmParameters.get(i) ) );
 				}
 				
 				List<Double> avgIncome = new ArrayList<Double>(income);
@@ -181,6 +181,7 @@ public class ReadData {
 
 				Person farmHead = new Person(age, education, memory);        
 				Farm farm = new Farm(name, location, network.get(farm_count_index), income, personalIncomeAverage, experience, pref, activities, diss_tolerance, income_tolerance, currentActivities, farmHead, parameters);
+				farm.setK();
 				
 				farms.add(farm);
 				farm_count_index++;	

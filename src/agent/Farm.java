@@ -17,6 +17,8 @@ import org.jgrapht.graph.DefaultEdge;
 import activity.Activity;
 import decision.DecisionCalculator;
 
+import java.lang.Math;
+
 /** 
  * Farm object contains people and parameters associated with each farm, as well as a copy of activity list, preferences and experiences, and network connections
  * 
@@ -376,6 +378,41 @@ public class Farm {
 		
 		return mean / list.size();
 	}
+	/** 
+	 * Initialize a value for K based on the memory limit of each farm
+	 * @return a double value that is K
+	 */
+	public double init_K() {
+		double s = 1;
+		double m1_ratio = 1/2.0;
+		double m2_ratio = 1/8.0;
+
+		double upper_q = 0.9;
+		double lower_q = 0.65;
+		double delta = 0.005;
+		double k_upper = 1;
+		double k_lower = 0.1;
+		
+		double ln_ratio = 0;
+		
+		double memory_limit = this.getMemory();
+
+		while (k_upper > k_lower) {
+			ln_ratio = -Math.log((1-upper_q)/upper_q);
+			k_upper = ln_ratio/( Math.round(memory_limit * m1_ratio) * s);
+			ln_ratio = -Math.log((1-lower_q)/lower_q);
+			k_lower = ln_ratio/( Math.round(memory_limit * m2_ratio) * s);
+			upper_q = upper_q - delta;
+			lower_q = lower_q + delta;
+		}
+
+		double avg = (k_upper + k_lower) / 2.0;
+		
+		System.out.println("K value for farm is: " + avg);
+		
+		return k;
+	}
+	
 
 	// getters and setters for all fields
 	public void setAspiration(double aspiration) {
@@ -520,16 +557,22 @@ public class Farm {
 	public void setQ_range(List<Double> q_range) {
 		this.q_range = q_range;
 	}
-	/** 
-	 * the k value is individually set for each agent from the set [0.45,0.5,0.55]
-	 * @return
-	 */
 	public double getK() {
-		double k = 0.5;
-		
-		return k;
+		return this.k;
 	}
-	public void setK(double k) {
-		this.k = k;
+	public void setK() {
+		this.k = init_K();
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+

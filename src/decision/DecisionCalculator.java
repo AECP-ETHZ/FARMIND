@@ -45,7 +45,7 @@ public class DecisionCalculator {
 		this.S = getNetworkExperienceAverageVector(farm, m, farms);
 		this.P = getFarmPreferenceVector(farm,m);
 		this.farm = farm;
-		
+		farm.setQ_range();
 		double q_minus = farm.getQ_range().get(0);												   // set upper and lower q range for experience
 		double q_plus  =  farm.getQ_range().get(1);  
 		L.add(q_minus);															  

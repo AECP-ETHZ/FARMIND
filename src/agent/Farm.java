@@ -16,7 +16,6 @@ import org.jgrapht.graph.DefaultEdge;
 
 import activity.Activity;
 import decision.DecisionCalculator;
-
 import java.lang.Math;
 
 /** 
@@ -406,13 +405,38 @@ public class Farm {
 			lower_q = lower_q + delta;
 		}
 
-		double avg = (k_upper + k_lower) / 2.0;
-		
-		System.out.println("K value for farm is: " + avg);
-		
-		return k;
+		double avg = (k_upper + k_lower) / 2.0;		
+		return avg;
 	}
-	
+	/** 
+	 * Given a specific value for k, calculate all possible q (experience value) for all possible memory lengths. </br>
+	 * So if memory is 5 years long, we calculate a q value for years 1 to 5. And using this set of q values we calcualte a standard deviation. </br>
+	 * This standard deviation is used to set the upper and lower values for the q range. 
+	 * @return
+	 */
+	public List<Double> calc_q_set() {
+		double k = this.getK();
+		List<Double> experience = new ArrayList<Double>();
+		List<Double> q_range = new ArrayList<Double>();
+		
+		for (int i = 0; i < this.getMemory(); i++) {
+			experience.add(  1 / (1 + Math.exp(-k * (i+1)) ));
+		}
+		
+		// calculate standard deviation 
+		double sd = 0;		
+		for (int i=0; i<experience.size();i++)
+		{
+		    sd = sd + Math.pow(experience.get(i) - mean(experience), 2);
+		}
+		
+		sd = Math.sqrt(sd/experience.size());
+		
+		q_range.add(sd);
+		q_range.add(2*sd);
+		
+		return q_range;
+	}
 
 	// getters and setters for all fields
 	public void setAspiration(double aspiration) {
@@ -546,16 +570,13 @@ public class Farm {
 		Income_Tolerance = income_Tolerance;
 	}
 	public List<Double> getQ_range() {
-		// actually calculate q based on k value
-		List<Double> std = Arrays.asList(0.11, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.1, 0.09, 0.06 );
-		
-		double q = std.get(this.getEducation() - 1);
-		List<Double> q_range = Arrays.asList(q, 2*q); // first value is lower range, second is upper range
-		
-		return q_range;
+		if (mean(this.q_range) == 0) {
+			this.setQ_range();
+		}			
+		return this.q_range;
 	}
-	public void setQ_range(List<Double> q_range) {
-		this.q_range = q_range;
+	public void setQ_range() {
+		this.q_range = calc_q_set();
 	}
 	public double getK() {
 		return this.k;

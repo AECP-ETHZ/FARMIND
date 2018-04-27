@@ -157,6 +157,9 @@ public class ReadData {
 				age = currentYear - Integer.parseInt( farmParameters.get(AGE));
 				education = Integer.parseInt( farmParameters.get(EDUCATION) );
 				memory = Integer.parseInt( farmParameters.get(MEMORY));
+				if (memory < 4) {
+					memory = 4; 											   // error in calculations if memory is less than 4
+				}
 				diss_tolerance = Double.parseDouble( farmParameters.get(DISS_TOLERANCE));
 				income_tolerance = Double.parseDouble( farmParameters.get(INCOME_TOLERANCE));
 				

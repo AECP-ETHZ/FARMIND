@@ -31,7 +31,7 @@ public class Consumat {
 		double max_parameter_length = getParameterCount();
 		System.out.println("Starting Model");
 		
-		max_parameter_length = 2;
+		//max_parameter_length = 2;
 		for (double parameterSet = 1; parameterSet < max_parameter_length; parameterSet++) {	   // sensitivity testing, loop through all parameters
 			ReadData reader = new ReadData();										   // read all input data files
 			List<Farm>     allFarms = reader.getFarms((int)parameterSet);					       // build set of farms with new parameters
@@ -62,7 +62,7 @@ public class Consumat {
 	private static void CreateGamsFile(List<Farm> allFarms, int year, List<Double> simulatedIncomeForFarms) {
 		double income = 0;																	       // specific income of farm 
 		double probability = 0;																       // probability of income occurring
-		NormalDistribution normal = new NormalDistribution(50000.0, 10000.0);			           // distribution of possible incomes
+		
 		int farmIndex = 0;																		   // index of specific farm in list
 
 		File f = new File("p_allowedStratPrePost.csv");										       // delete last time period's simulation file
@@ -73,7 +73,10 @@ public class Consumat {
 				income = -1;
 				probability = 0.5;
 			} else {
-				income = simulatedIncomeForFarms.get(farmIndex)*100;
+				double mean = mean(simulatedIncomeForFarms)*100;
+				double std = std(simulatedIncomeForFarms)*100;
+				NormalDistribution normal = new NormalDistribution(mean, std);			           // distribution of possible incomes
+				income = simulatedIncomeForFarms.get(farmIndex);
 				probability = normal.cumulativeProbability(income);
 			}
 			
@@ -225,6 +228,22 @@ public class Consumat {
 		}
 		
 		return mean / list.size();
+	}
+	
+	/**
+	 * Calculate standard deviation of a list
+	 * @param list
+	 * @return std deviation value
+	 */
+	private static double std(List<Double> list) {
+		double sd = 0;		
+		for (int i=0; i<list.size();i++)
+		{
+		    sd = sd + Math.pow(list.get(i) - mean(list), 2);
+		}
+		
+		sd = Math.sqrt(sd/list.size());
+		return sd;
 	}
 
 	/** 

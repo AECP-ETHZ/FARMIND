@@ -11,5 +11,7 @@ for(i in sensitivity_step) {
   # etc
   
   ## Start Java program
-  shell.exec("run_java_ABM.bat")
+  shell.exec("run_java_ABM.bat") # this will pause the R program until this command is finished running
+  # for a mac it should be something like
+  # system("mac version of the batch file")
 }

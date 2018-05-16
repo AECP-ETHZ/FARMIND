@@ -120,7 +120,7 @@ set gn "municipalities in model" /
  alias(gn,gn1);set gnCur(gn);
  Parameter gn_inAnalysis;
 *number of geographical units that shall be calculated: max card(gn) = 377
- gn_inAnalysis = 3;
+ gn_inAnalysis = 6;
 
 
  set plants "weeds" /
@@ -161,7 +161,7 @@ set gn "municipalities in model" /
 
  Sets
   betas / 0*3 /
-  s_spre               "Pre-sowing weed control strategies" / spre1*spre16,spre19*spre21/
+  s_spre               "Pre-sowing weed control strategies" / spre1*spre6/
   s_spost              "Post-sowing weed control strategies" / spost1*spost55/
   s                    "Weed control strategies" / set.s_spre,set.s_spost /
   spre(s)              "pre-sowing weed control strategies strategies" / set.s_spre /
@@ -257,22 +257,15 @@ set gn "municipalities in model" /
   $$include p_weatherstation.csv
   $$offdelim
 
- table p_AllowedStrat(gn,spre,s_ASban)
-  $$ondelim
-  $$include p_AllowedStrat.csv
-  $$offdelim
-
- table p_AllowedStratPost(gn,spost,s_ASban)
-  $$ondelim
-  $$include p_AllowedStratPost.csv
-  $$offdelim
-
  Parameter p_soil(gn,s_soilVarieties,s_soilarea) "soil type in different municipalites"   ;
   $$gdxin p_soil.gdx
   $$load p_soil
   $$gdxin
 
-
+ table p_AllowedStratPrePost(gn,spost,spre)
+  $$ondelim
+  $$include p_AllowedStratPrePost.csv
+  $$offdelim
 
 *
 *  --- load results from previous estimation step
@@ -377,15 +370,13 @@ set gn "municipalities in model" /
      p_yieldFunc(gn,tt,spre,spost)                  "yield function for GM-estimation -> p_timeofemergence can be changed"
      p_revenue(gn,tt,spre,spost)                    "yield * output price"
    ;
-$Ontext
+
    table p_AllowedStrat(spre,s_ASban)
                      normal             GlyBan
      spre1*spre4       1                   1
      spre5             1                   0
      spre6             1                   0
-     spre7*spre16      1                   1
-     spre19*spre21     1                   1
-$offtext
+
    table p_fertappl(s_fertamount, s_workchar)
                        workhour            machinerycost
 *                      h/ha                Euro/ha (fix+var)
@@ -418,24 +409,6 @@ $offtext
      spre4          33.05
      spre5           0
      spre6           7.50
-     spre7           0
-     spre8           0
-     spre9           0
-     spre10          0
-     spre11          0
-     spre12          0
-     spre13          7.50
-     spre14          7.50
-     spre15          7.50
-     spre16          7.50
-*     spre17          7.50
-*     spre18          7.50
-     spre19         15.00
-     spre20         15.00
-     spre21         15.00
-*     spre22         15.00
-*     spre23         15.00
-*     spre24         15.00
    ;
 
 
@@ -451,24 +424,6 @@ $offtext
      spre4          -0.277            0                0.277             0
      spre5           0                0                0                -0.2
      spre6          -0.2              0                0.2              -0.2
-     spre7           0                0                0                -0.2
-     spre8           0                0                0                -0.2
-     spre9           0                0                0                -0.2
-     spre10          0                0                0                -0.2
-     spre11          0                0                0                -0.2
-     spre12          0                0                0                -0.2
-     spre13         -0.2              0                0.2              -0.2
-     spre14         -0.2              0                0.2              -0.2
-     spre15         -0.2              0                0.2              -0.2
-     spre16         -0.2              0                0.2              -0.2
-*     spre17         -0.2              0                0.2              -0.2
-*     spre18         -0.2              0                0.2              -0.2
-     spre19         -0.2              0                0.2               0
-     spre20         -0.2              0                0.2               0
-     spre21         -0.2              0                0.2               0
-*     spre22         -0.2              0                0.2               0
-*     spre23         -0.2              0                0.2               0
-*     spre24         -0.2              0                0.2               0
    ;
 
 *
@@ -632,6 +587,7 @@ $ontext
   v_shareSpray.l('spost1',gn,'t2011') = 1;
 $offtext
 
+
 *
 * --- Gross margin calculation, restrictions and objective function:
 *
@@ -639,16 +595,12 @@ $offtext
     v_gm(gn,tt) =E= Sum [(spre,spost), p_gm(gn,tt,spre,spost)
                                                               * v_shareSpray(spre,gn,tt)
                                                               * v_shareSpray(spost,gn,tt)
+                                                              * p_AllowedStratPrePost(gn,spost,spre)
 
 $iftheni.GlyphosateBan %GlyphosateBan%==ON
-                                                              * p_AllowedStrat(gn,spre,'GlyBan')
-                                                              * p_AllowedStratPost(gn,spost,'GlyBan')
-$else.GlyphosateBan
-
+                                                              * p_AllowedStrat(spre,"GlyBan")
 $endif.GlyphosateBan
-                       ];
-
-
+                      ];
 *
 * --- Restriction that shares of pre resp. post strategies add up to unity
 *

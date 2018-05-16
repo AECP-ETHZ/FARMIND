@@ -1504,13 +1504,6 @@ RMIQCP=CONOPT
 MIP=CPLEX
 MIQCP=CPLEX
 
-[OPENWINDOW_1]
-MAXIM=0
-TOP=145
-LEFT=55
-HEIGHT=959
-WIDTH=1599
-
 [RP:FIT_STRAT2]
 1=
 
@@ -1518,12 +1511,20 @@ WIDTH=1599
 1=
 
 [MRUFILES]
-1=H:\Boecker\PhD\Model_ABM-calibration\Fit_StratABM_Cal.lst
-2=H:\Boecker\PhD\Model_ABM-calibration\Fit_StratABM_Cal.gms
-3=H:\Boecker\PhD\Model_ABM-calibration\p_AllowedStrat.csv
-4=H:\Boecker\PhD\Model_ABM-calibration\p_YieldMdm.csv
-5=H:\Boecker\PhD\Model_ABM-calibration\Fit_StratABM_Cal.log
-6=H:\Boecker\PhD\JOWA Damage Control Farm Model\Model_WW_Schweiz\Model\Herbicide2.gpr
-7=H:\Boecker\PhD\JOWA Damage Control Farm Model\Model_WW_Schweiz\Model\Fit_Strat2.gms
-8=H:\Boecker\PhD\4\Model\Fit_Strat2.lst
-9=H:\Boecker\PhD\4\Model\Fit_Strat2.gms
+1=C:\Users\kellerke\Documents\gamsdir\projdir\Fit_StratABM_Cal.gms
+2=C:\Users\kellerke\Documents\gamsdir\projdir\Fit_StratABM_Cal.lst
+3=H:\Boecker\PhD\Model_ABM-calibration\Fit_StratABM_Cal.lst
+4=H:\Boecker\PhD\Model_ABM-calibration\Fit_StratABM_Cal.gms
+5=H:\Boecker\PhD\Model_ABM-calibration\p_AllowedStrat.csv
+6=H:\Boecker\PhD\Model_ABM-calibration\p_YieldMdm.csv
+7=H:\Boecker\PhD\Model_ABM-calibration\Fit_StratABM_Cal.log
+8=H:\Boecker\PhD\JOWA Damage Control Farm Model\Model_WW_Schweiz\Model\Herbicide2.gpr
+
+[OPENWINDOW_1]
+FILE0=C:\Users\kellerke\Desktop\Model_ABM-calibration\Fit_StratABM_Cal.gms
+FILE1=C:\Users\kellerke\Desktop\Model_ABM-calibration\Fit_StratABM_Cal.gms
+MAXIM=1
+TOP=145
+LEFT=55
+HEIGHT=959
+WIDTH=1599

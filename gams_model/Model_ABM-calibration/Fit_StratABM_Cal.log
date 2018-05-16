@@ -1,144 +1,868 @@
 
---- Job Fit_StratABM_Cal.gms Start 02/15/18 14:45:22 24.1.3 r41464 WEX-WEI x86_64/MS Windows
-GAMS 24.1.3   Copyright (C) 1987-2013 GAMS Development. All rights reserved
-Licensee: Small MUD - 5 User License                     S170216:0352AO-WIN
+--- Job Fit_StratABM_Cal.gms Start 03/07/18 15:36:16 24.8.3 r60202 WEX-WEI x86 64bit/MS Windows
+GAMS 24.8.3   Copyright (C) 1987-2017 GAMS Development. All rights reserved
+Licensee: Small MUD - 5 User License                     S170714:1032AO-WIN
           ETH Zurich, Institute for Environmental Decisions / IED   DC10381
           License for teaching and research at degree granting institutions
-          License_Admin:_Markus_Schaffner,_mschaffner@ethz.ch______________
+          License Admin: Markus Schaffner, mschaffner@ethz.ch              
 --- Starting compilation
 --- Fit_StratABM_Cal.gms(216) 3 Mb
---- GDXin=H:\Boecker\PhD\Model_ABM-calibration\probWeed.gdx
+--- GDXin=C:\Users\kellerke\Documents\gamsdir\projdir\probWeed.gdx
 --- Fit_StratABM_Cal.gms(222) 4 Mb
 --- .p_weedSpread.csv(33) 4 Mb
 --- Fit_StratABM_Cal.gms(227) 4 Mb
---- .p_weedControl.csv(75) 4 Mb
+--- .p_weedControl.csv(62) 4 Mb
 --- Fit_StratABM_Cal.gms(232) 4 Mb
---- .p_asToS.csv(75) 4 Mb
+--- .p_asToS.csv(62) 4 Mb
 --- Fit_StratABM_Cal.gms(237) 4 Mb
---- .p_HRAC.csv(75) 4 Mb
+--- .p_HRAC.csv(62) 4 Mb
 --- Fit_StratABM_Cal.gms(242) 4 Mb
---- .p_HerbRelCosts.csv(75) 4 Mb
+--- .p_HerbRelCosts.csv(62) 4 Mb
 --- Fit_StratABM_Cal.gms(247) 4 Mb
---- .p_HerbicideCost.csv(20) 4 Mb
+--- .p_HerbicideCost.csv(7) 4 Mb
 --- Fit_StratABM_Cal.gms(252) 4 Mb
---- .p_processes.csv(20) 4 Mb
+--- .p_processes.csv(7) 4 Mb
 --- Fit_StratABM_Cal.gms(257) 4 Mb
 --- .p_weatherstation.csv(378) 4 Mb
---- Fit_StratABM_Cal.gms(262) 4 Mb
---- .p_AllowedStrat.csv(58) 4 Mb
+--- Fit_StratABM_Cal.gms(261) 4 Mb
+--- GDXin=C:\Users\kellerke\Documents\gamsdir\projdir\p_soil.gdx
 --- Fit_StratABM_Cal.gms(267) 4 Mb
---- .p_AllowedStratPost.csv(166) 4 Mb
---- Fit_StratABM_Cal.gms(271) 4 Mb
---- GDXin=H:\Boecker\PhD\Model_ABM-calibration\p_soil.gdx
---- Fit_StratABM_Cal.gms(831) 4 Mb
---- Starting execution: elapsed 0:00:00.133
---- Fit_StratABM_Cal.gms(1305) 5 Mb
---- GDXin=H:\Boecker\PhD\Model_ABM-calibration\ResultBetaEstimate.gdx
---- Fit_StratABM_Cal.gms(1692) 176 Mb
---- Generating NLP model M_GM
---- Fit_StratABM_Cal.gms(1694) 178 Mb
---- LOOPS gn1 = Ahaus
----   13 rows  76 columns  277 non-zeroes
----   62 nl-code  8 nl-non-zeroes
---- Fit_StratABM_Cal.gms(1694) 176 Mb
---- Executing CONOPT (Solvelink=5): elapsed 0:00:03.696
-CONOPT 3         24.1.3 r41464 Released Jul 26, 2013 WEI x86_64/MS Windows    
- 
- 
-    C O N O P T 3   version 3.15L
-    Copyright (C)   ARKI Consulting and Development A/S
-                    Bagsvaerdvej 246 A
-                    DK-2880 Bagsvaerd, Denmark
- 
- 
-   Iter Phase Ninf   Infeasibility   RGmax    NSB   Step InItr MX OK
-      0   0        1.3816699818E+02 (Input point)
-                                Pre-triangular equations:        0
-                                Post-triangular equations:       2
-      1   0        0.0000000000E+00 (After pre-processing)
-      2   0        0.0000000000E+00 (After scaling)
- 
- ** Feasible solution. Value of objective =    138.166998179
- 
-   Iter Phase Ninf     Objective     RGmax    NSB   Step InItr MX OK
-      5   3        6.4360322342E+02 0.0E+00     0
- 
- ** Optimal solution. There are no superbasic variables.
- 
---- Reading solution for model M_GM
---- Executing after solve: elapsed 0:00:03.809
---- Fit_StratABM_Cal.gms(1692) 176 Mb
---- Generating NLP model M_GM
---- Fit_StratABM_Cal.gms(1694) 178 Mb
---- LOOPS gn1 = Beckum
----   13 rows  76 columns  277 non-zeroes
----   62 nl-code  8 nl-non-zeroes
---- Fit_StratABM_Cal.gms(1694) 176 Mb
---- Executing CONOPT (Solvelink=5): elapsed 0:00:03.825
-CONOPT 3         24.1.3 r41464 Released Jul 26, 2013 WEI x86_64/MS Windows    
- 
- 
-    C O N O P T 3   version 3.15L
-    Copyright (C)   ARKI Consulting and Development A/S
-                    Bagsvaerdvej 246 A
-                    DK-2880 Bagsvaerd, Denmark
- 
- 
-   Iter Phase Ninf   Infeasibility   RGmax    NSB   Step InItr MX OK
-      0   0        6.6029101955E+02 (Input point)
-                                Pre-triangular equations:        0
-                                Post-triangular equations:       2
-      1   0        0.0000000000E+00 (After pre-processing)
-      2   0        0.0000000000E+00 (After scaling)
- 
- ** Feasible solution. Value of objective =    16.6877961295
- 
-   Iter Phase Ninf     Objective     RGmax    NSB   Step InItr MX OK
-      5   3        3.5501941900E+02 0.0E+00     0
- 
- ** Optimal solution. There are no superbasic variables.
- 
---- Reading solution for model M_GM
---- Executing after solve: elapsed 0:00:03.937
---- Fit_StratABM_Cal.gms(1692) 176 Mb
---- Generating NLP model M_GM
---- Fit_StratABM_Cal.gms(1694) 178 Mb
---- LOOPS gn1 = Bruehl
----   13 rows  76 columns  278 non-zeroes
----   58 nl-code  9 nl-non-zeroes
---- Fit_StratABM_Cal.gms(1694) 176 Mb
---- Executing CONOPT (Solvelink=5): elapsed 0:00:03.952
-CONOPT 3         24.1.3 r41464 Released Jul 26, 2013 WEI x86_64/MS Windows    
- 
- 
-    C O N O P T 3   version 3.15L
-    Copyright (C)   ARKI Consulting and Development A/S
-                    Bagsvaerdvej 246 A
-                    DK-2880 Bagsvaerd, Denmark
- 
- 
-   Iter Phase Ninf   Infeasibility   RGmax    NSB   Step InItr MX OK
-      0   0        3.7931477944E+02 (Input point)
-                                Pre-triangular equations:        0
-                                Post-triangular equations:       2
-      1   0        0.0000000000E+00 (After pre-processing)
-      2   0        0.0000000000E+00 (After scaling)
- 
- ** Feasible solution. Value of objective =    24.2953604348
- 
-   Iter Phase Ninf     Objective     RGmax    NSB   Step InItr MX OK
-      5   3        4.2800444833E+02 0.0E+00     0
- 
- ** Optimal solution. There are no superbasic variables.
- 
---- Reading solution for model M_GM
---- Executing after solve: elapsed 0:00:04.065
---- Fit_StratABM_Cal.gms(1702) 176 Mb
-*** GDXopenRead failed H:\Boecker\PhD\Model_ABM-calibration\Grossmargin_P4,00NoRisk.gdx
-*** Msg: No such file or directory
---- Fit_StratABM_Cal.gms(1795) 179 Mb 2 Errors
---- Putfile fh H:\Boecker\PhD\Model_ABM-calibration\Grossmargin_P4,00.csv
---- Fit_StratABM_Cal.gms(1795) 179 Mb 2 Errors
-*** Status: Execution error(s)
---- Job Fit_StratABM_Cal.gms Stop 02/15/18 14:45:26 elapsed 0:00:04.154
-Exit code = 3
+--- .p_AllowedStratPrePost.csv(277) 4 Mb 1 Error
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(278) 4 Mb 2 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(279) 4 Mb 3 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(280) 4 Mb 4 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(281) 4 Mb 5 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(282) 4 Mb 6 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(283) 4 Mb 7 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(284) 4 Mb 8 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(285) 4 Mb 9 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(286) 4 Mb 10 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(287) 4 Mb 11 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(288) 4 Mb 12 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(289) 4 Mb 13 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(290) 4 Mb 14 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(291) 4 Mb 15 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(292) 4 Mb 16 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(293) 4 Mb 17 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(294) 4 Mb 18 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(295) 4 Mb 19 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(296) 4 Mb 20 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(297) 4 Mb 21 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(298) 4 Mb 22 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(299) 4 Mb 23 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(300) 4 Mb 24 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(301) 4 Mb 25 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(302) 4 Mb 26 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(303) 4 Mb 27 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(304) 4 Mb 28 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(305) 4 Mb 29 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(306) 4 Mb 30 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(307) 4 Mb 31 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(308) 4 Mb 32 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(309) 4 Mb 33 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(310) 4 Mb 34 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(311) 4 Mb 35 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(312) 4 Mb 36 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(313) 4 Mb 37 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(314) 4 Mb 38 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(315) 4 Mb 39 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(316) 4 Mb 40 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(317) 4 Mb 41 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(318) 4 Mb 42 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(319) 4 Mb 43 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(320) 4 Mb 44 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(321) 4 Mb 45 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(322) 4 Mb 46 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(323) 4 Mb 47 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(324) 4 Mb 48 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(325) 4 Mb 49 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(326) 4 Mb 50 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(327) 4 Mb 51 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(328) 4 Mb 52 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(329) 4 Mb 53 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(330) 4 Mb 54 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(331) 4 Mb 55 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(332) 4 Mb 56 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(333) 4 Mb 57 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(334) 4 Mb 58 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(335) 4 Mb 59 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(336) 4 Mb 60 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(337) 4 Mb 61 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(338) 4 Mb 62 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(339) 4 Mb 63 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(340) 4 Mb 64 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(341) 4 Mb 65 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(342) 4 Mb 66 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(343) 4 Mb 67 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(344) 4 Mb 68 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(345) 4 Mb 69 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(346) 4 Mb 70 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(347) 4 Mb 71 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(348) 4 Mb 72 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(349) 4 Mb 73 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(350) 4 Mb 74 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(351) 4 Mb 75 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(352) 4 Mb 76 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(353) 4 Mb 77 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(354) 4 Mb 78 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(355) 4 Mb 79 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(356) 4 Mb 80 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(357) 4 Mb 81 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(358) 4 Mb 82 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(359) 4 Mb 83 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(360) 4 Mb 84 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(361) 4 Mb 85 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(362) 4 Mb 86 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(363) 4 Mb 87 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(364) 4 Mb 88 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(365) 4 Mb 89 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(366) 4 Mb 90 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(367) 4 Mb 91 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(368) 4 Mb 92 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(369) 4 Mb 93 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(370) 4 Mb 94 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(371) 4 Mb 95 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(372) 4 Mb 96 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(373) 4 Mb 97 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(374) 4 Mb 98 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(375) 4 Mb 99 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(376) 4 Mb 100 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(377) 4 Mb 101 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(378) 4 Mb 102 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(379) 4 Mb 103 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(380) 4 Mb 104 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(381) 4 Mb 105 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(382) 4 Mb 106 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(383) 4 Mb 107 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(384) 4 Mb 108 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(385) 4 Mb 109 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(386) 4 Mb 110 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(387) 4 Mb 111 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(388) 4 Mb 112 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(389) 4 Mb 113 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(390) 4 Mb 114 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(391) 4 Mb 115 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(392) 4 Mb 116 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(393) 4 Mb 117 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(394) 4 Mb 118 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(395) 4 Mb 119 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(396) 4 Mb 120 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(397) 4 Mb 121 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(398) 4 Mb 122 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(399) 4 Mb 123 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(400) 4 Mb 124 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(401) 4 Mb 125 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(402) 4 Mb 126 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(403) 4 Mb 127 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(404) 4 Mb 128 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(405) 4 Mb 129 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(406) 4 Mb 130 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(407) 4 Mb 131 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(408) 4 Mb 132 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(409) 4 Mb 133 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(410) 4 Mb 134 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(411) 4 Mb 135 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(412) 4 Mb 136 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(413) 4 Mb 137 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(414) 4 Mb 138 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(415) 4 Mb 139 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(416) 4 Mb 140 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(417) 4 Mb 141 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(418) 4 Mb 142 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(419) 4 Mb 143 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(420) 4 Mb 144 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(421) 4 Mb 145 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(422) 4 Mb 146 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(423) 4 Mb 147 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(424) 4 Mb 148 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(425) 4 Mb 149 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(426) 4 Mb 150 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(427) 4 Mb 151 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(428) 4 Mb 152 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(429) 4 Mb 153 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(430) 4 Mb 154 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(431) 4 Mb 155 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(432) 4 Mb 156 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(433) 4 Mb 157 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(434) 4 Mb 158 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(435) 4 Mb 159 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(436) 4 Mb 160 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(437) 4 Mb 161 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(438) 4 Mb 162 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(439) 4 Mb 163 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(440) 4 Mb 164 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(441) 4 Mb 165 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(442) 4 Mb 166 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(443) 4 Mb 167 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(444) 4 Mb 168 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(445) 4 Mb 169 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(446) 4 Mb 170 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(447) 4 Mb 171 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(448) 4 Mb 172 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(449) 4 Mb 173 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(450) 4 Mb 174 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(451) 4 Mb 175 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(452) 4 Mb 176 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(453) 4 Mb 177 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(454) 4 Mb 178 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(455) 4 Mb 179 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(456) 4 Mb 180 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(457) 4 Mb 181 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(458) 4 Mb 182 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(459) 4 Mb 183 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(460) 4 Mb 184 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(461) 4 Mb 185 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(462) 4 Mb 186 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(463) 4 Mb 187 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(464) 4 Mb 188 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(465) 4 Mb 189 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(466) 4 Mb 190 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(467) 4 Mb 191 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(468) 4 Mb 192 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(469) 4 Mb 193 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(470) 4 Mb 194 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(471) 4 Mb 195 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(472) 4 Mb 196 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(473) 4 Mb 197 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(474) 4 Mb 198 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(475) 4 Mb 199 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(476) 4 Mb 200 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(477) 4 Mb 201 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(478) 4 Mb 202 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(479) 4 Mb 203 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(480) 4 Mb 204 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(481) 4 Mb 205 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(482) 4 Mb 206 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(483) 4 Mb 207 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(484) 4 Mb 208 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(485) 4 Mb 209 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(486) 4 Mb 210 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(487) 4 Mb 211 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(488) 4 Mb 212 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(489) 4 Mb 213 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(490) 4 Mb 214 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(491) 4 Mb 215 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(492) 4 Mb 216 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(493) 4 Mb 217 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(494) 4 Mb 218 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(495) 4 Mb 219 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(496) 4 Mb 220 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(497) 4 Mb 221 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(498) 4 Mb 222 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(499) 4 Mb 223 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(500) 4 Mb 224 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(501) 4 Mb 225 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(502) 4 Mb 226 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(503) 4 Mb 227 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(504) 4 Mb 228 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(505) 4 Mb 229 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(506) 4 Mb 230 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(507) 4 Mb 231 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(508) 4 Mb 232 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(509) 4 Mb 233 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(510) 4 Mb 234 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(511) 4 Mb 235 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(512) 4 Mb 236 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(513) 4 Mb 237 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(514) 4 Mb 238 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(515) 4 Mb 239 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(516) 4 Mb 240 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(517) 4 Mb 241 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(518) 4 Mb 242 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(519) 4 Mb 243 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(520) 4 Mb 244 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(521) 4 Mb 245 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(522) 4 Mb 246 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(523) 4 Mb 247 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(524) 4 Mb 248 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(525) 4 Mb 249 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(526) 4 Mb 250 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(527) 4 Mb 251 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(528) 4 Mb 252 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(529) 4 Mb 253 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(530) 4 Mb 254 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(531) 4 Mb 255 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(532) 4 Mb 256 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(533) 4 Mb 257 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(534) 4 Mb 258 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(535) 4 Mb 259 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(536) 4 Mb 260 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(537) 4 Mb 261 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(538) 4 Mb 262 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(539) 4 Mb 263 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(540) 4 Mb 264 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(541) 4 Mb 265 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(542) 4 Mb 266 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(543) 4 Mb 267 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(544) 4 Mb 268 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(545) 4 Mb 269 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(546) 4 Mb 270 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(547) 4 Mb 271 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(548) 4 Mb 272 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(549) 4 Mb 273 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(550) 4 Mb 274 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- .p_AllowedStratPrePost.csv(551) 4 Mb 275 Errors
+*** Error 176 in C:\Users\kellerke\Documents\gamsdir\projdir\p_AllowedStratPrePost.csv
+    A row with the same name has been defined before in this table.
+--- Fit_StratABM_Cal.gms(673) 4 Mb 276 Errors
+*** Error 257 in C:\Users\kellerke\Documents\gamsdir\projdir\Fit_StratABM_Cal.gms
+    Solve statement not checked because of previous errors
+--- Fit_StratABM_Cal.gms(735) 4 Mb 277 Errors
+*** Error 141 in C:\Users\kellerke\Documents\gamsdir\projdir\Fit_StratABM_Cal.gms
+    Symbol declared but no values have been assigned. Check for missing
+       data definition, assignment, data loading or implicit assignment
+       via a solve statement.
+       A wild shot: You may have spurious commas in the explanatory
+       text of a declaration. Check symbol reference list.
+--- Fit_StratABM_Cal.gms(783) 4 Mb 277 Errors
+*** Status: Compilation error(s)
+--- Job Fit_StratABM_Cal.gms Stop 03/07/18 15:36:16 elapsed 0:00:00.559
+Exit code = 2

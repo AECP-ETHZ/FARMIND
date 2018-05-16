@@ -1,0 +1,144 @@
+
+--- Job Fit_StratABM_Cal.gms Start 02/15/18 14:45:22 24.1.3 r41464 WEX-WEI x86_64/MS Windows
+GAMS 24.1.3   Copyright (C) 1987-2013 GAMS Development. All rights reserved
+Licensee: Small MUD - 5 User License                     S170216:0352AO-WIN
+          ETH Zurich, Institute for Environmental Decisions / IED   DC10381
+          License for teaching and research at degree granting institutions
+          License_Admin:_Markus_Schaffner,_mschaffner@ethz.ch______________
+--- Starting compilation
+--- Fit_StratABM_Cal.gms(216) 3 Mb
+--- GDXin=H:\Boecker\PhD\Model_ABM-calibration\probWeed.gdx
+--- Fit_StratABM_Cal.gms(222) 4 Mb
+--- .p_weedSpread.csv(33) 4 Mb
+--- Fit_StratABM_Cal.gms(227) 4 Mb
+--- .p_weedControl.csv(75) 4 Mb
+--- Fit_StratABM_Cal.gms(232) 4 Mb
+--- .p_asToS.csv(75) 4 Mb
+--- Fit_StratABM_Cal.gms(237) 4 Mb
+--- .p_HRAC.csv(75) 4 Mb
+--- Fit_StratABM_Cal.gms(242) 4 Mb
+--- .p_HerbRelCosts.csv(75) 4 Mb
+--- Fit_StratABM_Cal.gms(247) 4 Mb
+--- .p_HerbicideCost.csv(20) 4 Mb
+--- Fit_StratABM_Cal.gms(252) 4 Mb
+--- .p_processes.csv(20) 4 Mb
+--- Fit_StratABM_Cal.gms(257) 4 Mb
+--- .p_weatherstation.csv(378) 4 Mb
+--- Fit_StratABM_Cal.gms(262) 4 Mb
+--- .p_AllowedStrat.csv(58) 4 Mb
+--- Fit_StratABM_Cal.gms(267) 4 Mb
+--- .p_AllowedStratPost.csv(166) 4 Mb
+--- Fit_StratABM_Cal.gms(271) 4 Mb
+--- GDXin=H:\Boecker\PhD\Model_ABM-calibration\p_soil.gdx
+--- Fit_StratABM_Cal.gms(831) 4 Mb
+--- Starting execution: elapsed 0:00:00.133
+--- Fit_StratABM_Cal.gms(1305) 5 Mb
+--- GDXin=H:\Boecker\PhD\Model_ABM-calibration\ResultBetaEstimate.gdx
+--- Fit_StratABM_Cal.gms(1692) 176 Mb
+--- Generating NLP model M_GM
+--- Fit_StratABM_Cal.gms(1694) 178 Mb
+--- LOOPS gn1 = Ahaus
+---   13 rows  76 columns  277 non-zeroes
+---   62 nl-code  8 nl-non-zeroes
+--- Fit_StratABM_Cal.gms(1694) 176 Mb
+--- Executing CONOPT (Solvelink=5): elapsed 0:00:03.696
+CONOPT 3         24.1.3 r41464 Released Jul 26, 2013 WEI x86_64/MS Windows    
+ 
+ 
+    C O N O P T 3   version 3.15L
+    Copyright (C)   ARKI Consulting and Development A/S
+                    Bagsvaerdvej 246 A
+                    DK-2880 Bagsvaerd, Denmark
+ 
+ 
+   Iter Phase Ninf   Infeasibility   RGmax    NSB   Step InItr MX OK
+      0   0        1.3816699818E+02 (Input point)
+                                Pre-triangular equations:        0
+                                Post-triangular equations:       2
+      1   0        0.0000000000E+00 (After pre-processing)
+      2   0        0.0000000000E+00 (After scaling)
+ 
+ ** Feasible solution. Value of objective =    138.166998179
+ 
+   Iter Phase Ninf     Objective     RGmax    NSB   Step InItr MX OK
+      5   3        6.4360322342E+02 0.0E+00     0
+ 
+ ** Optimal solution. There are no superbasic variables.
+ 
+--- Reading solution for model M_GM
+--- Executing after solve: elapsed 0:00:03.809
+--- Fit_StratABM_Cal.gms(1692) 176 Mb
+--- Generating NLP model M_GM
+--- Fit_StratABM_Cal.gms(1694) 178 Mb
+--- LOOPS gn1 = Beckum
+---   13 rows  76 columns  277 non-zeroes
+---   62 nl-code  8 nl-non-zeroes
+--- Fit_StratABM_Cal.gms(1694) 176 Mb
+--- Executing CONOPT (Solvelink=5): elapsed 0:00:03.825
+CONOPT 3         24.1.3 r41464 Released Jul 26, 2013 WEI x86_64/MS Windows    
+ 
+ 
+    C O N O P T 3   version 3.15L
+    Copyright (C)   ARKI Consulting and Development A/S
+                    Bagsvaerdvej 246 A
+                    DK-2880 Bagsvaerd, Denmark
+ 
+ 
+   Iter Phase Ninf   Infeasibility   RGmax    NSB   Step InItr MX OK
+      0   0        6.6029101955E+02 (Input point)
+                                Pre-triangular equations:        0
+                                Post-triangular equations:       2
+      1   0        0.0000000000E+00 (After pre-processing)
+      2   0        0.0000000000E+00 (After scaling)
+ 
+ ** Feasible solution. Value of objective =    16.6877961295
+ 
+   Iter Phase Ninf     Objective     RGmax    NSB   Step InItr MX OK
+      5   3        3.5501941900E+02 0.0E+00     0
+ 
+ ** Optimal solution. There are no superbasic variables.
+ 
+--- Reading solution for model M_GM
+--- Executing after solve: elapsed 0:00:03.937
+--- Fit_StratABM_Cal.gms(1692) 176 Mb
+--- Generating NLP model M_GM
+--- Fit_StratABM_Cal.gms(1694) 178 Mb
+--- LOOPS gn1 = Bruehl
+---   13 rows  76 columns  278 non-zeroes
+---   58 nl-code  9 nl-non-zeroes
+--- Fit_StratABM_Cal.gms(1694) 176 Mb
+--- Executing CONOPT (Solvelink=5): elapsed 0:00:03.952
+CONOPT 3         24.1.3 r41464 Released Jul 26, 2013 WEI x86_64/MS Windows    
+ 
+ 
+    C O N O P T 3   version 3.15L
+    Copyright (C)   ARKI Consulting and Development A/S
+                    Bagsvaerdvej 246 A
+                    DK-2880 Bagsvaerd, Denmark
+ 
+ 
+   Iter Phase Ninf   Infeasibility   RGmax    NSB   Step InItr MX OK
+      0   0        3.7931477944E+02 (Input point)
+                                Pre-triangular equations:        0
+                                Post-triangular equations:       2
+      1   0        0.0000000000E+00 (After pre-processing)
+      2   0        0.0000000000E+00 (After scaling)
+ 
+ ** Feasible solution. Value of objective =    24.2953604348
+ 
+   Iter Phase Ninf     Objective     RGmax    NSB   Step InItr MX OK
+      5   3        4.2800444833E+02 0.0E+00     0
+ 
+ ** Optimal solution. There are no superbasic variables.
+ 
+--- Reading solution for model M_GM
+--- Executing after solve: elapsed 0:00:04.065
+--- Fit_StratABM_Cal.gms(1702) 176 Mb
+*** GDXopenRead failed H:\Boecker\PhD\Model_ABM-calibration\Grossmargin_P4,00NoRisk.gdx
+*** Msg: No such file or directory
+--- Fit_StratABM_Cal.gms(1795) 179 Mb 2 Errors
+--- Putfile fh H:\Boecker\PhD\Model_ABM-calibration\Grossmargin_P4,00.csv
+--- Fit_StratABM_Cal.gms(1795) 179 Mb 2 Errors
+*** Status: Execution error(s)
+--- Job Fit_StratABM_Cal.gms Stop 02/15/18 14:45:26 elapsed 0:00:04.154
+Exit code = 3

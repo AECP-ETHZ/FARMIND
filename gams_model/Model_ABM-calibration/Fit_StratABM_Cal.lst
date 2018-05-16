@@ -1,0 +1,1697 @@
+GAMS 24.1.3  r41464 Released Jul 26, 2013 WEX-WEI x86_64/MS Windows 02/15/18 14:45:22 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  **************************************************************************
+      ******
+       
+         Modelling the effects of a glyphosate ban on weed management in maize p
+      roduction
+         --- Online Appendix 1 ---
+       
+       
+         GAMS project: Herbicide
+         GAMS file :  FIT_STRAT.GMS
+       
+         @purpose :  Calculate gross margin for reference scenarios that an be i
+      mplemented in an ABM
+         @author :  Böcker, T.
+         @date :   28. March 2017
+         @since :
+         @refDoc :
+         @seeAlso :
+         @calledBy :
+       
+       
+       
+  22  **************************************************************************
+      ******
+  23  *
+  24  *-------------------------------------------------------------------------
+      ----------
+  25  *
+  26  * (0) General program control
+  27  *
+  28  * "EstimateBetas ON" means that parameters of the production function are 
+      estimated.
+  29  * Turn EstimateGM and GlyposateBan OFF in this case. After estimating the 
+      parameters,
+  30  * you can turn EstimateBetas OFF, and first turn "EstiamteGM" ON. Now, a b
+      enchmark scenario
+  31  * under current, profit maximising situations is simulated. Afterwards, yo
+      u can additionally
+  32  * turn GlyphosateBan ON, so that a counterfactual scenario without glyphos
+      ate is simulated.
+  33  *-------------------------------------------------------------------------
+      ----------
+  34  *
+GAMS 24.1.3  r41464 Released Jul 26, 2013 WEX-WEI x86_64/MS Windows 02/15/18 14:45:22 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Include File Summary
+
+
+   SEQ   GLOBAL TYPE      PARENT   LOCAL  FILENAME
+
+     1        1 INPUT          0       0  H:\Boecker\PhD\Model_ABM-calibration\F
+                                          it_StratABM_Cal.gms
+     2      216 GDXIN          1     216  H:\Boecker\PhD\Model_ABM-calibration\p
+                                          robWeed.gdx
+     3      222 INCLUDE        1     222  .H:\Boecker\PhD\Model_ABM-calibration\
+                                           p_weedSpread.csv
+     4      260 INCLUDE        1     227  .H:\Boecker\PhD\Model_ABM-calibration\
+                                           p_weedControl.csv
+     5      340 INCLUDE        1     232  .H:\Boecker\PhD\Model_ABM-calibration\
+                                           p_asToS.csv
+     6      420 INCLUDE        1     237  .H:\Boecker\PhD\Model_ABM-calibration\
+                                           p_HRAC.csv
+     7      500 INCLUDE        1     242  .H:\Boecker\PhD\Model_ABM-calibration\
+                                           p_HerbRelCosts.csv
+     8      580 INCLUDE        1     247  .H:\Boecker\PhD\Model_ABM-calibration\
+                                           p_HerbicideCost.csv
+     9      605 INCLUDE        1     252  .H:\Boecker\PhD\Model_ABM-calibration\
+                                           p_processes.csv
+    10      630 INCLUDE        1     257  .H:\Boecker\PhD\Model_ABM-calibration\
+                                           p_weatherstation.csv
+    11     1013 INCLUDE        1     262  .H:\Boecker\PhD\Model_ABM-calibration\
+                                           p_AllowedStrat.csv
+    12     1076 INCLUDE        1     267  .H:\Boecker\PhD\Model_ABM-calibration\
+                                           p_AllowedStratPost.csv
+    13     1246 GDXIN          1     271  H:\Boecker\PhD\Model_ABM-calibration\p
+                                          _soil.gdx
+    14     1255 IF EXIST       1     280  H:\Boecker\PhD\Model_ABM-calibration\R
+                                          esultBetaEstimate.gdx
+    15     1758 IF EXIST       1     788  H:\Boecker\PhD\Model_ABM-calibration\r
+                                          esultBetaEstimate.gdx
+
+
+COMPILATION TIME     =        0.110 SECONDS      4 MB  24.1.3 r41464 WEX-WEI
+GAMS 24.1.3  r41464 Released Jul 26, 2013 WEX-WEI x86_64/MS Windows 02/15/18 14:45:22 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+**** GDX ERROR AT LINE 1702
+ - Open read failed H:\Boecker\PhD\Model_ABM-calibration\Grossmargin_P4,00NoRisk
+                                                                            .gdx
+
+**** GDX ERROR AT LINE 1702 - Msg: No such file or directory
+
+----   1747 VARIABLE v_shareSpray.L  variable to chose a strategy
+
+                                        t2009
+
+spre1  .Hoevelhof                       1.000
+spre1  .Hopsten                         1.000
+spre1  .Lippetal                        1.000
+spre1  .Nottuln                         1.000
+spre1  .Ostbevern                       1.000
+spre1  .Greven                          1.000
+spre1  .Hamm                            1.000
+spre1  .Hamminkeln                      1.000
+spre1  .Mechernich                      1.000
+spre1  .Moenchengladbach                1.000
+spre1  .Salzkotten                      1.000
+spre1  .Selm                            1.000
+spre1  .Lotte                           1.000
+spre1  .Holzwickede                     1.000
+spre1  .Juechen                         1.000
+spre1  .Luedinghausen                   1.000
+spre1  .Hilden                          1.000
+spre1  .Borgholzhausen                  1.000
+spre1  .Kirchlengern                    1.000
+spre1  .Marienmuenster                  1.000
+spre1  .Sonsbeck                        1.000
+spre1  .Straelen                        1.000
+spre1  .Wuppertal                       1.000
+spre1  .Suedlohn                        1.000
+spre1  .Leverkusen                      1.000
+spre1  .Schwerte                        1.000
+spre1  .Engelskirchen                   1.000
+spre1  .Werl                            1.000
+spre1  .Wesseling                       1.000
+spre1  .Tecklenburg                     1.000
+spre1  .Mettmann                        1.000
+spre1  .Bocholt                         1.000
+spre1  .Schleiden                       1.000
+spre1  .Ratingen                        1.000
+spre1  .Meerbusch                       1.000
+spre1  .Hellenthal                      1.000
+spre1  .Uebach-Palenberg                1.000
+spre1  .Bestwig                         1.000
+spre1  .Lengerich                       1.000
+spre1  .Radevormwald                    1.000
+spre1  .Siegen                          1.000
+spre1  .Soest                           1.000
+spre1  .Issum                           1.000
+spre1  .Waltrop                         1.000
+spre1  .Castrop-Rauxel                  1.000
+spre1  .Nettetal                        1.000
+spre1  .Bad Salzuflen                   1.000
+spre1  .Rahden                          1.000
+spre1  .Steinfurt                       1.000
+spre1  .Lemgo                           1.000
+spre1  .Hoerstel                        1.000
+spre1  .Nieheim                         1.000
+spre1  .Steinheim                       1.000
+spre1  .Ruethen                         1.000
+spre1  .Bad Wuennenberg                 1.000
+spre1  .Vettweiss                       1.000
+spre1  .Luenen                          1.000
+spre1  .Bochum                          1.000
+spre1  .Delbrueck                       1.000
+spre1  .Gangelt                         1.000
+spre1  .Kerken                          1.000
+spre1  .Horstmar                        1.000
+spre1  .Barntrup                        1.000
+spre1  .Ascheberg                       1.000
+spre1  .Wenden                          1.000
+spre1  .Drolshagen                      1.000
+spre1  .Geseke                          1.000
+spre1  .Kevelaer                        1.000
+spre1  .Hille                           1.000
+spre1  .Heinsberg                       1.000
+spre1  .Goch                            1.000
+spre1  .Neuenrade                       1.000
+spre1  .Loehne                          1.000
+spre1  .Windeck                         1.000
+spre1  .Mettingen                       1.000
+spre1  .Muenster                        1.000
+spre1  .Alfter                          1.000
+spre1  .Rheurdt                         1.000
+spre1  .Rheine                          1.000
+spre1  .Augustdorf                      1.000
+spre1  .Stemwede                        1.000
+spre1  .Troisdorf                       1.000
+spre1  .Langenfeld (Rhld.)              1.000
+spre1  .Extertal                        1.000
+spre1  .Metelen                         1.000
+spre1  .Wipperfuerth                    1.000
+spre1  .Schoeppingen                    1.000
+spre1  .Uedem                           1.000
+spre1  .Froendenberg/Ruhr               1.000
+spre1  .Coesfeld                        1.000
+spre1  .Kalkar                          1.000
+spre1  .Sassenberg                      1.000
+spre1  .Viersen                         1.000
+spre1  .Buende                          1.000
+spre1  .Oelde                           1.000
+spre1  .Schieder-Schwalenberg           1.000
+spre1  .Spenge                          1.000
+spre1  .Wesel                           1.000
+spre1  .Wickede (Ruhr)                  1.000
+spre1  .Steinhagen                      1.000
+spre1  .Bielefeld                       1.000
+spre1  .Olpe                            1.000
+spre1  .Werdohl                         1.000
+spre1  .Kamen                           1.000
+spre1  .Emsdetten                       1.000
+spre1  .Brakel                          1.000
+spre1  .Roedinghausen                   1.000
+spre1  .Xanten                          1.000
+spre1  .Haan                            1.000
+spre1  .Halle (Westf.)                  1.000
+spre1  .Gladbeck                        1.000
+spre1  .Heimbach                        1.000
+spre1  .Beelen                          1.000
+spre1  .Medebach                        1.000
+spre1  .Nachrodt-Wiblingwerde           1.000
+spre1  .Horn-Bad Meinberg               1.000
+spre1  .Warstein                        1.000
+spre1  .Luegde                          1.000
+spre1  .Luedenscheid                    1.000
+spre1  .Schwalmtal                      1.000
+spre1  .Gummersbach                     1.000
+spre1  .Ahlen                           1.000
+spre1  .Senden                          1.000
+spre1  .Werne                           1.000
+spre1  .Iserlohn                        1.000
+spre1  .Titz                            1.000
+spre1  .Enger                           1.000
+spre1  .Herford                         1.000
+spre1  .Recke                           1.000
+spre1  .Finnentrop                      1.000
+spre1  .Waldfeucht                      1.000
+spre1  .Rheda-Wiedenbrueck              1.000
+spre1  .Brueggen                        1.000
+spre1  .Erkelenz                        1.000
+spre1  .Weeze                           1.000
+spre1  .Wilnsdorf                       1.000
+spre1  .Datteln                         1.000
+spre1  .Borken                          1.000
+spre1  .Bergkamen                       1.000
+spre1  .Oberhausen                      1.000
+spre1  .Wettringen                      1.000
+spre1  .Attendorn                       1.000
+spre1  .Herdecke                        1.000
+spre1  .Bergheim                        1.000
+spre1  .Much                            1.000
+spre1  .Eitorf                          1.000
+spre1  .Neuss                           1.000
+spre1  .Menden (Sauerland)              1.000
+spre1  .Wuelfrath                       1.000
+spre1  .Lippstadt                       1.000
+spre1  .Lichtenau                       1.000
+spre1  .Hallenberg                      1.000
+spre1  .Gevelsberg                      1.000
+spre1  .Havixbeck                       1.000
+spre1  .Petershagen                     1.000
+spre1  .Werther (Westf.)                1.000
+spre1  .Kleve                           1.000
+spre1  .Verl                            1.000
+spre1  .Herzebrock-Clarholz             1.000
+spre1  .Ibbenbueren                     1.000
+spre1  .Erkrath                         1.000
+spre1  .Lennestadt                      1.000
+spre1  .Oer-Erkenschwick                1.000
+spre1  .Huenxe                          1.000
+spre1  .Lienen                          1.000
+spre1  .Noervenich                      1.000
+spre1  .Erndtebrueck                    1.000
+spre1  .Marsberg                        1.000
+spre1  .Everswinkel                     1.000
+spre1  .Euskirchen                      1.000
+spre1  .Bad Lippspringe                 1.000
+spre1  .Huertgenwald                    1.000
+spre1  .Plettenberg                     1.000
+spre1  .Kalletal                        1.000
+spre1  .Gronau (Westf.)                 1.000
+spre1  .Herten                          1.000
+spre1  .Doerentrup                      1.000
+spre1  .Welver                          1.000
+spre1  .Nideggen                        1.000
+spre1  .Geilenkirchen                   1.000
+spre1  .Raesfeld                        1.000
+spre1  .Versmold                        1.000
+spre1  .Pulheim                         1.000
+spre1  .Laer                            1.000
+spre1  .Breckerfeld                     1.000
+spre1  .Westerkappeln                   1.000
+spre1  .Velbert                         1.000
+spre1  .Sundern (Sauerland)             1.000
+spre1  .Linnich                         1.000
+spre1  .Detmold                         1.000
+spre1  .Rosendahl                       1.000
+spre1  .Espelkamp                       1.000
+spre1  .Bedburg-Hau                     1.000
+spre1  .Paderborn                       1.000
+spre1  .Beverungen                      1.000
+spre1  .Sankt Augustin                  1.000
+spre1  .Niederzier                      1.000
+spre1  .Elsdorf                         1.000
+spre1  .Isselburg                       1.000
+spre1  .Emmerich am Rhein               1.000
+spre1  .Wachtberg                       1.000
+spre1  .Bad Muenstereifel               1.000
+spre1  .Heiden                          1.000
+spre1  .Wiehl                           1.000
+spre1  .Netphen                         1.000
+spre1  .Huellhorst                      1.000
+spre1  .Bedburg                         1.000
+spre1  .Huerth                          1.000
+spre1  .Hilchenbach                     1.000
+spre1  .Inden                           1.000
+spre1  .Schmallenberg                   1.000
+spre1  .Hueckelhoven                    1.000
+spre1  .Ennigerloh                      1.000
+spre1  .Zuelpich                        1.000
+spre1  .Olfen                           1.000
+spre1  .Ense                            1.000
+spre1  .Nordwalde                       1.000
+spre1  .Warendorf                       1.000
+spre1  .Sendenhorst                     1.000
+spre1  .Witten                          1.000
+spre1  .Willebadessen                   1.000
+spre1  .Grevenbroich                    1.000
+spre1  .Freudenberg                     1.000
+spre1  .Stadtlohn                       1.000
+spre1  .Bueren                          1.000
+spre1  .Duelmen                         1.000
+spre1  .Rheinberg                       1.000
+spre1  .Morsbach                        1.000
+spre1  .Bad Sassendorf                  1.000
+spre1  .Geldern                         1.000
+spre1  .Lage                            1.000
+spre1  .Burbach                         1.000
+spre1  .Guetersloh                      1.000
+spre1  .Schwelm                         1.000
+spre1  .Frechen                         1.000
+spre1  .Unna                            1.000
+spre1  .Preussisch Oldendorf            1.000
+spre1  .Anroechte                       1.000
+spre1  .Bad Oeynhausen                  1.000
+spre1  .Saerbeck                        1.000
+spre1  .Blankenheim                     1.000
+spre1  .Korschenbroich                  1.000
+spre1  .Kreuzau                         1.000
+spre1  .Bergneustadt                    1.000
+spre1  .Kirchhundem                     1.000
+spre1  .Halver                          1.000
+spre1  .Arnsberg                        1.000
+spre1  .Voerde (Niederrhein)            1.000
+spre1  .Langenberg                      1.000
+spre1  .Alpen                           1.000
+spre1  .Warburg                         1.000
+spre1  .Niederkruechten                 1.000
+spre1  .Langerwehe                      1.000
+spre1  .Recklinghausen                  1.000
+spre1  .Schloss Holte-Stukenbrock       1.000
+spre1  .Kreuztal                        1.000
+spre1  .Ennepetal                       1.000
+spre1  .Erwitte                         1.000
+spre1  .Selfkant                        1.000
+spre1  .Bad Berleburg                   1.000
+spre1  .Schermbeck                      1.000
+spre1  .Luebbecke                       1.000
+spre1  .Sprockhoevel                    1.000
+spre1  .Meinerzhagen                    1.000
+spre1  .Hattingen                       1.000
+spre1  .Olsberg                         1.000
+spre1  .Kall                            1.000
+spre1  .Blomberg                        1.000
+spre1  .Bad Laasphe                     1.000
+spre1  .Neunkirchen-Seelscheid          1.000
+spre1  .Schalksmuehle                   1.000
+spre1  .Dortmund                        1.000
+spre1  .Neunkirchen                     1.000
+spre1  .Boenen                          1.000
+spre1  .Rietberg                        1.000
+spre1  .Kamp-Lintfort                   1.000
+spre1  .Kranenburg                      1.000
+spre1  .Willich                         1.000
+spre1  .Drensteinfurt                   1.000
+spre1  .Minden                          1.000
+spre1  .Moehnesee                       1.000
+spre1  .Hemer                           1.000
+spre1  .Bad Honnef                      1.000
+spre1  .Reichshof                       1.000
+spre1  .Juelich                         1.000
+spre1  .Borchen                         1.000
+spre1  .Hiddenhausen                    1.000
+spre1  .Nuembrecht                      1.000
+spre1  .Monheim am Rhein                1.000
+spre1  .Neukirchen-Vluyn                1.000
+spre1  .Rheinbach                       1.000
+spre1  .Hennef (Sieg)                   1.000
+spre1  .Swisttal                        1.000
+spre1  .Lohmar                          1.000
+spre1  .Weilerswist                     1.000
+spre1  .Borgentreich                    1.000
+spre1  .Porta Westfalica                1.000
+spre1  .Merzenich                       1.000
+spre1  .Brilon                          1.000
+spre1  .Kaarst                          1.000
+spre1  .Marl                            1.000
+spre1  .Dorsten                         1.000
+spre1  .Oerlinghausen                   1.000
+spre1  .Grefrath                        1.000
+spre1  .Nettersheim                     1.000
+spre1  .Rhede                           1.000
+spre1  .Altena                          1.000
+spre1  .Wetter (Ruhr)                   1.000
+spre1  .Bad Driburg                     1.000
+spre1  .Ruppichteroth                   1.000
+spre1  .Siegburg                        1.000
+spre1  .Hagen                           1.000
+spre1  .Herscheid                       1.000
+spre1  .Altenbeken                      1.000
+spre1  .Meckenheim                      1.000
+spre1  .Reken                           1.000
+spre1  .Leopoldshoehe                   1.000
+spre1  .Wegberg                         1.000
+spre1  .Dueren                          1.000
+spre1  .Ladbergen                       1.000
+spre1  .Neuenkirchen                    1.000
+spre1  .Lindlar                         1.000
+spre1  .Kempen                          1.000
+spre1  .Legden                          1.000
+spre1  .Rommerskirchen                  1.000
+spre1  .Hueckeswagen                    1.000
+spre1  .Wadersloh                       1.000
+spre1  .Bornheim                        1.000
+spre1  .Waldbroel                       1.000
+spre1  .Telgte                          1.000
+spre1  .Dormagen                        1.000
+spre1  .Nordkirchen                     1.000
+spre1  .Niederkassel                    1.000
+spre1  .Balve                           1.000
+spre1  .Billerbeck                      1.000
+spre1  .Altenberge                      1.000
+spre1  .Heiligenhaus                    1.000
+spre1  .Ochtrup                         1.000
+spre1  .Velen                           1.000
+spre1  .Wassenberg                      1.000
+spre1  .Harsewinkel                     1.000
+spre1  .Erftstadt                       1.000
+spre1  .Rees                            1.000
+spre1  .Heek                            1.000
+spre1  .Hoexter                         1.000
+spre1  .Vlotho                          1.000
+spre1  .Aldenhoven                      1.000
+spre1  .Eslohe (Sauerland)              1.000
+spre1  .Dahlem                          1.000
+spre1  .Gescher                         1.000
+spre1  .Wachtendonk                     1.000
+spre1  .Herne                           1.000
+spre1  .Haltern am See                  1.000
+spre1  .Toenisvorst                     1.000
+spre1  .Moers                           1.000
+spre1  .Schlangen                       1.000
+spre1  .Meschede                        1.000
+spre1  .Dinslaken                       1.000
+spre1  .Kerpen                          1.000
+spre1  .Koenigswinter                   1.000
+spre1  .Kierspe                         1.000
+spre1  .Marienheide                     1.000
+spre1  .Winterberg                      1.000
+spre1  .Aachen                          1.000
+spre1  .Alsdorf                         1.000
+spre1  .Baesweiler                      1.000
+spre1  .Eschweiler                      1.000
+spre1  .Herzogenrath                    1.000
+spre1  .Monschau                        1.000
+spre1  .Roetgen                         1.000
+spre1  .Simmerath                       1.000
+spre1  .Stolberg (Rhld.)                1.000
+spre1  .Vreden                          1.000
+spre1  .Wuerselen                       1.000
+spre2  .Beckum                          1.000
+spre3  .Ahaus                           1.000
+spre4  .Bruehl                          1.000
+spost1 .Hoevelhof                       1.000
+spost1 .Hopsten                         1.000
+spost1 .Lippetal                        1.000
+spost1 .Nottuln                         1.000
+spost1 .Ostbevern                       1.000
+spost1 .Greven                          1.000
+spost1 .Hamm                            1.000
+spost1 .Hamminkeln                      1.000
+spost1 .Mechernich                      1.000
+spost1 .Moenchengladbach                1.000
+spost1 .Salzkotten                      1.000
+spost1 .Selm                            1.000
+spost1 .Lotte                           1.000
+spost1 .Holzwickede                     1.000
+spost1 .Juechen                         1.000
+spost1 .Luedinghausen                   1.000
+spost1 .Hilden                          1.000
+spost1 .Borgholzhausen                  1.000
+spost1 .Kirchlengern                    1.000
+spost1 .Marienmuenster                  1.000
+spost1 .Sonsbeck                        1.000
+spost1 .Straelen                        1.000
+spost1 .Wuppertal                       1.000
+spost1 .Suedlohn                        1.000
+spost1 .Leverkusen                      1.000
+spost1 .Schwerte                        1.000
+spost1 .Engelskirchen                   1.000
+spost1 .Werl                            1.000
+spost1 .Wesseling                       1.000
+spost1 .Tecklenburg                     1.000
+spost1 .Mettmann                        1.000
+spost1 .Bocholt                         1.000
+spost1 .Schleiden                       1.000
+spost1 .Ratingen                        1.000
+spost1 .Meerbusch                       1.000
+spost1 .Hellenthal                      1.000
+spost1 .Uebach-Palenberg                1.000
+spost1 .Bestwig                         1.000
+spost1 .Lengerich                       1.000
+spost1 .Radevormwald                    1.000
+spost1 .Siegen                          1.000
+spost1 .Soest                           1.000
+spost1 .Issum                           1.000
+spost1 .Waltrop                         1.000
+spost1 .Castrop-Rauxel                  1.000
+spost1 .Nettetal                        1.000
+spost1 .Bad Salzuflen                   1.000
+spost1 .Rahden                          1.000
+spost1 .Steinfurt                       1.000
+spost1 .Lemgo                           1.000
+spost1 .Hoerstel                        1.000
+spost1 .Nieheim                         1.000
+spost1 .Steinheim                       1.000
+spost1 .Ruethen                         1.000
+spost1 .Bad Wuennenberg                 1.000
+spost1 .Vettweiss                       1.000
+spost1 .Luenen                          1.000
+spost1 .Bochum                          1.000
+spost1 .Delbrueck                       1.000
+spost1 .Gangelt                         1.000
+spost1 .Kerken                          1.000
+spost1 .Horstmar                        1.000
+spost1 .Barntrup                        1.000
+spost1 .Ascheberg                       1.000
+spost1 .Wenden                          1.000
+spost1 .Drolshagen                      1.000
+spost1 .Geseke                          1.000
+spost1 .Kevelaer                        1.000
+spost1 .Hille                           1.000
+spost1 .Heinsberg                       1.000
+spost1 .Goch                            1.000
+spost1 .Neuenrade                       1.000
+spost1 .Loehne                          1.000
+spost1 .Windeck                         1.000
+spost1 .Mettingen                       1.000
+spost1 .Muenster                        1.000
+spost1 .Alfter                          1.000
+spost1 .Rheurdt                         1.000
+spost1 .Rheine                          1.000
+spost1 .Augustdorf                      1.000
+spost1 .Stemwede                        1.000
+spost1 .Troisdorf                       1.000
+spost1 .Langenfeld (Rhld.)              1.000
+spost1 .Extertal                        1.000
+spost1 .Metelen                         1.000
+spost1 .Wipperfuerth                    1.000
+spost1 .Schoeppingen                    1.000
+spost1 .Uedem                           1.000
+spost1 .Froendenberg/Ruhr               1.000
+spost1 .Coesfeld                        1.000
+spost1 .Kalkar                          1.000
+spost1 .Sassenberg                      1.000
+spost1 .Viersen                         1.000
+spost1 .Buende                          1.000
+spost1 .Oelde                           1.000
+spost1 .Schieder-Schwalenberg           1.000
+spost1 .Spenge                          1.000
+spost1 .Wesel                           1.000
+spost1 .Wickede (Ruhr)                  1.000
+spost1 .Steinhagen                      1.000
+spost1 .Bielefeld                       1.000
+spost1 .Olpe                            1.000
+spost1 .Werdohl                         1.000
+spost1 .Kamen                           1.000
+spost1 .Emsdetten                       1.000
+spost1 .Brakel                          1.000
+spost1 .Roedinghausen                   1.000
+spost1 .Xanten                          1.000
+spost1 .Haan                            1.000
+spost1 .Halle (Westf.)                  1.000
+spost1 .Gladbeck                        1.000
+spost1 .Heimbach                        1.000
+spost1 .Beelen                          1.000
+spost1 .Medebach                        1.000
+spost1 .Nachrodt-Wiblingwerde           1.000
+spost1 .Horn-Bad Meinberg               1.000
+spost1 .Warstein                        1.000
+spost1 .Luegde                          1.000
+spost1 .Luedenscheid                    1.000
+spost1 .Schwalmtal                      1.000
+spost1 .Gummersbach                     1.000
+spost1 .Ahlen                           1.000
+spost1 .Senden                          1.000
+spost1 .Werne                           1.000
+spost1 .Iserlohn                        1.000
+spost1 .Titz                            1.000
+spost1 .Enger                           1.000
+spost1 .Herford                         1.000
+spost1 .Recke                           1.000
+spost1 .Finnentrop                      1.000
+spost1 .Waldfeucht                      1.000
+spost1 .Rheda-Wiedenbrueck              1.000
+spost1 .Brueggen                        1.000
+spost1 .Erkelenz                        1.000
+spost1 .Weeze                           1.000
+spost1 .Wilnsdorf                       1.000
+spost1 .Datteln                         1.000
+spost1 .Borken                          1.000
+spost1 .Bergkamen                       1.000
+spost1 .Oberhausen                      1.000
+spost1 .Wettringen                      1.000
+spost1 .Attendorn                       1.000
+spost1 .Herdecke                        1.000
+spost1 .Bergheim                        1.000
+spost1 .Much                            1.000
+spost1 .Eitorf                          1.000
+spost1 .Neuss                           1.000
+spost1 .Menden (Sauerland)              1.000
+spost1 .Wuelfrath                       1.000
+spost1 .Lippstadt                       1.000
+spost1 .Lichtenau                       1.000
+spost1 .Hallenberg                      1.000
+spost1 .Gevelsberg                      1.000
+spost1 .Havixbeck                       1.000
+spost1 .Petershagen                     1.000
+spost1 .Werther (Westf.)                1.000
+spost1 .Kleve                           1.000
+spost1 .Verl                            1.000
+spost1 .Herzebrock-Clarholz             1.000
+spost1 .Ibbenbueren                     1.000
+spost1 .Erkrath                         1.000
+spost1 .Lennestadt                      1.000
+spost1 .Oer-Erkenschwick                1.000
+spost1 .Huenxe                          1.000
+spost1 .Lienen                          1.000
+spost1 .Noervenich                      1.000
+spost1 .Erndtebrueck                    1.000
+spost1 .Marsberg                        1.000
+spost1 .Everswinkel                     1.000
+spost1 .Euskirchen                      1.000
+spost1 .Bad Lippspringe                 1.000
+spost1 .Huertgenwald                    1.000
+spost1 .Plettenberg                     1.000
+spost1 .Kalletal                        1.000
+spost1 .Gronau (Westf.)                 1.000
+spost1 .Herten                          1.000
+spost1 .Doerentrup                      1.000
+spost1 .Welver                          1.000
+spost1 .Nideggen                        1.000
+spost1 .Geilenkirchen                   1.000
+spost1 .Raesfeld                        1.000
+spost1 .Versmold                        1.000
+spost1 .Pulheim                         1.000
+spost1 .Laer                            1.000
+spost1 .Breckerfeld                     1.000
+spost1 .Westerkappeln                   1.000
+spost1 .Velbert                         1.000
+spost1 .Sundern (Sauerland)             1.000
+spost1 .Linnich                         1.000
+spost1 .Detmold                         1.000
+spost1 .Rosendahl                       1.000
+spost1 .Espelkamp                       1.000
+spost1 .Bedburg-Hau                     1.000
+spost1 .Paderborn                       1.000
+spost1 .Beverungen                      1.000
+spost1 .Sankt Augustin                  1.000
+spost1 .Niederzier                      1.000
+spost1 .Elsdorf                         1.000
+spost1 .Isselburg                       1.000
+spost1 .Emmerich am Rhein               1.000
+spost1 .Wachtberg                       1.000
+spost1 .Bad Muenstereifel               1.000
+spost1 .Heiden                          1.000
+spost1 .Wiehl                           1.000
+spost1 .Netphen                         1.000
+spost1 .Huellhorst                      1.000
+spost1 .Bedburg                         1.000
+spost1 .Huerth                          1.000
+spost1 .Hilchenbach                     1.000
+spost1 .Inden                           1.000
+spost1 .Schmallenberg                   1.000
+spost1 .Hueckelhoven                    1.000
+spost1 .Ennigerloh                      1.000
+spost1 .Zuelpich                        1.000
+spost1 .Olfen                           1.000
+spost1 .Ense                            1.000
+spost1 .Nordwalde                       1.000
+spost1 .Warendorf                       1.000
+spost1 .Sendenhorst                     1.000
+spost1 .Witten                          1.000
+spost1 .Willebadessen                   1.000
+spost1 .Grevenbroich                    1.000
+spost1 .Freudenberg                     1.000
+spost1 .Stadtlohn                       1.000
+spost1 .Bueren                          1.000
+spost1 .Duelmen                         1.000
+spost1 .Rheinberg                       1.000
+spost1 .Morsbach                        1.000
+spost1 .Bad Sassendorf                  1.000
+spost1 .Geldern                         1.000
+spost1 .Lage                            1.000
+spost1 .Burbach                         1.000
+spost1 .Guetersloh                      1.000
+spost1 .Schwelm                         1.000
+spost1 .Frechen                         1.000
+spost1 .Unna                            1.000
+spost1 .Preussisch Oldendorf            1.000
+spost1 .Anroechte                       1.000
+spost1 .Bad Oeynhausen                  1.000
+spost1 .Saerbeck                        1.000
+spost1 .Blankenheim                     1.000
+spost1 .Korschenbroich                  1.000
+spost1 .Kreuzau                         1.000
+spost1 .Bergneustadt                    1.000
+spost1 .Kirchhundem                     1.000
+spost1 .Halver                          1.000
+spost1 .Arnsberg                        1.000
+spost1 .Voerde (Niederrhein)            1.000
+spost1 .Langenberg                      1.000
+spost1 .Alpen                           1.000
+spost1 .Warburg                         1.000
+spost1 .Niederkruechten                 1.000
+spost1 .Langerwehe                      1.000
+spost1 .Recklinghausen                  1.000
+spost1 .Schloss Holte-Stukenbrock       1.000
+spost1 .Kreuztal                        1.000
+spost1 .Ennepetal                       1.000
+spost1 .Erwitte                         1.000
+spost1 .Selfkant                        1.000
+spost1 .Bad Berleburg                   1.000
+spost1 .Schermbeck                      1.000
+spost1 .Luebbecke                       1.000
+spost1 .Sprockhoevel                    1.000
+spost1 .Meinerzhagen                    1.000
+spost1 .Hattingen                       1.000
+spost1 .Olsberg                         1.000
+spost1 .Kall                            1.000
+spost1 .Blomberg                        1.000
+spost1 .Bad Laasphe                     1.000
+spost1 .Neunkirchen-Seelscheid          1.000
+spost1 .Schalksmuehle                   1.000
+spost1 .Dortmund                        1.000
+spost1 .Neunkirchen                     1.000
+spost1 .Boenen                          1.000
+spost1 .Rietberg                        1.000
+spost1 .Kamp-Lintfort                   1.000
+spost1 .Kranenburg                      1.000
+spost1 .Willich                         1.000
+spost1 .Drensteinfurt                   1.000
+spost1 .Minden                          1.000
+spost1 .Moehnesee                       1.000
+spost1 .Hemer                           1.000
+spost1 .Bad Honnef                      1.000
+spost1 .Reichshof                       1.000
+spost1 .Juelich                         1.000
+spost1 .Borchen                         1.000
+spost1 .Hiddenhausen                    1.000
+spost1 .Nuembrecht                      1.000
+spost1 .Monheim am Rhein                1.000
+spost1 .Neukirchen-Vluyn                1.000
+spost1 .Rheinbach                       1.000
+spost1 .Hennef (Sieg)                   1.000
+spost1 .Swisttal                        1.000
+spost1 .Lohmar                          1.000
+spost1 .Weilerswist                     1.000
+spost1 .Borgentreich                    1.000
+spost1 .Porta Westfalica                1.000
+spost1 .Merzenich                       1.000
+spost1 .Brilon                          1.000
+spost1 .Kaarst                          1.000
+spost1 .Marl                            1.000
+spost1 .Dorsten                         1.000
+spost1 .Oerlinghausen                   1.000
+spost1 .Grefrath                        1.000
+spost1 .Nettersheim                     1.000
+spost1 .Rhede                           1.000
+spost1 .Altena                          1.000
+spost1 .Wetter (Ruhr)                   1.000
+spost1 .Bad Driburg                     1.000
+spost1 .Ruppichteroth                   1.000
+spost1 .Siegburg                        1.000
+spost1 .Hagen                           1.000
+spost1 .Herscheid                       1.000
+spost1 .Altenbeken                      1.000
+spost1 .Meckenheim                      1.000
+spost1 .Reken                           1.000
+spost1 .Leopoldshoehe                   1.000
+spost1 .Wegberg                         1.000
+spost1 .Dueren                          1.000
+spost1 .Ladbergen                       1.000
+spost1 .Neuenkirchen                    1.000
+spost1 .Lindlar                         1.000
+spost1 .Kempen                          1.000
+spost1 .Legden                          1.000
+spost1 .Rommerskirchen                  1.000
+spost1 .Hueckeswagen                    1.000
+spost1 .Wadersloh                       1.000
+spost1 .Bornheim                        1.000
+spost1 .Waldbroel                       1.000
+spost1 .Telgte                          1.000
+spost1 .Dormagen                        1.000
+spost1 .Nordkirchen                     1.000
+spost1 .Niederkassel                    1.000
+spost1 .Balve                           1.000
+spost1 .Billerbeck                      1.000
+spost1 .Altenberge                      1.000
+spost1 .Heiligenhaus                    1.000
+spost1 .Ochtrup                         1.000
+spost1 .Velen                           1.000
+spost1 .Wassenberg                      1.000
+spost1 .Harsewinkel                     1.000
+spost1 .Erftstadt                       1.000
+spost1 .Rees                            1.000
+spost1 .Heek                            1.000
+spost1 .Hoexter                         1.000
+spost1 .Vlotho                          1.000
+spost1 .Aldenhoven                      1.000
+spost1 .Eslohe (Sauerland)              1.000
+spost1 .Dahlem                          1.000
+spost1 .Gescher                         1.000
+spost1 .Wachtendonk                     1.000
+spost1 .Herne                           1.000
+spost1 .Haltern am See                  1.000
+spost1 .Toenisvorst                     1.000
+spost1 .Moers                           1.000
+spost1 .Schlangen                       1.000
+spost1 .Meschede                        1.000
+spost1 .Dinslaken                       1.000
+spost1 .Kerpen                          1.000
+spost1 .Koenigswinter                   1.000
+spost1 .Kierspe                         1.000
+spost1 .Marienheide                     1.000
+spost1 .Winterberg                      1.000
+spost1 .Aachen                          1.000
+spost1 .Alsdorf                         1.000
+spost1 .Baesweiler                      1.000
+spost1 .Eschweiler                      1.000
+spost1 .Herzogenrath                    1.000
+spost1 .Monschau                        1.000
+spost1 .Roetgen                         1.000
+spost1 .Simmerath                       1.000
+spost1 .Stolberg (Rhld.)                1.000
+spost1 .Vreden                          1.000
+spost1 .Wuerselen                       1.000
+spost2 .Beckum                          1.000
+spost24.Ahaus                           1.000
+spost24.Bruehl                          1.000
+
+
+----   1747 PARAMETER p_appSharePre  Application share of AS as calculated by mo
+                                     del for pre-sowing strategies
+
+                   t2009
+
+NoHerb             1.000
+AlsoMechanic       0.008
+PureMechanic       0.008
+Nothing            0.992
+
+
+----   1747 PARAMETER p_appSharePost  Application share of AS as calculated by m
+                                      odel for post-sowing strategies
+
+                    t2009
+
+NoHerb              0.992
+Nothing             0.992
+Herb                0.008
+Nicosulfuron        0.005
+Dicamba             0.003
+Prosulfuron         0.005
+Tritosulfuron       0.003
+
+
+----   1747 PARAMETER p_appSharePreGN  Application share of AS as calculated by 
+                                       model for pre-sowing strategies
+
+                               NoHerb  AlsoMecha~  PureMecha~     Nothing
+
+Ahaus                           1.000       1.000       1.000
+Beckum                          1.000       1.000       1.000
+Bruehl                          1.000       1.000       1.000
+Hoevelhof                       1.000                               1.000
+Hopsten                         1.000                               1.000
+Lippetal                        1.000                               1.000
+Nottuln                         1.000                               1.000
+Ostbevern                       1.000                               1.000
+Greven                          1.000                               1.000
+Hamm                            1.000                               1.000
+Hamminkeln                      1.000                               1.000
+Mechernich                      1.000                               1.000
+Moenchengladbach                1.000                               1.000
+Salzkotten                      1.000                               1.000
+Selm                            1.000                               1.000
+Lotte                           1.000                               1.000
+Holzwickede                     1.000                               1.000
+Juechen                         1.000                               1.000
+Luedinghausen                   1.000                               1.000
+Hilden                          1.000                               1.000
+Borgholzhausen                  1.000                               1.000
+Kirchlengern                    1.000                               1.000
+Marienmuenster                  1.000                               1.000
+Sonsbeck                        1.000                               1.000
+Straelen                        1.000                               1.000
+Wuppertal                       1.000                               1.000
+Suedlohn                        1.000                               1.000
+Leverkusen                      1.000                               1.000
+Schwerte                        1.000                               1.000
+Engelskirchen                   1.000                               1.000
+Werl                            1.000                               1.000
+Wesseling                       1.000                               1.000
+Tecklenburg                     1.000                               1.000
+Mettmann                        1.000                               1.000
+Bocholt                         1.000                               1.000
+Schleiden                       1.000                               1.000
+Ratingen                        1.000                               1.000
+Meerbusch                       1.000                               1.000
+Hellenthal                      1.000                               1.000
+Uebach-Palenberg                1.000                               1.000
+Bestwig                         1.000                               1.000
+Lengerich                       1.000                               1.000
+Radevormwald                    1.000                               1.000
+Siegen                          1.000                               1.000
+Soest                           1.000                               1.000
+Issum                           1.000                               1.000
+Waltrop                         1.000                               1.000
+Castrop-Rauxel                  1.000                               1.000
+Nettetal                        1.000                               1.000
+Bad Salzuflen                   1.000                               1.000
+Rahden                          1.000                               1.000
+Steinfurt                       1.000                               1.000
+Lemgo                           1.000                               1.000
+Hoerstel                        1.000                               1.000
+Nieheim                         1.000                               1.000
+Steinheim                       1.000                               1.000
+Ruethen                         1.000                               1.000
+Bad Wuennenberg                 1.000                               1.000
+Vettweiss                       1.000                               1.000
+Luenen                          1.000                               1.000
+Bochum                          1.000                               1.000
+Delbrueck                       1.000                               1.000
+Gangelt                         1.000                               1.000
+Kerken                          1.000                               1.000
+Horstmar                        1.000                               1.000
+Barntrup                        1.000                               1.000
+Ascheberg                       1.000                               1.000
+Wenden                          1.000                               1.000
+Drolshagen                      1.000                               1.000
+Geseke                          1.000                               1.000
+Kevelaer                        1.000                               1.000
+Hille                           1.000                               1.000
+Heinsberg                       1.000                               1.000
+Goch                            1.000                               1.000
+Neuenrade                       1.000                               1.000
+Loehne                          1.000                               1.000
+Windeck                         1.000                               1.000
+Mettingen                       1.000                               1.000
+Muenster                        1.000                               1.000
+Alfter                          1.000                               1.000
+Rheurdt                         1.000                               1.000
+Rheine                          1.000                               1.000
+Augustdorf                      1.000                               1.000
+Stemwede                        1.000                               1.000
+Troisdorf                       1.000                               1.000
+Langenfeld (Rhld.)              1.000                               1.000
+Extertal                        1.000                               1.000
+Metelen                         1.000                               1.000
+Wipperfuerth                    1.000                               1.000
+Schoeppingen                    1.000                               1.000
+Uedem                           1.000                               1.000
+Froendenberg/Ruhr               1.000                               1.000
+Coesfeld                        1.000                               1.000
+Kalkar                          1.000                               1.000
+Sassenberg                      1.000                               1.000
+Viersen                         1.000                               1.000
+Buende                          1.000                               1.000
+Oelde                           1.000                               1.000
+Schieder-Schwalenberg           1.000                               1.000
+Spenge                          1.000                               1.000
+Wesel                           1.000                               1.000
+Wickede (Ruhr)                  1.000                               1.000
+Steinhagen                      1.000                               1.000
+Bielefeld                       1.000                               1.000
+Olpe                            1.000                               1.000
+Werdohl                         1.000                               1.000
+Kamen                           1.000                               1.000
+Emsdetten                       1.000                               1.000
+Brakel                          1.000                               1.000
+Roedinghausen                   1.000                               1.000
+Xanten                          1.000                               1.000
+Haan                            1.000                               1.000
+Halle (Westf.)                  1.000                               1.000
+Gladbeck                        1.000                               1.000
+Heimbach                        1.000                               1.000
+Beelen                          1.000                               1.000
+Medebach                        1.000                               1.000
+Nachrodt-Wiblingwerde           1.000                               1.000
+Horn-Bad Meinberg               1.000                               1.000
+Warstein                        1.000                               1.000
+Luegde                          1.000                               1.000
+Luedenscheid                    1.000                               1.000
+Schwalmtal                      1.000                               1.000
+Gummersbach                     1.000                               1.000
+Ahlen                           1.000                               1.000
+Senden                          1.000                               1.000
+Werne                           1.000                               1.000
+Iserlohn                        1.000                               1.000
+Titz                            1.000                               1.000
+Enger                           1.000                               1.000
+Herford                         1.000                               1.000
+Recke                           1.000                               1.000
+Finnentrop                      1.000                               1.000
+Waldfeucht                      1.000                               1.000
+Rheda-Wiedenbrueck              1.000                               1.000
+Brueggen                        1.000                               1.000
+Erkelenz                        1.000                               1.000
+Weeze                           1.000                               1.000
+Wilnsdorf                       1.000                               1.000
+Datteln                         1.000                               1.000
+Borken                          1.000                               1.000
+Bergkamen                       1.000                               1.000
+Oberhausen                      1.000                               1.000
+Wettringen                      1.000                               1.000
+Attendorn                       1.000                               1.000
+Herdecke                        1.000                               1.000
+Bergheim                        1.000                               1.000
+Much                            1.000                               1.000
+Eitorf                          1.000                               1.000
+Neuss                           1.000                               1.000
+Menden (Sauerland)              1.000                               1.000
+Wuelfrath                       1.000                               1.000
+Lippstadt                       1.000                               1.000
+Lichtenau                       1.000                               1.000
+Hallenberg                      1.000                               1.000
+Gevelsberg                      1.000                               1.000
+Havixbeck                       1.000                               1.000
+Petershagen                     1.000                               1.000
+Werther (Westf.)                1.000                               1.000
+Kleve                           1.000                               1.000
+Verl                            1.000                               1.000
+Herzebrock-Clarholz             1.000                               1.000
+Ibbenbueren                     1.000                               1.000
+Erkrath                         1.000                               1.000
+Lennestadt                      1.000                               1.000
+Oer-Erkenschwick                1.000                               1.000
+Huenxe                          1.000                               1.000
+Lienen                          1.000                               1.000
+Noervenich                      1.000                               1.000
+Erndtebrueck                    1.000                               1.000
+Marsberg                        1.000                               1.000
+Everswinkel                     1.000                               1.000
+Euskirchen                      1.000                               1.000
+Bad Lippspringe                 1.000                               1.000
+Huertgenwald                    1.000                               1.000
+Plettenberg                     1.000                               1.000
+Kalletal                        1.000                               1.000
+Gronau (Westf.)                 1.000                               1.000
+Herten                          1.000                               1.000
+Doerentrup                      1.000                               1.000
+Welver                          1.000                               1.000
+Nideggen                        1.000                               1.000
+Geilenkirchen                   1.000                               1.000
+Raesfeld                        1.000                               1.000
+Versmold                        1.000                               1.000
+Pulheim                         1.000                               1.000
+Laer                            1.000                               1.000
+Breckerfeld                     1.000                               1.000
+Westerkappeln                   1.000                               1.000
+Velbert                         1.000                               1.000
+Sundern (Sauerland)             1.000                               1.000
+Linnich                         1.000                               1.000
+Detmold                         1.000                               1.000
+Rosendahl                       1.000                               1.000
+Espelkamp                       1.000                               1.000
+Bedburg-Hau                     1.000                               1.000
+Paderborn                       1.000                               1.000
+Beverungen                      1.000                               1.000
+Sankt Augustin                  1.000                               1.000
+Niederzier                      1.000                               1.000
+Elsdorf                         1.000                               1.000
+Isselburg                       1.000                               1.000
+Emmerich am Rhein               1.000                               1.000
+Wachtberg                       1.000                               1.000
+Bad Muenstereifel               1.000                               1.000
+Heiden                          1.000                               1.000
+Wiehl                           1.000                               1.000
+Netphen                         1.000                               1.000
+Huellhorst                      1.000                               1.000
+Bedburg                         1.000                               1.000
+Huerth                          1.000                               1.000
+Hilchenbach                     1.000                               1.000
+Inden                           1.000                               1.000
+Schmallenberg                   1.000                               1.000
+Hueckelhoven                    1.000                               1.000
+Ennigerloh                      1.000                               1.000
+Zuelpich                        1.000                               1.000
+Olfen                           1.000                               1.000
+Ense                            1.000                               1.000
+Nordwalde                       1.000                               1.000
+Warendorf                       1.000                               1.000
+Sendenhorst                     1.000                               1.000
+Witten                          1.000                               1.000
+Willebadessen                   1.000                               1.000
+Grevenbroich                    1.000                               1.000
+Freudenberg                     1.000                               1.000
+Stadtlohn                       1.000                               1.000
+Bueren                          1.000                               1.000
+Duelmen                         1.000                               1.000
+Rheinberg                       1.000                               1.000
+Morsbach                        1.000                               1.000
+Bad Sassendorf                  1.000                               1.000
+Geldern                         1.000                               1.000
+Lage                            1.000                               1.000
+Burbach                         1.000                               1.000
+Guetersloh                      1.000                               1.000
+Schwelm                         1.000                               1.000
+Frechen                         1.000                               1.000
+Unna                            1.000                               1.000
+Preussisch Oldendorf            1.000                               1.000
+Anroechte                       1.000                               1.000
+Bad Oeynhausen                  1.000                               1.000
+Saerbeck                        1.000                               1.000
+Blankenheim                     1.000                               1.000
+Korschenbroich                  1.000                               1.000
+Kreuzau                         1.000                               1.000
+Bergneustadt                    1.000                               1.000
+Kirchhundem                     1.000                               1.000
+Halver                          1.000                               1.000
+Arnsberg                        1.000                               1.000
+Voerde (Niederrhein)            1.000                               1.000
+Langenberg                      1.000                               1.000
+Alpen                           1.000                               1.000
+Warburg                         1.000                               1.000
+Niederkruechten                 1.000                               1.000
+Langerwehe                      1.000                               1.000
+Recklinghausen                  1.000                               1.000
+Schloss Holte-Stukenbrock       1.000                               1.000
+Kreuztal                        1.000                               1.000
+Ennepetal                       1.000                               1.000
+Erwitte                         1.000                               1.000
+Selfkant                        1.000                               1.000
+Bad Berleburg                   1.000                               1.000
+Schermbeck                      1.000                               1.000
+Luebbecke                       1.000                               1.000
+Sprockhoevel                    1.000                               1.000
+Meinerzhagen                    1.000                               1.000
+Hattingen                       1.000                               1.000
+Olsberg                         1.000                               1.000
+Kall                            1.000                               1.000
+Blomberg                        1.000                               1.000
+Bad Laasphe                     1.000                               1.000
+Neunkirchen-Seelscheid          1.000                               1.000
+Schalksmuehle                   1.000                               1.000
+Dortmund                        1.000                               1.000
+Neunkirchen                     1.000                               1.000
+Boenen                          1.000                               1.000
+Rietberg                        1.000                               1.000
+Kamp-Lintfort                   1.000                               1.000
+Kranenburg                      1.000                               1.000
+Willich                         1.000                               1.000
+Drensteinfurt                   1.000                               1.000
+Minden                          1.000                               1.000
+Moehnesee                       1.000                               1.000
+Hemer                           1.000                               1.000
+Bad Honnef                      1.000                               1.000
+Reichshof                       1.000                               1.000
+Juelich                         1.000                               1.000
+Borchen                         1.000                               1.000
+Hiddenhausen                    1.000                               1.000
+Nuembrecht                      1.000                               1.000
+Monheim am Rhein                1.000                               1.000
+Neukirchen-Vluyn                1.000                               1.000
+Rheinbach                       1.000                               1.000
+Hennef (Sieg)                   1.000                               1.000
+Swisttal                        1.000                               1.000
+Lohmar                          1.000                               1.000
+Weilerswist                     1.000                               1.000
+Borgentreich                    1.000                               1.000
+Porta Westfalica                1.000                               1.000
+Merzenich                       1.000                               1.000
+Brilon                          1.000                               1.000
+Kaarst                          1.000                               1.000
+Marl                            1.000                               1.000
+Dorsten                         1.000                               1.000
+Oerlinghausen                   1.000                               1.000
+Grefrath                        1.000                               1.000
+Nettersheim                     1.000                               1.000
+Rhede                           1.000                               1.000
+Altena                          1.000                               1.000
+Wetter (Ruhr)                   1.000                               1.000
+Bad Driburg                     1.000                               1.000
+Ruppichteroth                   1.000                               1.000
+Siegburg                        1.000                               1.000
+Hagen                           1.000                               1.000
+Herscheid                       1.000                               1.000
+Altenbeken                      1.000                               1.000
+Meckenheim                      1.000                               1.000
+Reken                           1.000                               1.000
+Leopoldshoehe                   1.000                               1.000
+Wegberg                         1.000                               1.000
+Dueren                          1.000                               1.000
+Ladbergen                       1.000                               1.000
+Neuenkirchen                    1.000                               1.000
+Lindlar                         1.000                               1.000
+Kempen                          1.000                               1.000
+Legden                          1.000                               1.000
+Rommerskirchen                  1.000                               1.000
+Hueckeswagen                    1.000                               1.000
+Wadersloh                       1.000                               1.000
+Bornheim                        1.000                               1.000
+Waldbroel                       1.000                               1.000
+Telgte                          1.000                               1.000
+Dormagen                        1.000                               1.000
+Nordkirchen                     1.000                               1.000
+Niederkassel                    1.000                               1.000
+Balve                           1.000                               1.000
+Billerbeck                      1.000                               1.000
+Altenberge                      1.000                               1.000
+Heiligenhaus                    1.000                               1.000
+Ochtrup                         1.000                               1.000
+Velen                           1.000                               1.000
+Wassenberg                      1.000                               1.000
+Harsewinkel                     1.000                               1.000
+Erftstadt                       1.000                               1.000
+Rees                            1.000                               1.000
+Heek                            1.000                               1.000
+Hoexter                         1.000                               1.000
+Vlotho                          1.000                               1.000
+Aldenhoven                      1.000                               1.000
+Eslohe (Sauerland)              1.000                               1.000
+Dahlem                          1.000                               1.000
+Gescher                         1.000                               1.000
+Wachtendonk                     1.000                               1.000
+Herne                           1.000                               1.000
+Haltern am See                  1.000                               1.000
+Toenisvorst                     1.000                               1.000
+Moers                           1.000                               1.000
+Schlangen                       1.000                               1.000
+Meschede                        1.000                               1.000
+Dinslaken                       1.000                               1.000
+Kerpen                          1.000                               1.000
+Koenigswinter                   1.000                               1.000
+Kierspe                         1.000                               1.000
+Marienheide                     1.000                               1.000
+Winterberg                      1.000                               1.000
+Aachen                          1.000                               1.000
+Alsdorf                         1.000                               1.000
+Baesweiler                      1.000                               1.000
+Eschweiler                      1.000                               1.000
+Herzogenrath                    1.000                               1.000
+Monschau                        1.000                               1.000
+Roetgen                         1.000                               1.000
+Simmerath                       1.000                               1.000
+Stolberg (Rhld.)                1.000                               1.000
+Vreden                          1.000                               1.000
+Wuerselen                       1.000                               1.000
+
+
+----   1747 PARAMETER p_appSharePostGN  Application share of AS as calculated by
+                                        model for post-sowing strategies
+
+                               NoHerb     Nothing        Herb  Nicosulfu~
+
+Ahaus                                                   1.000       1.000
+Beckum                                                  1.000
+Bruehl                                                  1.000       1.000
+Hoevelhof                       1.000       1.000
+Hopsten                         1.000       1.000
+Lippetal                        1.000       1.000
+Nottuln                         1.000       1.000
+Ostbevern                       1.000       1.000
+Greven                          1.000       1.000
+Hamm                            1.000       1.000
+Hamminkeln                      1.000       1.000
+Mechernich                      1.000       1.000
+Moenchengladbach                1.000       1.000
+Salzkotten                      1.000       1.000
+Selm                            1.000       1.000
+Lotte                           1.000       1.000
+Holzwickede                     1.000       1.000
+Juechen                         1.000       1.000
+Luedinghausen                   1.000       1.000
+Hilden                          1.000       1.000
+Borgholzhausen                  1.000       1.000
+Kirchlengern                    1.000       1.000
+Marienmuenster                  1.000       1.000
+Sonsbeck                        1.000       1.000
+Straelen                        1.000       1.000
+Wuppertal                       1.000       1.000
+Suedlohn                        1.000       1.000
+Leverkusen                      1.000       1.000
+Schwerte                        1.000       1.000
+Engelskirchen                   1.000       1.000
+Werl                            1.000       1.000
+Wesseling                       1.000       1.000
+Tecklenburg                     1.000       1.000
+Mettmann                        1.000       1.000
+Bocholt                         1.000       1.000
+Schleiden                       1.000       1.000
+Ratingen                        1.000       1.000
+Meerbusch                       1.000       1.000
+Hellenthal                      1.000       1.000
+Uebach-Palenberg                1.000       1.000
+Bestwig                         1.000       1.000
+Lengerich                       1.000       1.000
+Radevormwald                    1.000       1.000
+Siegen                          1.000       1.000
+Soest                           1.000       1.000
+Issum                           1.000       1.000
+Waltrop                         1.000       1.000
+Castrop-Rauxel                  1.000       1.000
+Nettetal                        1.000       1.000
+Bad Salzuflen                   1.000       1.000
+Rahden                          1.000       1.000
+Steinfurt                       1.000       1.000
+Lemgo                           1.000       1.000
+Hoerstel                        1.000       1.000
+Nieheim                         1.000       1.000
+Steinheim                       1.000       1.000
+Ruethen                         1.000       1.000
+Bad Wuennenberg                 1.000       1.000
+Vettweiss                       1.000       1.000
+Luenen                          1.000       1.000
+Bochum                          1.000       1.000
+Delbrueck                       1.000       1.000
+Gangelt                         1.000       1.000
+Kerken                          1.000       1.000
+Horstmar                        1.000       1.000
+Barntrup                        1.000       1.000
+Ascheberg                       1.000       1.000
+Wenden                          1.000       1.000
+Drolshagen                      1.000       1.000
+Geseke                          1.000       1.000
+Kevelaer                        1.000       1.000
+Hille                           1.000       1.000
+Heinsberg                       1.000       1.000
+Goch                            1.000       1.000
+Neuenrade                       1.000       1.000
+Loehne                          1.000       1.000
+Windeck                         1.000       1.000
+Mettingen                       1.000       1.000
+Muenster                        1.000       1.000
+Alfter                          1.000       1.000
+Rheurdt                         1.000       1.000
+Rheine                          1.000       1.000
+Augustdorf                      1.000       1.000
+Stemwede                        1.000       1.000
+Troisdorf                       1.000       1.000
+Langenfeld (Rhld.)              1.000       1.000
+Extertal                        1.000       1.000
+Metelen                         1.000       1.000
+Wipperfuerth                    1.000       1.000
+Schoeppingen                    1.000       1.000
+Uedem                           1.000       1.000
+Froendenberg/Ruhr               1.000       1.000
+Coesfeld                        1.000       1.000
+Kalkar                          1.000       1.000
+Sassenberg                      1.000       1.000
+Viersen                         1.000       1.000
+Buende                          1.000       1.000
+Oelde                           1.000       1.000
+Schieder-Schwalenberg           1.000       1.000
+Spenge                          1.000       1.000
+Wesel                           1.000       1.000
+Wickede (Ruhr)                  1.000       1.000
+Steinhagen                      1.000       1.000
+Bielefeld                       1.000       1.000
+Olpe                            1.000       1.000
+Werdohl                         1.000       1.000
+Kamen                           1.000       1.000
+Emsdetten                       1.000       1.000
+Brakel                          1.000       1.000
+Roedinghausen                   1.000       1.000
+Xanten                          1.000       1.000
+Haan                            1.000       1.000
+Halle (Westf.)                  1.000       1.000
+Gladbeck                        1.000       1.000
+Heimbach                        1.000       1.000
+Beelen                          1.000       1.000
+Medebach                        1.000       1.000
+Nachrodt-Wiblingwerde           1.000       1.000
+Horn-Bad Meinberg               1.000       1.000
+Warstein                        1.000       1.000
+Luegde                          1.000       1.000
+Luedenscheid                    1.000       1.000
+Schwalmtal                      1.000       1.000
+Gummersbach                     1.000       1.000
+Ahlen                           1.000       1.000
+Senden                          1.000       1.000
+Werne                           1.000       1.000
+Iserlohn                        1.000       1.000
+Titz                            1.000       1.000
+Enger                           1.000       1.000
+Herford                         1.000       1.000
+Recke                           1.000       1.000
+Finnentrop                      1.000       1.000
+Waldfeucht                      1.000       1.000
+Rheda-Wiedenbrueck              1.000       1.000
+Brueggen                        1.000       1.000
+Erkelenz                        1.000       1.000
+Weeze                           1.000       1.000
+Wilnsdorf                       1.000       1.000
+Datteln                         1.000       1.000
+Borken                          1.000       1.000
+Bergkamen                       1.000       1.000
+Oberhausen                      1.000       1.000
+Wettringen                      1.000       1.000
+Attendorn                       1.000       1.000
+Herdecke                        1.000       1.000
+Bergheim                        1.000       1.000
+Much                            1.000       1.000
+Eitorf                          1.000       1.000
+Neuss                           1.000       1.000
+Menden (Sauerland)              1.000       1.000
+Wuelfrath                       1.000       1.000
+Lippstadt                       1.000       1.000
+Lichtenau                       1.000       1.000
+Hallenberg                      1.000       1.000
+Gevelsberg                      1.000       1.000
+Havixbeck                       1.000       1.000
+Petershagen                     1.000       1.000
+Werther (Westf.)                1.000       1.000
+Kleve                           1.000       1.000
+Verl                            1.000       1.000
+Herzebrock-Clarholz             1.000       1.000
+Ibbenbueren                     1.000       1.000
+Erkrath                         1.000       1.000
+Lennestadt                      1.000       1.000
+Oer-Erkenschwick                1.000       1.000
+Huenxe                          1.000       1.000
+Lienen                          1.000       1.000
+Noervenich                      1.000       1.000
+Erndtebrueck                    1.000       1.000
+Marsberg                        1.000       1.000
+Everswinkel                     1.000       1.000
+Euskirchen                      1.000       1.000
+Bad Lippspringe                 1.000       1.000
+Huertgenwald                    1.000       1.000
+Plettenberg                     1.000       1.000
+Kalletal                        1.000       1.000
+Gronau (Westf.)                 1.000       1.000
+Herten                          1.000       1.000
+Doerentrup                      1.000       1.000
+Welver                          1.000       1.000
+Nideggen                        1.000       1.000
+Geilenkirchen                   1.000       1.000
+Raesfeld                        1.000       1.000
+Versmold                        1.000       1.000
+Pulheim                         1.000       1.000
+Laer                            1.000       1.000
+Breckerfeld                     1.000       1.000
+Westerkappeln                   1.000       1.000
+Velbert                         1.000       1.000
+Sundern (Sauerland)             1.000       1.000
+Linnich                         1.000       1.000
+Detmold                         1.000       1.000
+Rosendahl                       1.000       1.000
+Espelkamp                       1.000       1.000
+Bedburg-Hau                     1.000       1.000
+Paderborn                       1.000       1.000
+Beverungen                      1.000       1.000
+Sankt Augustin                  1.000       1.000
+Niederzier                      1.000       1.000
+Elsdorf                         1.000       1.000
+Isselburg                       1.000       1.000
+Emmerich am Rhein               1.000       1.000
+Wachtberg                       1.000       1.000
+Bad Muenstereifel               1.000       1.000
+Heiden                          1.000       1.000
+Wiehl                           1.000       1.000
+Netphen                         1.000       1.000
+Huellhorst                      1.000       1.000
+Bedburg                         1.000       1.000
+Huerth                          1.000       1.000
+Hilchenbach                     1.000       1.000
+Inden                           1.000       1.000
+Schmallenberg                   1.000       1.000
+Hueckelhoven                    1.000       1.000
+Ennigerloh                      1.000       1.000
+Zuelpich                        1.000       1.000
+Olfen                           1.000       1.000
+Ense                            1.000       1.000
+Nordwalde                       1.000       1.000
+Warendorf                       1.000       1.000
+Sendenhorst                     1.000       1.000
+Witten                          1.000       1.000
+Willebadessen                   1.000       1.000
+Grevenbroich                    1.000       1.000
+Freudenberg                     1.000       1.000
+Stadtlohn                       1.000       1.000
+Bueren                          1.000       1.000
+Duelmen                         1.000       1.000
+Rheinberg                       1.000       1.000
+Morsbach                        1.000       1.000
+Bad Sassendorf                  1.000       1.000
+Geldern                         1.000       1.000
+Lage                            1.000       1.000
+Burbach                         1.000       1.000
+Guetersloh                      1.000       1.000
+Schwelm                         1.000       1.000
+Frechen                         1.000       1.000
+Unna                            1.000       1.000
+Preussisch Oldendorf            1.000       1.000
+Anroechte                       1.000       1.000
+Bad Oeynhausen                  1.000       1.000
+Saerbeck                        1.000       1.000
+Blankenheim                     1.000       1.000
+Korschenbroich                  1.000       1.000
+Kreuzau                         1.000       1.000
+Bergneustadt                    1.000       1.000
+Kirchhundem                     1.000       1.000
+Halver                          1.000       1.000
+Arnsberg                        1.000       1.000
+Voerde (Niederrhein)            1.000       1.000
+Langenberg                      1.000       1.000
+Alpen                           1.000       1.000
+Warburg                         1.000       1.000
+Niederkruechten                 1.000       1.000
+Langerwehe                      1.000       1.000
+Recklinghausen                  1.000       1.000
+Schloss Holte-Stukenbrock       1.000       1.000
+Kreuztal                        1.000       1.000
+Ennepetal                       1.000       1.000
+Erwitte                         1.000       1.000
+Selfkant                        1.000       1.000
+Bad Berleburg                   1.000       1.000
+Schermbeck                      1.000       1.000
+Luebbecke                       1.000       1.000
+Sprockhoevel                    1.000       1.000
+Meinerzhagen                    1.000       1.000
+Hattingen                       1.000       1.000
+Olsberg                         1.000       1.000
+Kall                            1.000       1.000
+Blomberg                        1.000       1.000
+Bad Laasphe                     1.000       1.000
+Neunkirchen-Seelscheid          1.000       1.000
+Schalksmuehle                   1.000       1.000
+Dortmund                        1.000       1.000
+Neunkirchen                     1.000       1.000
+Boenen                          1.000       1.000
+Rietberg                        1.000       1.000
+Kamp-Lintfort                   1.000       1.000
+Kranenburg                      1.000       1.000
+Willich                         1.000       1.000
+Drensteinfurt                   1.000       1.000
+Minden                          1.000       1.000
+Moehnesee                       1.000       1.000
+Hemer                           1.000       1.000
+Bad Honnef                      1.000       1.000
+Reichshof                       1.000       1.000
+Juelich                         1.000       1.000
+Borchen                         1.000       1.000
+Hiddenhausen                    1.000       1.000
+Nuembrecht                      1.000       1.000
+Monheim am Rhein                1.000       1.000
+Neukirchen-Vluyn                1.000       1.000
+Rheinbach                       1.000       1.000
+Hennef (Sieg)                   1.000       1.000
+Swisttal                        1.000       1.000
+Lohmar                          1.000       1.000
+Weilerswist                     1.000       1.000
+Borgentreich                    1.000       1.000
+Porta Westfalica                1.000       1.000
+Merzenich                       1.000       1.000
+Brilon                          1.000       1.000
+Kaarst                          1.000       1.000
+Marl                            1.000       1.000
+Dorsten                         1.000       1.000
+Oerlinghausen                   1.000       1.000
+Grefrath                        1.000       1.000
+Nettersheim                     1.000       1.000
+Rhede                           1.000       1.000
+Altena                          1.000       1.000
+Wetter (Ruhr)                   1.000       1.000
+Bad Driburg                     1.000       1.000
+Ruppichteroth                   1.000       1.000
+Siegburg                        1.000       1.000
+Hagen                           1.000       1.000
+Herscheid                       1.000       1.000
+Altenbeken                      1.000       1.000
+Meckenheim                      1.000       1.000
+Reken                           1.000       1.000
+Leopoldshoehe                   1.000       1.000
+Wegberg                         1.000       1.000
+Dueren                          1.000       1.000
+Ladbergen                       1.000       1.000
+Neuenkirchen                    1.000       1.000
+Lindlar                         1.000       1.000
+Kempen                          1.000       1.000
+Legden                          1.000       1.000
+Rommerskirchen                  1.000       1.000
+Hueckeswagen                    1.000       1.000
+Wadersloh                       1.000       1.000
+Bornheim                        1.000       1.000
+Waldbroel                       1.000       1.000
+Telgte                          1.000       1.000
+Dormagen                        1.000       1.000
+Nordkirchen                     1.000       1.000
+Niederkassel                    1.000       1.000
+Balve                           1.000       1.000
+Billerbeck                      1.000       1.000
+Altenberge                      1.000       1.000
+Heiligenhaus                    1.000       1.000
+Ochtrup                         1.000       1.000
+Velen                           1.000       1.000
+Wassenberg                      1.000       1.000
+Harsewinkel                     1.000       1.000
+Erftstadt                       1.000       1.000
+Rees                            1.000       1.000
+Heek                            1.000       1.000
+Hoexter                         1.000       1.000
+Vlotho                          1.000       1.000
+Aldenhoven                      1.000       1.000
+Eslohe (Sauerland)              1.000       1.000
+Dahlem                          1.000       1.000
+Gescher                         1.000       1.000
+Wachtendonk                     1.000       1.000
+Herne                           1.000       1.000
+Haltern am See                  1.000       1.000
+Toenisvorst                     1.000       1.000
+Moers                           1.000       1.000
+Schlangen                       1.000       1.000
+Meschede                        1.000       1.000
+Dinslaken                       1.000       1.000
+Kerpen                          1.000       1.000
+Koenigswinter                   1.000       1.000
+Kierspe                         1.000       1.000
+Marienheide                     1.000       1.000
+Winterberg                      1.000       1.000
+Aachen                          1.000       1.000
+Alsdorf                         1.000       1.000
+Baesweiler                      1.000       1.000
+Eschweiler                      1.000       1.000
+Herzogenrath                    1.000       1.000
+Monschau                        1.000       1.000
+Roetgen                         1.000       1.000
+Simmerath                       1.000       1.000
+Stolberg (Rhld.)                1.000       1.000
+Vreden                          1.000       1.000
+Wuerselen                       1.000       1.000
+
+                        +     Dicamba  Prosulfur~  Tritosulf~
+
+Ahaus                                       1.000
+Beckum                          1.000                   1.000
+Bruehl                                      1.000
+
+
+----   1747 PARAMETER p_appSharePostGLY  only of glyphosate using m
+
+                      ( ALL       0.000 )
+
+
+----   1747 VARIABLE v_gm.L  gross margin for municipality gn for strategy comin
+                             ations spre and spost
+
+             t2009
+
+Ahaus      643.603
+Beckum     355.019
+Bruehl     428.004
+
+
+----   1774 PARAMETER p_GMAverage  Average gross margin over the period tt
+
+Ahaus  643.603,    Beckum 355.019,    Bruehl 428.004
+
+
+**** REPORT FILE SUMMARY
+
+fh H:\Boecker\PhD\Model_ABM-calibration\Grossmargin_P4,00.csv
+
+
+EXECUTION TIME       =        4.015 SECONDS    179 MB  24.1.3 r41464 WEX-WEI
+
+
+USER: Small MUD - 5 User License                     S170216:0352AO-WIN
+      ETH Zurich, Institute for Environmental Decisions / IED   DC10381
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Input      H:\Boecker\PhD\Model_ABM-calibration\Fit_StratABM_Cal.gms
+Output     H:\Boecker\PhD\Model_ABM-calibration\Fit_StratABM_Cal.lst
+
+**** USER ERROR(S) ENCOUNTERED

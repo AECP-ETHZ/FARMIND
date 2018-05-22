@@ -45,7 +45,7 @@ public class ReadData {
 	public static final int START_ACTION_INDEX = 16;					       // read in three activities
 	public static final int INCOME_INDEX = 19;								   // read in income history
 
-	public String DataFile = "./data/farm_data-example.csv";					       // allow external function to set data files for testing
+	public String DataFile = "./data/farm_data.csv";					       // allow external function to set data files for testing
 	public String PreferenceFile = "./data/products_preference.csv";
 	public String YearsFile = "./data/farming_years.csv";
 	public String SocialNetworkFile = "./data/social_networks.csv";

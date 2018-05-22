@@ -29,16 +29,23 @@ public class ReadData {
 	public static final int NAME = 0;										   
 	public static final int COORDINATE1 = 1;
 	public static final int COORDINATE2 = 2;
-	public static final int AGE = 3;
-	public static final int EDUCATION = 4;
-	public static final int MEMORY = 5;
-	public static final int DISS_TOLERANCE = 6;
-	public static final int INCOME_TOLERANCE = 7;
-	public static final int START_ACTION_INDEX = 8;					       
-	public static final int INCOME_INDEX = 11;
+	public static final int AGE = 3;										   // Agent age
+	public static final int EDUCATION = 4;									   // Agent education level
+	public static final int MEMORY = 5;										   // Agent memory length
+	public static final int BETA = 6;										   // experience multiplier
+	public static final int BETA_S = 7;									       // social learning multiplier
+	public static final int ASPIRATION_COEF = 8;							   // set aspiration level
+	public static final int INCOME_TOLERANCE = 9;							   // set income change dissimilarity tolerance
+	public static final int ACTIVITY_TOLERANCE = 10;						   // set dissimilarity in activity tolerance
+	public static final int LAMBDA = 11;									   // used for satisfaction calculation
+	public static final int ALPHA_PLUS = 12;								   // used for satisfaction calculation
+	public static final int ALPHA_MINUS = 13;								   // used for satisfaction calculation
+	public static final int PHI_PLUS = 14;								       // used for satisfaction calculation
+	public static final int PHI_MINUS = 15;  								   // used for satisfaction calculation
+	public static final int START_ACTION_INDEX = 16;					       // read in three activities
+	public static final int INCOME_INDEX = 19;								   // read in income history
 
-	public String DataFile = "./data/farm_data.csv";					       // allow external function to set data files for testing
-	public String ParameterFile = "./data/parameters.csv";
+	public String DataFile = "./data/farm_data-example.csv";					       // allow external function to set data files for testing
 	public String PreferenceFile = "./data/products_preference.csv";
 	public String YearsFile = "./data/farming_years.csv";
 	public String SocialNetworkFile = "./data/social_networks.csv";
@@ -117,33 +124,42 @@ public class ReadData {
 	 * @return List of all farm objects from the input csv file
 	 * @param parameterSet indicates which row (or set) of parameters should be used for the configuration
 	 */
-	public List<Farm> getFarms(int parameterSet) {
+	public List<Farm> getFarms() {
 		String Line;
 		List<Farm> farms = new ArrayList<Farm>();
 		ArrayList<String> farmParameters;
+		BufferedReader Buffer = null;	 									   // read input file
+		int farm_count_index = 0;                                              // index is used to set the actual farm id value
+		
 		String name = "";
 		int age = 0;
 		int education = 0;
 		int memory = 0;
-		double diss_tolerance = 0;
-		double income_tolerance =0;
-		BufferedReader Buffer = null;	 									   // read input file
-		int farm_count_index = 0;                                              // index is used to set the actual farm id value
-		
-		Parameters parameters = getParameters(parameterSet);
+		double beta = 0;
+		double beta_s = 0;
+		double aspiration_coef = 0;
+		double activity_tolerance = 0;
+		double income_tolerance = 0;
+		double lambda = 0;
+		double alpha_plus = 0;
+		double alpha_minus = 0;
+		double phi_plus = 0;
+		double phi_minus = 0;		
+	
 		List<Graph<String, DefaultEdge>> network = this.getSocialNetworks();   
-		List<Activity> activities = getActivityList();
-		FarmDataMatrix pref = getPreferences();
-		FarmDataMatrix experience = getExperience();
+		List<Activity>                   activities = getActivityList();
+		FarmDataMatrix                   preference = getPreferences();
+		FarmDataMatrix                   experience = getExperience();
 		
 		try {
 			Calendar now = Calendar.getInstance();                             // Gets the current date and time
 			int currentYear = now.get(Calendar.YEAR); 
 			Buffer = new BufferedReader(new FileReader(DataFile));
-			Line = Buffer.readLine();									       // first line to throw away
+			Line = Buffer.readLine();									       // first line with titles to throw away
 			
 			while ((Line = Buffer.readLine()) != null) {                       
 				farmParameters = CSVtoArrayList(Line);						   // Read farm's parameters line by line
+				
 				Location location = new Location();							   // create new location for each farm
 				List<Activity> currentActivities = new ArrayList<Activity>();  // each farm has list of activities
 				List<Double> income = new ArrayList<Double>();				   // each farm has income history records
@@ -154,14 +170,25 @@ public class ReadData {
 				coordinates[0] = Double.parseDouble(farmParameters.get(COORDINATE1));
 				coordinates[1] = Double.parseDouble(farmParameters.get(COORDINATE2));
 				location.setCoordinates(coordinates);
+				
 				age = currentYear - Integer.parseInt( farmParameters.get(AGE));
 				education = Integer.parseInt( farmParameters.get(EDUCATION) );
 				memory = Integer.parseInt( farmParameters.get(MEMORY));
 				if (memory < 4) {
 					memory = 4; 											   // error in calculations if memory is less than 4
 				}
-				diss_tolerance = Double.parseDouble( farmParameters.get(DISS_TOLERANCE));
+				
+				beta = Double.parseDouble( farmParameters.get(BETA));
+				beta_s = Double.parseDouble( farmParameters.get(BETA_S));
+				aspiration_coef = Double.parseDouble( farmParameters.get(ASPIRATION_COEF));
+				activity_tolerance = Double.parseDouble( farmParameters.get(ACTIVITY_TOLERANCE));
 				income_tolerance = Double.parseDouble( farmParameters.get(INCOME_TOLERANCE));
+				
+				lambda = Double.parseDouble( farmParameters.get(LAMBDA));
+				alpha_plus = Double.parseDouble( farmParameters.get(ALPHA_PLUS));
+				alpha_minus = Double.parseDouble( farmParameters.get(ALPHA_MINUS));
+				phi_plus = Double.parseDouble( farmParameters.get(PHI_PLUS));
+				phi_minus = Double.parseDouble( farmParameters.get(PHI_MINUS));
 				
 				currentActivities.clear();
 				for (int k = START_ACTION_INDEX; k < farmParameters.size(); k++) {
@@ -174,7 +201,7 @@ public class ReadData {
 					}
 				}
 				
-				for (int i = INCOME_INDEX; i < (farmParameters.size()); i++) {
+				for (int i = INCOME_INDEX; i < (INCOME_INDEX + memory); i++) {
 					income.add( Double.parseDouble( farmParameters.get(i) ) );
 				}
 				
@@ -183,8 +210,12 @@ public class ReadData {
 				personalIncomeAverage = mean(avgIncome);
 
 				Person farmHead = new Person(age, education, memory);        
-				Farm farm = new Farm(name, location, network.get(farm_count_index), income, personalIncomeAverage, experience, pref, activities, diss_tolerance, income_tolerance, currentActivities, farmHead, parameters);
-				farm.setK();
+				Farm farm = new Farm(name, location, network.get(farm_count_index), 
+						income, personalIncomeAverage, experience, preference, activities, 
+						activity_tolerance, income_tolerance, currentActivities, farmHead, 
+						beta, beta_s, aspiration_coef, lambda, alpha_plus, alpha_minus, phi_plus, phi_minus);
+				
+				farm.setLearningRate();
 				
 				farms.add(farm);
 				farm_count_index++;	
@@ -200,51 +231,6 @@ public class ReadData {
 			}
 		}
 		return farms;
-	}
-
-	/** 
-	 * Read input parameter file and set all parameters in object
-	 * @param parameterSet which set of parameters to read from input file
-	 * @return parameter object for agent creation
-	 */
-	private Parameters getParameters(int parameterSet) {
-		String Line;
-		ArrayList<String> matrixRow;
-		BufferedReader Buffer = null;	
-		Parameters parameters = new Parameters();
-
-		try {
-			Buffer = new BufferedReader(new FileReader(ParameterFile));
-			Line = Buffer.readLine();
-			
-			for(int i = 0; i < parameterSet; i++) {
-				Line = Buffer.readLine();
-			}
-			
-			matrixRow = CSVtoArrayList(Line);
-			parameters.setAlpha_plus(Double.parseDouble(matrixRow.get(1)) );
-			parameters.setAlpha_minus(Double.parseDouble(matrixRow.get(2)) );
-			parameters.setLambda(Double.parseDouble(matrixRow.get(3)) );
-			parameters.setPhi_plus(Double.parseDouble(matrixRow.get(4)) ); 
-			parameters.setPhi_minus(Double.parseDouble(matrixRow.get(5)) ); 
-			parameters.setA(Double.parseDouble(matrixRow.get(6)) ); 
-			parameters.setB(Double.parseDouble(matrixRow.get(7)) ); 
-			parameters.setM(Double.parseDouble(matrixRow.get(8)) ); 
-			parameters.setBeta_s(Double.parseDouble(matrixRow.get(9)) );
-			parameters.setBeta_q(Double.parseDouble(matrixRow.get(10)) );
-			parameters.setName(matrixRow.get(11));
-				
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (Buffer != null) Buffer.close();
-			} catch (IOException Exception) {
-				Exception.printStackTrace();
-			}
-		}
-		
-		return parameters;
 	}
 
 	/**

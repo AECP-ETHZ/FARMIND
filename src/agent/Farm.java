@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Set;
 
 import reader.FarmDataMatrix;
-import reader.Parameters;
 
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
@@ -39,54 +38,75 @@ public class Farm {
 	private FarmDataMatrix preferences;									       // preference (between 1 to 5) of each farm for each activity
 	private List<Activity> currentActivities;								   // list of current activities each farm is engaged in
 	private List<Activity> allActivities;									   // list of all possible activities
-	private Parameters parameters;											   // simulation parameters
 	private int strategy;													   // selected strategy (opt-out, optimize, imitate, repeat)
 	private double incomeProbability;										   // for a region (list of farms) income is distributed normally. We can determine the probability of an income occuring in this distribution (CPD)
 	private double regionIncomeChangePercent;								   // the percentage that the income of a region change (current_avg - historical_avg)/historical_avg
 	private double lastYearPersonalIncomeAverage;							   // excluding most recent time period, average income of the specific farm
-	private double k;														   // learning rate for specific farm. Calculated based on education level
+	private double learning_rate;											   // learning rate for specific farm. Calculated based on education level
 	private List<Double> q_range;											   // q range (+,- values) for the learning rate vectors for the individual farm
 	
-	/** 
-	 * Constructor method for farm object
-	 * @param name	of the farm
-	 * @param location	of the farm
-	 * @param socialNetwork		social network of the farm
-	 * @param incomeHistory	history to initialize farm
-	 * @param personalIncomeAverage	average of income except most recent time period
-	 * @param farmingExperience	shared experience matrix
-	 * @param preferences			activity preference
-	 * @param activities	full activity list
-	 * @param diss_tolerance	tolerance to dissimilarity
-	 * @param income_tolerance  tolerance to differences in income
-	 * @param currentActivities	list of current farm activities during initalization
-	 * @param farmHead	person object to lead farm
-	 * @param parameters	simulation parameters
+	private double p_beta = 0;
+	private double p_beta_s = 0;
+	private double p_aspiration_coef = 0;
+	private double p_activity_tolerance = 0;
+	private double p_income_tolerance = 0;
+	private double p_lambda = 0;
+	private double p_alpha_plus = 0;
+	private double p_alpha_minus = 0;
+	private double p_phi_plus = 0;
+	private double p_phi_minus = 0;
+	
+	/**
+	 * 
+	 * @param name
+	 * @param location
+	 * @param socialNetwork
+	 * @param incomeHistory
+	 * @param personalIncomeAverage
+	 * @param farmingExperience
+	 * @param preferences
+	 * @param activities
+	 * @param activity_tolerance
+	 * @param income_tolerance
+	 * @param currentActivities
+	 * @param farmHead
+	 * @param beta
+	 * @param beta_s
+	 * @param aspiration_coef
+	 * @param lambda
+	 * @param alpha_plus
+	 * @param alpha_minus
+	 * @param phi_plus
+	 * @param phi_minus
 	 */
-	public Farm(String name, Location location, Graph<String, DefaultEdge> socialNetwork, List<Double> incomeHistory,
-			double personalIncomeAverage, FarmDataMatrix farmingExperience, FarmDataMatrix preferences,
-			List<Activity> activities, double diss_tolerance, double income_tolerance, List<Activity> currentActivities, Person farmHead,
-			Parameters parameters) {
-
+	public Farm(String name, Location location, Graph<String, DefaultEdge> socialNetwork, List<Double> incomeHistory, double personalIncomeAverage, 
+			FarmDataMatrix farmingExperience, FarmDataMatrix preferences, List<Activity> activities, double activity_tolerance, double income_tolerance, 
+			List<Activity> currentActivities, Person farmHead, double beta, double beta_s, double aspiration_coef, double lambda, double alpha_plus, 
+			double alpha_minus, double phi_plus, double phi_minus) {
+		
 		this.setFarmName(name);
 		this.setLocation(location);
 		this.setNetwork(socialNetwork);
 		this.setIncomeHistory(incomeHistory);
 		this.setLastYearPersonalIncomeAverage(personalIncomeAverage);
+		
 		this.setExperience(farmingExperience);
 		this.setPreferences(preferences);
 		this.setActivities(activities);
-		this.setDissimilarity_Tolerance(diss_tolerance);
+		this.setDissimilarity_Tolerance(activity_tolerance);
 		this.setIncome_Tolerance(income_tolerance);
 		this.setCurrentActivites(currentActivities);
 		this.setHead(farmHead);
-		this.setParameters(parameters);
-	}
-	/**
-	 * Alternative constructor
-	 */
-	public Farm() {
-		// used for testing
+		
+		this.setP_beta(beta);
+		this.setP_beta_s(beta_s);
+		this.setP_aspiration_coef(aspiration_coef);
+		this.setP_lambda(lambda);
+		this.setP_alpha_plus(alpha_plus);
+		this.setP_alpha_minus(alpha_minus);
+		this.setP_phi_plus(phi_plus);
+		this.setP_phi_minus(phi_minus);
+		
 	}
 	/** 
 	 * After the gams model has returned the simulation results. We update the individual farms with the new income values. 
@@ -235,7 +255,7 @@ public class Farm {
 	 */
 	private void updateAspiration() {
 		double aspiration = 0;												   // calculated aspiration level
-		double alpha = this.parameters.getA();								   // alpha is the percentage of historical average
+		double alpha = this.getP_aspiration_coef();							   // alpha is the percentage of historical average
 		
 		aspiration = alpha*mean(IncomeHistory);
 		
@@ -245,8 +265,8 @@ public class Farm {
 	 * Based on the input parameter, calculate a tolerance level for dissimilarity and income. Percent of exogenously input tolerance levels. 
 	 */
 	private void updateISB_Tolerances() {
-		this.Dissimilarity_Tolerance = this.parameters.getB() * this.Dissimilarity_Tolerance;
-		this.Income_Tolerance        = this.parameters.getM() * this.Income_Tolerance;
+		this.Dissimilarity_Tolerance = this.getP_activity_tolerance();
+		this.Income_Tolerance        = this.getP_income_tolerance();
 	}
 	/** 
 	 * Each time period, t, call this function to increment the experience vector of this farm. 
@@ -327,13 +347,13 @@ public class Farm {
 	private double calculateSatisfaction(double income) {
 		double satisfaction = 0;
 		
-		double alpha_plus = this.parameters.getAlpha_plus();
-		double alpha_minus = this.parameters.getAlpha_minus();
-		double phi_plus = this.parameters.getPhi_plus();
-		double phi_minus = this.parameters.getPhi_minus();
+		double alpha_plus = this.getP_alpha_plus();
+		double alpha_minus = this.getP_alpha_minus();
+		double phi_plus = this.getP_phi_plus();
+		double phi_minus = this.getP_phi_minus();
 		
 		double probability = this.getIncomeProbability();
-		double lambda = this.parameters.getLambda();
+		double lambda = this.getP_lambda();
 		double v = 0;
 		double theta = 0; 
 		
@@ -380,7 +400,7 @@ public class Farm {
 	 * Initialize a value for K based on the memory limit of each farm
 	 * @return a double value that is K
 	 */
-	public double init_K() {
+	public double init_learning_rate() {
 		double s = 1;
 		double m1_ratio = 1/2.0;
 		double m2_ratio = 1/8.0;
@@ -414,7 +434,7 @@ public class Farm {
 	 * @return
 	 */
 	public List<Double> calc_q_set() {
-		double k = this.getK();
+		double k = this.getLearningRate();
 		List<Double> experience = new ArrayList<Double>();
 		List<Double> q_range = new ArrayList<Double>();
 		
@@ -526,12 +546,6 @@ public class Farm {
 	public void setIncomeHistory(List<Double> incomeHistory) {
 		IncomeHistory = incomeHistory;
 	}
-	public Parameters getParameters() {
-		return parameters;
-	}
-	public void setParameters(Parameters parameters) {
-		this.parameters = parameters;
-	}
 	public int getStrategy() {
 		return strategy;
 	}
@@ -577,11 +591,71 @@ public class Farm {
 	public void setQ_range() {
 		this.q_range = calc_q_set();
 	}
-	public double getK() {
-		return this.k;
+	public double getLearningRate() {
+		return this.learning_rate;
 	}
-	public void setK() {
-		this.k = init_K();
+	public void setLearningRate() {
+		this.learning_rate = init_learning_rate();
+	}
+	public double getP_beta() {
+		return p_beta;
+	}
+	public void setP_beta(double p_beta) {
+		this.p_beta = p_beta;
+	}
+	public double getP_beta_s() {
+		return p_beta_s;
+	}
+	public void setP_beta_s(double p_beta_s) {
+		this.p_beta_s = p_beta_s;
+	}
+	public double getP_aspiration_coef() {
+		return p_aspiration_coef;
+	}
+	public void setP_aspiration_coef(double p_aspiration_coef) {
+		this.p_aspiration_coef = p_aspiration_coef;
+	}
+	public double getP_activity_tolerance() {
+		return p_activity_tolerance;
+	}
+	public void setP_activity_tolerance(double p_activity_tolerance) {
+		this.p_activity_tolerance = p_activity_tolerance;
+	}
+	public double getP_income_tolerance() {
+		return p_income_tolerance;
+	}
+	public void setP_income_tolerance(double p_income_tolerance) {
+		this.p_income_tolerance = p_income_tolerance;
+	}
+	public double getP_lambda() {
+		return p_lambda;
+	}
+	public void setP_lambda(double p_lambda) {
+		this.p_lambda = p_lambda;
+	}
+	public double getP_alpha_plus() {
+		return p_alpha_plus;
+	}
+	public void setP_alpha_plus(double p_alpha_plus) {
+		this.p_alpha_plus = p_alpha_plus;
+	}
+	public double getP_alpha_minus() {
+		return p_alpha_minus;
+	}
+	public void setP_alpha_minus(double p_alpha_minus) {
+		this.p_alpha_minus = p_alpha_minus;
+	}
+	public double getP_phi_plus() {
+		return p_phi_plus;
+	}
+	public void setP_phi_plus(double p_phi_plus) {
+		this.p_phi_plus = p_phi_plus;
+	}
+	public double getP_phi_minus() {
+		return p_phi_minus;
+	}
+	public void setP_phi_minus(double p_phi_minus) {
+		this.p_phi_minus = p_phi_minus;
 	}
 }
 

@@ -1,8 +1,6 @@
 package consumat;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,25 +26,21 @@ public class Consumat {
 	static String FileName = origFileName + String.format("%d",0);								   // given enough lines in the log file, we need to start a new file
 		
 	public static void main(String[] args) {
-		double max_parameter_length = getParameterCount();
 		System.out.println("Starting Model");
 		
-		//max_parameter_length = 2;
-		for (double parameterSet = 1; parameterSet < max_parameter_length; parameterSet++) {	   // sensitivity testing, loop through all parameters
-			ReadData reader = new ReadData();										   // read all input data files
-			List<Farm>     allFarms = reader.getFarms((int)parameterSet);					       // build set of farms with new parameters
-			List<Double> simulatedIncomeForFarms = new ArrayList<Double>();						   // list of all farm incomes
+		ReadData reader = new ReadData();									   // read all input data files
+		List<Farm>     allFarms = reader.getFarms();					       // build set of farms 
+		List<Double> simulatedIncomeForFarms = new ArrayList<Double>();		   // list of all farm incomes
+		
+		initializeRegionIncomeChangePercent(allFarms);						   // only take into account the preset values
+		
+		for (int year = 1; year <= 4; year++) {							       // run simulation for a set of years, getting updated income and products	
+			System.out.println(String.format("year %d", year));				
 			
-			initializeRegionIncomeChangePercent(allFarms);										   // only take into account the preset values
-			
-			for (int year = 1; year <= 4; year++) {											       // run simulation for a set of years, getting updated income and products	
-				System.out.println(String.format("year %d", year));				
-				
-				CreateGamsFile(allFarms, year, simulatedIncomeForFarms);
-				RunGams(allFarms);
-				simulatedIncomeForFarms = readGamsResults(allFarms);
-				updateRegionIncomeChangePercent(allFarms,simulatedIncomeForFarms);				   // after time step update the percent change for population
-			}
+			CreateGamsFile(allFarms, year, simulatedIncomeForFarms);
+			RunGams(allFarms);
+			simulatedIncomeForFarms = readGamsResults(allFarms);
+			updateRegionIncomeChangePercent(allFarms,simulatedIncomeForFarms); // after time step update the percent change for population
 		}
 
 		System.out.println("Complete");
@@ -91,7 +85,7 @@ public class Consumat {
 			for (String act: possibleActivitySet) System.out.print(act + " ");
 			System.out.print("\n");
 			
-			DecisionResult decision = new DecisionResult(farm.getPreferences().getDataElementName(), farm.getFarmName(), year, farm.getParameters(), farm.getK(), farm.getStrategy(), farm.getIncomeHistory().get(0), farm.getCurrentActivities(), possibleActivitySet);
+			DecisionResult decision = new DecisionResult(farm.getPreferences().getDataElementName(), farm.getFarmName(), year, farm.getLearningRate(), farm.getStrategy(), farm.getIncomeHistory().get(0), farm.getCurrentActivities(), possibleActivitySet, farm);
 
 			line_counter++;
 			if (line_counter > 999999) {
@@ -99,7 +93,7 @@ public class Consumat {
 				file_counter++;
 				line_counter = 0;
 			} 
-			decision.appendDecisionFile(FileName);
+			decision.appendLogFile(FileName);
 			decision.appendGamsFile();													   // create a file 'p_allowedStrat' which contains the gams options for each farm
 			farm.updateExperiencePlusAge();                              				   // each time period update experience
 			farmIndex++;
@@ -260,32 +254,6 @@ public class Consumat {
 		String fileName = String.format("Results-%d-%d-%d-%d-%d_v", day, month, year_file,hour, minute);
 		
 		return fileName;
-	}
-	
-	/** 
-	 * Get number of parameter options in input parameter file
-	 * @return number of possible parameter options
-	 */
-	public static int getParameterCount() {
-		BufferedReader Buffer = null;	
-		int count = 0;
-		
-		try {
-			Buffer = new BufferedReader(new FileReader("./data/parameters.csv"));
-			while(Buffer.readLine() != null) {
-				count++;
-			}
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (Buffer != null) Buffer.close();
-			} catch (IOException Exception) {
-				Exception.printStackTrace();
-			}
-		}
-		return count;
 	}
 }
 

@@ -43,7 +43,7 @@ public class DecisionCalculatorTests {
 
 		List<Double> Q = new ArrayList<Double>();                              // learning by doing vector for specific farm
 		int time = 0;														   // years of experience
-		double k = farm.getK();												   // scale factor
+		double k = farm.getLearningRate();												   // scale factor
 		double q;															   // calculated score
 		
 		for (int i = 0; i < m; i++) {

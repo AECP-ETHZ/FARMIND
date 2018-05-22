@@ -40,13 +40,13 @@ public class DecisionCalculator {
 	 * @param farms - list of all farms in the region for network information
 	 */
 	public DecisionCalculator(Farm farm, List<Farm> farms) {
-		double m = farm.getPreferences().getDataElementName().size();		       // number of products in system
+		double m = farm.getPreferences().getDataElementName().size();		   // number of products in system
 		this.L = getFarmExperienceVector(farm,m);
 		this.S = getNetworkExperienceAverageVector(farm, m, farms);
 		this.P = getFarmPreferenceVector(farm,m);
 		this.farm = farm;
 		farm.setQ_range();
-		double q_minus = farm.getQ_range().get(0);												   // set upper and lower q range for experience
+		double q_minus = farm.getQ_range().get(0);							   // set upper and lower q range for experience
 		double q_plus  =  farm.getQ_range().get(1);  
 		L.add(q_minus);															  
 		L.add(q_plus);														   
@@ -90,7 +90,7 @@ public class DecisionCalculator {
 		 
 		for (int i = 0; i< len - 2; i++) {
 			for (int j = 0; j < len - 2; j++) {
-				matrix[i][j] = p_p[i][j] + farm.getParameters().getBeta_q() * ( p_l[i][j] + farm.getParameters().getBeta_s()*p_s[i][j] );
+				matrix[i][j] = p_p[i][j] + farm.getP_beta() * ( p_l[i][j] + farm.getP_beta_s()*p_s[i][j] );
 			}
 		}
 		
@@ -127,7 +127,7 @@ public class DecisionCalculator {
 		 
 		for (int i = 0; i< len - 2; i++) {
 			for (int j = 0; j < len - 2; j++) {
-				matrix[i][j] = p_p[i][j] + farm.getParameters().getBeta_q() * ( p_l[i][j] );
+				matrix[i][j] = p_p[i][j] + farm.getP_beta() * ( p_l[i][j] );
 			}
 		}
 		
@@ -279,7 +279,7 @@ public class DecisionCalculator {
 	private List<Double> getFarmExperienceVector(Farm farm, double m) {
 		List<Double> Q = new ArrayList<Double>();                              // learning by doing vector for specific farm
 		int time = 0;														   // years of experience
-		double k = farm.getK();								                   // scale factor
+		double k = farm.getLearningRate();								                   // scale factor
 		double q;															   // calculated score
 		
 		for (int i = 0; i < m; i++) {

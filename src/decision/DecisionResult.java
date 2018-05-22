@@ -8,7 +8,7 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import activity.Activity;
-import reader.Parameters;
+import agent.Farm;
 
 /**
  * Decision object with unique information for each farm. This object can output a gams compatible simulation file, as well as output a log of all decisions and parameters during the model execution. 
@@ -20,13 +20,13 @@ public class DecisionResult {
 
 	private String farmId;													   // unique farm id
 	private Integer year;													   // which time step this decision was made in
-	private Parameters param;												   // which parameter set was used
 	private int strategy;													   // farm strategy
 	private double income;													   // income of time step
-	private double k;													       // income of time step
+	private double learning_rate;											   // learning rate of agent
 	private List<String> allActivity;										   // All possible activities in the model
 	private List<Activity> currentActivity;									   // current activity of the agent
 	private List<String> possibleActivity;								       // set of possible activities by the agent
+	private Farm farm;														   // farm holds parameters
 	
 	/** 
 	 * Constructor for the Decision Result
@@ -39,16 +39,16 @@ public class DecisionResult {
 	 * @param currentActivities		current actions in system
 	 * @param income		income of farm
 	 */
-	public DecisionResult(List<String> allActivities, String farmId, Integer year, Parameters param, Double k, int strat, double income, List<Activity> currentActivities, List<String> possibleActivities) {
+	public DecisionResult(List<String> allActivities, String farmId, Integer year, Double learning_rate, int strat, double income, List<Activity> currentActivities, List<String> possibleActivities, Farm farm) {
 		setFarmId(farmId);
 		setYear(year);
-		setParam(param);
 		setStrategy(strat);
 		setIncome(income);
 		setCurrentActivity(currentActivities);
 		setPossibleActivity(possibleActivities);
 		setAllActivity(allActivities);
-		setK(k);
+		setLearningRate(learning_rate);
+		setFarm(farm);
 	}
 
 	/** 
@@ -92,7 +92,7 @@ public class DecisionResult {
 	 * write output CSV log file based on decision object. This log file can be updated each time period for each agent. 
 	 * @param fileName of output file which is previously checked to ensure we will not exceed 1 million lines of data. 
 	 */
-	public void appendDecisionFile(String fileName) {
+	public void appendLogFile(String fileName) {
 		String PATH = "./output";
 		File directory = new File(PATH);
 		if(!directory.exists()) {
@@ -110,23 +110,23 @@ public class DecisionResult {
 		PrintWriter writer = new PrintWriter(bw);
 		
 		if (file.length() == 0) {
-			writer.println("year,name,alpha_plus,alpha_minus,lambda,phi_plus,phi_minus,a,b,k,m,beta_s,beta_q,strategy,possible_action1,"
+			writer.println("year,name,alpha_plus,alpha_minus,lambda,phi_plus,phi_minus,aspiration_coef,activity_tolerance,learning_rate,income_tolerance,beta_s,beta_q,strategy,possible_action1,"
 					+ "possible_action2,possible_action3,possible_action4,possible_action5,possible_action6,income,current_action");
 		}
 		
 		writer.print(String.format("%s,",this.year));
-		writer.print(String.format("%s,",this.farmId));
-		writer.print(String.format("%s,",this.param.getAlpha_plus()));
-		writer.print(String.format("%s,",this.param.getAlpha_minus()));
-		writer.print(String.format("%s,",this.param.getLambda()));
-		writer.print(String.format("%s,",this.param.getPhi_plus() ));
-		writer.print(String.format("%s,",this.param.getPhi_minus() ));
-		writer.print(String.format("%s,",this.param.getA() ));
-		writer.print(String.format("%s,",this.param.getB() ));
-		writer.print(String.format("%s,",this.getK() ));
-		writer.print(String.format("%s,",this.param.getM() ));
-		writer.print(String.format("%s,",this.param.getBeta_s() ));
-		writer.print(String.format("%s,",this.param.getBeta_q() ));
+		writer.print(String.format("%s,",this.getFarmId()));
+		writer.print(String.format("%s,",this.farm.getP_alpha_plus()));
+		writer.print(String.format("%s,",this.farm.getP_alpha_minus()));
+		writer.print(String.format("%s,",this.farm.getP_lambda()));
+		writer.print(String.format("%s,",this.farm.getP_phi_plus() ));
+		writer.print(String.format("%s,",this.farm.getP_phi_minus() ));
+		writer.print(String.format("%s,",this.farm.getP_aspiration_coef() ));
+		writer.print(String.format("%s,",this.farm.getP_activity_tolerance() ));
+		writer.print(String.format("%s,",this.getLearningRate() ));
+		writer.print(String.format("%s,",this.farm.getP_income_tolerance() ));
+		writer.print(String.format("%s,",this.farm.getP_beta_s() ));
+		writer.print(String.format("%s,",this.farm.getP_beta() ));
 		writer.print(String.format("%s,",this.strategy) );
 		
 		for(int i = 0; i < this.possibleActivity.size(); i++) {
@@ -161,12 +161,6 @@ public class DecisionResult {
 	public void setYear(Integer year) {
 		this.year = year;
 	}
-	public Parameters getParam() {
-		return param;
-	}
-	public void setParam(Parameters param) {
-		this.param = param;
-	}
 	public int getStrategy() {
 		return strategy;
 	}
@@ -197,15 +191,19 @@ public class DecisionResult {
 	public void setAllActivity(List<String> allActivity) {
 		this.allActivity = allActivity;
 	}
+	public double getLearningRate() {
+		return learning_rate;
+	}
+	public void setLearningRate(double k) {
+		this.learning_rate = k;
+	}
+	public Farm getFarm() {
+		return farm;
+	}
+	public void setFarm(Farm farm) {
+		this.farm = farm;
+	}
 	
-	public double getK() {
-		return k;
-	}
-
-	public void setK(double k) {
-		this.k = k;
-	}
-
 	/**
 	 *  We have 72 strategies in the system, and these tuples correspond to each strategy.  first element in the tuple is a row in the strategy matrix, and the second element is the column.
 	 *  Each row element corresponds to a post sowing strategy, and each column is a pre sowing strategy. So [53,2] corresponds to post 53, and pre 2 strategy set.  

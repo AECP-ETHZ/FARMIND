@@ -122,7 +122,6 @@ public class ReadData {
 	 * Each farm in the list contains a social network, the associated people, and preferred activities
 	 * The satisfaction and Information Seeking Behavior (ISB) are generated initially
 	 * @return List of all farm objects from the input csv file
-	 * @param parameterSet indicates which row (or set) of parameters should be used for the configuration
 	 */
 	public List<Farm> getFarms() {
 		String Line;

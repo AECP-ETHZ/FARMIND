@@ -27,14 +27,19 @@ public class Consumat {
 		
 	public static void main(String[] args) {
 		System.out.println("Starting Model");
-		
+
+		if (args.length < 1) {
+			System.out.println("input number of iterations");
+			System.exit(0);
+		}
+
 		ReadData reader = new ReadData();									   // read all input data files
 		List<Farm>     allFarms = reader.getFarms();					       // build set of farms 
 		List<Double> simulatedIncomeForFarms = new ArrayList<Double>();		   // list of all farm incomes
 		
 		initializeRegionIncomeChangePercent(allFarms);						   // only take into account the preset values
 		
-		for (int year = 1; year <= 4; year++) {							       // run simulation for a set of years, getting updated income and products	
+		for (int year = 1; year <= Integer.parseInt(args[0]); year++) {							       // run simulation for a set of years, getting updated income and products	
 			System.out.println(String.format("year %d", year));				
 			
 			CreateGamsFile(allFarms, year, simulatedIncomeForFarms);

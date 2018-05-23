@@ -42,12 +42,15 @@ public class ReadData {
 	public static final int ALPHA_MINUS = 13;								   // used for satisfaction calculation
 	public static final int PHI_PLUS = 14;								       // used for satisfaction calculation
 	public static final int PHI_MINUS = 15;  								   // used for satisfaction calculation
+	
 	public static final int START_ACTION_INDEX = 16;					       // read in three activities
 	public static final int INCOME_INDEX = 19;								   // read in income history
 
-	public String DataFile = "./data/farm_data.csv";					       // allow external function to set data files for testing
-	public String PreferenceFile = "./data/products_preference.csv";
-	public String YearsFile = "./data/farming_years.csv";
+	public String DataFile = "./data/farm_parameters.csv";					       // allow external function to set data files for testing
+	public String PreferenceFile = "./data/activity_preference.csv";
+	public String InitialActivities = "./data/initial_activities.csv";
+	public String InitialIncomes = "./data/initial_incomes.csv";
+	public String YearsFile = "./data/performing_years.csv";
 	public String SocialNetworkFile = "./data/social_networks.csv";
 	public String ActivityFile = "./data/activities.csv";
 	
@@ -188,33 +191,12 @@ public class ReadData {
 				alpha_minus = Double.parseDouble( farmParameters.get(ALPHA_MINUS));
 				phi_plus = Double.parseDouble( farmParameters.get(PHI_PLUS));
 				phi_minus = Double.parseDouble( farmParameters.get(PHI_MINUS));
-				
-				currentActivities.clear();
-				for (int k = START_ACTION_INDEX; k < farmParameters.size(); k++) {
-					for(int i = 0; i<activities.size(); i++) {
-						if (activities.get(i).getName().equals(farmParameters.get(k) )) {
-							int ID = activities.get(i).getID();
-							Activity p = new Activity(ID, farmParameters.get(k)); 
-							currentActivities.add(p);
-						}
-					}
-				}
-				
-				for (int i = INCOME_INDEX; i < (INCOME_INDEX + memory); i++) {
-					income.add( Double.parseDouble( farmParameters.get(i) ) );
-				}
-				
-				List<Double> avgIncome = new ArrayList<Double>(income);
-				avgIncome.remove(0);                                           // remove income of first time period
-				personalIncomeAverage = mean(avgIncome);
 
 				Person farmHead = new Person(age, education, memory);        
 				Farm farm = new Farm(name, location, network.get(farm_count_index), 
 						income, personalIncomeAverage, experience, preference, activities, 
 						activity_tolerance, income_tolerance, currentActivities, farmHead, 
 						beta, beta_s, aspiration_coef, lambda, alpha_plus, alpha_minus, phi_plus, phi_minus);
-				
-				farm.setLearningRate();
 				
 				farms.add(farm);
 				farm_count_index++;	
@@ -229,8 +211,108 @@ public class ReadData {
 				Exception.printStackTrace();
 			}
 		}
+		
+		farms = updateFarmsActivities(farms);                                  // read actual activity and income data and update each farm
+		farms = updateFarmsIncome(farms);
+		
 		return farms;
 	}
+	
+	/** 
+	 * Update farm activity by reading activity file
+	 * @param farms List of farms in system
+	 * @return farms List of farms in system
+	 */
+	private List<Farm> updateFarmsActivities(List<Farm> farms) {
+		String Line;
+		ArrayList<String> farmParameters;
+		BufferedReader Buffer = null;	 									   // read input file
+		int farm_count_index = 0;                                              // index is used to set the actual farm id value
+		List<Activity>                   activities = getActivityList();
+		
+		try {
+			Buffer = new BufferedReader(new FileReader(InitialActivities));
+			Line = Buffer.readLine();									       // first line with titles to throw away
+			farm_count_index = 0;	
+			while ((Line = Buffer.readLine()) != null) { 
+				farmParameters = CSVtoArrayList(Line);						   // Read farm's parameters line by line
+				List<Activity> currentActivities = new ArrayList<Activity>();  // each farm has list of activities
+
+				currentActivities.clear();
+				for (int k = 0; k < farmParameters.size(); k++) {
+					for(int i = 0; i<activities.size(); i++) {
+						if (activities.get(i).getName().equals(farmParameters.get(k) )) {
+							int ID = activities.get(i).getID();
+							Activity p = new Activity(ID, farmParameters.get(k)); 
+							currentActivities.add(p);
+						}
+					}
+				}
+				
+				farms.get(farm_count_index).setCurrentActivites(currentActivities);;
+				farm_count_index++;	
+			}
+		
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (Buffer != null) Buffer.close();
+			} catch (IOException Exception) {
+				Exception.printStackTrace();
+			}
+		}
+		
+		return farms;
+	}
+	
+	/** 
+	 * Read the initial income data file and update each farm with the proper income
+	 * @param farms List of farms in system
+	 * @return farms List of farms in system
+	 */
+	private List<Farm> updateFarmsIncome(List<Farm> farms) {
+		String Line;
+		ArrayList<String> farmParameters;
+		BufferedReader Buffer = null;	 									   // read input file
+		int farm_count_index = 0;                                              // index is used to set the actual farm id value
+		
+		try {
+			Buffer = new BufferedReader(new FileReader(InitialIncomes));
+			Line = Buffer.readLine();									       // first line with titles to throw away
+			farm_count_index = 0;	
+			while ((Line = Buffer.readLine()) != null) { 
+				farmParameters = CSVtoArrayList(Line);						   // Read farm's parameters line by line
+				List<Double> income = new ArrayList<Double>();				   // each farm has income history records
+				double personalIncomeAverage = 0;					           // personal income average
+				
+				for (int i = 1; i < farms.get(farm_count_index).getMemory()+1; i++) {
+					income.add( Double.parseDouble( farmParameters.get(i) ) );
+				}
+				
+				List<Double> avgIncome = new ArrayList<Double>(income);
+				avgIncome.remove(0);                                           // remove income of first time period
+				personalIncomeAverage = mean(avgIncome);
+				
+				farms.get(farm_count_index).setLastYearPersonalIncomeAverage(personalIncomeAverage);
+				farms.get(farm_count_index).setIncomeHistory(income);
+				farms.get(farm_count_index).setLearningRate();
+				farm_count_index++;	
+			}
+		
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (Buffer != null) Buffer.close();
+			} catch (IOException Exception) {
+				Exception.printStackTrace();
+			}
+		}
+		
+		return farms;
+	}
+	
 
 	/**
 	 * Read preferences of each farm for each activity and build preference object

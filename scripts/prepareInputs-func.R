@@ -47,35 +47,40 @@ prepare_inputs <- function(i, nFarm, nAct, actLimit, farm_names, act_names,
   
   ### Write out farme parameters
   farm_chars_list <- farm_chars_list[-1,]
+  #farm_chars_list <- farm_chars_list[,]
   rownames(farm_chars_list) <- farm_names
   colnames(farm_chars_list) <- c('latitude','longitude','year','education','memory', 'beta', 'beta_s',
                                  'aspiration_coef', 'tolerance_income', 'tolerance_activity',
                                  'lambda',	'alpha_plus',	'alpha_minus', 'phi_plus',	'phi_minus')
-  write.csv(farm_chars_list, sprintf("farm_parameters_%d.csv", i))
+  #write.csv(farm_chars_list, sprintf("farm_parameters_%d.csv", i))
+  write.csv(farm_chars_list, sprintf("farm_parameters.csv"))
   
   ### Write out initial activities
   act_list <- act_list[-1,]
   rownames(act_list) <- farm_names
   colnames(act_list) <- c('strat1','strat2','strat3')
-  write.csv(act_list, sprintf("initial_activities_%d.csv", i))
-  
+  #write.csv(act_list, sprintf("initial_activities_%d.csv", i))
+  write.csv(act_list, sprintf("initial_activities.csv"))
   ### Write out initial incomes
   income_list <- income_list[-1,]
   rownames(income_list) <- farm_names
   colnames(income_list) <- c('income_t-1','income_t-2','income_t-3','income_t-4','income_t-5')
-  write.csv(income_list, sprintf("initial_incomes_%d.csv", i))
+  #write.csv(income_list, sprintf("initial_incomes_%d.csv", i))
+  write.csv(income_list, sprintf("initial_incomes.csv"))
   
   ### Write out activity perference
   pref_list <- pref_list[-1,]
   colnames(pref_list) <- act_names
   rownames(pref_list) <- farm_names
-  write.csv(pref_list, sprintf("activity_preference_%d.csv", i))
+  #write.csv(pref_list, sprintf("activity_preference_%d.csv", i))
+  write.csv(pref_list, sprintf("activity_preference.csv"))
   
   ### Write out performing years
   fyears_list <- fyears_list[-1,]
   colnames(fyears_list) <- act_names
   rownames(fyears_list) <- farm_names
-  write.csv(fyears_list, sprintf("performing_years_%d.csv", i))
+  #write.csv(fyears_list, sprintf("performing_years_%d.csv", i))
+  write.csv(fyears_list, sprintf("performing_years.csv"))
   
   ###----------------------- Generate social networks -----------------------###
   library(igraph)

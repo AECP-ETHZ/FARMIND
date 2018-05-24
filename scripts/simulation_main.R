@@ -1,5 +1,4 @@
-ifelse(Sys.getenv('USERNAME')=='xiongh', root<-'D:', root<-'~')
-setwd(paste(root,'/polybox/Agricultural_ABM/data/test',sep=''))
+#setwd(getwd())
 rm(list = ls())
 
 ###------------------ Generate parameter combinations ------------------###
@@ -45,7 +44,7 @@ act_names <- paste('strat', formatC(1:nAct, width=nchar(nAct), flag='0'), sep=''
 actLimit <- 3
 sd_share = 0.2
 source('prepareInputs-func.R')
-for(i in 1:20)#nrow(parameters))
+for(i in 1:1)#nrow(parameters))
 {
   prepare_inputs(
     i,

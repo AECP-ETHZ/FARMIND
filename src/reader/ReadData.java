@@ -98,9 +98,13 @@ public class ReadData {
 				}
 				
 				for(int i = 0; i < activities.size(); i++) {
-					if (activities.get(i).getName().equals(String.format("strat%d", index) )) {
+					String name = String.format("\"strat%d\"", index+1);
+					if (index < 10) {
+						name = String.format("\"strat0%d\"", index+1);
+					}
+					if (activities.get(i).getName().equals(name) ) {
 						int ID = activities.get(i).getID();
-						Activity p = new Activity(ID, String.format("strat%d", index)); 
+						Activity p = new Activity(ID, name); 
 						strat.add(p);
 					}
 				}

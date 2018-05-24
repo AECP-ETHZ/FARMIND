@@ -79,7 +79,13 @@ public class DecisionResult {
 			
 			for(int i = 1; i < 56; i++) {	
 				int[] row = output[i-1];									   // print each output row to build full gams file
-				writer.println(String.format("%s,spost%d,%d,%d,%d,%d,%d,%d", farmId, i, row[0],row[1],row[2],row[3],row[4],row[5]));
+				String name = farmId.substring(1, farmId.length() - 1);
+				if (name.charAt(0) == '\\') {
+					name = name.substring(1, name.length() - 1);               // in the input csv files, we use a \ to indicate a " in the output name. This is a workaround for an ugly issue with csv file input in R.
+					name = "\"" + name + "\"";
+				}
+				
+				writer.println(String.format("%s,spost%d,%d,%d,%d,%d,%d,%d", name, i, row[0],row[1],row[2],row[3],row[4],row[5]));
 			}
 			writer.close();
 			

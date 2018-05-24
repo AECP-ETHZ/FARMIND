@@ -308,7 +308,8 @@ public class DecisionCalculator {
 			P.add(1 - R[i]/m);
 		}
 		
-		return normalizeList(P);
+		//return normalizeList(P);
+		return P;
 	}
 	
 	/** 

@@ -116,7 +116,7 @@ public class DecisionResult {
 		PrintWriter writer = new PrintWriter(bw);
 		
 		if (file.length() == 0) {
-			writer.println("year,name,alpha_plus,alpha_minus,lambda,phi_plus,phi_minus,aspiration_coef,activity_tolerance,learning_rate,income_tolerance,beta_s,beta_q,strategy,possible_action1,"
+			writer.println("year,name,alpha_plus,alpha_minus,lambda,phi_plus,phi_minus,aspiration_coef,tolerance_activity,learning_rate,tolerance_income,beta,beta_s,strategy,possible_action1,"
 					+ "possible_action2,possible_action3,possible_action4,possible_action5,possible_action6,income,current_action");
 		}
 		
@@ -131,8 +131,8 @@ public class DecisionResult {
 		writer.print(String.format("%s,",this.farm.getP_activity_tolerance() ));
 		writer.print(String.format("%s,",this.getLearningRate() ));
 		writer.print(String.format("%s,",this.farm.getP_income_tolerance() ));
-		writer.print(String.format("%s,",this.farm.getP_beta_s() ));
 		writer.print(String.format("%s,",this.farm.getP_beta() ));
+		writer.print(String.format("%s,",this.farm.getP_beta_s() ));
 		writer.print(String.format("%s,",this.strategy) );
 		
 		for(int i = 0; i < this.possibleActivity.size(); i++) {

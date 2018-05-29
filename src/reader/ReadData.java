@@ -216,7 +216,7 @@ public class ReadData {
 			}
 		}
 		
-		farms = updateFarmsActivities(farms);                                  // read actual activity and income data and update each farm
+		updateFarmsActivities(farms);                                  // read actual activity and income data and update each farm
 		farms = updateFarmsIncome(farms);
 		
 		return farms;
@@ -227,7 +227,7 @@ public class ReadData {
 	 * @param farms List of farms in system
 	 * @return farms List of farms in system
 	 */
-	private List<Farm> updateFarmsActivities(List<Farm> farms) {
+	private void updateFarmsActivities(List<Farm> farms) {
 		String Line;
 		ArrayList<String> farmParameters;
 		BufferedReader Buffer = null;	 									   // read input file
@@ -267,7 +267,6 @@ public class ReadData {
 			}
 		}
 		
-		return farms;
 	}
 	
 	/** 

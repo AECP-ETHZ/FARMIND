@@ -32,6 +32,10 @@ public class Consumat {
 			System.out.println("input number of iterations");
 			System.exit(0);
 		}
+		
+		if (args.length > 1) {
+			System.out.println("ABM version number: 1.0");
+		}
 
 		ReadData reader = new ReadData();									   // read all input data files
 		List<Farm>     allFarms = reader.getFarms();					       // build set of farms 

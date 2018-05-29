@@ -116,12 +116,18 @@ public class DecisionResult {
 		PrintWriter writer = new PrintWriter(bw);
 		
 		if (file.length() == 0) {
-			writer.println("year,name,alpha_plus,alpha_minus,lambda,phi_plus,phi_minus,aspiration_coef,tolerance_activity,learning_rate,tolerance_income,beta,beta_s,strategy,possible_action1,"
+			writer.println("year,name,age,education,memory,alpha_plus,alpha_minus,lambda,phi_plus,phi_minus,aspiration_coef,tolerance_activity,learning_rate,tolerance_income,beta,beta_s,strategy,possible_action1,"
 					+ "possible_action2,possible_action3,possible_action4,possible_action5,possible_action6,income,current_action");
 		}
 		
+		
 		writer.print(String.format("%s,",this.year));
 		writer.print(String.format("%s,",this.getFarmId()));
+		
+		writer.print( String.format("%s,",this.farm.getAge()) );
+		writer.print( String.format("%s,",this.farm.getEducation() ) );
+		writer.print( String.format("%s,",this.farm.getMemory() ) );
+		
 		writer.print(String.format("%s,",this.farm.getP_alpha_plus()));
 		writer.print(String.format("%s,",this.farm.getP_alpha_minus()));
 		writer.print(String.format("%s,",this.farm.getP_lambda()));
@@ -129,7 +135,7 @@ public class DecisionResult {
 		writer.print(String.format("%s,",this.farm.getP_phi_minus() ));
 		writer.print(String.format("%s,",this.farm.getP_aspiration_coef() ));
 		writer.print(String.format("%s,",this.farm.getP_activity_tolerance() ));
-		writer.print(String.format("%s,",this.getLearningRate() ));
+		writer.print(String.format("%.2f,", this.getLearningRate() ) );
 		writer.print(String.format("%s,",this.farm.getP_income_tolerance() ));
 		writer.print(String.format("%s,",this.farm.getP_beta() ));
 		writer.print(String.format("%s,",this.farm.getP_beta_s() ));

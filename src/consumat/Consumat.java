@@ -23,7 +23,7 @@ public class Consumat {
 	static long line_counter = 0;
 	static int file_counter = 1;
 	static String origFileName = createFileName();										           // file name for logging
-	static String FileName = origFileName + String.format("%d",0);								   // given enough lines in the log file, we need to start a new file
+	static String FileName = origFileName + String.format("%d",0);								   // given enough lines in the log file, a new file is needed.
 		
 	public static void main(String[] args) {
 		System.out.println("Starting Model");
@@ -139,7 +139,8 @@ public class Consumat {
 	}
 	
 	/** 
-	 * This function reads GAMS file and set the income and activities based on that file
+	 * This function reads GAMS file and set the income and activities based on the file.
+	 * 
 	 * @param allFarms list of all farms in system
 	 * @return incomes is a list of all incomes for each farm
 	 */
@@ -199,7 +200,7 @@ public class Consumat {
 	}
 	
 	/** 
-	 * This function update the income growth rates based on new income for farms.
+	 * This function updates the income growth rates based on new income for farms.
 	 * 
 	 * @param allFarms list of all farms in region
 	 * @param thisYearIncome list of income values for all farms
@@ -224,7 +225,7 @@ public class Consumat {
 	}
 	
 	/** 
-	 * Return mean value of provided list 
+	 * This function calculates the mean of provided list 
 	 * @param list of values to calculate mean with
 	 * @return mean
 	 */
@@ -239,7 +240,7 @@ public class Consumat {
 	}
 	
 	/**
-	 * Calculate standard deviation of a list
+	 * This function calculates the standard deviation of provided list.
 	 * @param list
 	 * @return std deviation value
 	 */
@@ -255,7 +256,7 @@ public class Consumat {
 	}
 
 	/** 
-	 * Create generic file name so version number can be appended to end
+	 * This function creates generic file name so that version number can be appended to end. 
 	 * @return fileName
 	 */
 	public static String createFileName() {

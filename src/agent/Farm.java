@@ -109,14 +109,11 @@ public class Farm {
 	}
 	
 	/** 
-	 * This function executes strategic decision-making for all farms.
-	 * When each agent makes a decision about which activity set to pursue, we take into account the neighboring farms, the income from last year, and the current activities. 
-	 * We use this information to decide which of the four decisions the agent will pursue: exit, imitation, repetition, or optimization. 
-	 * <br>
-	 * Fuzzy logic is used for the optimization and imitation decisions to select a set of possible activities. These activities are then passed to a linear optimizer to get the best option. 
+	 * This function executes strategic decision-making for all farms. 
+	 * Comparing satisfaction to aspiration and dissimilarities to tolerance, agents decide which of the four strategies to pursue: repetition, optimization, imitation or opt-out.
 	 * 
 	 * @param allFarms full list of all farms in system
-	 * @return List containing the full fuzzy logic selection 
+	 * @return fuzzyActionSet list of activity options for a farm to select 
 	 */
 	public List<String> makeDecision(List<Farm> allFarms) {
 	    List<String> fuzzyActionSet = new ArrayList<String>();				   // list of names of products from fuzzy logic
@@ -171,11 +168,10 @@ public class Farm {
 		updateISB_Tolerances();      
 	}
 	/**
-	 * Using list of all current farms in the system and the social network of the main farm,
-	 * update the main farm's Information Seeking Behavior (ISB) value based on the social network weight and the dissimilarity 
-	 * between neighbor's activity types 
+	 * This function updates farms with values of dissimilarity in terms of activity. 
+	 * The dissimilarity is calculated as the degree that the activity one performs is different from those its peers in social networks perform.  
 	 * 
-	 * @param farms Input list of all farms in the system. 
+	 * @param farms list of farms 
 	 */
 	public void updateDissimilarity_ISB(List<Farm> farms) {
         double currentDissimilarity = 0;									   // similarity value of a farm 
@@ -242,6 +238,18 @@ public class Farm {
         currentDissimilarity = dissimilarity/networkActivityList.size();
 		setDissimilarity_ISB(currentDissimilarity);
 	}
+	
+	/**
+	 * This function updates farms with values of dissimilarity in terms of income growth. 
+	 * The dissimilarity is calculated as the degree that the growth rate of one's income is lower the average level of the population.
+	 */
+	private void updateIncome_ISB() {
+		double personalIncomeChangePercent = 0;								   // percent change in personal income
+		personalIncomeChangePercent = (IncomeHistory.get(0) - lastYearPersonalIncomeAverage) /lastYearPersonalIncomeAverage;
+		
+		this.Income_ISB = this.regionIncomeChangePercent - personalIncomeChangePercent;
+	}
+	
      /**
 	 * Based on the current income level of the farmer calculate new satisfaction level.
 	 * The farmer's income is set externally from LP simulation tool, or randomly generated from distribution
@@ -328,21 +336,12 @@ public class Farm {
 		double personalIncomeAverage = mean(avgIncome);						   // average of historical income
 		setLastYearPersonalIncomeAverage(personalIncomeAverage);
 	}
-	/**
-	 * update income Information Seeking Behavior (ISB) value based on personal income change and regional income change at a specific time period
-	 */
-	private void updateIncome_ISB() {
-		double personalIncomeChangePercent = 0;								   // percent change in personal income
-		personalIncomeChangePercent = (IncomeHistory.get(0) - lastYearPersonalIncomeAverage) /lastYearPersonalIncomeAverage;
-		
-		this.Income_ISB = this.regionIncomeChangePercent - personalIncomeChangePercent;
-	}
 	
-	// helper functions
+	// Helper functions
 	/** 
 	 * Calculate satisfaction score given income value
-	 * @param income of farmer
-	 * @return satisfaction
+	 * @param income income of farm
+	 * @return satisfaction satisfaction derived from income
 	 */
 	private double calculateSatisfaction(double income) {
 		double satisfaction = 0;
@@ -372,7 +371,7 @@ public class Farm {
 	}
 	/**
 	 * From the farm income history, calculate current satisfaction level as the average of historical satisfaction
-	 * @return mean historical satisfaction
+	 * @return mean mean of historical satisfaction
 	 */
 	private double currentSatisfaction() {
 		List<Double> sat = new ArrayList<Double>();						       // calculate satisfaction for each individual income in income history
@@ -397,8 +396,8 @@ public class Farm {
 		return mean / list.size();
 	}
 	/** 
-	 * Initialize a value for K based on the memory limit of each farm
-	 * @return a double value that is K
+	 * Initialize a value for learning rate based on the memory limit of each farm
+	 * @return avg value of learning rate
 	 */
 	public double init_learning_rate() {
 		double s = 1;
@@ -658,15 +657,3 @@ public class Farm {
 		this.p_phi_minus = p_phi_minus;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-

@@ -11,8 +11,7 @@ import agent.Farm;
 import reader.ReadData;
 
 /** 
- * Test farm agent object.
- * @author kellerke
+ * This class tests farm agent object.
  *
  */
 public class FarmTests {

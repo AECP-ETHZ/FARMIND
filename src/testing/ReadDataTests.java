@@ -13,6 +13,11 @@ import agent.Farm;
 import reader.ReadData;
 import testing.FarmTests;
 
+/**
+ * This class tests the data reader. 
+ *
+ */
+
 public class ReadDataTests {
 	ReadData reader = new ReadData();						                   // read all input data files
 	List<Object> ret = new ArrayList<Object>();							       // object to return

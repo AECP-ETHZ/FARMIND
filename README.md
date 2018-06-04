@@ -59,5 +59,3 @@ If the issue persists, try removing the libraries and reinstalling them again.
 	The gams program will produce a results file for the ABM to process. Until then it will wait. 
 	
 	When the ABM is running in test mode, the batch file 'run_gams.bat' will copy a results file (stored in /data/ folder as 'Grossmargin_P4,00') to simulate the gams output. 
-	
-

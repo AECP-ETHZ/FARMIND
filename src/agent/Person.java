@@ -1,15 +1,13 @@
 package agent;
 
 /** 
- * Person object to go inside farm object. Contains parameters such as age, preferences, memory.
- * 
- * @author kellerke
+ * Person object contains parameters age, education and memory length of farm member.
  *
  */
 public class Person {
 
 	private int age;														   // age of farmer
-	private int education;													   // years of formal education
+	private int education;													   // schooling years of farmer
 	private int memory;														   // number of years that farmer can remember experiences or income
 	
 	public Person(int age, int education, int memory) {

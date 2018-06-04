@@ -1,8 +1,7 @@
 package agent;
 
 /**
- * Object that contains coordinates of the farm
- * @author kellerke
+ * Location object contains the coordinates of farm. 
  *
  */
 public class Location {

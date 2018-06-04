@@ -17,9 +17,7 @@ import decision.DecisionCalculator;
 import java.lang.Math;
 
 /** 
- * Farm object contains people and parameters associated with each farm, as well as a copy of activity list, preferences and experiences, and network connections
- * 
- * @author kellerke
+ * Farm object contains farm characteristics, an activity list, activity preferences, experience of performing activities and a social network. 
  *
  */
 public class Farm {
@@ -57,6 +55,7 @@ public class Farm {
 	private double p_phi_minus = 0;
 	
 	/**
+	 * This constructor sets up the parameters associated with a farm. 
 	 * 
 	 * @param name
 	 * @param location
@@ -108,26 +107,9 @@ public class Farm {
 		this.setP_phi_minus(phi_minus);
 		
 	}
+	
 	/** 
-	 * After the gams model has returned the simulation results. We update the individual farms with the new income values. 
-	 * This allows the next stage of the ABM to run - we make a new activity set selection based on the ISB and the satisfaction levels. 
-	 * 
-	 * @param allFarms list of all the input farms
-	 * @param income input value of farm
-	 * @param probability of an income occurring in our distribution
-	 */
-	public void updateFarmData(List<Farm> allFarms, double income, double probability) {
-		updateIncomeHistoryList(income);									       // for year = 1, we pass in -1 for income so we don't update the income
-	    updateIncomeAverage();
-	    setIncomeProbability(probability);
-
-	    updateAspiration();
-	    updateSatisfaction();									
-	    updateIncome_ISB();
-		updateDissimilarity_ISB(allFarms);
-		updateISB_Tolerances();      
-	}
-	/** 
+	 * This function executes strategic decision-making for all farms.
 	 * When each agent makes a decision about which activity set to pursue, we take into account the neighboring farms, the income from last year, and the current activities. 
 	 * We use this information to decide which of the four decisions the agent will pursue: exit, imitation, repetition, or optimization. 
 	 * <br>
@@ -169,7 +151,25 @@ public class Farm {
 		return fuzzyActionSet;
 	}
 	
-	// update functions for farm parameters
+	// Update functions for farm parameters
+	/** 
+	 * This function updates farms with new income values, as well as the probabilities the values occur, returned by the optimization model. 
+	 * 
+	 * @param allFarms list of all farms
+	 * @param income income value of farm
+	 * @param probability probability of an income occurring in the distribution
+	 */
+	public void updateFarmData(List<Farm> allFarms, double income, double probability) {
+		updateIncomeHistoryList(income);									       // for year = 1, we pass in -1 for income so we don't update the income
+	    updateIncomeAverage();
+	    setIncomeProbability(probability);
+
+	    updateAspiration();
+	    updateSatisfaction();									
+	    updateIncome_ISB();
+		updateDissimilarity_ISB(allFarms);
+		updateISB_Tolerances();      
+	}
 	/**
 	 * Using list of all current farms in the system and the social network of the main farm,
 	 * update the main farm's Information Seeking Behavior (ISB) value based on the social network weight and the dissimilarity 

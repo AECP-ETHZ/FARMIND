@@ -15,8 +15,8 @@ import activity.Activity;
 import agent.Farm;
 
 /** 
- * Full ABM simulation runs inside of main by creating farm objects and making decisions for each farm.
- * @author kellerke
+ * This class contains the main() method of this programme. 
+ * Full simulation runs inside of the main() method by creating farm objects and making decisions for each farm.
  *
  */
 public class Consumat {

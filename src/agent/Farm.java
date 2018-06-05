@@ -9,6 +9,7 @@ import java.util.Set;
 
 import reader.FarmDataMatrix;
 
+import org.apache.commons.math3.distribution.NormalDistribution;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 
@@ -26,33 +27,31 @@ public class Farm {
 	private Location location;												   // geographic location of farm
 	private double Satisfaction;											   // Satisfaction level of farm
 	private List<Double> IncomeHistory;										   // list of previous income values
-	private double Aspiration;												   // Aspiration level of the farm
-	private double Dissimilarity_ISB;										   // Dissimilarity Information Seeking Behavior (ISB)
-	private double Income_ISB;										           // Income based Information Seeking Behavior (ISB)
-	private double Dissimilarity_Tolerance;									   // Individual level of tolerance to differences in activities on the network
-	private double Income_Tolerance;									       // Individual level of tolerance to differences in personal vs regional income changes
+	private double Aspiration;												   // Aspiration level of the farm	
+	private double Activity_Dissimilarity;									   // Dissimilarity of this farm with respect to network for each Activity
+	private double Income_Dissimilarity;									   // Dissimilarity of this farm with respect to network for each Income
+	
 	private Graph<String, DefaultEdge> network; 							   // Social network of farmers
 	private FarmDataMatrix experience;									       // experience (in years) of the each farm for each activity
 	private FarmDataMatrix preferences;									       // preference (between 1 to 5) of each farm for each activity
 	private List<Activity> currentActivities;								   // list of current activities each farm is engaged in
 	private List<Activity> allActivities;									   // list of all possible activities
 	private int strategy;													   // selected strategy (opt-out, optimize, imitate, repeat)
-	private double incomeProbability;										   // for a region (list of farms) income is distributed normally. We can determine the probability of an income occuring in this distribution (CPD)
 	private double regionIncomeChangePercent;								   // the percentage that the income of a region change (current_avg - historical_avg)/historical_avg
 	private double lastYearPersonalIncomeAverage;							   // excluding most recent time period, average income of the specific farm
 	private double learning_rate;											   // learning rate for specific farm. Calculated based on education level
 	private List<Double> q_range;											   // q range (+,- values) for the learning rate vectors for the individual farm
 	
-	private double p_beta ;
-	private double p_beta_s ;
-	private double p_aspiration_coef ;
-	private double p_activity_tolerance ;
-	private double p_income_tolerance ;
-	private double p_lambda ;
-	private double p_alpha_plus ;
-	private double p_alpha_minus ;
-	private double p_phi_plus ;
-	private double p_phi_minus;
+	private double p_beta ;													   // Parameter for the Beta
+	private double p_beta_s ;											       // Parameter for the Beta S 
+	private double p_aspiration_coef ;										   // Parameter for the Aspiration Calculation
+	private double p_activity_tolerance ;									   // Parameter for the individual level of tolerance to differences in activities on the network
+	private double p_income_tolerance ;									       // Parameter for the individual level of tolerance to differences in personal vs regional income changes
+	private double p_lambda ;												   // Parameter for the Lambda used for the Satisfaction Calculation
+	private double p_alpha_plus ;											   // Parameter for the Alpha Plus used for the Satisfaction Calculation
+	private double p_alpha_minus ;											   // Parameter for the Alpha Minus used for the Satisfaction Calculation
+	private double p_phi_plus ;												   // Parameter for the Phi Plus used for the Satisfaction Calculation
+	private double p_phi_minus;												   // Parameter for the Phi Minus used for the Satisfaction Calculation
 	
 	/**
 	 * This constructor sets up the parameters associated with a farm. 
@@ -92,8 +91,6 @@ public class Farm {
 		this.setExperience(farmingExperience);
 		this.setPreferences(preferences);
 		this.setActivities(activities);
-		this.setDissimilarity_Tolerance(activity_tolerance);
-		this.setIncome_Tolerance(income_tolerance);
 		this.setCurrentActivites(currentActivities);
 		this.setHead(farmHead);
 		
@@ -108,7 +105,6 @@ public class Farm {
 		
 		this.setP_activity_tolerance(activity_tolerance);
 		this.setP_income_tolerance(income_tolerance);
-		
 	}
 	
 	/** 
@@ -125,7 +121,7 @@ public class Farm {
 		if ((head.getAge() > 650)) {
 			this.strategy = 1; //EXIT
 		}
-		else if ( (this.Dissimilarity_ISB >= this.Dissimilarity_Tolerance) || (this.Income_ISB >= this.Income_Tolerance) ) {  
+		else if ( (this.Activity_Dissimilarity >= this.p_activity_tolerance) || (this.Income_Dissimilarity >= this.p_income_tolerance) ) {  
 			if (this.Satisfaction >= 0) {
 				this.strategy = 2; //IMITATION
 				ActivitySet = fuzzyLogicCalc.getImitationProducts();
@@ -159,16 +155,15 @@ public class Farm {
 	 * @param income income value of farm
 	 * @param probability probability of an income occurring in the distribution
 	 */
-	public void updateFarmData(List<Farm> allFarms, double income, double probability) {
-		updateIncomeHistoryList(income);									       // for year = 1, we pass in -1 for income so we don't update the income
-	    updateIncomeAverage();
-	    setIncomeProbability(probability);
+	public void updateFarmData(List<Farm> allFarms, double income) {
+		updateIncomeHistoryList(income);									   // for year = 1, we pass in -1 for income so we don't update the income 
+	    updateHistoricalIncomeAverage();
 
 	    updateAspiration();
 	    updateSatisfaction();									
-	    updateIncome_ISB();
-		updateDissimilarity_ISB(allFarms);
-		updateISB_Tolerances();      
+	    updateIncomeDissimilarity();										   // in the main simulation loop in Consumat, we update the regionIncomeChangePercent 
+		updateActivityDissimilarity(allFarms);
+   
 	}
 	/**
 	 * This function updates farms with values of dissimilarity in terms of activity. 
@@ -176,7 +171,7 @@ public class Farm {
 	 * 
 	 * @param farms list of farms 
 	 */
-	public void updateDissimilarity_ISB(List<Farm> farms) {
+	public void updateActivityDissimilarity(List<Farm> farms) {
         double currentDissimilarity = 0;									   // similarity value of a farm 
         int EdgeCount = 0;													   // how many edges does this farm have (ie neighbors)
 		int totalFarms = 0;													   // how many total farms are there in the network
@@ -239,18 +234,18 @@ public class Farm {
     	}
 
         currentDissimilarity = dissimilarity/networkActivityList.size();
-		setDissimilarity_ISB(currentDissimilarity);
+		setActivity_Dissimilarity(currentDissimilarity);
 	}
 	
 	/**
 	 * This function updates farms with values of dissimilarity in terms of income growth. 
 	 * The dissimilarity is calculated as the degree that the growth rate of one's income is lower the average level of the population.
 	 */
-	private void updateIncome_ISB() {
+	private void updateIncomeDissimilarity() {
 		double personalIncomeChangePercent = 0;								   // percent change in personal income
 		personalIncomeChangePercent = (IncomeHistory.get(0) - lastYearPersonalIncomeAverage) /lastYearPersonalIncomeAverage;
 		
-		this.Income_ISB = this.regionIncomeChangePercent - personalIncomeChangePercent;
+		this.Income_Dissimilarity = this.regionIncomeChangePercent - personalIncomeChangePercent;
 	}
 	
      /**
@@ -261,6 +256,7 @@ public class Farm {
 		double current_satisfaction = currentSatisfaction();			       // current satisfaction level
 		setSatisfaction(current_satisfaction);                                 // uses updated income history
 	}
+	
 	/** 
 	 * Based on the historical income data, calculate the aspiration level as a percentage of historical income.
 	 */
@@ -272,13 +268,7 @@ public class Farm {
 		
 		setAspiration(aspiration);
 	}
-	/** 
-	 * Based on the input parameter, calculate a tolerance level for dissimilarity and income. Percent of exogenously input tolerance levels. 
-	 */
-	private void updateISB_Tolerances() {
-		this.Dissimilarity_Tolerance = this.getP_activity_tolerance(); // this was originally used as a modifier on the Tolerance levels, now we exogenously input the tolerance levels. 
-		this.Income_Tolerance        = this.getP_income_tolerance();
-	}
+
 	/** 
 	 * Each time period, t, call this function to increment the experience vector of this farm. 
 	 * This experience vector is part of a shared experience matrix that all farms contain. 
@@ -312,28 +302,31 @@ public class Farm {
 			this.experience.setFarmDataElementValue(farmName, this.experience.getDataElementName().get(i), value);
 		}	
 	}
+	
 	/**
 	 * Update income history by removing oldest income and replacing with new income
-	 * IncomeHistory = [1,2,3,4,5]
-	 * where year 1 is the most recent income and year 5 is the oldest income
+	 * Income is an array of [year1_income, year2_income, year3_income, ... yearN_income]
+	 * where year 1 is the most recent income and year N is the oldest income
 	 * @param income
 	 */
 	private void updateIncomeHistoryList (double income) {
 		List<Double> temp = new ArrayList<Double>();                           // update array for new incomes
 		if(income == -1) return;											   // income is -1 for the first year due to initialization
 		
-		temp.add(income);													   // start income list with updated income
+		temp.add(income);													   // start income list with updated income for year 1
 		for (int i = 0; i< this.getMemory() - 1; i++) {
-			temp.add(this.IncomeHistory.get(i));							   // add all but oldest income to income list
+			temp.add(this.IncomeHistory.get(i));							   // add all but oldest income (year N) to income list 
 		}
 		
 		setIncomeHistory(temp); 
 	}
+	
 	/** 
 	 * Set average income over the previous time periods.
 	 * Exclude the first income period
+	 * Income is an array of [year1_income, year2_income, year3_income, ... yearN_income]
 	 */
-	private void updateIncomeAverage() {
+	private void updateHistoricalIncomeAverage() {
 		List<Double> avgIncome = new ArrayList<Double>(this.IncomeHistory);    // copy of income history
 		avgIncome.remove(0);                                                   // remove most recent year from historical avg. Most recent year is used to calculate percent change compared to avg. 
 		double personalIncomeAverage = mean(avgIncome);						   // average of historical income
@@ -346,7 +339,7 @@ public class Farm {
 	 * @param income income of farm
 	 * @return satisfaction satisfaction derived from income
 	 */
-	private double calculateSatisfaction(double income) {
+	private double calculateSatisfaction(double income, double probability) {
 		double satisfaction = 0;
 		
 		double alpha_plus = this.getP_alpha_plus();
@@ -354,7 +347,6 @@ public class Farm {
 		double phi_plus = this.getP_phi_plus();
 		double phi_minus = this.getP_phi_minus();
 		
-		double probability = this.getIncomeProbability();
 		double lambda = this.getP_lambda();
 		double v = 0;
 		double theta = 0; 
@@ -374,20 +366,26 @@ public class Farm {
 	}
 	/**
 	 * From the farm income history, calculate current satisfaction level as the average of historical satisfaction
-	 * @return mean mean of historical satisfaction
+	 * Build a normal distribution based on historical income and for each income at time period T, sample the probability and use that in the satisfaction
+	 * @return mean: mean of all satisfaction
 	 */
 	private double currentSatisfaction() {
 		List<Double> sat = new ArrayList<Double>();						       // calculate satisfaction for each individual income in income history
+		double probability = 0;
+		double mean = mean(this.IncomeHistory)*100;
+		double std = std(this.IncomeHistory)*100;
+		NormalDistribution normal = new NormalDistribution(mean, std);		   // distribution of historical incomes
 		
 		for (int i = 0; i< this.getMemory(); i++) {
-			sat.add(calculateSatisfaction(this.IncomeHistory.get(i)));
+			probability = normal.cumulativeProbability(this.IncomeHistory.get(i));
+			sat.add(calculateSatisfaction(this.IncomeHistory.get(i),probability ));
 		}
 		return mean(sat);
 	}
 	/** 
 	 * Return mean value of provided list 
 	 * @param list of values to calculate mean with
-	 * @return mean
+	 * @return mean: mean value of list
 	 */
 	private double mean(List<Double> list) {
 		double mean = 0;												       // mean value to return
@@ -398,6 +396,22 @@ public class Farm {
 		
 		return mean / list.size();
 	}
+	/**
+	 * This function calculates the standard deviation of provided list.
+	 * @param list
+	 * @return std deviation value
+	 */
+	private double std(List<Double> list) {
+		double sd = 0;		
+		for (int i=0; i<list.size();i++)
+		{
+		    sd = sd + Math.pow(list.get(i) - mean(list), 2);
+		}
+		
+		sd = Math.sqrt(sd/list.size());
+		return sd;
+	}
+	
 	/** 
 	 * Initialize a value for learning rate based on the memory limit of each farm
 	 * @return avg value of learning rate
@@ -463,11 +477,8 @@ public class Farm {
 	public void setAspiration(double aspiration) {
 		this.Aspiration = aspiration;
 	}
-	public void setDissimilarity_ISB(double dissimilarityISB) {
-		this.Dissimilarity_ISB = dissimilarityISB;
-	}
-	public void setDissimilarity_Tolerance(double tolerance) {
-		this.Dissimilarity_Tolerance = tolerance;
+	public void setActivity_Dissimilarity(double activity_dissimilarity) {
+		this.Activity_Dissimilarity = activity_dissimilarity;
 	}
 	public void setSatisfaction(double satisfaction) {
 		this.Satisfaction = satisfaction;
@@ -508,11 +519,8 @@ public class Farm {
 	public void setNetwork(Graph<String, DefaultEdge> network) {
 		this.network = network;
 	}
-	public double getDissimilarity_Tolerance() {
-		return this.Dissimilarity_Tolerance;
-	}
-	public double getDissimilarity_ISB() {
-		return this.Dissimilarity_ISB;
+	public double getActivity_Dissimilarity() {
+		return this.Activity_Dissimilarity;
 	}
 	public double getAspiration() {
 		return this.Aspiration;
@@ -553,17 +561,11 @@ public class Farm {
 	public void setStrategy(int strategy) {
 		this.strategy = strategy;
 	}
-	public double getIncomeProbability() {
-		return this.incomeProbability;
+	public double getIncome_Dissimilarity() {
+		return this.Income_Dissimilarity;
 	}
-	public void setIncomeProbability(double incomeProbability) {
-		this.incomeProbability = incomeProbability;
-	}
-	public double getIncome_ISB() {
-		return this.Income_ISB;
-	}
-	public void setIncome_ISB(double incomeISB) {
-		this.Income_ISB = incomeISB;
+	public void setIncome_Dissimilarity(double income_dissimilarity) {
+		this.Income_Dissimilarity = income_dissimilarity;
 	}
 	public double getRegionIncomeChangePercent() {
 		return this.regionIncomeChangePercent;
@@ -576,12 +578,6 @@ public class Farm {
 	}
 	public void setLastYearPersonalIncomeAverage(double lastYearPersonalIncomeAverage) {
 		this.lastYearPersonalIncomeAverage = lastYearPersonalIncomeAverage;
-	}
-	public double getIncome_Tolerance() {
-		return this.Income_Tolerance;
-	}
-	public void setIncome_Tolerance(double income_Tolerance) {
-		this.Income_Tolerance = income_Tolerance;
 	}
 	public List<Double> getQ_range() {
 		if (mean(this.q_range) == 0) {

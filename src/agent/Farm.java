@@ -119,8 +119,8 @@ public class Farm {
 	 * @return fuzzyActionSet list of activity options for a farm to select 
 	 */
 	public List<String> makeDecision(List<Farm> allFarms) {
-	    List<String> fuzzyActionSet = new ArrayList<String>();				   // list of names of products from fuzzy logic
-		DecisionCalculator cal = new DecisionCalculator(this, allFarms);       // calculator for the product selection
+	    List<String> ActivitySet = new ArrayList<String>();				   // list of names of products from fuzzy logic
+		DecisionCalculator fuzzyLogicCalc = new DecisionCalculator(this, allFarms);       // calculator for the product selection
 		
 		if ((head.getAge() > 650)) {
 			this.strategy = 1; //EXIT
@@ -128,7 +128,7 @@ public class Farm {
 		else if ( (this.Dissimilarity_ISB >= this.Dissimilarity_Tolerance) || (this.Income_ISB >= this.Income_Tolerance) ) {  
 			if (this.Satisfaction >= 0) {
 				this.strategy = 2; //IMITATION
-				fuzzyActionSet = cal.getImitationProducts();
+				ActivitySet = fuzzyLogicCalc.getImitationProducts();
 			}
 			else {
 				this.strategy = 1; //EXIT
@@ -139,16 +139,16 @@ public class Farm {
 			if (this.Satisfaction >= 0) {
 				this.strategy = 4; //REPETITION
 				for (int i = 0; i < this.getCurrentActivities().size(); i++) {
-					fuzzyActionSet.add(this.getCurrentActivities().get(i).getName());
+					ActivitySet.add(this.getCurrentActivities().get(i).getName());
 				} 
 			}
 			else {
 				this.strategy = 3; //OPTIMIZATION
-				fuzzyActionSet = cal.getOptimizeProducts();
+				ActivitySet = fuzzyLogicCalc.getOptimizeProducts();
 			}
 		}
 		
-		return fuzzyActionSet;
+		return ActivitySet;
 	}
 	
 	// Update functions for farm parameters

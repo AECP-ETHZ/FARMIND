@@ -98,7 +98,7 @@ public class Consumat {
 			DecisionResult decision = new DecisionResult(farm.getPreferences().getDataElementName(), farm.getFarmName(), year, farm.getLearningRate(), farm.getStrategy(), farm.getIncomeHistory().get(0), farm.getCurrentActivities(), possibleActivitySet, farm);
 
 			line_counter++;
-			if (line_counter > 999999) {
+			if (line_counter > 1000000) {
 				FileName = origFileName + String.format("%d",file_counter);
 				file_counter++;
 				line_counter = 0;
@@ -266,10 +266,8 @@ public class Consumat {
 		int year_file = now.get(Calendar.YEAR);
 		int hour = now.get(Calendar.HOUR);
 		int minute = now.get(Calendar.MINUTE);	
-		String fileName = String.format("Results-%d-%d-%d-%d-%d_v", day, month, year_file,hour, minute);
+		String fileName = String.format("Results-%d%02d%02d_%d-%d_v", year_file, month, day, hour, minute);
 		
 		return fileName;
 	}
 }
-
-

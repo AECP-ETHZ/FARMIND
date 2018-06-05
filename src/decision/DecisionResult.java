@@ -154,7 +154,12 @@ public class DecisionResult {
 		
 		for(int i = 0; i < this.currentActivity.size(); i++) {
 			//writer.print(String.format("%d,",  1 + this.allActivity.indexOf(this.currentActivity.get(i).getName() )) );
-			writer.print(String.format("%s,",  this.currentActivity.get(i).getName()) );
+			if (i < this.currentActivity.size() - 1) {
+				writer.print(String.format("%s,",  this.currentActivity.get(i).getName()) );
+			}
+			if (i == this.currentActivity.size() - 1) {
+				writer.print(String.format("%s",  this.currentActivity.get(i).getName()) );
+			}
 		}
 		
 		writer.print("\n");

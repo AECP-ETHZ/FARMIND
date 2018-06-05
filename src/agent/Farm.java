@@ -45,16 +45,16 @@ public class Farm {
 	private double learning_rate;											   // learning rate for specific farm. Calculated based on education level
 	private List<Double> q_range;											   // q range (+,- values) for the learning rate vectors for the individual farm
 	
-	private double p_beta = 0;
-	private double p_beta_s = 0;
-	private double p_aspiration_coef = 0;
-	private double p_activity_tolerance = 0;
-	private double p_income_tolerance = 0;
-	private double p_lambda = 0;
-	private double p_alpha_plus = 0;
-	private double p_alpha_minus = 0;
-	private double p_phi_plus = 0;
-	private double p_phi_minus = 0;
+	private double p_beta ;
+	private double p_beta_s ;
+	private double p_aspiration_coef ;
+	private double p_activity_tolerance ;
+	private double p_income_tolerance ;
+	private double p_lambda ;
+	private double p_alpha_plus ;
+	private double p_alpha_minus ;
+	private double p_phi_plus ;
+	private double p_phi_minus;
 	
 	/**
 	 * 
@@ -106,6 +106,9 @@ public class Farm {
 		this.setP_alpha_minus(alpha_minus);
 		this.setP_phi_plus(phi_plus);
 		this.setP_phi_minus(phi_minus);
+		
+		this.setP_activity_tolerance(activity_tolerance);
+		this.setP_income_tolerance(income_tolerance);
 		
 	}
 	/** 
@@ -265,7 +268,7 @@ public class Farm {
 	 * Based on the input parameter, calculate a tolerance level for dissimilarity and income. Percent of exogenously input tolerance levels. 
 	 */
 	private void updateISB_Tolerances() {
-		this.Dissimilarity_Tolerance = this.getP_activity_tolerance();
+		this.Dissimilarity_Tolerance = this.getP_activity_tolerance(); // this was originally used as a modifier on the Tolerance levels, now we exogenously input the tolerance levels. 
 		this.Income_Tolerance        = this.getP_income_tolerance();
 	}
 	/** 
@@ -459,16 +462,16 @@ public class Farm {
 
 	// getters and setters for all fields
 	public void setAspiration(double aspiration) {
-		Aspiration = aspiration;
+		this.Aspiration = aspiration;
 	}
 	public void setDissimilarity_ISB(double dissimilarityISB) {
-		Dissimilarity_ISB = dissimilarityISB;
+		this.Dissimilarity_ISB = dissimilarityISB;
 	}
 	public void setDissimilarity_Tolerance(double tolerance) {
-		Dissimilarity_Tolerance = tolerance;
+		this.Dissimilarity_Tolerance = tolerance;
 	}
 	public void setSatisfaction(double satisfaction) {
-		Satisfaction = satisfaction;
+		this.Satisfaction = satisfaction;
 	}
 	public int getAge() {
 		return this.head.getAge();
@@ -477,20 +480,19 @@ public class Farm {
 		return this.head.getEducation();
 	}
 	public FarmDataMatrix getPreferences() {
-		
 		return this.preferences;
 	}
 	public int getMemory() {
 		return this.head.getMemory();
 	}
 	public Person getHead() {
-		return head;
+		return this.head;
 	}
 	public void setHead(Person farmHead) {
 		this.head = farmHead;
 	}
 	public String getFarmName() {
-		return farmName;
+		return this.farmName;
 	}
 	public void setFarmName(String farmName) {
 		this.farmName = farmName;
@@ -502,22 +504,22 @@ public class Farm {
 		this.location = location;
 	}
 	public Graph<String, DefaultEdge> getNetwork() {
-		return network;
+		return this.network;
 	}
 	public void setNetwork(Graph<String, DefaultEdge> network) {
 		this.network = network;
 	}
 	public double getDissimilarity_Tolerance() {
-		return Dissimilarity_Tolerance;
+		return this.Dissimilarity_Tolerance;
 	}
 	public double getDissimilarity_ISB() {
-		return Dissimilarity_ISB;
+		return this.Dissimilarity_ISB;
 	}
 	public double getAspiration() {
-		return Aspiration;
+		return this.Aspiration;
 	}
 	public double getSatisfaction() {
-		return Satisfaction;
+		return this.Satisfaction;
 	}
 	public FarmDataMatrix getExperience() {
 		return this.experience;
@@ -535,52 +537,52 @@ public class Farm {
 		return this.currentActivities;
 	}
 	public List<Activity> getActivities() {
-		return allActivities;
+		return this.allActivities;
 	}
 	public void setActivities(List<Activity> activities) {
 		this.allActivities = activities;
 	}
 	public List<Double> getIncomeHistory() {
-		return IncomeHistory;
+		return this.IncomeHistory;
 	}
 	public void setIncomeHistory(List<Double> incomeHistory) {
-		IncomeHistory = incomeHistory;
+		this.IncomeHistory = incomeHistory;
 	}
 	public int getStrategy() {
-		return strategy;
+		return this.strategy;
 	}
 	public void setStrategy(int strategy) {
 		this.strategy = strategy;
 	}
 	public double getIncomeProbability() {
-		return incomeProbability;
+		return this.incomeProbability;
 	}
 	public void setIncomeProbability(double incomeProbability) {
 		this.incomeProbability = incomeProbability;
 	}
 	public double getIncome_ISB() {
-		return Income_ISB;
+		return this.Income_ISB;
 	}
 	public void setIncome_ISB(double incomeISB) {
-		Income_ISB = incomeISB;
+		this.Income_ISB = incomeISB;
 	}
 	public double getRegionIncomeChangePercent() {
-		return regionIncomeChangePercent;
+		return this.regionIncomeChangePercent;
 	}
 	public void setRegionIncomeChangePercent(double regionIncomeChangePercent) {
 		this.regionIncomeChangePercent = regionIncomeChangePercent;
 	}
 	public double getLastYearPersonalIncomeAverage() {
-		return lastYearPersonalIncomeAverage;
+		return this.lastYearPersonalIncomeAverage;
 	}
 	public void setLastYearPersonalIncomeAverage(double lastYearPersonalIncomeAverage) {
 		this.lastYearPersonalIncomeAverage = lastYearPersonalIncomeAverage;
 	}
 	public double getIncome_Tolerance() {
-		return Income_Tolerance;
+		return this.Income_Tolerance;
 	}
 	public void setIncome_Tolerance(double income_Tolerance) {
-		Income_Tolerance = income_Tolerance;
+		this.Income_Tolerance = income_Tolerance;
 	}
 	public List<Double> getQ_range() {
 		if (mean(this.q_range) == 0) {
@@ -598,19 +600,19 @@ public class Farm {
 		this.learning_rate = init_learning_rate();
 	}
 	public double getP_beta() {
-		return p_beta;
+		return this.p_beta;
 	}
 	public void setP_beta(double p_beta) {
 		this.p_beta = p_beta;
 	}
 	public double getP_beta_s() {
-		return p_beta_s;
+		return this.p_beta_s;
 	}
 	public void setP_beta_s(double p_beta_s) {
 		this.p_beta_s = p_beta_s;
 	}
 	public double getP_aspiration_coef() {
-		return p_aspiration_coef;
+		return this.p_aspiration_coef;
 	}
 	public void setP_aspiration_coef(double p_aspiration_coef) {
 		this.p_aspiration_coef = p_aspiration_coef;
@@ -622,7 +624,7 @@ public class Farm {
 		this.p_activity_tolerance = p_activity_tolerance;
 	}
 	public double getP_income_tolerance() {
-		return p_income_tolerance;
+		return this.p_income_tolerance;
 	}
 	public void setP_income_tolerance(double p_income_tolerance) {
 		this.p_income_tolerance = p_income_tolerance;

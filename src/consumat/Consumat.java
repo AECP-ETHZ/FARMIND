@@ -34,7 +34,7 @@ public class Consumat {
 		}
 		
 		if (args.length > 1) {
-			System.out.println("ABM version number: 1.0");
+			System.out.println("ABM version number: 1.01");
 		}
 
 		ReadData reader = new ReadData();									   // read all input data files
@@ -97,7 +97,7 @@ public class Consumat {
 			DecisionResult decision = new DecisionResult(farm.getPreferences().getDataElementName(), farm.getFarmName(), year, farm.getLearningRate(), farm.getStrategy(), farm.getIncomeHistory().get(0), farm.getCurrentActivities(), possibleActivitySet, farm);
 
 			line_counter++;
-			if (line_counter > 999999) {
+			if (line_counter > 1000000) {
 				FileName = origFileName + String.format("%d",file_counter);
 				file_counter++;
 				line_counter = 0;

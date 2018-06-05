@@ -1,12 +1,10 @@
 package activity;
 
 /**
- * Each agent has a set of possible activities that are a result of each consumat decision. 
- * These activities could be crop or livestock production or a specific farming technology (ie Maize production using xyz pesticide).
+ * Each agent has a set of possible activities that are a result of strategic decision-making based on the COMSUMAT approach. 
+ * These activities could be crop or livestock production, a farming technology (i.e. weed control strategy) or engagement in non-farming activities.
  * <br>
  * Each agent contains a list of possible activities where each item is an activity object with a name and associated ID value. 
- * 
- * @author kellerke
  *
  */
 public class Activity {
@@ -16,8 +14,8 @@ public class Activity {
 
 	/**
 	 * Activity object constructor. Always check against master list of activities before creation.
-	 * @param ID of the specific activity
-	 * @param name of the activity (cattle, pigs, etc)
+	 * @param ID ID of the activity
+	 * @param name name of the activity (cattle, pigs, 50% non-farming, etc.)
 	 */
 	public Activity(int ID, String name) {
 		this.name = name;

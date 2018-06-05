@@ -20,8 +20,7 @@ import agent.Person;
 import static decision.DecisionResult.strategySets;                            
 
 /** 
- * Read input parameters from configuration text files for each agent, as well as read results data from gams simulations
- * @author kellerke
+ * This class reads input parameters from configuration files and results data from the optimization model.
  *
  */
 public class ReadData {
@@ -32,21 +31,21 @@ public class ReadData {
 	public static final int AGE = 3;										   // Agent age
 	public static final int EDUCATION = 4;									   // Agent education level
 	public static final int MEMORY = 5;										   // Agent memory length
-	public static final int BETA = 6;										   // experience multiplier
+	public static final int BETA = 6;										   // learning multiplier
 	public static final int BETA_S = 7;									       // social learning multiplier
 	public static final int ASPIRATION_COEF = 8;							   // set aspiration level
 	public static final int INCOME_TOLERANCE = 9;							   // set income change dissimilarity tolerance
 	public static final int ACTIVITY_TOLERANCE = 10;						   // set dissimilarity in activity tolerance
-	public static final int LAMBDA = 11;									   // used for satisfaction calculation
-	public static final int ALPHA_PLUS = 12;								   // used for satisfaction calculation
-	public static final int ALPHA_MINUS = 13;								   // used for satisfaction calculation
-	public static final int PHI_PLUS = 14;								       // used for satisfaction calculation
-	public static final int PHI_MINUS = 15;  								   // used for satisfaction calculation
+	public static final int LAMBDA = 11;									   // parameter in the formula for calculating satisfaction
+	public static final int ALPHA_PLUS = 12;								   // parameter in the formula for calculating satisfaction
+	public static final int ALPHA_MINUS = 13;								   // parameter in the formula for calculating satisfaction
+	public static final int PHI_PLUS = 14;								       // parameter in the formula for calculating satisfaction
+	public static final int PHI_MINUS = 15;  								   // parameter in the formula for calculating satisfaction
 	
-	public static final int START_ACTION_INDEX = 16;					       // read in three activities
+	public static final int START_ACTION_INDEX = 16;					       // read in initial activities
 	public static final int INCOME_INDEX = 19;								   // read in income history
 
-	public String DataFile = "./data/farm_parameters.csv";					       // allow external function to set data files for testing
+	public String DataFile = "./data/farm_parameters.csv";					   // allow external function to set data files for testing
 	public String PreferenceFile = "./data/activity_preference.csv";
 	public String InitialActivities = "./data/initial_activities.csv";
 	public String InitialIncomes = "./data/initial_incomes.csv";
@@ -55,7 +54,8 @@ public class ReadData {
 	public String ActivityFile = "./data/activities.csv";
 	
 	/** 
-	 * Read the income and activity data from the gams output simulation file after each gams simulation. Use the StrategySet matrix defined in DecisionResult to get correct combinations. 
+	 * This function reads the income and activity data produced by the optimization model. 
+	 * Use the StrategySet matrix defined in DecisionResult to get correct combinations. 
 	 * @see decision.DecisionResult
 	 * @return List that contains the income for all farms, and the activity for all farms (two lists)
 	 */
@@ -389,7 +389,7 @@ public class ReadData {
 	}
 	
 	/**
-	 * Read a csv file that specifies each farm and generate a star network for each listed farm
+	 * Read a CSV file that specifies each farm and generate a star network for each listed farm
 	 * Each farm id/name is set as the root of the star graph, and each associated node has an associated link weight
 	 * Each farm will have an individual graph set based on the master list produced in this method
 	 * @return List of graphs for each farm
@@ -454,9 +454,9 @@ public class ReadData {
 
 		try {
 			Buffer = new BufferedReader(new FileReader(ActivityFile));
-			Line = Buffer.readLine();									       // first line to throw away
+			Line = Buffer.readLine();									       // first line to be deleted
 			
-			while ((Line = Buffer.readLine()) != null) {                       // Read activity data
+			while ((Line = Buffer.readLine()) != null) {                       // Read data line by line
 				activityRow = CSVtoArrayList(Line);
 				
 				int ID = Integer.parseInt(activityRow.get(0));
@@ -480,8 +480,8 @@ public class ReadData {
 	}
 	
 	/**
-	 * Input a readline from a csv using a split operation 
-	 * @param CSV String from input csv file to break into array
+	 * This function converts data from CSV file into array structure 
+	 * @param CSV String from input CSv file to break into array
 	 * @return Result ArrayList of strings 
 	 */
 	private static ArrayList<String> CSVtoArrayList(String CSV) {		       
@@ -499,8 +499,8 @@ public class ReadData {
 	}
 	
 	/** 
-	 * Return mean value of provided list 
-	 * @param list of values to calculate mean with
+	 * This function returns the mean value of a given list 
+	 * @param list list of the values to calculate mean with
 	 * @return mean
 	 */
 	private double mean(List<Double> list) {

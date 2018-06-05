@@ -1,9 +1,9 @@
 # Farmade
-An agent-based model (ABM) for simulation of farmers' decision-making developed by the AECP Group at ETH Zurich (www.aecp.ethz.ch).
+This is an agent-based model for the simulation of farm level decision-making developed by the Agricultural Economics and Policy Group at ETH Zurich (www.aecp.ethz.ch).
 
-The ABM uses a set of agents to represent farms, and uses the farm's behavioral model to select the best activities for each farm based on a set of parameters. 
+The model represents each farm as an agent as well as a node in social networks. Each agent chooses a strategy for perform activities based on the satisfaction and uncertainty about its output. A set of activity options is determined for each agent according to the strategy it chooses and by considering its personal preference and social interactions with its peers. 
 
-The ABM integrates into a gams linear programming model to select the optimal strategy from the set of ABM options and generate an income value for the year. 
+A linear programming model, integrated into the agent-based model, is then used to select an optimal activity for each agent to perform and generate an income value. Agents' satisfaction and uncertainty are updated accordingly. This sets the base for decision-making of next period.
 
 # Program Overview and Requirements
 The initial conditions of the agents with all parameters need to be specified in the /data/ directory before starting the model. The /test_data/ folder contains example initialization files. 
@@ -59,5 +59,3 @@ If the issue persists, try removing the libraries and reinstalling them again.
 	The gams program will produce a results file for the ABM to process. Until then it will wait. 
 	
 	When the ABM is running in test mode, the batch file 'run_gams.bat' will copy a results file (stored in /data/ folder as 'Grossmargin_P4,00') to simulate the gams output. 
-	
-

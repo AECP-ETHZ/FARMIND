@@ -14,8 +14,7 @@ import decision.DecisionCalculator;
 import reader.ReadData;		
 
 /**
- * Test decision calculator. 
- * @author kellerke
+ * This class tests the decision calculator. 
  *
  */
 public class DecisionCalculatorTests {

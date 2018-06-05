@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"activity","c":"Activity","l":"Activity(int, String)","url":"Activity-int-java.lang.String-"},{"p":"activity","c":"Activity","l":"getID()"},{"p":"activity","c":"Activity","l":"getName()"},{"p":"activity","c":"Activity","l":"setId(int)"},{"p":"activity","c":"Activity","l":"setName(String)","url":"setName-java.lang.String-"}]

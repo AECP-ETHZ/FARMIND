@@ -3,8 +3,7 @@ package testing;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 /** 
- * Testing suite for all possible unit tests.
- * @author kellerke
+ * This class tests suite for all possible unit tests
  *
  */
 @RunWith(Suite.class)

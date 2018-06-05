@@ -114,7 +114,7 @@ public class Consumat {
 		f.delete();
 		
 		try {
-			String name = System.getProperty("os.name").toLowerCase();;
+			String name = System.getProperty("os.name").toLowerCase();
 			if (name.startsWith("win") ){
 				runtime.exec("cmd /C" + "run_gams.bat");						   // actually run command
 			}

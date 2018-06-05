@@ -156,12 +156,12 @@ public class Farm {
 	 * @param probability probability of an income occurring in the distribution
 	 */
 	public void updateFarmData(List<Farm> allFarms, double income) {
-		updateIncomeHistoryList(income);									       // for year = 1, we pass in -1 for income so we don't update the income
+		updateIncomeHistoryList(income);									   // for year = 1, we pass in -1 for income so we don't update the income 
 	    updateHistoricalIncomeAverage();
 
 	    updateAspiration();
 	    updateSatisfaction();									
-	    updateIncomeDissimilarity();
+	    updateIncomeDissimilarity();										   // in the main simulation loop in Consumat, we update the regionIncomeChangePercent 
 		updateActivityDissimilarity(allFarms);
    
 	}

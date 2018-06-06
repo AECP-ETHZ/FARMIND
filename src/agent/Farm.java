@@ -369,7 +369,7 @@ public class Farm {
 	 * @return mean: mean of all satisfaction
 	 */
 	private double currentSatisfaction() {
-		List<Double> sat = new ArrayList<Double>();						       // calculate satisfaction for each individual income in income history
+		List<Double> current_satisfaction = new ArrayList<Double>();						       // calculate satisfaction for each income value in the list of income history
 		double probability = 0;
 		double mean = mean(this.IncomeHistory)*100;
 		double std = std(this.IncomeHistory)*100;
@@ -377,9 +377,9 @@ public class Farm {
 		
 		for (int i = 0; i< this.getMemory(); i++) {
 			probability = normal.cumulativeProbability(this.IncomeHistory.get(i));
-			sat.add(calculateSatisfaction(this.IncomeHistory.get(i),probability ));
+			current_satisfaction.add(calculateSatisfaction(this.IncomeHistory.get(i),probability ));
 		}
-		return mean(sat);
+		return mean(current_satisfaction);
 	}
 	/** 
 	 * Return mean value of provided list 
@@ -397,8 +397,8 @@ public class Farm {
 	}
 	/**
 	 * This function calculates the standard deviation of provided list.
-	 * @param list
-	 * @return std deviation value
+	 * @param list list for calculating standard deviation
+	 * @return std standard deviation value
 	 */
 	private double std(List<Double> list) {
 		double sd = 0;		
@@ -443,9 +443,15 @@ public class Farm {
 		return avg;
 	}
 	/** 
+<<<<<<< HEAD
 	 * Given a specific value for learning rate, calculate all possible experience value for all possible memory lengths. </br>
 	 * So if memory length is 5, we calculate an experience value for years 1 to 5. And using this set of experience values we calculate a standard deviation. </br>
 	 * This standard deviation is used to set the upper and lower values for the range of experience value. 
+=======
+	 * Given a specific value for k, calculate all possible q (experience value) for all possible memory lengths. </br>
+	 * So if memory is 5 years long, we calculate a q value for years 1 to 5. And using this set of q values we calculate a standard deviation. </br>
+	 * This standard deviation is used to set the upper and lower values for the q range. 
+>>>>>>> origin/master
 	 * @return
 	 */
 	public List<Double> calc_q_set() {

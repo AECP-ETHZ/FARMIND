@@ -61,12 +61,12 @@ public class ReadData {
 	 */
 	public List<Object> readMPOutputFiles() {
 		List<Double> incomesFromMP = new ArrayList<Double>();				   // list of incomes from result file
-		List<Activity> activitiesFromMP = new ArrayList<Activity>();		   // list of selected strategies for each agent (one per agent)
+		List<Activity> activitiesFromMP = new ArrayList<Activity>();		   // list of selected activities for each agent (one per agent)
 		List<Object> dataObject = new ArrayList<Object>();					   // object to return
 		BufferedReader Buffer = null;	 									   // read input file
 		String Line;														   // read each line of the file individually
 		ArrayList<String> dataArray;										   // separate data line
-		List<Activity> activities = getActivityList();						   // generated activity list with ID and name 
+		List<Activity> allPossibleActivities = getActivityList();			   // generated activity list with ID and name 
 		
 		File f = new File("Grossmargin_P4,00.csv");							   // actual results file
 		while (!f.exists()) {try {
@@ -88,22 +88,22 @@ public class ReadData {
 				String post = dataArray.get(3);
 				post = post.substring(5);
 				
-				int[] strategy = {Integer.valueOf(post),Integer.valueOf(pre)};
+				int[] activity = {Integer.valueOf(post),Integer.valueOf(pre)};
 				int index = 0;
-				for(int i = 0; i < activitySets.length; i++) {				   // strategySets were defined in DecisionResult to allow the correct output combinations to be set for gams
+				for(int i = 0; i < activitySets.length; i++) {				   // activitySets were defined in DecisionResult to allow the correct output combinations to be set for gams
 					int[] test = {activitySets[i][0],activitySets[i][1]};
-					if (Arrays.equals(strategy, test)) {
+					if (Arrays.equals(activity, test)) {
 						index = i;
 					}
 				}
 				
-				for(int i = 0; i < activities.size(); i++) {
-					String name = String.format("\"strat%d\"", index+1);
+				for(int i = 0; i < allPossibleActivities.size(); i++) {
+					String name = String.format("\"activity%d\"", index+1);
 					if (index < 10) {
-						name = String.format("\"strat0%d\"", index+1);
+						name = String.format("\"activity0%d\"", index+1);
 					}
-					if (activities.get(i).getName().equals(name) ) {
-						int ID = activities.get(i).getID();
+					if (allPossibleActivities.get(i).getName().equals(name) ) {
+						int ID = allPossibleActivities.get(i).getID();
 						Activity p = new Activity(ID, name); 
 						activitiesFromMP.add(p);
 					}

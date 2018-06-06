@@ -58,7 +58,7 @@ public class DecisionResult {
 	 */
 	public void appendMPInput() {
 		File file = new File("p_allowedStratPrePost.csv");
-		int[][] output = strategy_matrix;									   // copy empty matrix
+		int[][] output = activity_matrix;									   // copy empty matrix
 		
 		try {
 			FileWriter fw = new FileWriter(file,true);
@@ -222,19 +222,19 @@ public class DecisionResult {
 	}
 	
 	/**
-	 *  We have 72 strategies in the system, and these tuples correspond to each strategy.  first element in the tuple is a row in the strategy matrix, and the second element is the column.
-	 *  Each row element corresponds to a post sowing strategy, and each column is a pre sowing strategy. So [53,2] corresponds to post 53, and pre 2 strategy set.  
+	 *  We have 72 activities in the system, and these tuples correspond to each activity.  first element in the tuple is a row in the activity matrix, and the second element is the column.
+	 *  Each row element corresponds to a post sowing strategy, and each column is a pre sowing strategy. So [53,2] corresponds to post_strat 53, and pre_strat 2 strategy set.  
 	 */
 	public static int[][] activitySets = 
 		{
-				{1,1},												           // strategy 1 is post sowing 1, pre sowing 1											    
-				{1,2},														   // strategy 2 is post 1, pre 2
-				{1,3},														   // strategy 3 is post 1, pre 3
-				{1,4},													       // strategy 4 is post 1, pre 4
-				{1,5},														   // strategy 5 is post 1, pre 5
-				{1,6},														   // strategy 6 is post 1, pre 6
-				{3,2},														   // strategy 7 is post 3, pre 2
-				{3,3},														   // strategy 8 is post 3, pre 2
+				{1,1},												           // activity 1 is post sowing 1, pre sowing 1											    
+				{1,2},														   // activity 2 is post 1, pre 2
+				{1,3},														   // activity 3 is post 1, pre 3
+				{1,4},													       // activity 4 is post 1, pre 4
+				{1,5},														   // activity 5 is post 1, pre 5
+				{1,6},														   // activity 6 is post 1, pre 6
+				{3,2},														   // activity 7 is post 3, pre 2
+				{3,3},														   // activity 8 is post 3, pre 2
 				{3,4},
 				{3,5},
 				{3,6},
@@ -304,7 +304,7 @@ public class DecisionResult {
 	/**
 	 *  empty matrix for the output gams file. The matrix corresponds to a 55 row by 6 column matrix where each row is a post strategy and the columns are a pre strategy 
 	 */
-	private int[][] strategy_matrix = 
+	private int[][] activity_matrix = 
 		{
 				{1,1,1,1,1,1},
 				{0,0,0,0,0,0},

@@ -49,7 +49,7 @@ public class Consumat {
 			updatePopulationIncomeChange(allFarms,simulatedIncomeForFarms);    // after time step update the percent change for population
 		}
 
-		System.out.println("Complete");
+		System.out.println("Complete"); 
 	}
 	
 	/**

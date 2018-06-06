@@ -14,7 +14,7 @@ import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 
 import activity.Activity;
-import decision.DecisionCalculator;
+import fuzzy_logic.FuzzyLogicCalculator;
 import java.lang.Math;
 
 /** 
@@ -114,9 +114,9 @@ public class Farm {
 	 * @param allFarms full list of all farms in system
 	 * @return ActivitySet list of activity options for a farm to select 
 	 */
-	public List<String> makeDecision(List<Farm> allFarms) {
-	    List<String> ActivitySet = new ArrayList<String>();				                  // list of activities from fuzzy logic
-		DecisionCalculator fuzzyLogicCalc = new DecisionCalculator(this, allFarms);       // calculator for the activity selection
+	public List<String> decideActivitySet(List<Farm> allFarms) {
+	    List<String> ActivitySet = new ArrayList<String>();				                           // list of activities from fuzzy logic
+		FuzzyLogicCalculator fuzzyLogicCalc = new FuzzyLogicCalculator(this, allFarms);            // calculator for the activity selection
 		
 		if ((head.getAge() > 650)) {
 			this.strategy = 1; //EXIT

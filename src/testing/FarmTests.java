@@ -35,7 +35,7 @@ public class FarmTests {
 	public void testAgeExitDecision() {
 		Farm farm = allFarms.get(0);
 		farm.getHead().setAge(700);
-		farm.makeDecision(allFarms);
+		farm.decideActivitySet(allFarms);
 		
 		int strat = farm.getStrategy();
 		assertEquals(strat, 1);	// exit
@@ -48,7 +48,7 @@ public class FarmTests {
 		farm.setSatisfaction(100);
 		farm.setDissimilarity_ISB(100);
 		farm.setDissimilarity_Tolerance(0);
-		farm.makeDecision(allFarms);
+		farm.decideActivitySet(allFarms);
 		
 		int strat = farm.getStrategy();
 		assertEquals(strat, 2);	
@@ -61,7 +61,7 @@ public class FarmTests {
 		farm.setSatisfaction(100);
 		farm.setDissimilarity_ISB(0);
 		farm.setDissimilarity_Tolerance(10);
-		farm.makeDecision(allFarms);
+		farm.decideActivitySet(allFarms);
 		
 		int strat = farm.getStrategy();
 		assertEquals(strat, 4);	
@@ -74,7 +74,7 @@ public class FarmTests {
 		farm.setSatisfaction(-1);
 		farm.setDissimilarity_ISB(0);
 		farm.setDissimilarity_Tolerance(10);
-		farm.makeDecision(allFarms);
+		farm.decideActivitySet(allFarms);
 		
 		int strat = farm.getStrategy();
 		assertEquals(strat, 3);	
@@ -87,7 +87,7 @@ public class FarmTests {
 		farm.setSatisfaction(-1);
 		farm.setDissimilarity_ISB(10);
 		farm.setDissimilarity_Tolerance(0);
-		farm.makeDecision(allFarms);
+		farm.decideActivitySet(allFarms);
 		
 		int strat = farm.getStrategy();
 		assertEquals(strat, 1);	

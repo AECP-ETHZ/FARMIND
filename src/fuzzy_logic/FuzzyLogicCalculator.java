@@ -1,4 +1,4 @@
-package decision;
+package fuzzy_logic;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,7 +26,7 @@ import agent.Farm;
  * @author kellerke
  *
  */
-public class DecisionCalculator {
+public class FuzzyLogicCalculator {
 	
 	public List<Double> L = new ArrayList<Double>();                           // learning by doing vector for specific farm 
 	public List<Double> P = new ArrayList<Double>();						   // rank of all activity preferences for specific farm 
@@ -39,7 +39,7 @@ public class DecisionCalculator {
 	 * @param farm - specific farm to study
 	 * @param farms - list of all farms in the region for network information
 	 */
-	public DecisionCalculator(Farm farm, List<Farm> farms) {
+	public FuzzyLogicCalculator(Farm farm, List<Farm> farms) {
 		double m = farm.getPreferences().getDataElementName().size();		   // number of activities in system
 		this.L = getFarmExperienceVector(farm,m);
 		this.S = getNetworkExperienceAverageVector(farm, m, farms);

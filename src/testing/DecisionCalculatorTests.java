@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import agent.Farm;
-import decision.DecisionCalculator;
+import decision.FuzzyLogicCalculator;
 import reader.ReadData;		
 
 /**
@@ -30,14 +30,14 @@ public class DecisionCalculatorTests {
 	@Test
 	public void testProductSelectionCalculator() {
 		Farm farm = allFarms.get(0);
-		DecisionCalculator cal = new DecisionCalculator(farm, allFarms);
+		FuzzyLogicCalculator cal = new FuzzyLogicCalculator(farm, allFarms);
 		assertNotEquals(cal, null);
 	}
 
 	@Test
 	public void testLearningVector() {
 		Farm farm = allFarms.get(0);
-		DecisionCalculator cal = new DecisionCalculator(farm, allFarms);
+		FuzzyLogicCalculator cal = new FuzzyLogicCalculator(farm, allFarms);
 		double m = farm.getPreferences().getDataElementName().size();		       // number of products in system
 
 		List<Double> Q = new ArrayList<Double>();                              // learning by doing vector for specific farm
@@ -61,7 +61,7 @@ public class DecisionCalculatorTests {
 	@Test
 	public void testPreferenceVector() {
 		Farm farm = allFarms.get(0);
-		DecisionCalculator cal = new DecisionCalculator(farm, allFarms);
+		FuzzyLogicCalculator cal = new FuzzyLogicCalculator(farm, allFarms);
 		double m = farm.getPreferences().getDataElementName().size();		       // number of products in system
 		List<Double> P = new ArrayList<Double>();							   // rank of all product preferences for specific farm
 		Integer[] R;                           				 			   	   // Product preference vector 
@@ -83,7 +83,7 @@ public class DecisionCalculatorTests {
 	@Test
 	public void testNDSelection() {
 		Farm farm = allFarms.get(0);
-		DecisionCalculator cal = new DecisionCalculator(farm, allFarms);
+		FuzzyLogicCalculator cal = new FuzzyLogicCalculator(farm, allFarms);
 		List<Double> crit1 = Arrays.asList(15.0,10.0,5.0,1.0,5.0);	           // sample from document
 		List<Double> crit2 = Arrays.asList(6.0,14.0,10.0,1.0,5.0);
 		List<Double> crit3 = Arrays.asList(10.0,7.0,13.0,1.0,5.0);

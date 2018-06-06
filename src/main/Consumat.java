@@ -12,7 +12,7 @@ import activity.Activity;
 import agent.Farm;
 
 /** 
- * This class contains the main() method of this programme. 
+ * This class contains the main() method of this program. 
  * Full simulation runs inside of the main() method by creating farm objects and making decisions for each farm.
  *
  */
@@ -75,7 +75,7 @@ public class Consumat {
 			}
 			
 			farm.updateFarmParameters(allFarms, income);
-			List<String> possibleActivitySet = farm.makeDecision(allFarms);      
+			List<String> possibleActivitySet = farm.decideActivitySet(allFarms);      
 			
 			System.out.print(farm.getFarmName() + " current activity: ");
 			for (Activity act: farm.getCurrentActivity() ) System.out.print(act.getName() + " ");

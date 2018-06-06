@@ -304,7 +304,7 @@ public class DecisionResult {
 	/**
 	 *  empty matrix for the output gams file. The matrix corresponds to a 55 row by 6 column matrix where each row is a post strategy and the columns are a pre strategy 
 	 */
-	private int[][] activity_matrix = 
+	public static int[][] activity_matrix = 
 		{
 				{1,1,1,1,1,1},
 				{0,0,0,0,0,0},

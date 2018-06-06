@@ -443,16 +443,11 @@ public class Farm {
 		return avg;
 	}
 	/** 
-<<<<<<< HEAD
-	 * Given a specific value for learning rate, calculate all possible experience value for all possible memory lengths. </br>
 	 * So if memory length is 5, we calculate an experience value for years 1 to 5. And using this set of experience values we calculate a standard deviation. </br>
-	 * This standard deviation is used to set the upper and lower values for the range of experience value. 
-=======
 	 * Given a specific value for k, calculate all possible q (experience value) for all possible memory lengths. </br>
 	 * So if memory is 5 years long, we calculate a q value for years 1 to 5. And using this set of q values we calculate a standard deviation. </br>
 	 * This standard deviation is used to set the upper and lower values for the q range. 
->>>>>>> origin/master
-	 * @return
+	 * @return q_range
 	 */
 	public List<Double> calc_q_set() {
 		double k = this.getLearningRate();

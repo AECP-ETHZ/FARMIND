@@ -12,7 +12,7 @@ import activity.Activity;
 import agent.Farm;
 
 /** 
- * This class contains the main() method of this programme. 
+ * This class contains the main() method of this program. 
  * Full simulation runs inside of the main() method by creating farm objects and making decisions for each farm.
  *
  */

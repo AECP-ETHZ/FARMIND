@@ -398,8 +398,8 @@ public class Farm {
 	}
 	/**
 	 * This function calculates the standard deviation of provided list.
-	 * @param list
-	 * @return std deviation value
+	 * @param list list for calculating standard deviation
+	 * @return std standard deviation value
 	 */
 	private double std(List<Double> list) {
 		double sd = 0;		
@@ -445,7 +445,7 @@ public class Farm {
 	}
 	/** 
 	 * Given a specific value for k, calculate all possible q (experience value) for all possible memory lengths. </br>
-	 * So if memory is 5 years long, we calculate a q value for years 1 to 5. And using this set of q values we calcualte a standard deviation. </br>
+	 * So if memory is 5 years long, we calculate a q value for years 1 to 5. And using this set of q values we calculate a standard deviation. </br>
 	 * This standard deviation is used to set the upper and lower values for the q range. 
 	 * @return
 	 */

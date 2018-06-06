@@ -214,7 +214,7 @@ public class DecisionCalculator {
 	 * Calculate ND score by comparing product 'index' against all other products
 	 * @param index which item in the list (eg product) we want to score against the criterion matrix
 	 * @param matrix of criteria preferences for all items
-	 * @return nd score for this product
+	 * @return ND score for this product
 	 */
 	private double ND(int index, double[][] matrix ) {
 		List<Double> ND = new ArrayList<Double>();                             // set of ND scores for product 'index' against all other products

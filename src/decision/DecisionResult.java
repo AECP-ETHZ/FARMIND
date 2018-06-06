@@ -32,11 +32,11 @@ public class DecisionResult {
 	 * Constructor for the Decision Result
 	 * @param allActivities	full set of activities
 	 * @param farmId		ID of the farm
-	 * @param possibleActivities		full product set
+	 * @param possibleActivities		full activity set
 	 * @param year			time period
 	 * @param param			which parameters were used
 	 * @param strat			strategy
-	 * @param currentActivity		current actions in system
+	 * @param currentActivity		current activity(ies) in system
 	 * @param income		income of farm
 	 */
 	public DecisionResult(List<String> allActivities, String farmId, Integer year, Double learning_rate, int strat, double income, List<Activity> currentActivity, List<String> possibleActivities, Farm farm) {
@@ -56,7 +56,7 @@ public class DecisionResult {
 	 * Use the strategy matrix variable that is 55x6 elements and set a specific bit pattern based on the selected strategy. Each strategy corresponds to a StrategySet tuple value which sets the correct 1 in the matrix.
 	 * 
 	 */
-	public void appendGamsFile() {
+	public void appendMPInput() {
 		File file = new File("p_allowedStratPrePost.csv");
 		int[][] output = strategy_matrix;									   // copy empty matrix
 		
@@ -68,9 +68,9 @@ public class DecisionResult {
 				writer.println(",,spre1,spre2,spre3,spre4,spre5,spre6");
 			}
 						
-			for(int i = 1; i < strategySets.length + 1; i++) {
+			for(int i = 1; i < activitySets.length + 1; i++) {
 				if (this.possibleActivity.contains(String.format("strat%d", i))) {
-					int[] ind = strategySets[i-1];
+					int[] ind = activitySets[i-1];
 					int row = ind[0];
 					int column = ind[1];
 					output[row-1][column-1] = 1;							   // set correct bit to 1 in output matrix if this strategy is selected
@@ -116,8 +116,8 @@ public class DecisionResult {
 		PrintWriter writer = new PrintWriter(bw);
 		
 		if (file.length() == 0) {
-			writer.println("year,name,age,education,memory,alpha_plus,alpha_minus,lambda,phi_plus,phi_minus,aspiration_coef,tolerance_activity,learning_rate,tolerance_income,beta,beta_s,strategy,possible_action1,"
-					+ "possible_action2,possible_action3,possible_action4,possible_action5,possible_action6,income,current_action");
+			writer.println("year,name,age,education,memory,alpha_plus,alpha_minus,lambda,phi_plus,phi_minus,aspiration_coef,tolerance_activity,learning_rate,tolerance_income,beta,beta_s,strategy,possible_activity1,"
+					+ "possible_activity2,possible_activity3,possible_activity4,possible_activity5,possible_activity6,income,current_activity");
 		}
 		
 		
@@ -134,9 +134,9 @@ public class DecisionResult {
 		writer.print(String.format("%s,",this.farm.getP_phi_plus() ));
 		writer.print(String.format("%s,",this.farm.getP_phi_minus() ));
 		writer.print(String.format("%s,",this.farm.getP_aspiration_coef() ));
-		writer.print(String.format("%s,",this.farm.getP_activity_tolerance() ));
+		writer.print(String.format("%s,",this.farm.getP_activity_tolerance_coef() ));
 		writer.print(String.format("%.2f,", this.getLearningRate() ) );
-		writer.print(String.format("%s,",this.farm.getP_income_tolerance() ));
+		writer.print(String.format("%s,",this.farm.getP_income_tolerance_coef() ));
 		writer.print(String.format("%s,",this.farm.getP_beta() ));
 		writer.print(String.format("%s,",this.farm.getP_beta_s() ));
 		writer.print(String.format("%s,",this.strategy) );
@@ -225,7 +225,7 @@ public class DecisionResult {
 	 *  We have 72 strategies in the system, and these tuples correspond to each strategy.  first element in the tuple is a row in the strategy matrix, and the second element is the column.
 	 *  Each row element corresponds to a post sowing strategy, and each column is a pre sowing strategy. So [53,2] corresponds to post 53, and pre 2 strategy set.  
 	 */
-	public static int[][] strategySets = 
+	public static int[][] activitySets = 
 		{
 				{1,1},												           // strategy 1 is post sowing 1, pre sowing 1											    
 				{1,2},														   // strategy 2 is post 1, pre 2

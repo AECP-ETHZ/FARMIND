@@ -12,16 +12,16 @@ import agent.Farm;
 
 /** 
  * Object contains three vectors (L,P,S) that contain normalized rankings of experience, preference, and social network experience for a specific farm. <br>
- * Create the calculator for each individual farm, and the calculator can be used to decide on the imitation and optimization actions using fuzzy preference. <br>
+ * Create the calculator for each individual farm, and the calculator can be used to decide on the imitation and optimization activities using fuzzy preference. <br>
  * <br>
- *  q range shows how different two products can be based on the criteria and still be 1) equivalent, 2) weighted, 3) not equivalent<br>
- *  If you take a criteria vector = [0.9, 0.1, 0.8, 0.7, 0.4] that corresponds to products [A, B, C, D, E] and<br>
+ *  q range shows how different two activities can be based on the criteria and still be 1) equivalent, 2) weighted, 3) not equivalent<br>
+ *  If you take a criteria vector = [0.9, 0.1, 0.8, 0.7, 0.4] that corresponds to activities [A, B, C, D, E] and<br>
  *  if we set the lower bound q- to 0.3 and the upper bound q+ to 0.6 we get the following difference vector <br>
- *  for A compared to all other products (one directional comparison):<br>
+ *  for A compared to all other activities (one directional comparison):<br>
  *  delta = [0, 0.8, 0.1, 0.2, 0.5] ie 0.5 corresponds to A-E :: 0.9-0.4 = 0.5 <br>
- *  We can now build another vector of comparison values for A compared to all other products based on the q ranges: <br>
- *  CP = [0, 1, 0, 0, 2/3] which shows that when product A is compared to all other products in the set which shows<br>
- *  Product A is strictly preferred to Product B, and weakly preferred to product E. It is not preferred at all to C or D. <br>
+ *  We can now build another vector of comparison values for A compared to all other activities based on the q ranges: <br>
+ *  CP = [0, 1, 0, 0, 2/3] which shows that when activity A is compared to all other activities in the set which shows<br>
+ *  Product A is strictly preferred to Product B, and weakly preferred to activity E. It is not preferred at all to C or D. <br>
  * 
  * @author kellerke
  *
@@ -29,8 +29,8 @@ import agent.Farm;
 public class DecisionCalculator {
 	
 	public List<Double> L = new ArrayList<Double>();                           // learning by doing vector for specific farm 
-	public List<Double> P = new ArrayList<Double>();						   // rank of all product preferences for specific farm 
-	public List<Double> S = new ArrayList<Double>();						   // average social learning value for each products weighted by social network 
+	public List<Double> P = new ArrayList<Double>();						   // rank of all activity preferences for specific farm 
+	public List<Double> S = new ArrayList<Double>();						   // average social learning value for each activities weighted by social network 
 	public List<Double> ND = new ArrayList<Double>();                          // non-domination score vector to apply for clustering 
 	Farm farm;																   // farm associated with this calculator 
 
@@ -40,7 +40,7 @@ public class DecisionCalculator {
 	 * @param farms - list of all farms in the region for network information
 	 */
 	public DecisionCalculator(Farm farm, List<Farm> farms) {
-		double m = farm.getPreferences().getDataElementName().size();		   // number of products in system
+		double m = farm.getPreferences().getDataElementName().size();		   // number of activities in system
 		this.L = getFarmExperienceVector(farm,m);
 		this.S = getNetworkExperienceAverageVector(farm, m, farms);
 		this.P = getFarmPreferenceVector(farm,m);
@@ -59,13 +59,13 @@ public class DecisionCalculator {
 		P.add(q_plus);														   
 	}
 	
-	// product calculations
+	// activity calculations
 	/** 
-	 * Using fuzzy logic check S,P,L lists to determine best product combinations. 
+	 * Using fuzzy logic check S,P,L lists to determine best activity combinations. 
 	 * The len-2 part of the calculation is to account for q+ and q- minus at the start and end of the calculation
-	 * @return list of products from the product selection calculator
+	 * @return list of activities from the activity selection calculator
 	 */
-	public List<String> getImitationProducts() {
+	public List<String> getImitationActivities() {
 		double[] c1 = new double[this.P.size()];
 		for (int i = 0; i < this.P.size(); i++) {
 			c1[i] = P.get(i);
@@ -98,17 +98,17 @@ public class DecisionCalculator {
 			ND.add(ND(i,matrix));
 		}
 
-		List<String> list = productList((ND));							       // cluster algorithm returns optimal product list
+		List<String> list = activityList((ND));							       // cluster algorithm returns optimal activity list
 		
 		return list;
 	}
 	/** 
-	 * Using fuzzy logic check P, L lists to determine best product combinations.
+	 * Using fuzzy logic check P, L lists to determine best activity combinations.
 	 * Do not take into account social learning vector S. 
 	 * The len-2 part of the calculation is to account for q+ and q- minus at the start and end of the calculation
-	 * @return list of products from the product selection calculator
+	 * @return list of activities from the activity selection calculator
 	 */
-	public List<String> getOptimizeProducts() {
+	public List<String> getOptimizeActivities() {
 		double[] c1 = new double[this.P.size()];
 		for (int i = 0; i < this.P.size(); i++) {
 			c1[i] = P.get(i);
@@ -135,23 +135,23 @@ public class DecisionCalculator {
 			ND.add(ND(i,matrix));
 		}
 		
-		List<String> list = productList(ND);                                   // cluster algorithm returns optimal product list
+		List<String> list = activityList(ND);                                   // cluster algorithm returns optimal activity list
 
 		return list;
 	}
 
 	// fuzzy logic and clustering functions
 	/**
-	 *  given a vector of non-domination scores return an optimized product list
+	 *  given a vector of non-domination scores return an optimized activity list
 	 *  using a clustering algorithm to detect two groups within the list
 	 * @param x original ND vector
-	 * @return list of product names
+	 * @return list of activity names
 	 */
-	private List<String> productList(List<Double> x){
-		List<String> list = new ArrayList<String>();                           // final product list
+	private List<String> activityList(List<Double> x){
+		List<String> list = new ArrayList<String>();                           // final activity list
 		List<Double> original = new ArrayList<Double>();					   // backup list					
 		List<Double> sorted = new ArrayList<Double>();						   // sorted list
-		List<Double> cluster = new ArrayList<Double>();						   // final selected product values from clustering algoritm
+		List<Double> cluster = new ArrayList<Double>();						   // final selected activity values from clustering algoritm
 
 		original = normalizeList(x);
 		sorted = original;
@@ -159,7 +159,7 @@ public class DecisionCalculator {
 		cluster = cluster(sorted);
 		
 		int index = 0;
-		for (int i = 0; i< cluster.size(); i++) {							   // turn ranking values into product list
+		for (int i = 0; i< cluster.size(); i++) {							   // turn ranking values into activity list
 			index = original.indexOf(cluster.get(i));
 			list.add(this.farm.getPreferences().getDataElementName().get(index));
 			original.set(index, -1.0);                                         // duplicate values exist in array, so 'remove' when used to get next duplicate value
@@ -171,7 +171,7 @@ public class DecisionCalculator {
 	/** 
 	 * clustering based on the mean
 	 * @param sorted original list to cluster
-	 * @return list of preferred products
+	 * @return list of preferred activities
 	 */
 	private List<Double> cluster(List<Double> sorted) {
 		List<Double> cluster = new ArrayList<Double>(); 
@@ -211,13 +211,13 @@ public class DecisionCalculator {
 		
 	/** 
 	 * Non Domination score for a fuzzy logic preference matrix
-	 * Calculate ND score by comparing product 'index' against all other products
-	 * @param index which item in the list (eg product) we want to score against the criterion matrix
+	 * Calculate ND score by comparing activities 'index' against all other activities
+	 * @param index which item in the list (eg activity) we want to score against the criterion matrix
 	 * @param matrix of criteria preferences for all items
-	 * @return nd score for this product
+	 * @return nd score for this activity
 	 */
 	private double ND(int index, double[][] matrix ) {
-		List<Double> ND = new ArrayList<Double>();                             // set of ND scores for product 'index' against all other products
+		List<Double> ND = new ArrayList<Double>();                             // set of ND scores for activity 'index' against all other activities
 		
 		for (int j = 0; j < matrix[0].length; j++) {
 			if (index != j) {
@@ -238,7 +238,7 @@ public class DecisionCalculator {
 		int len = category.length;											// length of matrix columns/rows
 		double q_plus = category[len-1];									// set q-
 		double q_minus = category[len-2];								    // set q+ 
-		double[][] matrix = new double[len-2][len-2];					    // cross product preference matrix
+		double[][] matrix = new double[len-2][len-2];					    // cross activity preference matrix
 		
 		for (int i = 0; i< len-2; i++) {
 			for (int j = 0; j < len - 2; j++) {
@@ -273,13 +273,13 @@ public class DecisionCalculator {
 	 * Each farm has a vector with associated years of experience in the shared matrix of experience.
 	 * Scale this vector based on a parameter k. 
 	 * @param farm that we are performing the calculations for
-	 * @param m number of products in the system
+	 * @param m number of activities in the system
 	 * @return vector of farming experience for this farm
 	 */
 	private List<Double> getFarmExperienceVector(Farm farm, double m) {
 		List<Double> Q = new ArrayList<Double>();                              // learning by doing vector for specific farm
 		int time = 0;														   // years of experience
-		double k = farm.getLearningRate();								                   // scale factor
+		double k = farm.getLearningRate();								       // scale factor
 		double q;															   // calculated score
 		
 		for (int i = 0; i < m; i++) {
@@ -293,13 +293,13 @@ public class DecisionCalculator {
 	}
 	
 	/** 
-	 * Each farm has a preference vector and we scale this vector based on the number of products in the system
+	 * Each farm has a preference vector and we scale this vector based on the number of activities in the system
 	 * @param farm that we are performing the calculations for
-	 * @param m number of products in the system
+	 * @param m number of activities in the system
 	 * @return vector of farming preference for this farm
 	 */
 	private List<Double> getFarmPreferenceVector(Farm farm, double m) {
-		List<Double> P = new ArrayList<Double>();							   // rank of all product preferences for specific farm
+		List<Double> P = new ArrayList<Double>();							   // rank of all activity preferences for specific farm
 		Integer[] R;                           				 			   	   // Product preference vector 
 
 		R = farm.getPreferences().getFarmMap().get(farm.getFarmName());
@@ -314,21 +314,21 @@ public class DecisionCalculator {
 	
 	/** 
 	 * for all farms in the network connected to the main farm build the Experience vector (Q). 
-	 * Then take the average experience level for each product for all farms in the network 
+	 * Then take the average experience level for each activity for all farms in the network 
 	 * Base this average on the social network weight between the main farm and the node farm
 	 * 
 	 * @param farm that we are performing the calculations for
-	 * @param m number of products in the system
+	 * @param m number of activities in the system
 	 * @return vector of social farming experience for this farm
 	 */
 	private List<Double> getNetworkExperienceAverageVector(Farm farm, double m, List<Farm> farms) {
-		List<Double> S = new ArrayList<Double>();							   // rank of all product preferences for specific farm
+		List<Double> S = new ArrayList<Double>();							   // rank of all activity preferences for specific farm
 		int i,j = 0;														   // iterators
         double totalFarms = 0;												   // how many total farms are there in the network
 		Set<DefaultEdge> E;													   // set of edges in the network
 		Iterator<DefaultEdge> I;											   // iterator through all edges
         double w;															   // weight of edge between two nodes
-        double sum = 0;														   // running sum of product score
+        double sum = 0;														   // running sum of activity score
         List<List<Double>> QForAllFarms = new ArrayList<List<Double>>();       // aggregate list of all Q lists
 
 		// social learning calculation
@@ -354,12 +354,12 @@ public class DecisionCalculator {
         	}
         }
         
-        // loop through all products and all farms to develop final list
+        // loop through all activities and all farms to develop final list
         for (j = 0; j < m; j++) {
         	sum = 0;
         	for (i = 0; i < QForAllFarms.size(); i++) {
         		if (QForAllFarms.get(i).get(j) > 0) {
-        			sum = sum + QForAllFarms.get(i).get(j);                        // farm i, product j
+        			sum = sum + QForAllFarms.get(i).get(j);                        // farm i, activity j
         		}
         	}
         	sum = sum/QForAllFarms.size();

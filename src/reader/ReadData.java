@@ -17,7 +17,7 @@ import activity.Activity;
 import agent.Farm;
 import agent.Location;
 import agent.Person;
-import static decision.DecisionResult.strategySets;                            
+import static decision.DecisionResult.activitySets;                            
 
 /** 
  * This class reads input parameters from configuration files and results data from the optimization model.
@@ -59,10 +59,10 @@ public class ReadData {
 	 * @see decision.DecisionResult
 	 * @return List that contains the income for all farms, and the activity for all farms (two lists)
 	 */
-	public List<Object> readIncomeResults() {
-		List<Double> incomes = new ArrayList<Double>();						   // list of incomes from result file
-		List<Activity> strat = new ArrayList<Activity>();					   // list of selected strategies for each agent (one per agent)
-		List<Object> ret = new ArrayList<Object>();							   // object to return
+	public List<Object> readMPOutputFiles() {
+		List<Double> incomesFromMP = new ArrayList<Double>();				   // list of incomes from result file
+		List<Activity> activitiesFromMP = new ArrayList<Activity>();		   // list of selected strategies for each agent (one per agent)
+		List<Object> dataObject = new ArrayList<Object>();					   // object to return
 		BufferedReader Buffer = null;	 									   // read input file
 		String Line;														   // read each line of the file individually
 		ArrayList<String> dataArray;										   // separate data line
@@ -81,7 +81,7 @@ public class ReadData {
 			Line = Buffer.readLine();
 			while ((Line = Buffer.readLine()) != null) {                       
 				dataArray = CSVtoArrayList(Line);						       // Read farm's parameters line by line
-				incomes.add( Double.parseDouble(dataArray.get(1)) );
+				incomesFromMP.add( Double.parseDouble(dataArray.get(1)) );
 				
 				String pre = dataArray.get(2);								   // we need to break the results file which has pre and post strategies
 				pre = pre.substring(4);										   // into corresponding strategy values in our system based on the defined strategies
@@ -90,8 +90,8 @@ public class ReadData {
 				
 				int[] strategy = {Integer.valueOf(post),Integer.valueOf(pre)};
 				int index = 0;
-				for(int i = 0; i < strategySets.length; i++) {				   // strategySets were defined in DecisionResult to allow the correct output combinations to be set for gams
-					int[] test = {strategySets[i][0],strategySets[i][1]};
+				for(int i = 0; i < activitySets.length; i++) {				   // strategySets were defined in DecisionResult to allow the correct output combinations to be set for gams
+					int[] test = {activitySets[i][0],activitySets[i][1]};
 					if (Arrays.equals(strategy, test)) {
 						index = i;
 					}
@@ -105,7 +105,7 @@ public class ReadData {
 					if (activities.get(i).getName().equals(name) ) {
 						int ID = activities.get(i).getID();
 						Activity p = new Activity(ID, name); 
-						strat.add(p);
+						activitiesFromMP.add(p);
 					}
 				}
 			}
@@ -120,9 +120,9 @@ public class ReadData {
 			e.printStackTrace();
 		}
 
-		ret.add(incomes);
-		ret.add(strat);
-		return ret;
+		dataObject.add(incomesFromMP);
+		dataObject.add(activitiesFromMP);
+		return dataObject;
 	}
 	
 	/**
@@ -157,6 +157,7 @@ public class ReadData {
 		FarmDataMatrix                   preference = getPreferences();
 		FarmDataMatrix                   experience = getExperience();
 		
+		// Read data files and create list of farms
 		try {
 			Calendar now = Calendar.getInstance();                             // Gets the current date and time
 			int currentYear = now.get(Calendar.YEAR); 
@@ -167,8 +168,8 @@ public class ReadData {
 				farmParameters = CSVtoArrayList(Line);						   // Read farm's parameters line by line
 				
 				Location location = new Location();							   // create new location for each farm
-				List<Activity> currentActivity = new ArrayList<Activity>();  // each farm has list of activities
-				List<Double> income = new ArrayList<Double>();				   // each farm has income history records
+				List<Activity> currentActivity = new ArrayList<Activity>();    // dummy variable to create initial farm object. Initialized after creation. 
+				List<Double> income = new ArrayList<Double>();				   // dummy variable to create initial farm object. Initialized after creation. 
 				double[] coordinates = {0,0};								   // location of farm
 				double personalIncomeAverage = 0;					           // personal income average
 				
@@ -189,7 +190,6 @@ public class ReadData {
 				aspiration_coef = Double.parseDouble( farmParameters.get(ASPIRATION_COEF));
 				activity_tolerance = Double.parseDouble( farmParameters.get(ACTIVITY_TOLERANCE));
 				income_tolerance = Double.parseDouble( farmParameters.get(INCOME_TOLERANCE));
-				
 				lambda = Double.parseDouble( farmParameters.get(LAMBDA));
 				alpha_plus = Double.parseDouble( farmParameters.get(ALPHA_PLUS));
 				alpha_minus = Double.parseDouble( farmParameters.get(ALPHA_MINUS));
@@ -216,18 +216,17 @@ public class ReadData {
 			}
 		}
 		
-		updateFarmsActivities(farms);                                  // read actual activity and income data and update each farm
-		farms = updateFarmsIncome(farms);
+		initializeFarmActivities(farms);                                       // read initialization activity data from data file and set all initialize all activities
+		initializeFarmIncomes(farms);                                          // read initialization income data from data file and set all initialize all incomes
 		
 		return farms;
 	}
 	
 	/** 
-	 * Update farm activity by reading activity file
+	 * initialize farm activity by reading activity file
 	 * @param farms List of farms in system
-	 * @return farms List of farms in system
 	 */
-	private void updateFarmsActivities(List<Farm> farms) {
+	private void initializeFarmActivities(List<Farm> farms) {
 		String Line;
 		ArrayList<String> farmParameters;
 		BufferedReader Buffer = null;	 									   // read input file
@@ -274,7 +273,7 @@ public class ReadData {
 	 * @param farms List of farms in system
 	 * @return farms List of farms in system
 	 */
-	private List<Farm> updateFarmsIncome(List<Farm> farms) {
+	private void initializeFarmIncomes(List<Farm> farms) {
 		String Line;
 		ArrayList<String> farmParameters;
 		BufferedReader Buffer = null;	 									   // read input file
@@ -312,11 +311,8 @@ public class ReadData {
 				Exception.printStackTrace();
 			}
 		}
-		
-		return farms;
 	}
 	
-
 	/**
 	 * Read preferences of each farm for each activity and build preference object
 	 * @return matrix of the farm region preferences
@@ -443,7 +439,7 @@ public class ReadData {
 
 	/**
 	 * Create list of activity type/category from master CSV list
-	 * This is used to generate the individual farm product lists
+	 * This is used to generate the individual farm activities lists
 	 * @return List of activities in the master CSV file
 	 */
 	private List<Activity> getActivityList() {

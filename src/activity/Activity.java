@@ -2,7 +2,7 @@ package activity;
 
 /**
  * Each agent has a set of possible activities that are a result of strategic decision-making based on the COMSUMAT approach. 
- * These activities could be crop or livestock production, a farming technology (i.e. weed control strategy) or engagement in non-farming activities.
+ * These activities could be crop or livestock production methods, a farming technology (i.e. weed control strategy) or engagement in non-farming activities.
  * <br>
  * Each agent contains a list of possible activities where each item is an activity object with a name and associated ID value. 
  *

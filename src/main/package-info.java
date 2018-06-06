@@ -7,4 +7,4 @@
  * @author kellerke
  *
  */
-package consumat;
+package main;

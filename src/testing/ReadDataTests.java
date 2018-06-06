@@ -25,7 +25,7 @@ public class ReadDataTests {
 	@Before 
 	public void setup() {
 		copyResultsFile();
-		ret = reader.readIncomeResults();
+		ret = reader.readMPOutputFiles();
 	} 
 	
 	@SuppressWarnings("unchecked")

@@ -34,10 +34,10 @@ public class Farm {
 	private Graph<String, DefaultEdge> network; 							   // Social network of farmers
 	private FarmDataMatrix experience;									       // experience (in years) of the each farm for each activity
 	private FarmDataMatrix preferences;									       // preference (between 1 to 5) of each farm for each activity
-	private List<Activity> currentActivity;								   // list of current activities each farm is engaged in
+	private List<Activity> currentActivity;								       // list of current activities each farm is engaged in
 	private List<Activity> allActivities;									   // list of all possible activities
 	private int strategy;													   // selected strategy (opt-out, optimize, imitate, repeat)
-	private double regionIncomeChangePercent;								   // the percentage that the income of a region change (current_avg - historical_avg)/historical_avg
+	private double populationIncomeChangePercent;							   // the percentage that the income of a population change (current_avg - historical_avg)/historical_avg
 	private double lastYearPersonalIncomeAverage;							   // excluding most recent time period, average income of the specific farm
 	private double learning_rate;											   // learning rate for specific farm. Calculated based on education level
 	private List<Double> q_range;											   // q range (+,- values) for the learning rate vectors for the individual farm
@@ -45,8 +45,8 @@ public class Farm {
 	private double p_beta ;													   // Parameter for the Beta
 	private double p_beta_s ;											       // Parameter for the Beta S 
 	private double p_aspiration_coef ;										   // Parameter for the Aspiration Calculation
-	private double p_activity_tolerance ;									   // Parameter for the individual level of tolerance to differences in activities on the network
-	private double p_income_tolerance ;									       // Parameter for the individual level of tolerance to differences in personal vs regional income changes
+	private double p_activity_tolerance_coef ;								   // Parameter for the individual level of tolerance to differences in activities on the network
+	private double p_income_tolerance_coef ;								   // Parameter for the individual level of tolerance to differences in personal vs population income changes
 	private double p_lambda ;												   // Parameter for the Lambda used for the Satisfaction Calculation
 	private double p_alpha_plus ;											   // Parameter for the Alpha Plus used for the Satisfaction Calculation
 	private double p_alpha_minus ;											   // Parameter for the Alpha Minus used for the Satisfaction Calculation
@@ -103,8 +103,8 @@ public class Farm {
 		this.setP_phi_plus(phi_plus);
 		this.setP_phi_minus(phi_minus);
 		
-		this.setP_activity_tolerance(activity_tolerance);
-		this.setP_income_tolerance(income_tolerance);
+		this.setP_activity_tolerance_coef(activity_tolerance);
+		this.setP_income_tolerance_coef(income_tolerance);
 	}
 	
 	/** 
@@ -112,19 +112,19 @@ public class Farm {
 	 * Comparing satisfaction to aspiration and dissimilarities to tolerance, agents decide which of the four strategies to pursue: repetition, optimization, imitation or opt-out.
 	 * 
 	 * @param allFarms full list of all farms in system
-	 * @return fuzzyActionSet list of activity options for a farm to select 
+	 * @return ActivitySet list of activity options for a farm to select 
 	 */
 	public List<String> makeDecision(List<Farm> allFarms) {
-	    List<String> ActivitySet = new ArrayList<String>();				   // list of names of products from fuzzy logic
-		DecisionCalculator fuzzyLogicCalc = new DecisionCalculator(this, allFarms);       // calculator for the product selection
+	    List<String> ActivitySet = new ArrayList<String>();				                  // list of activities from fuzzy logic
+		DecisionCalculator fuzzyLogicCalc = new DecisionCalculator(this, allFarms);       // calculator for the activity selection
 		
 		if ((head.getAge() > 650)) {
 			this.strategy = 1; //EXIT
 		}
-		else if ( (this.Activity_Dissimilarity >= this.p_activity_tolerance) || (this.Income_Dissimilarity >= this.p_income_tolerance) ) {  
+		else if ( (this.Activity_Dissimilarity >= this.p_activity_tolerance_coef) || (this.Income_Dissimilarity >= this.p_income_tolerance_coef) ) {  
 			if (this.Satisfaction >= 0) {
 				this.strategy = 2; //IMITATION
-				ActivitySet = fuzzyLogicCalc.getImitationProducts();
+				ActivitySet = fuzzyLogicCalc.getImitationActivities();
 			}
 			else {
 				this.strategy = 1; //EXIT
@@ -140,7 +140,7 @@ public class Farm {
 			}
 			else {
 				this.strategy = 3; //OPTIMIZATION
-				ActivitySet = fuzzyLogicCalc.getOptimizeProducts();
+				ActivitySet = fuzzyLogicCalc.getOptimizeActivities();
 			}
 		}
 		
@@ -155,13 +155,13 @@ public class Farm {
 	 * @param income income value of farm
 	 * @param probability probability of an income occurring in the distribution
 	 */
-	public void updateFarmData(List<Farm> allFarms, double income) {
+	public void updateFarmParameters(List<Farm> allFarms, double income) {
 		updateIncomeHistoryList(income);									   // for year = 1, we pass in -1 for income so we don't update the income 
 	    updateHistoricalIncomeAverage();
 
 	    updateAspiration();
 	    updateSatisfaction();									
-	    updateIncomeDissimilarity();										   // in the main simulation loop in Consumat, we update the regionIncomeChangePercent 
+	    updateIncomeDissimilarity();										   // in the main simulation loop in Consumat, we update the populationIncomeChangePercent 
 		updateActivityDissimilarity(allFarms);
    
 	}
@@ -175,13 +175,16 @@ public class Farm {
         double currentDissimilarity = 0;									   // similarity value of a farm 
         int EdgeCount = 0;													   // how many edges does this farm have (ie neighbors)
 		int totalFarms = 0;													   // how many total farms are there in the network
-        List<String>  networkActivityList = new ArrayList<String>();		   // intermediate variable of just names, not product objects
-        Map<String, Integer> activityMap = new HashMap<String,Integer>();      // map of all activities on network, with count of often it's produced
+		
+		// Network Activity includes all farms on the network with a weight greater than 0 AND includes this (main) farm. 
+        List<String>  networkActivityList = new ArrayList<String>();		   // Intermediate variable of just names, not activity objects (allows easier search)
+        
+        Map<String, Integer> activityMap = new HashMap<String,Integer>();      // map of all activities on network, with count of often it's produced 
         Double dissimilarity = 0.0;											   // dissimilarity value for farm
         Set<DefaultEdge> E;                                                    // set of edges in network with this farm at the head
         double w = 0;														   // weight of each network connection
         Iterator<DefaultEdge> I;											   // iterator through all edges
-        List<String> mainFarmActivity = new ArrayList<String>();			   // the main farm's list of activities for comparison to network activities
+        List<String> thisFarmActivityList = new ArrayList<String>();		   // the main farm's list of activities for comparison to network activities
     		
 		E = this.network.outgoingEdgesOf(this.farmName);
         totalFarms = farms.size();
@@ -199,7 +202,7 @@ public class Farm {
             				networkActivityList.add(p.get(i).getName());
             				activityMap.put(p.get(i).getName(), 1);
             			} else {
-            				activityMap.put(p.get(i).getName(), activityMap.get(p.get(i).getName()) + 1);    // increment map that tracks how often a product occurs in the network (ie Maize occurs 5 times in network -> Maize, 5)
+            				activityMap.put(p.get(i).getName(), activityMap.get(p.get(i).getName()) + 1);    // increment map that tracks how often an activity occurs in the network (ie Maize occurs 5 times in network -> Maize, 5)
             			}
             		}
         			
@@ -210,25 +213,25 @@ public class Farm {
     	for (int i = 0; i < this.getCurrentActivity().size(); i++)
     	{
     		String name = this.getCurrentActivity().get(i).getName();
-    		mainFarmActivity.add(name);
+    		thisFarmActivityList.add(name);
     		
     		if(!networkActivityList.contains(name) ) {
     			networkActivityList.add(name);
-    			activityMap.put(name, 1);                                       // add product to map of entire network (
+    			activityMap.put(name, 1);                                       // add activity to map of entire network (
     		} else {
     			activityMap.put(name, activityMap.get(name) + 1);              // increment map
     		}
     	}
     	
-    	// dissimilarity calculation based on difference in neighbor vs main farm product sets
+    	// dissimilarity calculation based on difference in neighbor vs main farm activity sets
     	for (int i = 0; i < networkActivityList.size(); i++)
     	{
-    		// if the activity is done by the main farmer ignore that product in the dissimilarity
-    		if (mainFarmActivity.contains(networkActivityList.get(i))) {
+    		// if the activity is done by the main farmer ignore that activity in the dissimilarity
+    		if (thisFarmActivityList.contains(networkActivityList.get(i))) {
     			continue;
     			
     		} else {
-    			// these products are not grown by the main farmer so it counts for the dissimilarity
+    			// these activities are not done by the main farmer so it counts for the dissimilarity
     			dissimilarity = dissimilarity + (activityMap.get(networkActivityList.get(i)) / ((double)EdgeCount) );
     		}
     	}
@@ -245,7 +248,7 @@ public class Farm {
 		double personalIncomeChangePercent = 0;								   // percent change in personal income
 		personalIncomeChangePercent = (IncomeHistory.get(0) - lastYearPersonalIncomeAverage) /lastYearPersonalIncomeAverage;
 		
-		this.Income_Dissimilarity = this.regionIncomeChangePercent - personalIncomeChangePercent;
+		this.Income_Dissimilarity = this.populationIncomeChangePercent - personalIncomeChangePercent;
 	}
 	
      /**
@@ -272,24 +275,22 @@ public class Farm {
 	/** 
 	 * Each time period, t, call this function to increment the experience vector of this farm. 
 	 * This experience vector is part of a shared experience matrix that all farms contain. 
-	 * If the farm is currently farming a product, then increase the experience of that product for that farm.
-	 * For all other possible products in the experience vector for this farm, decrement the experience by one year.
+	 * If the farm is currently performing an activity, then increase the experience of that activity for that farm.
+	 * For all other possible activities in the experience vector for this farm, decrement the experience by one year.
 	 * <br>
 	 * Increment the age of the farmer each time step.
 	 */
-	public void updateExperiencePlusAge() {
-		List<String> productNames = new ArrayList<String>();				   // array of names of products for comparison
-		int age = this.head.getAge();										   // age of the farmer
-		this.head.setAge(age + 1);                                             // increment farmers age each time period
-		
+	public void updateExperience() {
+		List<String> activityNames = new ArrayList<String>();				   // array of names of activities for comparison
+
 		for (int i = 0; i<this.getCurrentActivity().size(); i++) {
-			productNames.add(this.getCurrentActivity().get(i).getName());
+			activityNames.add(this.getCurrentActivity().get(i).getName());
 		}
 		
 		for (int i = 0; i< this.experience.getDataElementName().size(); i++ ) {
 			int value = this.experience.getFarmDataElementValue(farmName, this.experience.getDataElementName().get(i));
 			
-			if (productNames.contains(this.experience.getDataElementName().get(i))) {
+			if (activityNames.contains(this.experience.getDataElementName().get(i))) {
 				value += 1;
 			}
 			else {
@@ -302,6 +303,21 @@ public class Farm {
 			this.experience.setFarmDataElementValue(farmName, this.experience.getDataElementName().get(i), value);
 		}	
 	}
+	
+	/** 
+	 * Each time period, t, call this function to increment the experience vector of this farm. 
+	 * This experience vector is part of a shared experience matrix that all farms contain. 
+	 * If the farm is currently performing an activity, then increase the experience of that activity for that farm.
+	 * For all other possible activities in the experience vector for this farm, decrement the experience by one year.
+	 * <br>
+	 * Increment the age of the farmer each time step.
+	 */
+	public void updateAge() {
+		int age = this.head.getAge();										   // age of the farmer
+		this.head.setAge(age + 1);                                             // increment farmers age each time period
+
+	}
+	
 	
 	/**
 	 * Update income history by removing oldest income and replacing with new income
@@ -371,8 +387,8 @@ public class Farm {
 	private double currentSatisfaction() {
 		List<Double> current_satisfaction = new ArrayList<Double>();						       // calculate satisfaction for each income value in the list of income history
 		double probability = 0;
-		double mean = mean(this.IncomeHistory)*100;
-		double std = std(this.IncomeHistory)*100;
+		double mean = mean(this.IncomeHistory);
+		double std = std(this.IncomeHistory);
 		NormalDistribution normal = new NormalDistribution(mean, std);		   // distribution of historical incomes
 		
 		for (int i = 0; i< this.getMemory(); i++) {
@@ -444,7 +460,7 @@ public class Farm {
 	}
 	/** 
 	 * So if memory length is 5, we calculate an experience value for years 1 to 5. And using this set of experience values we calculate a standard deviation. </br>
-	 * Given a specific value for k, calculate all possible q (experience value) for all possible memory lengths. </br>
+	 * Given a specific value for k/learning_rate, calculate all possible q (experience value) for all possible memory lengths. </br>
 	 * So if memory is 5 years long, we calculate a q value for years 1 to 5. And using this set of q values we calculate a standard deviation. </br>
 	 * This standard deviation is used to set the upper and lower values for the q range. 
 	 * @return q_range
@@ -568,10 +584,10 @@ public class Farm {
 		this.Income_Dissimilarity = income_dissimilarity;
 	}
 	public double getRegionIncomeChangePercent() {
-		return this.regionIncomeChangePercent;
+		return this.populationIncomeChangePercent;
 	}
-	public void setRegionIncomeChangePercent(double regionIncomeChangePercent) {
-		this.regionIncomeChangePercent = regionIncomeChangePercent;
+	public void setRegionIncomeChangePercent(double populationIncomeChangePercent) {
+		this.populationIncomeChangePercent = populationIncomeChangePercent;
 	}
 	public double getLastYearPersonalIncomeAverage() {
 		return this.lastYearPersonalIncomeAverage;
@@ -612,17 +628,17 @@ public class Farm {
 	public void setP_aspiration_coef(double p_aspiration_coef) {
 		this.p_aspiration_coef = p_aspiration_coef;
 	}
-	public double getP_activity_tolerance() {
-		return p_activity_tolerance;
+	public double getP_activity_tolerance_coef() {
+		return p_activity_tolerance_coef;
 	}
-	public void setP_activity_tolerance(double p_activity_tolerance) {
-		this.p_activity_tolerance = p_activity_tolerance;
+	public void setP_activity_tolerance_coef(double p_activity_tolerance_coef) {
+		this.p_activity_tolerance_coef = p_activity_tolerance_coef;
 	}
-	public double getP_income_tolerance() {
-		return this.p_income_tolerance;
+	public double getP_income_tolerance_coef() {
+		return this.p_income_tolerance_coef;
 	}
-	public void setP_income_tolerance(double p_income_tolerance) {
-		this.p_income_tolerance = p_income_tolerance;
+	public void setP_income_tolerance_coef(double p_income_tolerance_coef) {
+		this.p_income_tolerance_coef = p_income_tolerance_coef;
 	}
 	public double getP_lambda() {
 		return p_lambda;

@@ -12,7 +12,7 @@ import java.util.Map;
  * row 2: Farm1: [values for each associated data element]  <br>
  * row 3: Farm2: [values for each associated data element] <br>
  * row m: FarmM: [values for each associated data element] <br>
- * These data elements for could be product preference or years of farming experience<br>
+ * These data elements for could be activity preference or years of farming experience<br>
  * @author kellerke
  */
 

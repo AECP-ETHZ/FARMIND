@@ -370,7 +370,7 @@ public class Farm {
 	 * @return mean: mean of all satisfaction
 	 */
 	private double currentSatisfaction() {
-		List<Double> sat = new ArrayList<Double>();						       // calculate satisfaction for each individual income in income history
+		List<Double> current_satisfaction = new ArrayList<Double>();						       // calculate satisfaction for each income value in the list of income history
 		double probability = 0;
 		double mean = mean(this.IncomeHistory)*100;
 		double std = std(this.IncomeHistory)*100;
@@ -378,9 +378,9 @@ public class Farm {
 		
 		for (int i = 0; i< this.getMemory(); i++) {
 			probability = normal.cumulativeProbability(this.IncomeHistory.get(i));
-			sat.add(calculateSatisfaction(this.IncomeHistory.get(i),probability ));
+			current_satisfaction.add(calculateSatisfaction(this.IncomeHistory.get(i),probability ));
 		}
-		return mean(sat);
+		return mean(current_satisfaction);
 	}
 	/** 
 	 * Return mean value of provided list 

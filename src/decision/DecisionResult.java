@@ -36,15 +36,15 @@ public class DecisionResult {
 	 * @param year			time period
 	 * @param param			which parameters were used
 	 * @param strat			strategy
-	 * @param currentActivities		current actions in system
+	 * @param currentActivity		current actions in system
 	 * @param income		income of farm
 	 */
-	public DecisionResult(List<String> allActivities, String farmId, Integer year, Double learning_rate, int strat, double income, List<Activity> currentActivities, List<String> possibleActivities, Farm farm) {
+	public DecisionResult(List<String> allActivities, String farmId, Integer year, Double learning_rate, int strat, double income, List<Activity> currentActivity, List<String> possibleActivities, Farm farm) {
 		setFarmId(farmId);
 		setYear(year);
 		setStrategy(strat);
 		setIncome(income);
-		setCurrentActivity(currentActivities);
+		setCurrentActivity(currentActivity);
 		setPossibleActivity(possibleActivities);
 		setAllActivity(allActivities);
 		setLearningRate(learning_rate);

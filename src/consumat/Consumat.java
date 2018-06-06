@@ -78,14 +78,14 @@ public class Consumat {
 			List<String> possibleActivitySet = farm.makeDecision(allFarms);      
 			
 			System.out.print(farm.getFarmName() + " current activity: ");
-			for (Activity act: farm.getCurrentActivities() ) System.out.print(act.getName() + " ");
+			for (Activity act: farm.getCurrentActivity() ) System.out.print(act.getName() + " ");
 			System.out.print("\n");
 			
 			System.out.print(farm.getFarmName() + " possible activity: ");
 			for (String act: possibleActivitySet) System.out.print(act + " ");
 			System.out.print("\n");
 			
-			DecisionResult decision = new DecisionResult(farm.getPreferences().getDataElementName(), farm.getFarmName(), year, farm.getLearningRate(), farm.getStrategy(), farm.getIncomeHistory().get(0), farm.getCurrentActivities(), possibleActivitySet, farm);
+			DecisionResult decision = new DecisionResult(farm.getPreferences().getDataElementName(), farm.getFarmName(), year, farm.getLearningRate(), farm.getStrategy(), farm.getIncomeHistory().get(0), farm.getCurrentActivity(), possibleActivitySet, farm);
 
 			line_counter++;
 			if (line_counter > 1000000) {
@@ -137,16 +137,16 @@ public class Consumat {
 	@SuppressWarnings("unchecked")
 	private static List<Double> readGamsResults(List<Farm> allFarms) {
 		List<Double> incomes = new ArrayList<Double>();						   // list of all farm incomes
-		List<Activity> activity = new ArrayList<Activity>();	   	 	       // list of all farm activities selected by LP model
+		List<Activity> activities = new ArrayList<Activity>();	   	 	       // list of all farm activities selected by MP model
 		
 		List<Object> data = readIncome();            					       // read all results data
 		incomes = (List<Double>) data.get(0);
-		activity = (List<Activity>) data.get(1);
+		activities = (List<Activity>) data.get(1);
 		
 		for (int i = 0; i < allFarms.size(); i++) {
 			List<Activity> act = new ArrayList<Activity>();
-			act.add(activity.get(i));
-			allFarms.get(i).setCurrentActivites(act);
+			act.add(activities.get(i));
+			allFarms.get(i).setCurrentActivity(act);
 		}
 		return incomes;
 	}

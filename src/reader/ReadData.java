@@ -167,7 +167,7 @@ public class ReadData {
 				farmParameters = CSVtoArrayList(Line);						   // Read farm's parameters line by line
 				
 				Location location = new Location();							   // create new location for each farm
-				List<Activity> currentActivities = new ArrayList<Activity>();  // each farm has list of activities
+				List<Activity> currentActivity = new ArrayList<Activity>();  // each farm has list of activities
 				List<Double> income = new ArrayList<Double>();				   // each farm has income history records
 				double[] coordinates = {0,0};								   // location of farm
 				double personalIncomeAverage = 0;					           // personal income average
@@ -199,7 +199,7 @@ public class ReadData {
 				Person farmHead = new Person(age, education, memory);        
 				Farm farm = new Farm(name, location, network.get(farm_count_index), 
 						income, personalIncomeAverage, experience, preference, activities, 
-						activity_tolerance, income_tolerance, currentActivities, farmHead, 
+						activity_tolerance, income_tolerance, currentActivity, farmHead, 
 						beta, beta_s, aspiration_coef, lambda, alpha_plus, alpha_minus, phi_plus, phi_minus);
 				
 				farms.add(farm);
@@ -240,20 +240,20 @@ public class ReadData {
 			farm_count_index = 0;	
 			while ((Line = Buffer.readLine()) != null) { 
 				farmParameters = CSVtoArrayList(Line);						   // Read farm's parameters line by line
-				List<Activity> currentActivities = new ArrayList<Activity>();  // each farm has list of activities
+				List<Activity> currentActivity = new ArrayList<Activity>();  // each farm has list of activities
 
-				currentActivities.clear();
+				currentActivity.clear();
 				for (int k = 0; k < farmParameters.size(); k++) {
 					for(int i = 0; i<activities.size(); i++) {
 						if (activities.get(i).getName().equals(farmParameters.get(k) )) {
 							int ID = activities.get(i).getID();
 							Activity p = new Activity(ID, farmParameters.get(k)); 
-							currentActivities.add(p);
+							currentActivity.add(p);
 						}
 					}
 				}
 				
-				farms.get(farm_count_index).setCurrentActivites(currentActivities);;
+				farms.get(farm_count_index).setCurrentActivity(currentActivity);;
 				farm_count_index++;	
 			}
 		

@@ -34,7 +34,7 @@ public class Farm {
 	private Graph<String, DefaultEdge> network; 							   // Social network of farmers
 	private FarmDataMatrix experience;									       // experience (in years) of the each farm for each activity
 	private FarmDataMatrix preferences;									       // preference (between 1 to 5) of each farm for each activity
-	private List<Activity> currentActivities;								   // list of current activities each farm is engaged in
+	private List<Activity> currentActivity;								   // list of current activities each farm is engaged in
 	private List<Activity> allActivities;									   // list of all possible activities
 	private int strategy;													   // selected strategy (opt-out, optimize, imitate, repeat)
 	private double regionIncomeChangePercent;								   // the percentage that the income of a region change (current_avg - historical_avg)/historical_avg
@@ -66,7 +66,7 @@ public class Farm {
 	 * @param activities
 	 * @param activity_tolerance
 	 * @param income_tolerance
-	 * @param currentActivities
+	 * @param currentActivity
 	 * @param farmHead
 	 * @param beta
 	 * @param beta_s
@@ -79,7 +79,7 @@ public class Farm {
 	 */
 	public Farm(String name, Location location, Graph<String, DefaultEdge> socialNetwork, List<Double> incomeHistory, double personalIncomeAverage, 
 			FarmDataMatrix farmingExperience, FarmDataMatrix preferences, List<Activity> activities, double activity_tolerance, double income_tolerance, 
-			List<Activity> currentActivities, Person farmHead, double beta, double beta_s, double aspiration_coef, double lambda, double alpha_plus, 
+			List<Activity> currentActivity, Person farmHead, double beta, double beta_s, double aspiration_coef, double lambda, double alpha_plus, 
 			double alpha_minus, double phi_plus, double phi_minus) {
 		
 		this.setFarmName(name);
@@ -91,7 +91,7 @@ public class Farm {
 		this.setExperience(farmingExperience);
 		this.setPreferences(preferences);
 		this.setActivities(activities);
-		this.setCurrentActivites(currentActivities);
+		this.setCurrentActivity(currentActivity);
 		this.setHead(farmHead);
 		
 		this.setP_beta(beta);
@@ -134,8 +134,8 @@ public class Farm {
 		else {
 			if (this.Satisfaction >= 0) {
 				this.strategy = 4; //REPETITION
-				for (int i = 0; i < this.getCurrentActivities().size(); i++) {
-					ActivitySet.add(this.getCurrentActivities().get(i).getName());
+				for (int i = 0; i < this.getCurrentActivity().size(); i++) {
+					ActivitySet.add(this.getCurrentActivity().get(i).getName());
 				} 
 			}
 			else {
@@ -192,7 +192,7 @@ public class Farm {
         		w = this.getNetwork().getEdgeWeight(I.next());						   // weight of social tie between main farm and farm i
         		if (w > 0) {
         			EdgeCount++;
-            		List<Activity> p = farms.get(k).getCurrentActivities();
+            		List<Activity> p = farms.get(k).getCurrentActivity();
             		for (int i = 0; i < p.size(); i++) {
             			if (!networkActivityList.contains(p.get(i).getName())) 
             			{
@@ -207,9 +207,9 @@ public class Farm {
         	}
         }
     	
-    	for (int i = 0; i < this.getCurrentActivities().size(); i++)
+    	for (int i = 0; i < this.getCurrentActivity().size(); i++)
     	{
-    		String name = this.getCurrentActivities().get(i).getName();
+    		String name = this.getCurrentActivity().get(i).getName();
     		mainFarmActivity.add(name);
     		
     		if(!networkActivityList.contains(name) ) {
@@ -282,8 +282,8 @@ public class Farm {
 		int age = this.head.getAge();										   // age of the farmer
 		this.head.setAge(age + 1);                                             // increment farmers age each time period
 		
-		for (int i = 0; i<this.getCurrentActivities().size(); i++) {
-			productNames.add(this.getCurrentActivities().get(i).getName());
+		for (int i = 0; i<this.getCurrentActivity().size(); i++) {
+			productNames.add(this.getCurrentActivity().get(i).getName());
 		}
 		
 		for (int i = 0; i< this.experience.getDataElementName().size(); i++ ) {
@@ -346,21 +346,20 @@ public class Farm {
 		double alpha_minus = this.getP_alpha_minus();
 		double phi_plus = this.getP_phi_plus();
 		double phi_minus = this.getP_phi_minus();
-		
 		double lambda = this.getP_lambda();
-		double v = 0;
-		double theta = 0; 
+		double value = 0;              //value function
+		double probWeighting = 0;      // probability weighting function
 		
 		if (income >= this.Aspiration) {
-			v = Math.pow(income, alpha_plus);
-			theta = ( Math.pow(probability, phi_plus) ) / Math.pow( (Math.pow(probability, phi_plus) + Math.pow((1 - probability), phi_plus)), (1/phi_plus) );
+			value = Math.pow(income, alpha_plus);
+			probWeighting = ( Math.pow(probability, phi_plus) ) / Math.pow( (Math.pow(probability, phi_plus) + Math.pow((1 - probability), phi_plus)), (1/phi_plus) );
 		} 
 		else if (income < this.Aspiration) {
-			v = (-1)*Math.pow(income, alpha_minus);
-			theta = ( Math.pow(probability, phi_minus) ) / Math.pow( (Math.pow(probability, phi_minus) + Math.pow((1 - probability), phi_minus)), (1/phi_minus) );
+			value = (-1)*Math.pow(income, alpha_minus);
+			probWeighting = ( Math.pow(probability, phi_minus) ) / Math.pow( (Math.pow(probability, phi_minus) + Math.pow((1 - probability), phi_minus)), (1/phi_minus) );
 		}
 
-		satisfaction = v*theta*lambda;
+		satisfaction = lambda*value*probWeighting;
 		
 		return satisfaction;
 	}
@@ -444,9 +443,9 @@ public class Farm {
 		return avg;
 	}
 	/** 
-	 * Given a specific value for k, calculate all possible q (experience value) for all possible memory lengths. </br>
-	 * So if memory is 5 years long, we calculate a q value for years 1 to 5. And using this set of q values we calcualte a standard deviation. </br>
-	 * This standard deviation is used to set the upper and lower values for the q range. 
+	 * Given a specific value for learning rate, calculate all possible experience value for all possible memory lengths. </br>
+	 * So if memory length is 5, we calculate an experience value for years 1 to 5. And using this set of experience values we calculate a standard deviation. </br>
+	 * This standard deviation is used to set the upper and lower values for the range of experience value. 
 	 * @return
 	 */
 	public List<Double> calc_q_set() {
@@ -537,11 +536,11 @@ public class Farm {
 	public void setPreferences(FarmDataMatrix preferences) {
 		this.preferences = preferences;
 	}
-	public void setCurrentActivites(List<Activity> activities) {
-		this.currentActivities = activities;
+	public void setCurrentActivity(List<Activity> activities) {
+		this.currentActivity = activities;
 	}
-	public List<Activity> getCurrentActivities() {
-		return this.currentActivities;
+	public List<Activity> getCurrentActivity() {
+		return this.currentActivity;
 	}
 	public List<Activity> getActivities() {
 		return this.allActivities;

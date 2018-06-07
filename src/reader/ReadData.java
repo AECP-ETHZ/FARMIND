@@ -17,7 +17,7 @@ import activity.Activity;
 import agent.Farm;
 import agent.Location;
 import agent.Person;
-import static decision.DecisionResult.activitySets;                            
+import static logging.CSVLog.activitySets;                            
 
 /** 
  * This class reads input parameters from configuration files and results data from the optimization model.
@@ -56,7 +56,7 @@ public class ReadData {
 	/** 
 	 * This function reads the income and activity data produced by the optimization model. 
 	 * Use the StrategySet matrix defined in DecisionResult to get correct combinations. 
-	 * @see decision.DecisionResult
+	 * @see CSVLog.DecisionResult
 	 * @return List that contains the income for all farms, and the activity for all farms (two lists)
 	 */
 	public List<Object> readMPOutputFiles() {

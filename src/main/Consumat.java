@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import decision.DecisionResult;
+import logging.CSVLog;
 import reader.ReadData;
 import activity.Activity;
 import agent.Farm;
@@ -85,7 +85,7 @@ public class Consumat {
 			for (String act: possibleActivitySet) System.out.print(act + " ");
 			System.out.print("\n");
 			
-			DecisionResult decision = new DecisionResult(farm.getPreferences().getDataElementName(), farm.getFarmName(), year, farm.getLearningRate(), farm.getStrategy(), farm.getIncomeHistory().get(0), farm.getCurrentActivity(), possibleActivitySet, farm);
+			CSVLog log = new CSVLog(farm.getPreferences().getDataElementName(), farm.getFarmName(), year, farm.getLearningRate(), farm.getStrategy(), farm.getIncomeHistory().get(0), farm.getCurrentActivity(), possibleActivitySet, farm);
 
 			line_counter++;
 			if (line_counter > 1000000) {
@@ -93,8 +93,8 @@ public class Consumat {
 				file_counter++;
 				line_counter = 0;
 			} 
-			decision.appendLogFile(FileName);
-			decision.appendMPInput();										   // create a file 'p_allowedStrat' which contains the gams options for each farm
+			log.appendLogFile(FileName);
+			log.appendMPInput();										   // create a file 'p_allowedStrat' which contains the gams options for each farm
 			farm.updateExperience();                              			   // each time period update experience
 			farm.updateAge();                              				       // each time period update experience
 			farmIndex++;

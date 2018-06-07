@@ -6,8 +6,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import static decision.DecisionResult.activitySets;                            
-import static decision.DecisionResult.activity_matrix;                            
+import static logging.CSVLog.activitySets;                            
+import static logging.CSVLog.activity_matrix;                            
 
 
 public class MP implements MP_Interface{

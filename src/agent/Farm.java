@@ -56,26 +56,26 @@ public class Farm {
 	/**
 	 * This constructor sets up the parameters associated with a farm. 
 	 * 
-	 * @param name
-	 * @param location
-	 * @param socialNetwork
-	 * @param incomeHistory
-	 * @param personalIncomeAverage
-	 * @param farmingExperience
-	 * @param preferences
-	 * @param activities
-	 * @param activity_tolerance
-	 * @param income_tolerance
-	 * @param currentActivity
-	 * @param farmHead
-	 * @param beta
-	 * @param beta_s
-	 * @param aspiration_coef
-	 * @param lambda
-	 * @param alpha_plus
-	 * @param alpha_minus
-	 * @param phi_plus
-	 * @param phi_minus
+	 * @param name: name of the farm agent
+	 * @param location: location of the farm agent
+	 * @param socialNetwork: social network of the agent shared among the population
+	 * @param incomeHistory: income history for each agent
+	 * @param personalIncomeAverage: average of historical income for the agent
+	 * @param farmingExperience: matrix of farming experience for each activity
+	 * @param preferences: agent preference matrix for activities
+	 * @param activities: list of all activities
+	 * @param activity_tolerance: tolerance for activity differences
+	 * @param income_tolerance: tolerance for income differences
+	 * @param currentActivity: current activity for agent
+	 * @param farmHead: person object to represent main farmer
+	 * @param beta: parameter for fuzzy logic
+	 * @param beta_s: parameter for fuzzy logic
+	 * @param aspiration_coef: aspiration value
+	 * @param lambda: value for lamda for satisfaction
+	 * @param alpha_plus: for satisfaction calculation
+	 * @param alpha_minus: for satisfaction calculation
+	 * @param phi_plus: for satisfaction calculation
+	 * @param phi_minus: for satisfaction calculation
 	 */
 	public Farm(String name, Location location, Graph<String, DefaultEdge> socialNetwork, List<Double> incomeHistory, double personalIncomeAverage, 
 			FarmDataMatrix farmingExperience, FarmDataMatrix preferences, List<Activity> activities, double activity_tolerance, double income_tolerance, 
@@ -153,7 +153,6 @@ public class Farm {
 	 * 
 	 * @param allFarms list of all farms
 	 * @param income income value of farm
-	 * @param probability probability of an income occurring in the distribution
 	 */
 	public void updateFarmParameters(List<Farm> allFarms, double income) {
 		updateIncomeHistoryList(income);									   // for year = 1, we pass in -1 for income so we don't update the income 
@@ -459,9 +458,9 @@ public class Farm {
 		return avg;
 	}
 	/** 
-	 * So if memory length is 5, we calculate an experience value for years 1 to 5. And using this set of experience values we calculate a standard deviation. </br>
-	 * Given a specific value for k/learning_rate, calculate all possible q (experience value) for all possible memory lengths. </br>
-	 * So if memory is 5 years long, we calculate a q value for years 1 to 5. And using this set of q values we calculate a standard deviation. </br>
+	 * So if memory length is 5, we calculate an experience value for years 1 to 5. And using this set of experience values we calculate a standard deviation. <br>
+	 * Given a specific value for k/learning_rate, calculate all possible q (experience value) for all possible memory lengths. <br>
+	 * So if memory is 5 years long, we calculate a q value for years 1 to 5. And using this set of q values we calculate a standard deviation. <br>
 	 * This standard deviation is used to set the upper and lower values for the q range. 
 	 * @return q_range
 	 */

@@ -1,4 +1,4 @@
-package decision;
+package logging;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -16,7 +16,7 @@ import agent.Farm;
  * @author kellerke
  *
  */
-public class DecisionResult {
+public class CSVLog {
 
 	private String farmId;													   // unique farm id
 	private Integer year;													   // which time step this decision was made in
@@ -31,15 +31,16 @@ public class DecisionResult {
 	/** 
 	 * Constructor for the Decision Result
 	 * @param allActivities	full set of activities
-	 * @param farmId		ID of the farm
-	 * @param possibleActivities		full activity set
-	 * @param year			time period
-	 * @param param			which parameters were used
-	 * @param strat			strategy
-	 * @param currentActivity		current activity(ies) in system
-	 * @param income		income of farm
+	 * @param farmId:		ID of the farm
+	 * @param possibleActivities:		full activity set
+	 * @param year:			time period
+	 * @param strat:			strategy
+	 * @param currentActivity:		current activity(ies) in system
+	 * @param income:		income of farm
+	 * @param learning_rate: learning rate for the agent
+	 * @param farm: specific farm for this decision object
 	 */
-	public DecisionResult(List<String> allActivities, String farmId, Integer year, Double learning_rate, int strat, double income, List<Activity> currentActivity, List<String> possibleActivities, Farm farm) {
+	public CSVLog(List<String> allActivities, String farmId, Integer year, Double learning_rate, int strat, double income, List<Activity> currentActivity, List<String> possibleActivities, Farm farm) {
 		setFarmId(farmId);
 		setYear(year);
 		setStrategy(strat);

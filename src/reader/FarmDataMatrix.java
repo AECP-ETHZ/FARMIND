@@ -22,8 +22,8 @@ public class FarmDataMatrix {
 
 	/** 
 	 * Given a farmID and a name of the data element (eg. activity), return the value of that matrix cell. 
-	 * @param FarmID of the specific farm
-	 * @param data element name to return value from matrix
+	 * @param FarmID: of the specific farm
+	 * @param name: data element name to return value from matrix
 	 * @return value of that cell in the matrix
 	 */
 	public int getFarmDataElementValue(String FarmID, String name) {
@@ -36,9 +36,9 @@ public class FarmDataMatrix {
 	/** 
 	 * Given a farmID and a name, set the value of that cell in the matrix. 
 	 * 
-	 * @param FarmID of the specific farm
-	 * @param data element name (eg. activity name)
-	 * @param value to set for farm and element combination
+	 * @param FarmID: of the specific farm
+	 * @param name: data element name (eg. activity name)
+	 * @param value: to set for farm and element combination
 	 */
 	public void setFarmDataElementValue(String FarmID, String name, int value) {
 		int index = dataElementNames.indexOf(name);

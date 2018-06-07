@@ -154,10 +154,14 @@ public class Farm {
 	 * @param allFarms list of all farms
 	 * @param income income value of farm
 	 */
-	public void updateFarmParameters(List<Farm> allFarms, double income) {
+	public void updateFarmParameters(List<Farm> allFarms, double income, List<Activity> activity) {
 		updateIncomeHistoryList(income);									   // for year = 1, we pass in -1 for income so we don't update the income 
 	    updateHistoricalIncomeAverage();
-
+	    
+	    if (income != -1) {
+	    	setCurrentActivity(activity);
+	    }
+	    
 	    updateAspiration();
 	    updateSatisfaction();									
 	    updateIncomeDissimilarity();										   // in the main simulation loop in Consumat, we update the populationIncomeChangePercent 

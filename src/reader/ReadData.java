@@ -1,11 +1,9 @@
 package reader;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -16,8 +14,7 @@ import org.jgrapht.graph.SimpleWeightedGraph;
 import activity.Activity;
 import agent.Farm;
 import agent.Location;
-import agent.Person;
-import static logging.CSVLog.activitySets;                            
+import agent.Person;                 
 
 /** 
  * This class reads input parameters from configuration files and results data from the optimization model.
@@ -52,78 +49,6 @@ public class ReadData {
 	public String YearsFile = "./data/performing_years.csv";
 	public String SocialNetworkFile = "./data/social_networks.csv";
 	public String ActivityFile = "./data/activities.csv";
-	
-	/** 
-	 * This function reads the income and activity data produced by the optimization model. 
-	 * Use the StrategySet matrix defined in DecisionResult to get correct combinations. 
-	 * @see CSVLog.DecisionResult
-	 * @return List that contains the income for all farms, and the activity for all farms (two lists)
-	 */
-	public List<Object> readMPOutputFiles() {
-		List<Double> incomesFromMP = new ArrayList<Double>();				   // list of incomes from result file
-		List<Activity> activitiesFromMP = new ArrayList<Activity>();		   // list of selected activities for each agent (one per agent)
-		List<Object> dataObject = new ArrayList<Object>();					   // object to return
-		BufferedReader Buffer = null;	 									   // read input file
-		String Line;														   // read each line of the file individually
-		ArrayList<String> dataArray;										   // separate data line
-		List<Activity> allPossibleActivities = getActivityList();			   // generated activity list with ID and name 
-		
-		File f = new File("Grossmargin_P4,00.csv");							   // actual results file
-		while (!f.exists()) {try {
-			Thread.sleep(1000);												   // wait until simulation finishes running
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}}
-
-		try {
-			Buffer = new BufferedReader(new FileReader("Grossmargin_P4,00.csv"));
-			System.out.println("read margin values");
-			Line = Buffer.readLine();
-			while ((Line = Buffer.readLine()) != null) {                       
-				dataArray = CSVtoArrayList(Line);						       // Read farm's parameters line by line
-				incomesFromMP.add( Double.parseDouble(dataArray.get(1)) );
-				
-				String pre = dataArray.get(2);								   // we need to break the results file which has pre and post strategies
-				pre = pre.substring(4);										   // into corresponding strategy values in our system based on the defined strategies
-				String post = dataArray.get(3);
-				post = post.substring(5);
-				
-				int[] activity = {Integer.valueOf(post),Integer.valueOf(pre)};
-				int index = 0;
-				for(int i = 0; i < activitySets.length; i++) {				   // activitySets were defined in DecisionResult to allow the correct output combinations to be set for gams
-					int[] test = {activitySets[i][0],activitySets[i][1]};
-					if (Arrays.equals(activity, test)) {
-						index = i;
-					}
-				}
-				
-				for(int i = 0; i < allPossibleActivities.size(); i++) {
-					String name = String.format("\"activity%d\"", index+1);
-					if (index < 10) {
-						name = String.format("\"activity0%d\"", index+1);
-					}
-					if (allPossibleActivities.get(i).getName().equals(name) ) {
-						int ID = allPossibleActivities.get(i).getID();
-						Activity p = new Activity(ID, name); 
-						activitiesFromMP.add(p);
-					}
-				}
-			}
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}									       
-
-		try {
-			Buffer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		dataObject.add(incomesFromMP);
-		dataObject.add(activitiesFromMP);
-		return dataObject;
-	}
 	
 	/**
 	 * Each farm in the list contains a social network, the associated people, and preferred activities
@@ -442,7 +367,7 @@ public class ReadData {
 	 * This is used to generate the individual farm activities lists
 	 * @return List of activities in the master CSV file
 	 */
-	private List<Activity> getActivityList() {
+	public List<Activity> getActivityList() {
 		String Line;
 		List<Activity> activities = new ArrayList<Activity>();
 		ArrayList<String> activityRow;

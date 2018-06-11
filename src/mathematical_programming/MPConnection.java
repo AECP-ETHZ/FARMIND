@@ -21,6 +21,7 @@ public class MPConnection implements MP_Interface{
 	public MPConnection() {
 		file = new File("p_allowedStratPrePost.csv");					   // delete last time period's simulation file
 		if (file.exists()) {file.delete();}
+				
 	}
 
 	@Override

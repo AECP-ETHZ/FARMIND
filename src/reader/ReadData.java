@@ -38,9 +38,6 @@ public class ReadData {
 	public static final int ALPHA_MINUS = 13;								   // parameter in the formula for calculating satisfaction
 	public static final int PHI_PLUS = 14;								       // parameter in the formula for calculating satisfaction
 	public static final int PHI_MINUS = 15;  								   // parameter in the formula for calculating satisfaction
-	
-	public static final int START_ACTION_INDEX = 16;					       // read in initial activities
-	public static final int INCOME_INDEX = 19;								   // read in income history
 
 	public String DataFile = "./data/farm_parameters.csv";					   // allow external function to set data files for testing
 	public String PreferenceFile = "./data/activity_preference.csv";
@@ -48,7 +45,6 @@ public class ReadData {
 	public String InitialIncomes = "./data/initial_incomes.csv";
 	public String YearsFile = "./data/performing_years.csv";
 	public String SocialNetworkFile = "./data/social_networks.csv";
-	public String ActivityFile = "./data/activities.csv";
 	
 	/**
 	 * Each farm in the list contains a social network, the associated people, and preferred activities
@@ -374,17 +370,15 @@ public class ReadData {
 		BufferedReader Buffer = null;	
 
 		try {
-			Buffer = new BufferedReader(new FileReader(ActivityFile));
+			Buffer = new BufferedReader(new FileReader(YearsFile));
 			Line = Buffer.readLine();									       // first line to be deleted
-			
-			while ((Line = Buffer.readLine()) != null) {                       // Read data line by line
-				activityRow = CSVtoArrayList(Line);
+			activityRow = CSVtoArrayList(Line);
+			int ID = 100;
+			activityRow.remove(0);
+			for (String act: activityRow) {
+				ID = ID + 100;
 				
-				int ID = Integer.parseInt(activityRow.get(0));
-				String name = activityRow.get(1);
-				
-				Activity activity = new Activity(ID, name);
-				
+				Activity activity = new Activity(ID, act);
 				activities.add(activity);
 			}
 				

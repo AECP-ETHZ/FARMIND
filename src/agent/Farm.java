@@ -151,8 +151,9 @@ public class Farm {
 	/** 
 	 * This function updates farms with new income values, as well as the probabilities the values occur, returned by the optimization model. 
 	 * 
-	 * @param allFarms list of all farms
+	 * @param allFarms: list of all farms
 	 * @param income income value of farm
+	 * @param activity: activity list to update farm after MP time step iteration
 	 */
 	public void updateFarmParameters(List<Farm> allFarms, double income, List<Activity> activity) {
 		updateIncomeHistoryList(income);									   // for year = 1, we pass in -1 for income so we don't update the income 

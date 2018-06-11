@@ -7,4 +7,4 @@
  * @author kellerke
  *
  */
-package decision;
+package logging;

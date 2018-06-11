@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import activity.Activity;
 import reader.ReadData;
@@ -72,7 +73,15 @@ public class MPConnection implements MP_Interface{
 	@Override
 	public void inputsforMP(String farmId, List<String> possibleActivity) {
 		
-		int[][] output = activity_matrix;									   // copy empty matrix
+		int[][] output = new int[55][6]; 
+		
+		Random rand = new Random();
+		int[] init = {1,2,3,4,5,6};	
+		int initialization_strategy = rand.nextInt(5) ; // number between 1 and 5
+		
+		int init_value = init[initialization_strategy];                        // init first set of activities in gams control file
+
+		output[0][init_value-1] = 1;
 		
 		try {
 			FileWriter fw = new FileWriter(file,true);
@@ -286,7 +295,7 @@ public class MPConnection implements MP_Interface{
 	 */
 	public static int[][] activity_matrix = 
 		{
-				{1,1,1,1,1,1},
+				{0,0,0,0,0,0},
 				{0,0,0,0,0,0},
 				{0,0,0,0,0,0},
 				{0,0,0,0,0,0},

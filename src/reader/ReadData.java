@@ -359,7 +359,7 @@ public class ReadData {
 	}
 
 	/**
-	 * Create list of activity type/category from master CSV list
+	 * Create list of activity type/category by reading the years of experience file
 	 * This is used to generate the individual farm activities lists
 	 * @return List of activities in the master CSV file
 	 */

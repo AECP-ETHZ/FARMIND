@@ -1,5 +1,5 @@
 ,,spre1,spre2,spre3,spre4,spre5,spre6
-Ahaus,spost1,0,0,1,0,0,0
+Ahaus,spost1,0,1,0,0,0,0
 Ahaus,spost2,0,0,0,0,0,0
 Ahaus,spost3,0,0,0,0,0,0
 Ahaus,spost4,0,0,0,0,0,0
@@ -54,7 +54,7 @@ Ahaus,spost52,0,0,0,0,0,0
 Ahaus,spost53,0,0,0,0,0,0
 Ahaus,spost54,0,0,0,0,0,0
 Ahaus,spost55,0,0,0,0,0,0
-Beckum,spost1,0,1,0,0,0,0
+Beckum,spost1,0,0,0,1,0,0
 Beckum,spost2,0,0,0,0,0,0
 Beckum,spost3,0,0,0,0,0,0
 Beckum,spost4,0,0,0,0,0,0
@@ -109,7 +109,7 @@ Beckum,spost52,0,0,0,0,0,0
 Beckum,spost53,0,0,0,0,0,0
 Beckum,spost54,0,0,0,0,0,0
 Beckum,spost55,0,0,0,0,0,0
-Bruehl,spost1,1,0,0,0,0,0
+Bruehl,spost1,0,0,1,0,0,0
 Bruehl,spost2,0,0,0,0,0,0
 Bruehl,spost3,0,0,0,0,0,0
 Bruehl,spost4,0,0,0,0,0,0
@@ -164,7 +164,7 @@ Bruehl,spost52,0,0,0,0,0,0
 Bruehl,spost53,0,0,0,0,0,0
 Bruehl,spost54,0,0,0,0,0,0
 Bruehl,spost55,0,0,0,0,0,0
-Hoevelhof,spost1,0,1,0,0,0,0
+Hoevelhof,spost1,0,0,0,0,1,0
 Hoevelhof,spost2,0,0,0,0,0,0
 Hoevelhof,spost3,0,0,0,0,0,0
 Hoevelhof,spost4,0,0,0,0,0,0
@@ -219,7 +219,7 @@ Hoevelhof,spost52,0,0,0,0,0,0
 Hoevelhof,spost53,0,0,0,0,0,0
 Hoevelhof,spost54,0,0,0,0,0,0
 Hoevelhof,spost55,0,0,0,0,0,0
-Hopsten,spost1,0,0,1,0,0,0
+Hopsten,spost1,1,0,0,0,0,0
 Hopsten,spost2,0,0,0,0,0,0
 Hopsten,spost3,0,0,0,0,0,0
 Hopsten,spost4,0,0,0,0,0,0
@@ -274,7 +274,7 @@ Hopsten,spost52,0,0,0,0,0,0
 Hopsten,spost53,0,0,0,0,0,0
 Hopsten,spost54,0,0,0,0,0,0
 Hopsten,spost55,0,0,0,0,0,0
-Lippetal,spost1,0,0,0,0,1,0
+Lippetal,spost1,0,0,1,0,0,0
 Lippetal,spost2,0,0,0,0,0,0
 Lippetal,spost3,0,0,0,0,0,0
 Lippetal,spost4,0,0,0,0,0,0
@@ -439,7 +439,7 @@ Ostbevern,spost52,0,0,0,0,0,0
 Ostbevern,spost53,0,0,0,0,0,0
 Ostbevern,spost54,0,0,0,0,0,0
 Ostbevern,spost55,0,0,0,0,0,0
-Greven,spost1,1,0,0,0,0,0
+Greven,spost1,0,0,0,0,1,0
 Greven,spost2,0,0,0,0,0,0
 Greven,spost3,0,0,0,0,0,0
 Greven,spost4,0,0,0,0,0,0

@@ -10,7 +10,7 @@ A mathematical programming model, integrated into the agent-based model, is then
 
 ### Program Overview and Requirements
 
-The initial conditions of the agents with all parameters need to be specified in the /data/ directory before starting the model. The /test_data/ folder contains example initialization files. 
+The initial conditions of the agents with all parameters need to be specified in the `/data` directory before starting the model. The /test_data/ folder contains example initialization files. 
 
 For the complete system documentation download the [documentation](../blob/tree/master/documentation). 
 
@@ -22,10 +22,9 @@ Required libraries:
 
 Both of the those libraries **should** already be downloaded and included in the /lib/ directory. 
 
-1. In Eclipse Open:
-	Window->Preferences->java->Build Path->User Libraries 
+1. In Eclipse Open `Window -> Preferences -> java -> Build Path -> User Libraries`
 
-2. Select "New" and input the name of the library:
+2. Select `New...` and input the name of the library:
 	Either *jgrapht* or *commons-math3-3.6.1*
 	
 3. After creating the library, link the new library with the jar files.
@@ -61,8 +60,7 @@ To fix this issue ensure that you have installed all libraries as shown in the *
 If the issue persists, try removing the libraries and reinstalling them again.
 	
 2. Program hangs after printing "Waiting for gams results to be generated":
-
-	This is the expected program operation. It has generated the gams file and started the gams simulation. 
-	The gams program will produce a results file for the ABM to process. Until then it will wait. 
+This is the expected program operation. It has generated the gams file and started the gams simulation. 
+The gams program will produce a results file for the ABM to process. Until then it will wait. 
 	
 	When the ABM is running in test mode, the batch file 'run_gams.bat' will copy a results file (stored in /data/ folder as 'Grossmargin_P4,00') to simulate the gams output. 

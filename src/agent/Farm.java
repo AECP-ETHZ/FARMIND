@@ -119,7 +119,7 @@ public class Farm {
 		FuzzyLogicCalculator fuzzyLogicCalc = new FuzzyLogicCalculator(this, allFarms);            // calculator for the activity selection
 		
 		if ((head.getAge() > 650)) {
-			this.strategy = 1; //EXIT
+			this.strategy = 1;     //OPT-OUT (The farmer retires.)
 		}
 		else if ( (this.Activity_Dissimilarity >= this.p_activity_tolerance_coef) || (this.Income_Dissimilarity >= this.p_income_tolerance_coef) ) {  
 			if (this.Satisfaction >= 0) {
@@ -127,8 +127,8 @@ public class Farm {
 				ActivitySet = fuzzyLogicCalc.getImitationActivities();
 			}
 			else {
-				this.strategy = 1; //EXIT
-				System.out.println("exit: empty set");
+				this.strategy = 1; //OPT-OUT
+				System.out.println("Opt-out strategy chosen and returning an empty activity set");
 			}
 		}
 		else {
@@ -161,8 +161,7 @@ public class Farm {
 	    
 	    if (income != -1) {
 	    	setCurrentActivity(activity);
-	    }
-	    
+	    }    
 	    updateAspiration();
 	    updateSatisfaction();									
 	    updateIncomeDissimilarity();										   // in the main simulation loop in Consumat, we update the populationIncomeChangePercent 
@@ -177,7 +176,7 @@ public class Farm {
 	 */
 	public void updateActivityDissimilarity(List<Farm> farms) {
         double currentDissimilarity = 0;									   // similarity value of a farm 
-        int EdgeCount = 0;													   // how many edges does this farm have (ie neighbors)
+        int edgeCount = 0;													   // how many edges does this farm have (ie neighbors)
 		int totalFarms = 0;													   // how many total farms are there in the network
 		
 		// Network Activity includes all farms on the network with a weight greater than 0 AND includes this (main) farm. 
@@ -185,20 +184,20 @@ public class Farm {
         
         Map<String, Integer> activityMap = new HashMap<String,Integer>();      // map of all activities on network, with count of often it's produced 
         Double dissimilarity = 0.0;											   // dissimilarity value for farm
-        Set<DefaultEdge> E;                                                    // set of edges in network with this farm at the head
+        Set<DefaultEdge> edge;                                                 // set of edges in network with this farm at the head
         double w = 0;														   // weight of each network connection
         Iterator<DefaultEdge> I;											   // iterator through all edges
         List<String> thisFarmActivityList = new ArrayList<String>();		   // the main farm's list of activities for comparison to network activities
     		
-		E = this.network.outgoingEdgesOf(this.farmName);
+		edge = this.network.outgoingEdgesOf(this.farmName);
         totalFarms = farms.size();
-        I = E.iterator();
+        I = edge.iterator();
         
         for (int k = 0; k < totalFarms; k++) {
         	if (!farms.get(k).getFarmName().equals(this.getFarmName()) ) {
         		w = this.getNetwork().getEdgeWeight(I.next());						   // weight of social tie between main farm and farm i
         		if (w > 0) {
-        			EdgeCount++;
+        			edgeCount++;
             		List<Activity> p = farms.get(k).getCurrentActivity();
             		for (int i = 0; i < p.size(); i++) {
             			if (!networkActivityList.contains(p.get(i).getName())) 
@@ -236,7 +235,7 @@ public class Farm {
     			
     		} else {
     			// these activities are not done by the main farmer so it counts for the dissimilarity
-    			dissimilarity = dissimilarity + (activityMap.get(networkActivityList.get(i)) / ((double)EdgeCount) );
+    			dissimilarity = dissimilarity + (activityMap.get(networkActivityList.get(i)) / ((double)edgeCount) );
     		}
     	}
 

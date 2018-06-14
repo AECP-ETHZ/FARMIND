@@ -366,7 +366,7 @@ public class Farm {
 		double phi_plus = this.getP_phi_plus();
 		double phi_minus = this.getP_phi_minus();
 		double lambda = this.getP_lambda();
-		double value = 0;              //value function
+		double value = 0;              // value function
 		double probWeighting = 0;      // probability weighting function
 		
 		if (income >= this.Aspiration) {
@@ -385,7 +385,7 @@ public class Farm {
 	/**
 	 * From the farm income history, calculate current satisfaction level as the average of historical satisfaction
 	 * Build a normal distribution based on historical income and for each income at time period T, sample the probability and use that in the satisfaction
-	 * @return mean: mean of all satisfaction
+	 * @return mean mean of all satisfaction values
 	 */
 	private double currentSatisfaction() {
 		List<Double> current_satisfaction = new ArrayList<Double>();						       // calculate satisfaction for each income value in the list of income history
@@ -403,7 +403,7 @@ public class Farm {
 	/** 
 	 * Return mean value of provided list 
 	 * @param list of values to calculate mean with
-	 * @return mean: mean value of list
+	 * @return mean mean value of list
 	 */
 	private double mean(List<Double> list) {
 		double mean = 0;												       // mean value to return
@@ -412,7 +412,8 @@ public class Farm {
 			mean = mean + list.get(i);
 		}
 		
-		return mean / list.size();
+		mean  = mean / list.size();
+		return mean;
 	}
 	/**
 	 * This function calculates the standard deviation of provided list.
@@ -420,22 +421,22 @@ public class Farm {
 	 * @return std standard deviation value
 	 */
 	private double std(List<Double> list) {
-		double sd = 0;		
+		double std = 0;		
 		for (int i=0; i<list.size();i++)
 		{
-		    sd = sd + Math.pow(list.get(i) - mean(list), 2);
+		    std = std + Math.pow(list.get(i) - mean(list), 2);
 		}
 		
-		sd = Math.sqrt(sd/list.size());
-		return sd;
+		std = Math.sqrt(std/list.size());
+		return std;
 	}
 	
 	/** 
 	 * Initialize a value for learning rate based on the memory limit of each farm
-	 * @return avg value of learning rate
+	 * @return learning_r value of learning rate
 	 */
 	public double init_learning_rate() {
-		double s = 1;
+		double max_edu = 1;
 		double m1_ratio = 1/2.0;
 		double m2_ratio = 1/8.0;
 
@@ -451,15 +452,15 @@ public class Farm {
 
 		while (k_upper > k_lower) {
 			ln_ratio = -Math.log((1-upper_q)/upper_q);
-			k_upper = ln_ratio/( Math.round(memory_limit * m1_ratio) * s);
+			k_upper = ln_ratio/( Math.round(memory_limit * m1_ratio) * max_edu);
 			ln_ratio = -Math.log((1-lower_q)/lower_q);
-			k_lower = ln_ratio/( Math.round(memory_limit * m2_ratio) * s);
+			k_lower = ln_ratio/( Math.round(memory_limit * m2_ratio) * max_edu);
 			upper_q = upper_q - delta;
 			lower_q = lower_q + delta;
 		}
 
-		double avg = (k_upper + k_lower) / 2.0;		
-		return avg;
+		double learning_r = (k_upper + k_lower) / 2.0;		
+		return learning_r;
 	}
 	/** 
 	 * So if memory length is 5, we calculate an experience value for years 1 to 5. And using this set of experience values we calculate a standard deviation. <br>

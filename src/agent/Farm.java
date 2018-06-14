@@ -268,12 +268,37 @@ public class Farm {
 	 */
 	private void updateAspiration() {
 		double aspiration = 0;												   // calculated aspiration level
-		double alpha = this.getP_aspiration_coef();							   // alpha is the percentage of historical average
+		double alpha = this.getP_aspiration_coef();							   // alpha the aspiration coeficient for reference in satisfactyion calculation
 		
 		aspiration = alpha*mean(IncomeHistory);
+//		System.out.println(aspiration);
 		
 		setAspiration(aspiration);
 	}
+
+	
+	/*
+	 	private void updateAspiration() {
+		double aspiration = 0;												   // calculated aspiration level
+		double aspi_coef = this.getP_aspiration_coef();							   // alpha is the percentage of historical average
+		
+		aspiration = aspi_coef*mean(SatisfactionHistory);
+		
+		setAspiration(aspiration);
+	}
+	 */
+	
+	/*
+		private void updateIncomeReference() {
+		double reference = 0;												   // calculated aspiration level
+		double incomeRef_coef = this.getP_incomeReference_coef();							   // alpha is the percentage of historical average
+		
+		reference = incomeRef_coef*mean(IncomeHistory);
+		
+		setAspiration(reference);
+	}
+	 */
+	
 
 	/** 
 	 * Each time period, t, call this function to increment the experience vector of this farm. 
@@ -394,10 +419,16 @@ public class Farm {
 		double std = std(this.IncomeHistory);
 		NormalDistribution normal = new NormalDistribution(mean, std);		   // distribution of historical incomes
 		
-		for (int i = 0; i< this.getMemory(); i++) {
-			probability = normal.cumulativeProbability(this.IncomeHistory.get(i));
-			current_satisfaction.add(calculateSatisfaction(this.IncomeHistory.get(i),probability ));
-		}
+//		for (int i = 0; i< this.getMemory(); i++) {
+//			probability = normal.cumulativeProbability(this.IncomeHistory.get(i));
+//			current_satisfaction.add(calculateSatisfaction(this.IncomeHistory.get(i),probability ));
+//		}
+		
+		probability = normal.cumulativeProbability(this.IncomeHistory.get(0));
+		current_satisfaction.add(calculateSatisfaction(this.IncomeHistory.get(0),probability ));
+		
+		System.out.println(mean(current_satisfaction));
+		
 		return mean(current_satisfaction);
 	}
 	/** 

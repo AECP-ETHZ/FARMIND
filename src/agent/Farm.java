@@ -119,7 +119,7 @@ public class Farm {
 		FuzzyLogicCalculator fuzzyLogicCalc = new FuzzyLogicCalculator(this, allFarms);            // calculator for the activity selection
 		
 		if ((head.getAge() > 650)) {
-			this.strategy = 1; //EXIT
+			this.strategy = 1;     //OPT-OUT (The farmer retires.)
 		}
 		else if ( (this.Activity_Dissimilarity >= this.p_activity_tolerance_coef) || (this.Income_Dissimilarity >= this.p_income_tolerance_coef) ) {  
 			if (this.Satisfaction >= 0) {
@@ -127,8 +127,8 @@ public class Farm {
 				ActivitySet = fuzzyLogicCalc.getImitationActivities();
 			}
 			else {
-				this.strategy = 1; //EXIT
-				System.out.println("exit: empty set");
+				this.strategy = 1; //OPT-OUT
+				System.out.println("Opt-out strategy chosen and returning an empty activity set");
 			}
 		}
 		else {
@@ -161,8 +161,7 @@ public class Farm {
 	    
 	    if (income != -1) {
 	    	setCurrentActivity(activity);
-	    }
-	    
+	    }    
 	    updateAspiration();
 	    updateSatisfaction();									
 	    updateIncomeDissimilarity();										   // in the main simulation loop in Consumat, we update the populationIncomeChangePercent 
@@ -177,7 +176,7 @@ public class Farm {
 	 */
 	public void updateActivityDissimilarity(List<Farm> farms) {
         double currentDissimilarity = 0;									   // similarity value of a farm 
-        int EdgeCount = 0;													   // how many edges does this farm have (ie neighbors)
+        int edgeCount = 0;													   // how many edges does this farm have (ie neighbors)
 		int totalFarms = 0;													   // how many total farms are there in the network
 		
 		// Network Activity includes all farms on the network with a weight greater than 0 AND includes this (main) farm. 
@@ -185,20 +184,20 @@ public class Farm {
         
         Map<String, Integer> activityMap = new HashMap<String,Integer>();      // map of all activities on network, with count of often it's produced 
         Double dissimilarity = 0.0;											   // dissimilarity value for farm
-        Set<DefaultEdge> E;                                                    // set of edges in network with this farm at the head
+        Set<DefaultEdge> edge;                                                 // set of edges in network with this farm at the head
         double w = 0;														   // weight of each network connection
         Iterator<DefaultEdge> I;											   // iterator through all edges
         List<String> thisFarmActivityList = new ArrayList<String>();		   // the main farm's list of activities for comparison to network activities
     		
-		E = this.network.outgoingEdgesOf(this.farmName);
+		edge = this.network.outgoingEdgesOf(this.farmName);
         totalFarms = farms.size();
-        I = E.iterator();
+        I = edge.iterator();
         
         for (int k = 0; k < totalFarms; k++) {
         	if (!farms.get(k).getFarmName().equals(this.getFarmName()) ) {
         		w = this.getNetwork().getEdgeWeight(I.next());						   // weight of social tie between main farm and farm i
         		if (w > 0) {
-        			EdgeCount++;
+        			edgeCount++;
             		List<Activity> p = farms.get(k).getCurrentActivity();
             		for (int i = 0; i < p.size(); i++) {
             			if (!networkActivityList.contains(p.get(i).getName())) 
@@ -236,7 +235,7 @@ public class Farm {
     			
     		} else {
     			// these activities are not done by the main farmer so it counts for the dissimilarity
-    			dissimilarity = dissimilarity + (activityMap.get(networkActivityList.get(i)) / ((double)EdgeCount) );
+    			dissimilarity = dissimilarity + (activityMap.get(networkActivityList.get(i)) / ((double)edgeCount) );
     		}
     	}
 
@@ -367,7 +366,7 @@ public class Farm {
 		double phi_plus = this.getP_phi_plus();
 		double phi_minus = this.getP_phi_minus();
 		double lambda = this.getP_lambda();
-		double value = 0;              //value function
+		double value = 0;              // value function
 		double probWeighting = 0;      // probability weighting function
 		
 		if (income >= this.Aspiration) {
@@ -386,7 +385,7 @@ public class Farm {
 	/**
 	 * From the farm income history, calculate current satisfaction level as the average of historical satisfaction
 	 * Build a normal distribution based on historical income and for each income at time period T, sample the probability and use that in the satisfaction
-	 * @return mean: mean of all satisfaction
+	 * @return mean mean of all satisfaction values
 	 */
 	private double currentSatisfaction() {
 		List<Double> current_satisfaction = new ArrayList<Double>();						       // calculate satisfaction for each income value in the list of income history
@@ -404,7 +403,7 @@ public class Farm {
 	/** 
 	 * Return mean value of provided list 
 	 * @param list of values to calculate mean with
-	 * @return mean: mean value of list
+	 * @return mean mean value of list
 	 */
 	private double mean(List<Double> list) {
 		double mean = 0;												       // mean value to return
@@ -413,7 +412,8 @@ public class Farm {
 			mean = mean + list.get(i);
 		}
 		
-		return mean / list.size();
+		mean  = mean / list.size();
+		return mean;
 	}
 	/**
 	 * This function calculates the standard deviation of provided list.
@@ -421,22 +421,22 @@ public class Farm {
 	 * @return std standard deviation value
 	 */
 	private double std(List<Double> list) {
-		double sd = 0;		
+		double std = 0;		
 		for (int i=0; i<list.size();i++)
 		{
-		    sd = sd + Math.pow(list.get(i) - mean(list), 2);
+		    std = std + Math.pow(list.get(i) - mean(list), 2);
 		}
 		
-		sd = Math.sqrt(sd/list.size());
-		return sd;
+		std = Math.sqrt(std/list.size());
+		return std;
 	}
 	
 	/** 
 	 * Initialize a value for learning rate based on the memory limit of each farm
-	 * @return avg value of learning rate
+	 * @return learning_r value of learning rate
 	 */
 	public double init_learning_rate() {
-		double s = 1;
+		double max_edu = 1;
 		double m1_ratio = 1/2.0;
 		double m2_ratio = 1/8.0;
 
@@ -452,15 +452,15 @@ public class Farm {
 
 		while (k_upper > k_lower) {
 			ln_ratio = -Math.log((1-upper_q)/upper_q);
-			k_upper = ln_ratio/( Math.round(memory_limit * m1_ratio) * s);
+			k_upper = ln_ratio/( Math.round(memory_limit * m1_ratio) * max_edu);
 			ln_ratio = -Math.log((1-lower_q)/lower_q);
-			k_lower = ln_ratio/( Math.round(memory_limit * m2_ratio) * s);
+			k_lower = ln_ratio/( Math.round(memory_limit * m2_ratio) * max_edu);
 			upper_q = upper_q - delta;
 			lower_q = lower_q + delta;
 		}
 
-		double avg = (k_upper + k_lower) / 2.0;		
-		return avg;
+		double learning_r = (k_upper + k_lower) / 2.0;		
+		return learning_r;
 	}
 	/** 
 	 * So if memory length is 5, we calculate an experience value for years 1 to 5. And using this set of experience values we calculate a standard deviation. <br>

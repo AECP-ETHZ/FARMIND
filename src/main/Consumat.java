@@ -30,7 +30,7 @@ public class Consumat {
 		} 
 		
 		if (args.length > 1) {
-			System.out.println("ABM version number: 1.1.1");
+			System.out.println("ABM version number: 1.1.0");
 		}
 
 		ReadData reader         = new ReadData();							               		   // read all input data files

@@ -22,10 +22,10 @@ public class Consumat {
 	static String FileName = origFileName + String.format("%d",0);								   // given enough lines in the log file, a new file is needed.
 		
 	public static void main(String[] args) {
-		System.out.println("Starting Model");
+		System.out.println("Starting FARMIND");
 
 		if (args.length < 1) {
-			System.out.println("input number of iterations");
+			System.out.println("Input number of iterations");
 			System.exit(0);
 		} 
 		

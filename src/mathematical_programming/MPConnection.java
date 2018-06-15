@@ -20,19 +20,18 @@ public class MPConnection implements MP_Interface{
 	File file; 
 	
 	public MPConnection() {
-		file = new File("model\\p_allowedStratPrePost.csv");				   // delete last time period's simulation file
-		if (file.exists()) {
-			System.out.println("Deleted old results file");
-			file.delete();
-			}		
+		file = new File("p_allowedStratPrePost.csv");				   // delete last time period's simulation file
+
 	}
 
 	@Override
 	public void runModel() {
 		Runtime runtime = Runtime.getRuntime();								   // java runtime to run commands
 		
-		File f = new File("model\\Grossmargin_P4,00.csv");					   // delete previous results file before new run
+		File f = new File("Grossmargin_P4,00.csv");					   // delete previous results file before new run
 		f.delete();
+		
+		System.out.println("Starting gams model");
 		
 		try {
 			String name = System.getProperty("os.name").toLowerCase();
@@ -42,7 +41,7 @@ public class MPConnection implements MP_Interface{
 			if (name.startsWith("mac")) {
 				runtime.exec("/bin/bash -c ./run_gams_mac.command");		   // actually run command
 			}
-			System.out.println("Starting gams model");
+			
 			System.out.println("Waiting for gams results to be generated");
 		} catch (IOException e) {
 			e.printStackTrace();

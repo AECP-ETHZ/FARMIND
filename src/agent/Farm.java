@@ -333,8 +333,8 @@ public class Farm {
 		if(income == -1) return;											   // income is -1 for the first year due to initialization
 		
 		income_hist.add(income);											   // start income list with updated income for year 1
-		for (int i = 0; i< this.getMemory() - 1; i++) {
-			income_hist.add(this.IncomeHistory.get(i+1));						// add all but oldest income (year N) to income list 
+		for (int i = 0; i< this.getMemory()-1; i++) {
+			income_hist.add(this.IncomeHistory.get(i));						// add all but oldest income (year N) to income list 
 		}
 		
 		setIncomeHistory(income_hist); 
@@ -374,11 +374,11 @@ public class Farm {
 			probWeighting = ( Math.pow(probability, phi_plus) ) / Math.pow( (Math.pow(probability, phi_plus) + Math.pow((1 - probability), phi_plus)), (1/phi_plus) );
 		} 
 		else if (income < this.Aspiration) {
-			value = (-1)*Math.pow(income, alpha_minus);
+			value = (-1)*lambda*Math.pow(income, alpha_minus);
 			probWeighting = ( Math.pow(probability, phi_minus) ) / Math.pow( (Math.pow(probability, phi_minus) + Math.pow((1 - probability), phi_minus)), (1/phi_minus) );
 		}
 
-		satisfaction = lambda*value*probWeighting;
+		satisfaction = value*probWeighting;
 		
 		return satisfaction;
 	}

@@ -13,7 +13,6 @@ import java.util.Map;
  * row 3: Farm2: [values for each associated data element] <br>
  * row m: FarmM: [values for each associated data element] <br>
  * These data elements for could be activity preference or years of farming experience<br>
- * @author kellerke
  */
 
 public class FarmDataMatrix {
@@ -37,7 +36,7 @@ public class FarmDataMatrix {
 	 * Given a farmID and a name, set the value of that cell in the matrix. 
 	 * 
 	 * @param FarmID: of the specific farm
-	 * @param name: data element name (eg. activity name)
+	 * @param name: data element name (e.g. activity name)
 	 * @param value: to set for farm and element combination
 	 */
 	public void setFarmDataElementValue(String FarmID, String name, int value) {

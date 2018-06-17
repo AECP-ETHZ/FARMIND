@@ -45,7 +45,7 @@ public class Consumat {
 		
 		int farmIndex = 0;													                       // index of specific farm in list
 		for (int year = 1; year <= Integer.parseInt(args[0]); year++) {		                       // run simulation for a set of years, getting updated income and activities	
-			System.out.println(String.format("year %d", year));	
+			System.out.println(String.format("Year %d", year));	
 			
 			MPConnection MP = new MPConnection();
 			

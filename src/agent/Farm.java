@@ -71,7 +71,7 @@ public class Farm {
 	 * @param beta: parameter for fuzzy logic
 	 * @param beta_s: parameter for fuzzy logic
 	 * @param aspiration_coef: aspiration value
-	 * @param lambda: value for lamda for satisfaction
+	 * @param lambda: value for lambda for satisfaction
 	 * @param alpha_plus: for satisfaction calculation
 	 * @param alpha_minus: for satisfaction calculation
 	 * @param phi_plus: for satisfaction calculation
@@ -416,7 +416,7 @@ public class Farm {
 		double probability = 0;
 		double mean = mean(this.IncomeHistory);
 		double std = std(this.IncomeHistory);
-		NormalDistribution normal = new NormalDistribution(mean, std);		   // distribution of historical incomes
+		NormalDistribution normal = new NormalDistribution(mean, 2);		   // distribution of historical incomes
 		
 		for (int i = 0; i< this.getMemory(); i++) {
 			probability = normal.cumulativeProbability(this.IncomeHistory.get(i));

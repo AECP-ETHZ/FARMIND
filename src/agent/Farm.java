@@ -268,36 +268,12 @@ public class Farm {
 	 */
 	private void updateAspiration() {
 		double aspiration = 0;												   // calculated aspiration level
-		double aspi_value = this.getP_aspiration_coef();							   // alpha the aspiration coeficient for reference in satisfactyion calculation
+		double aspi_value = this.getP_aspiration_coef();					   // aspiration value / coefficient
 		
 		aspiration = aspi_value;
 
 		setAspiration(aspiration);
-	}
-
-	
-	/*
-	 	private void updateAspiration() {
-		double aspiration = 0;												   // calculated aspiration level
-		double aspi_coef = this.getP_aspiration_coef();						   // alpha is the percentage of historical average
-		
-		aspiration = aspi_coef*mean(SatisfactionHistory);
-		
-		setAspiration(aspiration);
-	}
-	 */
-	
-	/*
-		private void updateIncomeReference() {
-		double reference = 0;												   // calculated income reference point
-		double incomeRef_coef = this.getP_incomeReference_coef();			   // alpha is the percentage of historical average
-		
-		reference = incomeRef_coef*mean(IncomeHistory);
-		
-		setAspiration(reference);
-	}
-	 */
-	
+	}	
 
 	/** 
 	 * Each time period, t, call this function to increment the experience vector of this farm. 
@@ -353,15 +329,15 @@ public class Farm {
 	 * @param income
 	 */
 	private void updateIncomeHistoryList (double income) {
-		List<Double> temp = new ArrayList<Double>();                           // update array for new incomes
+		List<Double> income_hist = new ArrayList<Double>();                    // update array for new incomes
 		if(income == -1) return;											   // income is -1 for the first year due to initialization
 		
-		temp.add(income);													   // start income list with updated income for year 1
+		income_hist.add(income);											   // start income list with updated income for year 1
 		for (int i = 0; i< this.getMemory() - 1; i++) {
-			temp.add(this.IncomeHistory.get(i));							   // add all but oldest income (year N) to income list 
+			income_hist.add(this.IncomeHistory.get(i+1));						// add all but oldest income (year N) to income list 
 		}
 		
-		setIncomeHistory(temp); 
+		setIncomeHistory(income_hist); 
 	}
 	
 	/** 
@@ -416,7 +392,9 @@ public class Farm {
 		double probability = 0;
 		double mean = mean(this.IncomeHistory);
 		double std = std(this.IncomeHistory);
-		NormalDistribution normal = new NormalDistribution(mean, 2);		   // distribution of historical incomes
+		System.out.println(this.IncomeHistory);
+		//System.out.format("mean=%.3f%n std=%.3f%n",mean, std+10);
+		NormalDistribution normal = new NormalDistribution(mean, std);		   // distribution of historical incomes
 		
 		for (int i = 0; i< this.getMemory(); i++) {
 			probability = normal.cumulativeProbability(this.IncomeHistory.get(i));

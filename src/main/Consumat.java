@@ -30,7 +30,7 @@ public class Consumat {
 		} 
 		
 		if (args.length > 1) {
-			System.out.println("ABM version number: 1.1.0");
+			System.out.println("FARMIND version number: 1.1.0");
 		}
 
 		ReadData reader         = new ReadData();							               		   // read all input data files
@@ -45,7 +45,7 @@ public class Consumat {
 		
 		int farmIndex = 0;													                       // index of specific farm in list
 		for (int year = 1; year <= Integer.parseInt(args[0]); year++) {		                       // run simulation for a set of years, getting updated income and activities	
-			System.out.println(String.format("year %d", year));	
+			System.out.println(String.format("Year %d", year));	
 			
 			MPConnection MP = new MPConnection();
 			
@@ -54,7 +54,7 @@ public class Consumat {
 				if (year == 1) {											                       // ignore first year as we already have that initialized with input file
 					income = -1;
 				} else {
-					income = MP_Incomes.get(farmIndex);											   // for all other years get the MP income and the MP activities to update each farm
+					income = MP_Incomes.get(farmIndex);										       // for all other years get the MP income and the MP activities to update each farm
 					activity = MP_Activities.get(farmIndex);
 				}
 				
@@ -77,7 +77,7 @@ public class Consumat {
 			MP_Incomes = MP.readMPIncomes();
 			MP_Activities = MP.readMPActivities();
 
-			updatePopulationIncomeChange(allFarms,MP_Incomes);    // at end of time step update the percent change for population
+			updatePopulationIncomeChange(allFarms, MP_Incomes);    // at end of time step update the percent change for population
 		}
 
 		System.out.println("Complete"); 
@@ -86,7 +86,7 @@ public class Consumat {
     private static void updateLogFileName() {
 		line_counter++;
 		if (line_counter > 1000000) {
-			FileName = origFileName + String.format("%d",file_counter);
+			FileName = origFileName + String.format("%d", file_counter);
 			file_counter++;
 			line_counter = 0;
 		} 

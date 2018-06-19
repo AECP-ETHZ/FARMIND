@@ -24,7 +24,6 @@ public class MPConnection implements MP_Interface{
 		if (file.exists()) {
 			file.delete();
 		}
-		
 	}
 
 	@Override
@@ -49,7 +48,6 @@ public class MPConnection implements MP_Interface{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
 
 	@SuppressWarnings("unchecked")

@@ -98,7 +98,11 @@ public class MPConnection implements MP_Interface{
 			}
 						
 			for(int i = 1; i < activitySets.length + 1; i++) {
-				if (possibleActivity.contains(String.format("\"activity%d\"", i))) {
+				String name = String.format("\"activity%d\"", i);
+				if (i < 10) {
+					name = String.format("\"activity0%d\"", i);
+				}
+				if (possibleActivity.contains(name)) {
 					int[] ind = activitySets[i-1];
 					int row = ind[0];
 					int column = ind[1];

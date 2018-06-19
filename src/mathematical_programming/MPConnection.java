@@ -15,7 +15,11 @@ import java.util.Random;
 import activity.Activity;
 import reader.ReadData;
 
-
+/** 
+ * Mathematical Programming Class for input and output files from the ABM.
+ * @author kellerke
+ *
+ */
 public class MPConnection implements MP_Interface{
 	File file; 
 	

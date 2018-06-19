@@ -11,8 +11,7 @@ import activity.Activity;
 import agent.Farm;
 
 /**
- * Decision object with unique information for each farm. This object can output a gams compatible simulation file, as well as output a log of all decisions and parameters during the model execution. 
- * This object contains a public 2d array of the pre/post sowing strategies that correspond to the 72 strategies in the model. 
+ * Logs the output of each step of the ABM process to an output csv log of all decisions and parameters during the model execution. 
  * @author kellerke
  *
  */
@@ -29,16 +28,16 @@ public class CSVLog {
 	private Farm farm;														   // farm holds parameters
 	
 	/** 
-	 * Constructor for the Decision Result
-	 * @param allActivities	full set of activities
-	 * @param farmId:		ID of the farm
-	 * @param possibleActivities:		full activity set
-	 * @param year:			time period
-	 * @param strat:			strategy
+	 * Constructor for the CSV Log
+	 * @param allActivities:		full set of activities
+	 * @param farmId:		    	ID of the farm
+	 * @param possibleActivities:	full activity set
+	 * @param year:					time period
+	 * @param strat:				strategy
 	 * @param currentActivity:		current activity(ies) in system
-	 * @param income:		income of farm
-	 * @param learning_rate: learning rate for the agent
-	 * @param farm: specific farm for this decision object
+	 * @param income:				income of farm
+	 * @param learning_rate: 		learning rate for the agent
+	 * @param farm: 				specific farm for this decision object
 	 */
 	public CSVLog(List<String> allActivities, String farmId, Integer year, Double learning_rate, int strat, double income, List<Activity> currentActivity, List<String> possibleActivities, Farm farm) {
 		setFarmId(farmId);

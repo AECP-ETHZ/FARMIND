@@ -111,8 +111,8 @@ public class Farm {
 	 * This function executes strategic decision-making for all farms. 
 	 * Comparing satisfaction to aspiration and dissimilarities to tolerance, agents decide which of the four strategies to pursue: repetition, optimization, imitation or opt-out.
 	 * 
-	 * @param allFarms full list of all farms in system
-	 * @return ActivitySet list of activity options for a farm to select 
+	 * @param allFarms: full list of all farms in system
+	 * @return ActivitySet: list of activity options for a farm to select 
 	 */
 	public List<String> decideActivitySet(List<Farm> allFarms) {
 	    List<String> ActivitySet = new ArrayList<String>();				                           // list of activities from fuzzy logic
@@ -152,7 +152,7 @@ public class Farm {
 	 * This function updates farms with new income values, as well as the probabilities the values occur, returned by the optimization model. 
 	 * 
 	 * @param allFarms: list of all farms
-	 * @param income income value of farm
+	 * @param income: income value of farm
 	 * @param activity: activity list to update farm after MP time step iteration
 	 */
 	public void updateFarmParameters(List<Farm> allFarms, double income, List<Activity> activity) {
@@ -172,7 +172,7 @@ public class Farm {
 	 * This function updates farms with values of dissimilarity in terms of activity. 
 	 * The dissimilarity is calculated as the degree that the activity one performs is different from those its peers in social networks perform.  
 	 * 
-	 * @param farms list of farms 
+	 * @param farms: list of farms 
 	 */
 	public void updateActivityDissimilarity(List<Farm> farms) {
         double currentDissimilarity = 0;									   // similarity value of a farm 
@@ -356,7 +356,8 @@ public class Farm {
 	// Helper functions
 	/** 
 	 * Calculate satisfaction score given income value
-	 * @param income income of farm
+	 * @param income: income of farm
+	 * @param probability: probability of income occuring
 	 * @return satisfaction satisfaction derived from income
 	 */
 	private double calculateSatisfaction(double income, double probability) {
@@ -386,7 +387,7 @@ public class Farm {
 	/**
 	 * From the farm income history, calculate current satisfaction level as the average of historical satisfaction
 	 * Build a normal distribution based on historical income and for each income at time period T, sample the probability and use that in the satisfaction
-	 * @return mean mean of all satisfaction values
+	 * @return mean: mean of all satisfaction values
 	 */
 	private double currentSatisfaction() {
 		List<Double> current_satisfaction = new ArrayList<Double>();						       // calculate satisfaction for each income value in the list of income history
@@ -404,8 +405,8 @@ public class Farm {
 	}
 	/** 
 	 * Return mean value of provided list 
-	 * @param list of values to calculate mean with
-	 * @return mean mean value of list
+	 * @param list: list of values to calculate mean with
+	 * @return mean: mean value of list
 	 */
 	private double mean(List<Double> list) {
 		double mean = 0;												       // mean value to return
@@ -419,8 +420,8 @@ public class Farm {
 	}
 	/**
 	 * This function calculates the standard deviation of provided list.
-	 * @param list list for calculating standard deviation
-	 * @return std standard deviation value
+	 * @param list: list for calculating standard deviation
+	 * @return std: standard deviation value
 	 */
 	private double std(List<Double> list) {
 		double std = 0;		
@@ -435,7 +436,7 @@ public class Farm {
 	
 	/** 
 	 * Initialize a value for learning rate based on the memory limit of each farm
-	 * @return learning_r value of learning rate
+	 * @return learning_r: value of learning rate
 	 */
 	public double init_learning_rate() {
 		double max_edu = 1;
@@ -469,7 +470,7 @@ public class Farm {
 	 * Given a specific value for k/learning_rate, calculate all possible q (experience value) for all possible memory lengths. <br>
 	 * So if memory is 5 years long, we calculate a q value for years 1 to 5. And using this set of q values we calculate a standard deviation. <br>
 	 * This standard deviation is used to set the upper and lower values for the q range. 
-	 * @return q_range
+	 * @return q_range: lower and upper boundary for fuzzy logic selection
 	 */
 	public List<Double> calc_q_set() {
 		double k = this.getLearningRate();

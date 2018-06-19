@@ -14,8 +14,8 @@ public class Activity {
 
 	/**
 	 * Activity object constructor. Always check against master list of activities before creation.
-	 * @param ID ID of the activity
-	 * @param name name of the activity (cattle, pigs, 50% non-farming, etc.)
+	 * @param ID: ID of the activity
+	 * @param name: name of the activity (cattle, pigs, 50% non-farming, etc.)
 	 */
 	public Activity(int ID, String name) {
 		this.name = name;

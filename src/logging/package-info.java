@@ -3,7 +3,7 @@
  */
 /**
  * 
- * Objects to calculate farm decision
+ * Log output of ABM 
  * @author kellerke
  *
  */

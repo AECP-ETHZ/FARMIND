@@ -20,8 +20,7 @@ public class MPConnection implements MP_Interface{
 	File file; 
 	
 	public MPConnection() {
-		//file = new File("p_allowedStratPrePost.csv");				           // delete last time period's simulation file
-		file = new File("model\\p_allowedStratPrePost.csv");				           // delete last time period's simulation file
+		file = new File("model\\p_allowedStratPrePost.csv");				   // delete last time period's simulation file
 		if (file.exists()) {
 			file.delete();
 		}
@@ -31,7 +30,6 @@ public class MPConnection implements MP_Interface{
 	public void runModel() {
 		Runtime runtime = Runtime.getRuntime();						           // java runtime to run commands
 		
-		//File f = new File("Grossmargin_P4,00.csv");					           // delete previous results file before new run
 		File f = new File("model\\Grossmargin_P4,00.csv");
 		f.delete();
 		
@@ -215,8 +213,8 @@ public class MPConnection implements MP_Interface{
 	
 	
 	/**
-	 *  We have 72 activities in the system, and these tuples correspond to each activity.  first element in the tuple is a row in the activity matrix, and the second element is the column.
-	 *  Each row element corresponds to a post sowing strategy, and each column is a pre sowing strategy. So [53,2] corresponds to post_strat 53, and pre_strat 2 strategy set.  
+	 *  We have 72 activities in the system, and these tuples correspond to each activity. The first element in the tuple is a row in the activity matrix, and the second element is the column.
+	 *  Each row element corresponds to a post sowing strategy, and each column is a pre sowing strategy. So [53,2] corresponds to the post_strat 53, and pre_strat 2 strategy set.  
 	 */
 	public static int[][] activitySets = 
 		{
@@ -293,68 +291,7 @@ public class MPConnection implements MP_Interface{
 				{54,3},
 				{54,4}														   // strategy 72, post sowing 54, pre sowing 4
 		};
-	
-	/**
-	 *  empty matrix for the output gams file. The matrix corresponds to a 55 row by 6 column matrix where each row is a post strategy and the columns are a pre strategy 
-	 */
-	public static int[][] activity_matrix = 
-		{
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0}
-		};
+
 	
 
 }

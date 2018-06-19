@@ -1,4 +1,5 @@
-,Farm01,Farm02,Farm03
-Farm01,0,1,0
-Farm02,1,0,1
-Farm03,0,1,0
+"","Ahaus","Beckum","Bruehl","Hoevelhof"
+"Ahaus",0,1,1,0
+"Beckum",1,0,0,1
+"Bruehl",1,0,0,1
+"Hoevelhof",0,1,1,0

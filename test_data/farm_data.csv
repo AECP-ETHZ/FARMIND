@@ -1,4 +1,0 @@
-Farm,Latitude,Longitude,Birth Year,Education,Memory,Entrepreneurship,x,Action1,Action2,Action3,income_t-5,income_t-4,income_t-3,income_t-2,income_t-1
-Farm01,0,0,1962,6,5,0.1,1,pigs,wheat,potatoes,63300,52200,48600,56400,57900
-Farm02,0,0,1964,10,5,0.1,1,wheat,cattle,maize,43600,50000,43000,58200,51600
-Farm03,0,0,1990,11,5,0.6,1,sheep,NA,NA,61300,39400,47000,63000,58600

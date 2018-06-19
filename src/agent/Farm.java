@@ -226,15 +226,15 @@ public class Farm {
     		}
     	}
     	
-    	// dissimilarity calculation based on difference in neighbor vs main farm activity sets
+    	// Dissimilarity calculation based on difference btw activity sets of this farm and its peers 
     	for (int i = 0; i < networkActivityList.size(); i++)
     	{
-    		// if the activity is done by the main farmer ignore that activity in the dissimilarity
+    		// if the activity is done by this farm, ignore that activity in the dissimilarity
     		if (thisFarmActivityList.contains(networkActivityList.get(i))) {
     			continue;
     			
     		} else {
-    			// these activities are not done by the main farmer so it counts for the dissimilarity
+    	    // these activities are not done by this farm so it counts for the dissimilarity
     			dissimilarity = dissimilarity + (activityMap.get(networkActivityList.get(i)) / ((double)edgeCount) );
     		}
     	}
@@ -270,7 +270,7 @@ public class Farm {
 		double aspiration = 0;												   // calculated aspiration level
 		double aspi_value = this.getP_aspiration_coef();					   // aspiration value / coefficient
 		
-		aspiration = aspi_value;                                               // as a coefficient: *mean(IncomeHistory);
+		aspiration = aspi_value;                                               // if as a coefficient: *mean(IncomeHistory);
 
 		setAspiration(aspiration);
 	}	
@@ -393,8 +393,6 @@ public class Farm {
 		double probability = 0;
 		double mean = mean(this.IncomeHistory);
 		double std = std(this.IncomeHistory);
-		System.out.println(this.IncomeHistory);
-		//System.out.format("mean=%.3f%n std=%.3f%n",mean, std+10);
 		NormalDistribution normal = new NormalDistribution(mean, std);		   // distribution of historical incomes
 		
 		for (int i = 0; i< this.getMemory(); i++) {

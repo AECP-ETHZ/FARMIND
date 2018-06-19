@@ -120,19 +120,19 @@ public class MPConnection implements MP_Interface{
 	}
 	
 	public List<Object> readMPOutputFiles() {
-		List<Double> incomesFromMP = new ArrayList<Double>();				   // list of incomes from result file
-		List<List<Activity>> activitiesFromMP = new ArrayList<List<Activity>>();		   // list of selected activities for each agent (one per agent)
-		List<Object> dataObject = new ArrayList<Object>();					   // object to return
-		BufferedReader Buffer = null;	 									   // read input file
-		String Line;														   // read each line of the file individually
-		ArrayList<String> dataArray;										   // separate data line
+		List<Double> incomesFromMP = new ArrayList<Double>();				       // list of all agents' incomes produced by the MP
+		List<List<Activity>> activitiesFromMP = new ArrayList<List<Activity>>();   // list of all agents' final activities selected by the MP
+		List<Object> incomes_activitiesOutput = new ArrayList<Object>();		   // combination list of incomes and activities to return
+		BufferedReader Buffer = null;	 									       // read input file
+		String Line;														       // read each line of the file individually
+		ArrayList<String> dataArray;										       // separate data line
 		ReadData reader = new ReadData();
 		
-		List<Activity> allPossibleActivities = reader.getActivityList();			   // generated activity list with ID and name 
+		List<Activity> allPossibleActivities = reader.getActivityList();		   // generated activity list with ID and name 
 		
-		File f = new File("Grossmargin_P4,00.csv");							   // actual results file
+		File f = new File("Grossmargin_P4,00.csv");							       // actual results file
 		while (!f.exists()) {try {
-			Thread.sleep(1000);												   // wait until simulation finishes running
+			Thread.sleep(1000);												       // wait until the MP finishes running
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}}
@@ -142,17 +142,17 @@ public class MPConnection implements MP_Interface{
 			
 			Line = Buffer.readLine();
 			while ((Line = Buffer.readLine()) != null) {                       
-				dataArray = CSVtoArrayList(Line);						       // Read farm's parameters line by line
+				dataArray = CSVtoArrayList(Line);						          // Read farm's parameters line by line
 				incomesFromMP.add( Double.parseDouble(dataArray.get(1)) );
 				
-				String pre = dataArray.get(2);								   // we need to break the results file which has pre and post strategies
-				pre = pre.substring(4);										   // into corresponding strategy values in our system based on the defined strategies
+				String pre = dataArray.get(2);								      // Break the MP output file which has pre- and post-sowing strategies into activities
+				pre = pre.substring(4);
 				String post = dataArray.get(3);
 				post = post.substring(5);
 				
 				int[] activity = {Integer.valueOf(post),Integer.valueOf(pre)};
 				int index = 0;
-				for(int i = 0; i < activitySets.length; i++) {				   // activitySets were defined in DecisionResult to allow the correct output combinations to be set for gams
+				for(int i = 0; i < activitySets.length; i++) {				      // activitySets were defined in DecisionResult to allow the correct output combinations to be set for gams
 					int[] test = {activitySets[i][0],activitySets[i][1]};
 					if (Arrays.equals(activity, test)) {
 						index = i;
@@ -186,9 +186,9 @@ public class MPConnection implements MP_Interface{
 			e.printStackTrace();
 		}
 
-		dataObject.add(incomesFromMP);
-		dataObject.add(activitiesFromMP);
-		return dataObject;
+		incomes_activitiesOutput.add(incomesFromMP);
+		incomes_activitiesOutput.add(activitiesFromMP);
+		return incomes_activitiesOutput;
 	}
 	
 	/**

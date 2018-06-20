@@ -56,6 +56,9 @@ public class Consumat {
 					income = MP_Incomes.get(farmIndex);										       // for all other years get the MP income and the MP activities to update each farm
 					activity = MP_Activities.get(farmIndex);
 				}
+				System.out.println(String.format("Income=%f", income));
+				System.out.println(String.format("Activity=%s", activity));
+				System.out.println(String.format("farm index=%d", farmIndex));
 				
 				farm.updateFarmParameters(allFarms, income, activity);
 				
@@ -70,6 +73,7 @@ public class Consumat {
 				farm.updateExperience();                              			   // each time period update experience
 				farm.updateAge();                              				       // each time period update age
 				farmIndex++;                                                       // go to next farm in list
+				
 			}
 			
 			MP.runModel();
@@ -96,7 +100,7 @@ public class Consumat {
 	 * @param allFarms: list of all farms in region
 	 */
 	private static void initializePopulationIncomeChange(List<Farm> allFarms) {
-		double historicalPopulationAverage = 0;
+		double historicalPopulationAverageIncome = 0;
 		List<Double> initIncome = new ArrayList<Double>();
 		double thisYearAverage = 0;
 		double percentChange;
@@ -105,15 +109,15 @@ public class Consumat {
 			List<Double> income = new ArrayList<Double>(farm.getIncomeHistory());
 			initIncome.add(income.get(0));
 			income.remove(0);
-			historicalPopulationAverage = historicalPopulationAverage + mean(income);
+			historicalPopulationAverageIncome = historicalPopulationAverageIncome + mean(income);
 		}
-		historicalPopulationAverage = historicalPopulationAverage/allFarms.size();
+		historicalPopulationAverageIncome = historicalPopulationAverageIncome/allFarms.size();
 		thisYearAverage = mean(initIncome);
 		
-		percentChange = (thisYearAverage - historicalPopulationAverage) / historicalPopulationAverage;
+		percentChange = (thisYearAverage - historicalPopulationAverageIncome) / historicalPopulationAverageIncome;
 		
 		for (Farm farm: allFarms) {
-			farm.setRegionIncomeChangePercent(percentChange);
+			farm.setPopulationIncomeChangePercent(percentChange);
 		}
 	}
 	
@@ -123,21 +127,21 @@ public class Consumat {
 	 * @param thisYearIncome: list of income values for all farms
 	 */
 	private static void updatePopulationIncomeChange(List<Farm> allFarms, List<Double> thisYearIncome) {
-		double historicalRegionAverage = 0;
+		double historicalPopulationAverageIncome = 0;
 		double thisYearAverage = mean(thisYearIncome);
 		double percentChange;
 		
 		for (Farm farm: allFarms) {
 			List<Double> income = new ArrayList<Double>(farm.getIncomeHistory());
 			income.remove(0);
-			historicalRegionAverage = historicalRegionAverage + mean(income);
+			historicalPopulationAverageIncome = historicalPopulationAverageIncome + mean(income);
 		}
-		historicalRegionAverage = historicalRegionAverage/allFarms.size();
+		historicalPopulationAverageIncome = historicalPopulationAverageIncome/allFarms.size();
 		
-		percentChange = (thisYearAverage - historicalRegionAverage) / historicalRegionAverage;
+		percentChange = (thisYearAverage - historicalPopulationAverageIncome) / historicalPopulationAverageIncome;
 		
 		for (Farm farm: allFarms) {
-			farm.setRegionIncomeChangePercent(percentChange);
+			farm.setPopulationIncomeChangePercent(percentChange);
 		}
 	}
 	

@@ -40,7 +40,7 @@ public class Consumat {
 		double income = 0;													                       // specific income of farm 		
 		ArrayList<Activity> activity = null;											           // specific activity list of the farm
 		
-		initializePopulationIncomeChange(allFarms);						                           // initialize the farms with the input values before starting the full ABM simulation
+		initializePopulationIncomeChangeRate(allFarms);						                           // initialize the farms with the input values before starting the full ABM simulation
 		
 		int farmIndex = 0;													                       // index of specific farm in list
 		for (int year = 1; year <= Integer.parseInt(args[0]); year++) {		                       // run simulation for a set of years, getting updated income and activities	
@@ -60,6 +60,7 @@ public class Consumat {
 				//System.out.println(String.format("Activity=%s", activity));
 				//System.out.println(String.format("farm index=%d", farmIndex));
 				
+				farm.updateExperience();                              			   // each time period update experience
 				farm.updateFarmParameters(allFarms, income, activity);
 				
 				List<String> possibleActivitySet = farm.decideActivitySet(allFarms);      
@@ -70,7 +71,6 @@ public class Consumat {
 				
 				MP.inputsforMP(farm.getFarmName(), possibleActivitySet);
 				
-				farm.updateExperience();                              			   // each time period update experience
 				farm.updateAge();                              				       // each time period update age
 				farmIndex++;                                                       // go to next farm in list
 				
@@ -80,7 +80,7 @@ public class Consumat {
 			MP_Incomes = MP.readMPIncomes();
 			MP_Activities = MP.readMPActivities();
 
-			updatePopulationIncomeChange(allFarms, MP_Incomes);    // at end of time step update the percent change for population
+			updatePopulationIncomeChangeRate(allFarms, MP_Incomes);    // at end of time step update the percent change for population
 		}
 
 		System.out.println("Complete"); 
@@ -99,25 +99,28 @@ public class Consumat {
 	 * This function initializes the income growth rate of the population (in a region) for all farms.
 	 * @param allFarms: list of all farms in region
 	 */
-	private static void initializePopulationIncomeChange(List<Farm> allFarms) {
-		double historicalPopulationAverageIncome = 0;
-		List<Double> initIncome = new ArrayList<Double>();
-		double thisYearAverage = 0;
-		double percentChange;
+	private static void initializePopulationIncomeChangeRate(List<Farm> allFarms) {	
+		List<Double> differenceIncomeYears = new ArrayList<Double>();
+		List<Double> populationYearlyMeanIncome = new ArrayList<Double>();
 		
-		for (Farm farm: allFarms) {
-			List<Double> income = new ArrayList<Double>(farm.getIncomeHistory());
-			initIncome.add(income.get(0));
-			income.remove(0);
-			historicalPopulationAverageIncome = historicalPopulationAverageIncome + mean(income);
+		int memory = allFarms.get(0).getMemory();                              // assume all farms have same memory length
+		
+		for(int i = 0; i < memory; i++) {
+			List<Double> incomeFarmYear = new ArrayList<Double>();
+			for (Farm farm: allFarms) {
+				incomeFarmYear.add(farm.getIncomeHistory().get(i)); 
+			}
+			populationYearlyMeanIncome.add(mean(incomeFarmYear));	
 		}
-		historicalPopulationAverageIncome = historicalPopulationAverageIncome/allFarms.size();
-		thisYearAverage = mean(initIncome);
 		
-		percentChange = (thisYearAverage - historicalPopulationAverageIncome) / historicalPopulationAverageIncome;
+		for(int i = memory-1; i > 0; i-- ) {
+			double diff = (populationYearlyMeanIncome.get(i-1) -  populationYearlyMeanIncome.get(i)) /  populationYearlyMeanIncome.get(i);
+			differenceIncomeYears.add( diff );   
+		}
 		
 		for (Farm farm: allFarms) {
-			farm.setPopulationIncomeChangePercent(percentChange);
+			double changeRate = mean(differenceIncomeYears);
+			farm.setAveragePopulationIncomeChangeRate(changeRate);
 		}
 	}
 	
@@ -126,22 +129,32 @@ public class Consumat {
 	 * @param allFarms: list of all farms in region
 	 * @param thisYearIncome: list of income values for all farms
 	 */
-	private static void updatePopulationIncomeChange(List<Farm> allFarms, List<Double> thisYearIncome) {
-		double historicalPopulationAverageIncome = 0;
-		double thisYearAverage = mean(thisYearIncome);
-		double percentChange;
+	private static void updatePopulationIncomeChangeRate(List<Farm> allFarms, List<Double> thisYearIncome) {
+		List<Double> differenceIncomeYears = new ArrayList<Double>();
+		List<Double> populationYearlyMeanIncome = new ArrayList<Double>();
 		
-		for (Farm farm: allFarms) {
-			List<Double> income = new ArrayList<Double>(farm.getIncomeHistory());
-			income.remove(0);
-			historicalPopulationAverageIncome = historicalPopulationAverageIncome + mean(income);
+		int memory = allFarms.get(0).getMemory();                              // assume all farms have same memory length
+		double currentYearAverageIncome = mean(thisYearIncome);
+		populationYearlyMeanIncome.add(currentYearAverageIncome);
+				
+		// get the average income for the population for each year, but skip the oldest income. 
+		// The incomes will get updated for each agent, and the oldest income will be removed. 
+		for(int i = 0; i < memory-1; i++) {
+			List<Double> incomeFarmYear = new ArrayList<Double>();
+			for (Farm farm: allFarms) {
+				incomeFarmYear.add(farm.getIncomeHistory().get(i)); 
+			}
+			populationYearlyMeanIncome.add(mean(incomeFarmYear));	
 		}
-		historicalPopulationAverageIncome = historicalPopulationAverageIncome/allFarms.size();
 		
-		percentChange = (thisYearAverage - historicalPopulationAverageIncome) / historicalPopulationAverageIncome;
+		for(int i = memory-1; i > 0; i-- ) {
+			double diff = (populationYearlyMeanIncome.get(i-1) -  populationYearlyMeanIncome.get(i)) /  populationYearlyMeanIncome.get(i);
+			differenceIncomeYears.add( diff );   
+		}
 		
 		for (Farm farm: allFarms) {
-			farm.setPopulationIncomeChangePercent(percentChange);
+			double changeRate = mean(differenceIncomeYears);
+			farm.setAveragePopulationIncomeChangeRate(changeRate);
 		}
 	}
 	

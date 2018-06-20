@@ -37,8 +37,8 @@ public class Farm {
 	private List<Activity> currentActivity;								       // list of current activities each farm is engaged in
 	private List<Activity> allActivities;									   // list of all possible activities
 	private int strategy;													   // selected strategy (opt-out, optimize, imitate, repeat)
-	private double populationIncomeChangePercent;							   // the percentage that the income of a population change (current_avg - historical_avg)/historical_avg
-	private double lastYearPersonalIncomeAverage;							   // excluding most recent time period, average income of the specific farm
+	private double averagePopulationIncomeChangeRate;						   // the average rate of change for all incomes in the population
+	private double averagePersonalIncomeChangeRate;						       // the average rate of change for incomes between all years in the memory length
 	private double learning_rate;											   // learning rate for specific farm. Calculated based on education level
 	private List<Double> q_range;											   // q range (+,- values) for the learning rate vectors for the individual farm
 	
@@ -86,7 +86,7 @@ public class Farm {
 		this.setLocation(location);
 		this.setNetwork(socialNetwork);
 		this.setIncomeHistory(incomeHistory);
-		this.setLastYearPersonalIncomeAverage(personalIncomeAverage);
+		this.setAveragePersonalIncomeChangeRate(personalIncomeAverage);
 		
 		this.setExperience(farmingExperience);
 		this.setPreferences(preferences);
@@ -120,8 +120,8 @@ public class Farm {
 		
 		System.out.println(String.format("Activity_Dissimilarity=%f", this.Activity_Dissimilarity));
 		System.out.println(String.format("Activity_tolerance_coef=%f", this.p_activity_tolerance_coef));
-		System.out.println(String.format("Income_Dissimilarity=%f", this.Activity_Dissimilarity));
-		System.out.println(String.format("Income_tolerance_coef=%f", this.p_activity_tolerance_coef));
+		System.out.println(String.format("Income_Dissimilarity=%f", this.Income_Dissimilarity));
+		System.out.println(String.format("Income_tolerance_coef=%f", this.p_income_tolerance_coef));
 		System.out.println(String.format("========== Satisfaction ========== %f", this.Satisfaction));
 		
 		if ((head.getAge() > 650)) {
@@ -165,7 +165,7 @@ public class Farm {
 	 */
 	public void updateFarmParameters(List<Farm> allFarms, double income, List<Activity> activity) {
 		updateIncomeHistoryList(income);									   // for year = 1, we pass in -1 for income so we don't update the income 
-	    updateHistoricalIncomeAverage();
+	    updateAveragePersonalIncomeChangeRate();
 	    
 	    if (income != -1) {
 	    	setCurrentActivity(activity);
@@ -256,10 +256,8 @@ public class Farm {
 	 * The dissimilarity is calculated as the degree that the growth rate of one's income is lower the average level of the population.
 	 */
 	private void updateIncomeDissimilarity() {
-		double personalIncomeChangePercent = 0;								   // Change rate in personal income
-		personalIncomeChangePercent = (IncomeHistory.get(0) - lastYearPersonalIncomeAverage) / lastYearPersonalIncomeAverage;
 		
-		this.Income_Dissimilarity = this.populationIncomeChangePercent - personalIncomeChangePercent;
+		this.Income_Dissimilarity = averagePopulationIncomeChangeRate - averagePersonalIncomeChangeRate;
 	}
 	
      /**
@@ -299,13 +297,13 @@ public class Farm {
 		}
 		
 		for (int i = 0; i< this.experience.getDataElementName().size(); i++ ) {
-			int value = this.experience.getFarmDataElementValue(farmName, this.experience.getDataElementName().get(i));
+			double value = this.experience.getFarmDataElementValue(farmName, this.experience.getDataElementName().get(i)); 
 			
 			if (activityNames.contains(this.experience.getDataElementName().get(i))) {
-				value += 1;
+				value = value*0.8 + 1;
 			}
 			else {
-				value -= 1;      // Experience for all activities decays by 20% per year. Do the decay first, then increase the value for new activities.
+				value = value*0.8;      // Experience for all activities decays by 20% per year. Do the decay first, then increase the value for new activities.
 			}
 			
 			if(value > this.getMemory()) value = this.getMemory();
@@ -328,8 +326,7 @@ public class Farm {
 		this.head.setAge(age + 1);                                             // increment farmers age each time period
 
 	}
-	
-	
+		
 	/**
 	 * Update income history by removing oldest income and replacing with new income
 	 * Income is an array in the format of [year1_income, year2_income, year3_income, ... yearM_income]
@@ -350,15 +347,23 @@ public class Farm {
 	}
 	
 	/** 
-	 * Set average income over the previous time periods.
-	 * Exclude the first income period
+	 * Update personal income change rate over the previous time periods and include the current year. 
 	 * Income is an array of [year1_income, year2_income, year3_income, ... yearN_income]
+	 * change rate is calculated for all years as (Year_n-1 - Year_n) / year_n
+	 * We then set the mean of all the rates of change including the most recent year. 
 	 */
-	private void updateHistoricalIncomeAverage() {
-		List<Double> avgIncome = new ArrayList<Double>(this.IncomeHistory);    // copy of income history
-		avgIncome.remove(0);                                                   // remove most recent year from historical avg. Most recent year is used to calculate percent change compared to avg. 
-		double personalIncomeAverage = mean(avgIncome);						   // average of historical income
-		setLastYearPersonalIncomeAverage(personalIncomeAverage);
+	private void updateAveragePersonalIncomeChangeRate() {	
+		List<Double> differenceIncomeYears = new ArrayList<Double>();
+		double historicalIncomeChangeRate = 0;								   
+		
+		for(int i = this.getMemory()-1; i > 0; i-- ) {
+			double diff = (this.IncomeHistory.get(i-1) -  this.IncomeHistory.get(i)) /  this.IncomeHistory.get(i);
+			differenceIncomeYears.add( diff );   
+		}
+		
+		historicalIncomeChangeRate = mean(differenceIncomeYears);
+		
+		setAveragePersonalIncomeChangeRate(historicalIncomeChangeRate);
 	}
 	
 	// Helper functions
@@ -601,17 +606,17 @@ public class Farm {
 	public void setIncome_Dissimilarity(double income_dissimilarity) {
 		this.Income_Dissimilarity = income_dissimilarity;
 	}
-	public double getPopulationIncomeChangePercent() {
-		return this.populationIncomeChangePercent;
+	public double getAveragePopulationIncomeChangeRate() {
+		return this.averagePopulationIncomeChangeRate;
 	}
-	public void setPopulationIncomeChangePercent(double populationIncomeChangePercent) {
-		this.populationIncomeChangePercent = populationIncomeChangePercent;
+	public void setAveragePopulationIncomeChangeRate(double averagePopulationIncomeChangePercent) {
+		this.averagePopulationIncomeChangeRate = averagePopulationIncomeChangePercent;
 	}
-	public double getLastYearPersonalIncomeAverage() {
-		return this.lastYearPersonalIncomeAverage;
+	public double getAveragePersonalIncomeChangeRate() {
+		return this.averagePersonalIncomeChangeRate;
 	}
-	public void setLastYearPersonalIncomeAverage(double lastYearPersonalIncomeAverage) {
-		this.lastYearPersonalIncomeAverage = lastYearPersonalIncomeAverage;
+	public void setAveragePersonalIncomeChangeRate(double averagePersonalIncomeChangeRate) {
+		this.averagePersonalIncomeChangeRate = averagePersonalIncomeChangeRate;
 	}
 	public List<Double> getQ_range() {
 		if (mean(this.q_range) == 0) {

@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class FarmDataMatrix {
 	private List<String> dataElementNames = new ArrayList<String>();				   	 // top row of matrix with names of the data elements
-	private Map<String,Integer[]> elementFarmMap = new HashMap<String,Integer[]>();	     // map that links farm and data with a value
+	private Map<String,Double[]> elementFarmMap = new HashMap<String,Double[]>();	     // map that links farm and data with a value
 
 	/** 
 	 * Given a farmID and a name of the data element (eg. activity), return the value of that matrix cell. 
@@ -25,8 +25,8 @@ public class FarmDataMatrix {
 	 * @param name: data element name to return value from matrix
 	 * @return value of that cell in the matrix
 	 */
-	public int getFarmDataElementValue(String FarmID, String name) {
-		int val;
+	public double getFarmDataElementValue(String FarmID, String name) {
+		double val;
 		int index = dataElementNames.indexOf(name);
 		val = elementFarmMap.get(FarmID)[index];	 						   // get(FarmID) returns int array
 		return val;
@@ -39,9 +39,9 @@ public class FarmDataMatrix {
 	 * @param name: data element name (e.g. activity name)
 	 * @param value: to set for farm and element combination
 	 */
-	public void setFarmDataElementValue(String FarmID, String name, int value) {
+	public void setFarmDataElementValue(String FarmID, String name, double value) {
 		int index = dataElementNames.indexOf(name);
-		Integer[] array = elementFarmMap.get(FarmID);
+		Double[] array = elementFarmMap.get(FarmID);
 		array[index] = value;
 		
 		elementFarmMap.replace(FarmID, array);
@@ -55,7 +55,7 @@ public class FarmDataMatrix {
 		this.dataElementNames = listNames;
 	}
 	
-	public Map<String,Integer[]> getFarmMap() {
+	public Map<String,Double[]> getFarmMap() {
 		return elementFarmMap;
 	}
 	
@@ -65,16 +65,16 @@ public class FarmDataMatrix {
 	 */
 	public void setFarmMap(ArrayList<String> matrixRow) {
 		String name = matrixRow.get(0);
-		Integer[] values = new Integer[matrixRow.size() - 1];
+		Double[] values = new Double[matrixRow.size() - 1];
 		
 		for (int i = 1; i < matrixRow.size(); i++) {
-			values[i-1] = Integer.valueOf(matrixRow.get(i));
+			values[i-1] = Double.valueOf(matrixRow.get(i));
 		}
 		
 		this.elementFarmMap.put(name, values);
 	}
 
-	public void setDataElementMap(Map<String, Integer[]> dataMap) {
+	public void setDataElementMap(Map<String, Double[]> dataMap) {
 		this.elementFarmMap = dataMap;
 	}
 	

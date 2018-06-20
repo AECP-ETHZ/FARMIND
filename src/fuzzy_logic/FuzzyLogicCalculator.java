@@ -278,7 +278,7 @@ public class FuzzyLogicCalculator {
 	 */
 	private List<Double> getFarmExperienceVector(Farm farm, double m) {
 		List<Double> Q = new ArrayList<Double>();                              // learning by doing vector for specific farm
-		int time = 0;														   // years of experience
+		double time = 0;														   // years of experience
 		double k = farm.getLearningRate();								       // scale factor
 		double q;															   // calculated score
 		
@@ -300,7 +300,7 @@ public class FuzzyLogicCalculator {
 	 */
 	private List<Double> getFarmPreferenceVector(Farm farm, double m) {
 		List<Double> P = new ArrayList<Double>();							   // rank of all activity preferences for specific farm
-		Integer[] R;                           				 			   	   // Product preference vector 
+		Double[] R;                           				 			   	   // Product preference vector 
 
 		R = farm.getPreferences().getFarmMap().get(farm.getFarmName());
 		

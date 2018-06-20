@@ -217,7 +217,7 @@ public class ReadData {
 				avgIncome.remove(0);                                           // remove income of first time period
 				personalIncomeAverage = mean(avgIncome);
 				
-				farms.get(farm_count_index).setLastYearPersonalIncomeAverage(personalIncomeAverage);
+				farms.get(farm_count_index).setAveragePersonalIncomeChangeRate(personalIncomeAverage);
 				farms.get(farm_count_index).setIncomeHistory(income);
 				farms.get(farm_count_index).setLearningRate();
 				farm_count_index++;	

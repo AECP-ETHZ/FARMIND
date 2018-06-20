@@ -118,6 +118,12 @@ public class Farm {
 	    List<String> ActivitySet = new ArrayList<String>();				                           // list of activities from fuzzy logic
 		FuzzyLogicCalculator fuzzyLogicCalc = new FuzzyLogicCalculator(this, allFarms);            // calculator for the activity selection
 		
+		System.out.println(String.format("Activity_Dissimilarity=%f", this.Activity_Dissimilarity));
+		System.out.println(String.format("Activity_tolerance_coef=%f", this.p_activity_tolerance_coef));
+		System.out.println(String.format("Income_Dissimilarity=%f", this.Activity_Dissimilarity));
+		System.out.println(String.format("Income_tolerance_coef=%f", this.p_activity_tolerance_coef));
+		System.out.println(String.format("Satisfaction=%f", this.Satisfaction));
+		
 		if ((head.getAge() > 650)) {
 			this.strategy = 1;     //OPT-OUT (The farmer retires.)
 		}
@@ -140,7 +146,7 @@ public class Farm {
 			}
 			else {
 				this.strategy = 3; //OPTIMIZATION
-				ActivitySet = fuzzyLogicCalc.getOptimizeActivities();
+				ActivitySet = fuzzyLogicCalc.getOptimizationActivities();
 			}
 		}
 		
@@ -368,9 +374,12 @@ public class Farm {
 		double phi_plus = this.getP_phi_plus();
 		double phi_minus = this.getP_phi_minus();
 		double lambda = this.getP_lambda();
-		double value = 0;              // value function
-		double probWeighting = 0;      // probability weighting function
+		double value = 0;                                     // value function
+		double probWeighting = 0;                             // probability weighting function
 		
+		System.out.println(String.format("Income=%f", income));
+		System.out.println(String.format("Aspiration=%f", this.Aspiration));
+
 		if (income >= this.Aspiration) {
 			value = Math.pow(income, alpha_plus);
 			probWeighting = ( Math.pow(probability, phi_plus) ) / Math.pow( (Math.pow(probability, phi_plus) + Math.pow((1 - probability), phi_plus)), (1/phi_plus) );

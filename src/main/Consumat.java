@@ -56,9 +56,9 @@ public class Consumat {
 					income = MP_Incomes.get(farmIndex);										       // for all other years get the MP income and the MP activities to update each farm
 					activity = MP_Activities.get(farmIndex);
 				}
-				System.out.println(String.format("Income=%f", income));
-				System.out.println(String.format("Activity=%s", activity));
-				System.out.println(String.format("farm index=%d", farmIndex));
+				//System.out.println(String.format("Income=%f", income));
+				//System.out.println(String.format("Activity=%s", activity));
+				//System.out.println(String.format("farm index=%d", farmIndex));
 				
 				farm.updateFarmParameters(allFarms, income, activity);
 				

@@ -108,7 +108,7 @@ public class FuzzyLogicCalculator {
 	 * The len-2 part of the calculation is to account for q+ and q- minus at the start and end of the calculation
 	 * @return list of activities from the activity selection calculator
 	 */
-	public List<String> getOptimizeActivities() {
+	public List<String> getOptimizationActivities() {
 		double[] c1 = new double[this.P.size()];
 		for (int i = 0; i < this.P.size(); i++) {
 			c1[i] = P.get(i);

@@ -120,8 +120,8 @@ public class Farm {
 		
 		System.out.println(String.format("Activity_Dissimilarity=%f", this.Activity_Dissimilarity));
 		System.out.println(String.format("Activity_tolerance_coef=%f", this.p_activity_tolerance_coef));
-		System.out.println(String.format("Income_Dissimilarity=%f", this.Activity_Dissimilarity));
-		System.out.println(String.format("Income_tolerance_coef=%f", this.p_activity_tolerance_coef));
+		System.out.println(String.format("Income_Dissimilarity=%f", this.Income_Dissimilarity));
+		System.out.println(String.format("Income_tolerance_coef=%f", this.p_income_tolerance_coef));
 		System.out.println(String.format("========== Satisfaction ========== %f", this.Satisfaction));
 		
 		if ((head.getAge() > 650)) {

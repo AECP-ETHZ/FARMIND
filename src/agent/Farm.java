@@ -229,17 +229,17 @@ public class Farm {
     	// Dissimilarity calculation based on difference btw activity sets of this farm and its peers 
     	for (int i = 0; i < networkActivityList.size(); i++)
     	{
-    		// if the activity is done by this farm, ignore that activity in the dissimilarity
+    		// Ignore the activity in the dissimilarity if it is performed by this farm
     		if (thisFarmActivityList.contains(networkActivityList.get(i))) {
     			continue;
     			
     		} else {
-    	    // these activities are not done by this farm so it counts for the dissimilarity
+    	    // Count activities not performed by this farm for the dissimilarity
     			dissimilarity = dissimilarity + (activityMap.get(networkActivityList.get(i)) / ((double)edgeCount) );
     		}
     	}
 
-        currentDissimilarity = dissimilarity/networkActivityList.size();
+        currentDissimilarity = dissimilarity / networkActivityList.size();
 		setActivity_Dissimilarity(currentDissimilarity);
 	}
 	
@@ -248,8 +248,8 @@ public class Farm {
 	 * The dissimilarity is calculated as the degree that the growth rate of one's income is lower the average level of the population.
 	 */
 	private void updateIncomeDissimilarity() {
-		double personalIncomeChangePercent = 0;								   // percent change in personal income
-		personalIncomeChangePercent = (IncomeHistory.get(0) - lastYearPersonalIncomeAverage) /lastYearPersonalIncomeAverage;
+		double personalIncomeChangePercent = 0;								   // Change rate in personal income
+		personalIncomeChangePercent = (IncomeHistory.get(0) - lastYearPersonalIncomeAverage) / lastYearPersonalIncomeAverage;
 		
 		this.Income_Dissimilarity = this.populationIncomeChangePercent - personalIncomeChangePercent;
 	}
@@ -590,10 +590,10 @@ public class Farm {
 	public void setIncome_Dissimilarity(double income_dissimilarity) {
 		this.Income_Dissimilarity = income_dissimilarity;
 	}
-	public double getRegionIncomeChangePercent() {
+	public double getPopulationIncomeChangePercent() {
 		return this.populationIncomeChangePercent;
 	}
-	public void setRegionIncomeChangePercent(double populationIncomeChangePercent) {
+	public void setPopulationIncomeChangePercent(double populationIncomeChangePercent) {
 		this.populationIncomeChangePercent = populationIncomeChangePercent;
 	}
 	public double getLastYearPersonalIncomeAverage() {

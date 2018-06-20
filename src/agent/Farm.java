@@ -122,7 +122,7 @@ public class Farm {
 		System.out.println(String.format("Activity_tolerance_coef=%f", this.p_activity_tolerance_coef));
 		System.out.println(String.format("Income_Dissimilarity=%f", this.Activity_Dissimilarity));
 		System.out.println(String.format("Income_tolerance_coef=%f", this.p_activity_tolerance_coef));
-		System.out.println(String.format("Satisfaction=%f", this.Satisfaction));
+		System.out.println(String.format("========== Satisfaction ========== %f", this.Satisfaction));
 		
 		if ((head.getAge() > 650)) {
 			this.strategy = 1;     //OPT-OUT (The farmer retires.)
@@ -149,6 +149,8 @@ public class Farm {
 				ActivitySet = fuzzyLogicCalc.getOptimizationActivities();
 			}
 		}
+		
+		System.out.println(String.format("=================== STRATEGY =================== %d", this.strategy));
 		
 		return ActivitySet;
 	}
@@ -232,7 +234,7 @@ public class Farm {
     		}
     	}
     	
-    	// Dissimilarity calculation based on difference btw activity sets of this farm and its peers 
+    	// Dissimilarity calculation based on difference between activity sets of this farm and its peers 
     	for (int i = 0; i < networkActivityList.size(); i++)
     	{
     		// Ignore the activity in the dissimilarity if it is performed by this farm
@@ -303,7 +305,7 @@ public class Farm {
 				value += 1;
 			}
 			else {
-				value -= 1;
+				value -= 1;      // Experience for all activities decays by 20% per year. Do the decay first, then increase the value for new activities.
 			}
 			
 			if(value > this.getMemory()) value = this.getMemory();
@@ -330,18 +332,18 @@ public class Farm {
 	
 	/**
 	 * Update income history by removing oldest income and replacing with new income
-	 * Income is an array of [year1_income, year2_income, year3_income, ... yearN_income]
-	 * where year 1 is the most recent income and year N is the oldest income
+	 * Income is an array in the format of [year1_income, year2_income, year3_income, ... yearM_income]
+	 * where year1 is the most recent income and yearM is the oldest income
 	 * @param income
 	 */
 	private void updateIncomeHistoryList (double income) {
-		List<Double> income_hist = new ArrayList<Double>();                    // update array for new incomes
+		List<Double> income_hist = new ArrayList<Double>();                    // Add new income to the list of income history
 		if(income == -1) return;											   // income is -1 for the first year due to initialization
 		
 		income_hist.add(income);											   // start income list with updated income for year 1
 
 		for (int i = 0; i< this.getMemory()-1; i++) {
-			income_hist.add(this.IncomeHistory.get(i));						// add all but oldest income (year N) to income list 
+			income_hist.add(this.IncomeHistory.get(i));						   // add all but oldest income (year N) to income list 
 		}
 		
 		setIncomeHistory(income_hist); 
@@ -363,7 +365,7 @@ public class Farm {
 	/** 
 	 * Calculate satisfaction score given income value
 	 * @param income: income of farm
-	 * @param probability: probability of income occuring
+	 * @param probability: probability that the income occurs
 	 * @return satisfaction satisfaction derived from income
 	 */
 	private double calculateSatisfaction(double income, double probability) {
@@ -384,7 +386,7 @@ public class Farm {
 			value = Math.pow(income, alpha_plus);
 			probWeighting = ( Math.pow(probability, phi_plus) ) / Math.pow( (Math.pow(probability, phi_plus) + Math.pow((1 - probability), phi_plus)), (1/phi_plus) );
 		} 
-		else if (income < this.Aspiration) {
+		else {
 			value = (-1)*lambda*Math.pow(income, alpha_minus);
 			probWeighting = ( Math.pow(probability, phi_minus) ) / Math.pow( (Math.pow(probability, phi_minus) + Math.pow((1 - probability), phi_minus)), (1/phi_minus) );
 		}

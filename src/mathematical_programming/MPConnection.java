@@ -221,8 +221,8 @@ public class MPConnection implements MP_Interface{
 	
 	
 	/**
-	 *  We have 72 activities in the system, and these tuples correspond to each activity. The first element in the tuple is a row in the activity matrix, and the second element is the column.
-	 *  Each row element corresponds to a post sowing strategy, and each column is a pre sowing strategy. So [53,2] corresponds to the post_strat 53, and pre_strat 2 strategy set.  
+	 *  The following tuples correspond to the 72 activities in the application. The first element in the tuple is a row in the activity matrix, and the second element is the column.
+	 *  Each row element corresponds to a post-sowing strategy, and each column is a pre-sowing strategy. E.g. [53,2] corresponds to the post_strat 53 and pre_strat 2 strategy set.  
 	 */
 	public static int[][] activitySets = 
 		{

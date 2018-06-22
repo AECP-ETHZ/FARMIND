@@ -112,7 +112,9 @@ public class Consumat {
 			populationYearlyMeanIncome.add(mean(incomeFarmYear));	
 		}
 		
-		for(int i = memory-1; i > 0; i-- ) {
+		int meanYearCount = 2;                                                 // number of years to count in the past for the mean calculation
+		
+		for(int i = meanYearCount; i > 0; i-- ) {
 			double diff = (populationYearlyMeanIncome.get(i-1) -  populationYearlyMeanIncome.get(i)) /  populationYearlyMeanIncome.get(i);
 			differenceIncomeYears.add( diff );   
 		}
@@ -146,7 +148,9 @@ public class Consumat {
 			populationYearlyMeanIncome.add(mean(incomeFarmYear));	
 		}
 		
-		for(int i = memory-1; i > 0; i-- ) {
+		int meanYearCount = 2;                                                 // number of years to count in the past for the mean calculation
+		
+		for(int i = meanYearCount; i > 0; i-- ) {
 			double diff = (populationYearlyMeanIncome.get(i-1) -  populationYearlyMeanIncome.get(i)) /  populationYearlyMeanIncome.get(i);
 			differenceIncomeYears.add( diff );   
 		}

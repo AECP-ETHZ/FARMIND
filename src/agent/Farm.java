@@ -356,7 +356,9 @@ public class Farm {
 		List<Double> differenceIncomeYears = new ArrayList<Double>();
 		double historicalIncomeChangeRate = 0;								   
 		
-		for(int i = this.getMemory()-1; i > 0; i-- ) {
+		int meanYearCount = 2;                                                 // number of years to count in the past for the mean calculation
+		
+		for(int i = meanYearCount; i > 0; i-- ) {
 			double diff = (this.IncomeHistory.get(i-1) -  this.IncomeHistory.get(i)) /  this.IncomeHistory.get(i);
 			differenceIncomeYears.add( diff );   
 		}

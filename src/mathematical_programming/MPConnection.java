@@ -10,7 +10,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 import activity.Activity;
 import reader.ReadData;
@@ -80,14 +79,10 @@ public class MPConnection implements MP_Interface{
 	public void inputsforMP(String farmId, List<String> possibleActivity) {
 		
 		int[][] output = new int[55][6]; 
-		
-		Random rand = new Random();
-		int[] init = {1,2,3,4,5,6};	
-		int initialization_strategy = rand.nextInt(5) ;                        // number between 1 and 5
-		
-		int init_value = init[initialization_strategy];                        // init first set of activities in gams control file
 
-		output[0][init_value-1] = 1;
+		for (int i = 0; i<5; i++) {  // set all the first row, except the last column, to 1 as the initialization strategies. 
+			output[0][i] = 1;
+		}
 		
 		try {
 			FileWriter fw = new FileWriter(file,true);
@@ -139,7 +134,7 @@ public class MPConnection implements MP_Interface{
 		
 		List<Activity> allPossibleActivities = reader.getActivityList();		   // generated activity list with ID and name 
 		
-		File f = new File("projdir\\Grossmargin_P4,00.csv");							       // actual results file
+		File f = new File("projdir\\Grossmargin_P4,00.csv");					   // actual results file
 		while (!f.exists()) {try {
 			Thread.sleep(1000);												       // wait until the MP finishes running
 		} catch (InterruptedException e) {

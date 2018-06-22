@@ -374,8 +374,7 @@ public class Farm {
 	 * @return satisfaction satisfaction derived from income
 	 */
 	private double calculateSatisfaction(double income, double probability) {
-		double satisfaction = 0;
-		
+		double satisfaction = 0;	
 		double alpha_plus = this.getP_alpha_plus();
 		double alpha_minus = this.getP_alpha_minus();
 		double phi_plus = this.getP_phi_plus();
@@ -383,9 +382,6 @@ public class Farm {
 		double lambda = this.getP_lambda();
 		double value = 0;                                     // value function
 		double probWeighting = 0;                             // probability weighting function
-		
-		System.out.println(String.format("Income=%f", income));
-		System.out.println(String.format("Aspiration=%f", this.Aspiration));
 
 		if (income >= this.Aspiration) {
 			value = Math.pow(income, alpha_plus);
@@ -397,6 +393,10 @@ public class Farm {
 		}
 
 		satisfaction = value*probWeighting;
+		
+		System.out.println(String.format("Income=%f", income));
+		System.out.println(String.format("Aspiration=%f", this.Aspiration));
+		System.out.println(String.format("Satisfaction=%f", satisfaction));
 		
 		return satisfaction;
 	}

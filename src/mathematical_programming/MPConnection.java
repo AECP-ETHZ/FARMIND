@@ -24,7 +24,7 @@ public class MPConnection implements MP_Interface{
 	File file; 
 	
 	public MPConnection() {
-		file = new File("model\\p_allowedStratPrePost.csv");				   // delete last time period's simulation file
+		file = new File("projdir\\p_allowedStratPrePost.csv");				   // delete last time period's simulation file
 		if (file.exists()) {
 			file.delete();
 		}
@@ -34,7 +34,7 @@ public class MPConnection implements MP_Interface{
 	public void runModel() {
 		Runtime runtime = Runtime.getRuntime();						           // java runtime to run commands
 		
-		File f = new File("model\\Grossmargin_P4,00.csv");
+		File f = new File("projdir\\Grossmargin_P4,00.csv");
 		f.delete();
 		
 		System.out.println("Starting MP model");
@@ -139,7 +139,7 @@ public class MPConnection implements MP_Interface{
 		
 		List<Activity> allPossibleActivities = reader.getActivityList();		   // generated activity list with ID and name 
 		
-		File f = new File("model\\Grossmargin_P4,00.csv");							       // actual results file
+		File f = new File("projdir\\Grossmargin_P4,00.csv");							       // actual results file
 		while (!f.exists()) {try {
 			Thread.sleep(1000);												       // wait until the MP finishes running
 		} catch (InterruptedException e) {
@@ -147,7 +147,7 @@ public class MPConnection implements MP_Interface{
 		}}
 
 		try {
-			Buffer = new BufferedReader(new FileReader("model\\Grossmargin_P4,00.csv"));
+			Buffer = new BufferedReader(new FileReader("projdir\\Grossmargin_P4,00.csv"));
 			
 			Line = Buffer.readLine();
 			while ((Line = Buffer.readLine()) != null) {                       

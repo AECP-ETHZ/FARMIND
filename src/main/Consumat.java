@@ -73,7 +73,6 @@ public class Consumat {
 				
 				farm.updateAge();                              				       // each time period update age
 				farmIndex++;                                                       // go to next farm in list
-				
 			}
 			
 			MP.runModel();

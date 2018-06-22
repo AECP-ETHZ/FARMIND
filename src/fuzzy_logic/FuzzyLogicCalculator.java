@@ -288,8 +288,8 @@ public class FuzzyLogicCalculator {
 			Q.add(q);
 		}
 
-		//return normalizeList(Q);
-		return (Q);
+		return normalizeList(Q);
+		//return (Q);
 	}
 	
 	/** 
@@ -308,8 +308,8 @@ public class FuzzyLogicCalculator {
 			P.add(1 - R[i]/m);
 		}
 		
-		//return normalizeList(P);
-		return P;
+		return normalizeList(P);
+		//return P;
 	}
 	
 	/** 
@@ -366,8 +366,8 @@ public class FuzzyLogicCalculator {
         	S.add(sum);
         }
 
-		//return normalizeList(S);
-		return (S);
+		return normalizeList(S);
+		//return (S);
 	}
 	
 	/**

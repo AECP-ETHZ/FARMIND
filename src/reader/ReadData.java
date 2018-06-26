@@ -104,6 +104,8 @@ public class ReadData {
 				memory = Integer.parseInt( farmParameters.get(MEMORY));
 				if (memory < 4) {
 					memory = 4; 											   // error in calculations if memory is less than 4
+					System.out.println("Please use a memory length greater than 4");
+					System.exit(0);
 				}
 				
 				beta = Double.parseDouble( farmParameters.get(BETA));

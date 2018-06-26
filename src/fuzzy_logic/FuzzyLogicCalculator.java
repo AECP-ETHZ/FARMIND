@@ -90,7 +90,7 @@ public class FuzzyLogicCalculator {
 		 
 		for (int i = 0; i< len - 2; i++) {
 			for (int j = 0; j < len - 2; j++) {
-				matrix[i][j] = p_p[i][j] + farm.getP_beta() * ( p_l[i][j] + farm.getP_beta_s()*p_s[i][j] );
+				matrix[i][j] = ( p_p[i][j] + farm.getP_beta() * ( p_l[i][j] + farm.getP_beta_s()*p_s[i][j] ) ) / (1 + farm.getP_beta() + farm.getP_beta_s());
 			}
 		}
 		
@@ -226,6 +226,9 @@ public class FuzzyLogicCalculator {
 				ND.add( (x - y) );
 			}
 		}	
+		double maxND = max(ND);
+		if(maxND < 0) maxND = 0;
+		
 		return 1 - max(ND);
 	}
 	

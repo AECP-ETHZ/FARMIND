@@ -98,7 +98,7 @@ public class Consumat {
 	 * This function initializes the income growth rate of the population (in a region) for all farms.
 	 * @param allFarms: list of all farms in region
 	 */
-	private static void initializePopulationIncomeChangeRate(List<Farm> allFarms) {	
+	public static void initializePopulationIncomeChangeRate(List<Farm> allFarms) {	
 		List<Double> differenceIncomeYears = new ArrayList<Double>();
 		List<Double> populationYearlyMeanIncome = new ArrayList<Double>();
 		
@@ -130,7 +130,7 @@ public class Consumat {
 	 * @param allFarms: list of all farms in region
 	 * @param thisYearIncome: list of income values for all farms
 	 */
-	private static void updatePopulationIncomeChangeRate(List<Farm> allFarms, List<Double> thisYearIncome) {
+	public static void updatePopulationIncomeChangeRate(List<Farm> allFarms, List<Double> thisYearIncome) {
 		List<Double> differenceIncomeYears = new ArrayList<Double>();
 		List<Double> populationYearlyMeanIncome = new ArrayList<Double>();
 		

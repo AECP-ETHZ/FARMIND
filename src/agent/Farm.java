@@ -77,7 +77,7 @@ public class Farm {
 	 * @param phi_plus: for satisfaction calculation
 	 * @param phi_minus: for satisfaction calculation
 	 */
-	public Farm(String name, Location location, Graph<String, DefaultEdge> socialNetwork, List<Double> incomeHistory, double personalIncomeAverage, 
+	public Farm(String name, Location location, Graph<String, DefaultEdge> socialNetwork, List<Double> incomeHistory,  
 			FarmDataMatrix farmingExperience, FarmDataMatrix preferences, List<Activity> activities, double activity_tolerance, double income_tolerance, 
 			List<Activity> currentActivity, Person farmHead, double beta, double beta_s, double aspiration_coef, double lambda, double alpha_plus, 
 			double alpha_minus, double phi_plus, double phi_minus) {
@@ -86,7 +86,6 @@ public class Farm {
 		this.setLocation(location);
 		this.setNetwork(socialNetwork);
 		this.setIncomeHistory(incomeHistory);
-		this.setAveragePersonalIncomeChangeRate(personalIncomeAverage);
 		
 		this.setExperience(farmingExperience);
 		this.setPreferences(preferences);
@@ -255,7 +254,7 @@ public class Farm {
 	 * This function updates farms with values of dissimilarity in terms of income growth. 
 	 * The dissimilarity is calculated as the degree that the growth rate of one's income is lower the average level of the population.
 	 */
-	private void updateIncomeDissimilarity() {
+	public void updateIncomeDissimilarity() {
 		
 		this.Income_Dissimilarity = averagePopulationIncomeChangeRate - averagePersonalIncomeChangeRate;
 	}
@@ -264,7 +263,7 @@ public class Farm {
 	 * Based on the current income level of the farmer calculate new satisfaction level.
 	 * The farmer's income is set externally from LP simulation tool, or randomly generated from distribution
 	 */
-	private void updateSatisfaction() {		
+	public void updateSatisfaction() {		
 		double current_satisfaction = currentSatisfaction();			       // current satisfaction level
 		setSatisfaction(current_satisfaction);                                 // uses updated income history
 	}
@@ -352,7 +351,7 @@ public class Farm {
 	 * change rate is calculated for all years as (Year_n-1 - Year_n) / year_n
 	 * We then set the mean of all the rates of change including the most recent year. 
 	 */
-	private void updateAveragePersonalIncomeChangeRate() {	
+	public void updateAveragePersonalIncomeChangeRate() {	
 		List<Double> differenceIncomeYears = new ArrayList<Double>();
 		double historicalIncomeChangeRate = 0;								   
 		

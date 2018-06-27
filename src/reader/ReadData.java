@@ -92,7 +92,6 @@ public class ReadData {
 				List<Activity> currentActivity = new ArrayList<Activity>();    // dummy variable to create initial farm object. Initialized after creation. 
 				List<Double> income = new ArrayList<Double>();				   // dummy variable to create initial farm object. Initialized after creation. 
 				double[] coordinates = {0,0};								   // location of farm
-				double personalIncomeAverage = 0;					           // personal income average
 				
 				name = farmParameters.get(NAME);
 				coordinates[0] = Double.parseDouble(farmParameters.get(COORDINATE1));
@@ -121,7 +120,7 @@ public class ReadData {
 
 				Person farmHead = new Person(age, education, memory);        
 				Farm farm = new Farm(name, location, network.get(farm_count_index), 
-						income, personalIncomeAverage, experience, preference, activities, 
+						income, experience, preference, activities, 
 						activity_tolerance, income_tolerance, currentActivity, farmHead, 
 						beta, beta_s, aspiration_coef, lambda, alpha_plus, alpha_minus, phi_plus, phi_minus);
 				
@@ -209,19 +208,14 @@ public class ReadData {
 			while ((Line = Buffer.readLine()) != null) { 
 				farmParameters = CSVtoArrayList(Line);						   // Read farm's parameters line by line
 				List<Double> income = new ArrayList<Double>();				   // each farm has income history records
-				double personalIncomeAverage = 0;					           // personal income average
 				
 				for (int i = 1; i < farms.get(farm_count_index).getMemory()+1; i++) {
 					income.add( Double.parseDouble( farmParameters.get(i) ) );
 				}
 				
-				List<Double> avgIncome = new ArrayList<Double>(income);
-				avgIncome.remove(0);                                           // remove income of first time period
-				personalIncomeAverage = mean(avgIncome);
-				
-				farms.get(farm_count_index).setAveragePersonalIncomeChangeRate(personalIncomeAverage);
 				farms.get(farm_count_index).setIncomeHistory(income);
 				farms.get(farm_count_index).setLearningRate();
+				farms.get(farm_count_index).updateAveragePersonalIncomeChangeRate();
 				farm_count_index++;	
 			}
 		
@@ -413,21 +407,6 @@ public class ReadData {
 			}
 		}
 		return Result;
-	}
-	
-	/** 
-	 * This function returns the mean value of a given list 
-	 * @param list list of the values to calculate mean with
-	 * @return mean
-	 */
-	private double mean(List<Double> list) {
-		double mean = 0;												       // mean value to return
-		
-		for (int i = 0; i<list.size(); i++) {
-			mean = mean + list.get(i);
-		}
-		
-		return mean / list.size();
 	}
 
 }

@@ -30,7 +30,7 @@ public class Consumat {
 		} 
 		
 		if (args.length > 1) {
-			System.out.println("FARMIND version number: 1.2.0");
+			System.out.println("FARMIND version number: 0.5.0");
 		}
 
 		ReadData reader         = new ReadData();							               		   // read all input data files
@@ -40,28 +40,25 @@ public class Consumat {
 		double income = 0;													                       // specific income of farm 		
 		ArrayList<Activity> activity = null;											           // specific activity list of the farm
 		
-		initializePopulationIncomeChangeRate(allFarms);						                           // initialize the farms with the input values before starting the full ABM simulation
+		initializePopulationIncomeChangeRate(allFarms);						                       // initialize the farms with the input values before starting the full ABM simulation
 		
 		int farmIndex = 0;													                       // index of specific farm in list
-		for (int year = 1; year <= Integer.parseInt(args[0]); year++) {		                       // run simulation for a set of years, getting updated income and activities	
+		for (int year = 1; year <= Integer.parseInt(args[0]); year++) {		                       // run simulation for a set of years, getting updated income and activities from the MP model each iteration
 			System.out.println(String.format("Year %d", year));	
 			
 			MPConnection MP = new MPConnection();
 			
 			farmIndex = 0;
 			for (Farm farm : allFarms) {
-				if (year == 1) {											                       // ignore first year as we already have that initialized with input file
+				if (year == 1) {											                       // ignore first year udpated as we already have that initialized with input file
 					income = -1;
 				} else {
 					income = MP_Incomes.get(farmIndex);										       // for all other years get the MP income and the MP activities to update each farm
 					activity = MP_Activities.get(farmIndex);
 				}
-				//System.out.println(String.format("Income=%f", income));
-				//System.out.println(String.format("Activity=%s", activity));
-				//System.out.println(String.format("farm index=%d", farmIndex));
 				
-				farm.updateExperience();                              			   // each time period update experience
-				farm.updateFarmParameters(allFarms, income, activity);
+				farm.updateExperience();                              			                   // each time period update experience
+				farm.updateFarmParameters(allFarms, income, activity);                             
 				
 				List<String> possibleActivitySet = farm.decideActivitySet(allFarms);      
 				
@@ -71,20 +68,23 @@ public class Consumat {
 				
 				MP.inputsforMP(farm.getFarmName(), possibleActivitySet);
 				
-				farm.updateAge();                              				       // each time period update age
-				farmIndex++;                                                       // go to next farm in list
+				farm.updateAge();                              				                       // each time period update age
+				farmIndex++;                                                                       // go to next farm in list
 			}
 			
 			MP.runModel();
 			MP_Incomes = MP.readMPIncomes();
 			MP_Activities = MP.readMPActivities();
 
-			updatePopulationIncomeChangeRate(allFarms, MP_Incomes);    // at end of time step update the percent change for population
+			updatePopulationIncomeChangeRate(allFarms, MP_Incomes);                                // at end of time step update the percent change for population
 		}
 
 		System.out.println("Complete"); 
 	}
 		
+	/**
+	 * For the output log file, we update the name after 1 million lines. Excel is not able to parse CSV files with more than 1 Million lines of data
+	 */
     private static void updateLogFileName() {
 		line_counter++;
 		if (line_counter > 1000000) {

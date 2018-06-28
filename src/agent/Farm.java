@@ -171,9 +171,8 @@ public class Farm {
 	    }    
 	    updateAspiration();
 	    updateSatisfaction();									
-	    updateIncomeDissimilarity();										   // in the main simulation loop in Consumat, we update the populationIncomeChangePercent 
+	    updateIncomeDissimilarity();										   // in the simulation loop in Main, we update the populationIncomeChangePercent 
 		updateActivityDissimilarity(allFarms);
-   
 	}
 	/**
 	 * This function updates farms with values of dissimilarity in terms of activity. 
@@ -381,8 +380,8 @@ public class Farm {
 		double phi_plus = this.getP_phi_plus();
 		double phi_minus = this.getP_phi_minus();
 		double lambda = this.getP_lambda();
-		double value = 0;                                     // value function
-		double probWeighting = 0;                             // probability weighting function
+		double value = 0;                                                      // value function
+		double probWeighting = 0;                                              // probability weighting function
 
 		if (income >= this.Aspiration) {
 			value = Math.pow(income, alpha_plus);

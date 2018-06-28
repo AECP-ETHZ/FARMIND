@@ -197,7 +197,7 @@ public class MPConnection implements MP_Interface{
 	
 	/**
 	 * This function converts data from CSV file into array structure 
-	 * @param CSV String from input CSv file to break into array
+	 * @param CSV String from input CSV file to break into array
 	 * @return Result ArrayList of strings 
 	 */
 	private static ArrayList<String> CSVtoArrayList(String CSV) {		       
@@ -294,7 +294,4 @@ public class MPConnection implements MP_Interface{
 				{54,3},
 				{54,4}														   // strategy 72, post sowing 54, pre sowing 4
 		};
-
-	
-
 }

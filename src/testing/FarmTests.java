@@ -196,7 +196,7 @@ public class FarmTests {
 		Farm farm = allFarms.get(0);
 		farm.updateIncomeDissimilarity();
 		
-		double diff = farm.getIncome_Dissimilarity(); //getAveragePersonalIncomeChangeRate();
+		double diff = farm.getIncome_Dissimilarity(); 
 		
 		assertEquals(-0.1762316074687296, diff);							   // excel calculation
 	}

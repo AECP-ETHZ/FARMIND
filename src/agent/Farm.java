@@ -60,7 +60,6 @@ public class Farm {
 	 * @param location: location of the farm agent
 	 * @param socialNetwork: social network of the agent shared among the population
 	 * @param incomeHistory: income history for each agent
-	 * @param personalIncomeAverage: average of historical income for the agent
 	 * @param farmingExperience: matrix of farming experience for each activity
 	 * @param preferences: agent preference matrix for activities
 	 * @param activities: list of all activities

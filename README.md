@@ -8,7 +8,7 @@ A linear programming model, integrated into the agent-based model, is then used 
 ### Program Overview and Requirements
 The initial conditions of the agents with all parameters need to be specified in the /data/ directory before starting the model. The /test_data/ folder contains example initialization files. 
 
-For the complete system documentation download the [documentation] (../blob/tree/master/documentation). 
+The complete system documentation is available in the documentation folder. 
 
 ### Library Installation in Eclipse
 Required libraries:

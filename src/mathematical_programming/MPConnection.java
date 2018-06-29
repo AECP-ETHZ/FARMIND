@@ -23,7 +23,7 @@ public class MPConnection implements MP_Interface{
 	File file; 
 	
 	public MPConnection() {
-		file = new File("projdir\\p_allowedStratPrePost.csv");				   // delete last time period's simulation file
+		file = new File("projdir\\p_AllowedStratPrePost.csv");				   // delete last time period's simulation file
 		if (file.exists()) {
 			file.delete();
 		}

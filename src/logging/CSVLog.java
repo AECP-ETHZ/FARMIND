@@ -92,7 +92,7 @@ public class CSVLog {
 		writer.print(String.format("%s,",this.farm.getP_phi_minus() ));
 		writer.print(String.format("%s,",this.farm.getP_aspiration_coef() ));
 		writer.print(String.format("%s,",this.farm.getP_activity_tolerance_coef() ));
-		writer.print(String.format("%.2f,", this.getLearningRate() ) );
+		writer.print(String.format("%.4f,", this.getLearningRate() ) );
 		writer.print(String.format("%s,",this.farm.getP_income_tolerance_coef() ));
 		writer.print(String.format("%s,",this.farm.getP_beta() ));
 		writer.print(String.format("%s,",this.farm.getP_beta_s() ));
@@ -107,7 +107,7 @@ public class CSVLog {
 			writer.print("NA," );
 		}
 
-		writer.print(String.format("%s,",this.income ) );
+		writer.print(String.format("%.2f,",this.income ) );
 		
 		for(int i = 0; i < this.currentActivity.size(); i++) {
 			//writer.print(String.format("%d,",  1 + this.allActivity.indexOf(this.currentActivity.get(i).getName() )) );

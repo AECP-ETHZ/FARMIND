@@ -115,13 +115,13 @@ public class Farm {
 	public List<String> decideActivitySet(List<Farm> allFarms) {
 	    List<String> ActivitySet = new ArrayList<String>();				                           // list of activities from fuzzy logic
 		FuzzyLogicCalculator fuzzyLogicCalc = new FuzzyLogicCalculator(this, allFarms);            // calculator for the activity selection
-		
+		/*
 		System.out.println(String.format("Activity_Dissimilarity=%f", this.Activity_Dissimilarity));
 		System.out.println(String.format("Activity_tolerance_coef=%f", this.p_activity_tolerance_coef));
 		System.out.println(String.format("Income_Dissimilarity=%f", this.Income_Dissimilarity));
 		System.out.println(String.format("Income_tolerance_coef=%f", this.p_income_tolerance_coef));
 		System.out.println(String.format("========== Satisfaction ========== %f", this.Satisfaction));
-		
+		*/
 		if ((head.getAge() > 650)) {
 			this.strategy = 1;     //OPT-OUT (The farmer retires.)
 		}
@@ -148,7 +148,7 @@ public class Farm {
 			}
 		}
 		
-		System.out.println(String.format("=================== STRATEGY =================== %d", this.strategy));
+		//System.out.println(String.format("=================== STRATEGY =================== %d", this.strategy));
 		
 		return ActivitySet;
 	}
@@ -392,11 +392,11 @@ public class Farm {
 		}
 
 		satisfaction = value*probWeighting;
-		
+		/*
 		System.out.println(String.format("Income=%f", income));
 		System.out.println(String.format("Aspiration=%f", this.Aspiration));
 		System.out.println(String.format("Satisfaction=%f", satisfaction));
-		
+		*/
 		return satisfaction;
 	}
 	/**
@@ -409,13 +409,11 @@ public class Farm {
 		double probability = 0;
 		double mean = mean(this.IncomeHistory);
 		double std = std(this.IncomeHistory);
-		/*
-		System.out.println(String.format("std was :%f", std));
+		
 		if (std == 0) {
 			System.out.println("The standard deviation of historical incomes is 0.");
-			std = 10;
+			//std = 10;
 		}
-		*/
 		NormalDistribution normal = new NormalDistribution(mean, std);		   // distribution of historical incomes
 		
 		for (int i = 0; i< this.getMemory(); i++) {

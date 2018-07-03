@@ -166,7 +166,7 @@ public class MPConnection implements MP_Interface{
 				for(int i = 0; i < allPossibleActivities.size(); i++) {
 					String name = String.format("\"activity%d\"", index+1);
 					List<Activity> farmActivityList = new ArrayList<Activity>();
-					if (index < 10) {
+					if (index < 9) {
 						name = String.format("\"activity0%d\"", index+1);
 					}
 					if (allPossibleActivities.get(i).getName().equals(name) ) {

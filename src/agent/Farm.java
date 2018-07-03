@@ -409,6 +409,13 @@ public class Farm {
 		double probability = 0;
 		double mean = mean(this.IncomeHistory);
 		double std = std(this.IncomeHistory);
+		/*
+		System.out.println(String.format("std was :%f", std));
+		if (std == 0) {
+			System.out.println("The standard deviation of historical incomes is 0.");
+			std = 10;
+		}
+		*/
 		NormalDistribution normal = new NormalDistribution(mean, std);		   // distribution of historical incomes
 		
 		for (int i = 0; i< this.getMemory(); i++) {

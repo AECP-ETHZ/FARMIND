@@ -1,51 +1,378 @@
 Municipality,GMAverage,Pre-Sow-Herbicide,Post-Sow-Herbicide
-Ahaus       ,      574.87,spre3       ,spost1      ,
-Beckum      ,      339.18,spre3       ,spost1      ,
-Bruehl      ,      291.34,spre3       ,spost1      ,
-Hoevelhof   ,      544.15,spre3       ,spost1      ,
-Hopsten     ,      643.02,spre3       ,spost1      ,
-Lippetal    ,      373.10,spre3       ,spost1      ,
-Nottuln     ,      548.39,spre3       ,spost1      ,
-Ostbevern   ,      640.34,spre3       ,spost1      ,
-Greven      ,      577.71,spre3       ,spost1      ,
-Hamm        ,      504.75,spre3       ,spost1      ,
-Hamminkeln  ,      578.79,spre3       ,spost1      ,
-Mechernich  ,      451.76,spre3       ,spost1      ,
-Moenchenglad,      587.45,spre3       ,spost1      ,
-Salzkotten  ,      559.60,spre3       ,spost1      ,
-Selm        ,      548.02,spre3       ,spost1      ,
-Lotte       ,      579.61,spre3       ,spost1      ,
-Holzwickede ,      580.25,spre3       ,spost1      ,
-Juechen     ,      614.57,spre3       ,spost1      ,
-Luedinghause,      539.87,spre3       ,spost1      ,
-Hilden      ,      572.60,spre3       ,spost1      ,
-Borgholzhaus,      520.19,spre3       ,spost1      ,
-Kirchlengern,      552.45,spre3       ,spost1      ,
-Marienmuenst,      547.72,spre3       ,spost1      ,
-Sonsbeck    ,      571.49,spre3       ,spost1      ,
-Straelen    ,      565.12,spre3       ,spost1      ,
-Wuppertal   ,      616.82,spre3       ,spost1      ,
-Suedlohn    ,      540.25,spre3       ,spost1      ,
-Leverkusen  ,      576.14,spre3       ,spost1      ,
-Schwerte    ,      596.18,spre3       ,spost1      ,
-Engelskirche,      465.63,spre3       ,spost1      ,
-Werl        ,      601.84,spre3       ,spost1      ,
-Wesseling   ,      511.48,spre3       ,spost1      ,
-Tecklenburg ,      583.82,spre3       ,spost1      ,
-Mettmann    ,      702.52,spre3       ,spost1      ,
-Bocholt     ,      583.23,spre3       ,spost1      ,
-Schleiden   ,      353.81,spre3       ,spost1      ,
-Ratingen    ,      636.78,spre3       ,spost1      ,
-Meerbusch   ,      579.48,spre3       ,spost1      ,
-Hellenthal  ,      324.62,spre3       ,spost1      ,
-Uebach-Palen,      572.77,spre3       ,spost1      ,
-Bestwig     ,      471.60,spre3       ,spost1      ,
-Lengerich   ,      556.28,spre3       ,spost1      ,
-Radevormwald,      384.84,spre3       ,spost1      ,
-Siegen      ,      542.23,spre3       ,spost1      ,
-Soest       ,      594.39,spre3       ,spost1      ,
-Issum       ,      542.61,spre3       ,spost1      ,
-Waltrop     ,      562.70,spre3       ,spost1      ,
-Castrop-Raux,      573.00,spre3       ,spost1      ,
-Nettetal    ,      547.78,spre3       ,spost1      ,
-Bad Salzufle,      586.95,spre3       ,spost1      ,
+Ahaus       ,      857.18,spre5       ,spost1
+Beckum      ,      583.95,spre3       ,spost18
+Bruehl      ,      479.99,spre5       ,spost1
+Hoevelhof   ,      814.49,spre5       ,spost1
+Hopsten     ,      944.85,spre5       ,spost1
+Lippetal    ,      653.86,spre3       ,spost53
+Nottuln     ,      815.18,spre3       ,spost1
+Ostbevern   ,      940.93,spre5       ,spost1
+Greven      ,      961.16,spre5       ,spost18
+Hamm        ,      757.22,spre3       ,spost1
+Hamminkeln  ,      860.85,spre5       ,spost1
+Mechernich  ,      691.43,spre5       ,spost1
+Moenchenglad,      955.14,spre5       ,spost5
+Salzkotten  ,      829.75,spre3       ,spost1
+Selm        ,      909.61,spre3       ,spost52
+Lotte       ,      861.66,spre5       ,spost1
+Holzwickede ,      945.21,spre5       ,spost5
+Juechen     ,      906.13,spre5       ,spost1
+Luedinghause,      803.47,spre3       ,spost1
+Hilden      ,      918.59,spre3       ,spost39
+Borgholzhaus,      782.25,spre5       ,spost1
+Kirchlengern,      863.99,spre3       ,spost33
+Marienmuenst,      821.73,spre5       ,spost1
+Sonsbeck    ,      931.69,spre5       ,spost14
+Straelen    ,      836.29,spre3       ,spost1
+Wuppertal   ,      905.24,spre5       ,spost1
+Suedlohn    ,      820.01,spre5       ,spost1
+Leverkusen  ,      852.57,spre5       ,spost1
+Schwerte    ,      877.60,spre5       ,spost1
+Engelskirche,      714.33,spre5       ,spost1
+Werl        ,      947.87,spre5       ,spost36
+Wesseling   ,      765.96,spre3       ,spost1
+Tecklenburg ,      868.64,spre5       ,spost1
+Mettmann    ,     1016.04,spre3       ,spost1
+Bocholt     ,      955.29,spre5       ,spost14
+Schleiden   ,      568.85,spre5       ,spost1
+Ratingen    ,      930.28,spre3       ,spost1
+Meerbusch   ,      854.95,spre3       ,spost1
+Hellenthal  ,      533.47,spre5       ,spost1
+UebachPalenb,      887.72,spre5       ,spost22
+Bestwig     ,      720.73,spre5       ,spost1
+Lengerich   ,      832.38,spre5       ,spost1
+Radevormwald,      607.07,spre5       ,spost1
+Siegen      ,      868.38,spre5       ,spost16
+Soest       ,      979.33,spre5       ,spost13
+Issum       ,      807.04,spre3       ,spost1
+Waltrop     ,      921.19,spre5       ,spost37
+CastropRauxe,      847.17,spre3       ,spost1
+Nettetal    ,      813.75,spre3       ,spost1
+BadSalzuflen,      837.29,spre1       ,spost1
+Rahden      ,      744.24,spre5       ,spost1
+Steinfurt   ,      941.46,spre5       ,spost22
+Lemgo       ,      871.07,spre5       ,spost1
+Hoerstel    ,      882.12,spre5       ,spost1
+Nieheim     ,      807.50,spre5       ,spost1
+Steinheim   ,      832.91,spre5       ,spost1
+Ruethen     ,      676.54,spre5       ,spost1
+BadWuennenbe,      633.89,spre5       ,spost1
+Vettweiss   ,      798.06,spre5       ,spost1
+Luenen      ,      822.43,spre3       ,spost1
+Bochum      ,      885.50,spre3       ,spost1
+Delbrueck   ,      946.39,spre3       ,spost7
+Gangelt     ,      795.03,spre5       ,spost21
+Kerken      ,      792.11,spre3       ,spost1
+Horstmar    ,      820.97,spre5       ,spost1
+Barntrup    ,      849.23,spre5       ,spost7
+Ascheberg   ,      702.10,spre3       ,spost1
+Wenden      ,      786.90,spre5       ,spost1
+Drolshagen  ,      782.97,spre5       ,spost1
+Geseke      ,      736.47,spre3       ,spost1
+Kevelaer    ,      901.53,spre3       ,spost23
+Hille       ,      817.76,spre5       ,spost1
+Heinsberg   ,      771.47,spre5       ,spost1
+Goch        ,      883.99,spre3       ,spost1
+Neuenrade   ,      776.85,spre5       ,spost1
+Loehne      ,      934.36,spre3       ,spost28
+Windeck     ,      825.45,spre5       ,spost1
+Mettingen   ,      910.34,spre5       ,spost1
+Muenster    ,      761.22,spre5       ,spost1
+Alfter      ,      790.46,spre5       ,spost1
+Rheurdt     ,      825.25,spre3       ,spost1
+Rheine      ,      920.05,spre5       ,spost16
+Augustdorf  ,      683.89,spre5       ,spost1
+Stemwede    ,      779.39,spre5       ,spost39
+Troisdorf   ,      875.84,spre3       ,spost52
+LangenfeldRh,      799.66,spre3       ,spost1
+Extertal    ,      785.93,spre5       ,spost1
+Metelen     ,      891.87,spre5       ,spost1
+Wipperfuerth,      514.94,spre5       ,spost1
+Schoeppingen,      801.75,spre5       ,spost1
+Uedem       ,      993.72,spre3       ,spost53
+Froendenberg,      841.66,spre5       ,spost1
+Coesfeld    ,      871.60,spre5       ,spost37
+Kalkar      ,      863.05,spre3       ,spost1
+Sassenberg  ,      817.81,spre5       ,spost1
+Viersen     ,      879.74,spre5       ,spost22
+Buende      ,      798.52,spre3       ,spost1
+Oelde       ,      748.69,spre5       ,spost14
+SchiederSchw,      889.16,spre5       ,spost1
+Spenge      ,      903.12,spre3       ,spost7
+Wesel       ,      933.20,spre5       ,spost3
+WickedeRuhr ,     1000.75,spre3       ,spost5
+Steinhagen  ,      764.27,spre5       ,spost1
+Bielefeld   ,      814.48,spre5       ,spost1
+Olpe        ,      767.35,spre5       ,spost1
+Werdohl     ,      832.58,spre5       ,spost1
+Kamen       ,      827.07,spre3       ,spost1
+Emsdetten   ,      842.21,spre5       ,spost1
+Brakel      ,      928.77,spre5       ,spost37
+Roedinghause,      979.84,spre3       ,spost12
+Xanten      ,      927.45,spre5       ,spost37
+Haan        ,      923.38,spre3       ,spost1
+HalleWestf  ,      899.03,spre5       ,spost5
+Gladbeck    ,      845.76,spre3       ,spost1
+Heimbach    ,      709.73,spre5       ,spost1
+Beelen      ,      779.77,spre5       ,spost1
+Medebach    ,      643.70,spre5       ,spost1
+NachrodtWibl,      824.75,spre5       ,spost1
+HornBadMeinb,      798.60,spre5       ,spost1
+Warstein    ,      752.20,spre5       ,spost1
+Luegde      ,      907.75,spre5       ,spost5
+Luedenscheid,      826.93,spre5       ,spost37
+Schwalmtal  ,      860.59,spre5       ,spost21
+Gummersbach ,      498.52,spre5       ,spost1
+Ahlen       ,      605.15,spre3       ,spost1
+Senden      ,      745.54,spre3       ,spost1
+Werne       ,      785.89,spre3       ,spost1
+Iserlohn    ,      837.28,spre5       ,spost1
+Titz        ,      894.61,spre5       ,spost1
+Enger       ,      826.75,spre3       ,spost1
+Herford     ,      917.71,spre3       ,spost54
+Recke       ,      858.51,spre5       ,spost1
+Finnentrop  ,      734.89,spre5       ,spost1
+Waldfeucht  ,      807.24,spre5       ,spost37
+RhedaWiedenb,      759.94,spre5       ,spost1
+Brueggen    ,      816.19,spre5       ,spost1
+Erkelenz    ,      914.05,spre5       ,spost1
+Weeze       ,      914.35,spre3       ,spost23
+Wilnsdorf   ,      763.06,spre5       ,spost1
+Datteln     ,      929.08,spre3       ,spost51
+Borken      ,      843.22,spre5       ,spost1
+Bergkamen   ,      803.49,spre3       ,spost1
+Oberhausen  ,      841.24,spre5       ,spost1
+Wettringen  ,      865.26,spre5       ,spost1
+Attendorn   ,      770.24,spre5       ,spost1
+Herdecke    ,      856.83,spre3       ,spost1
+Bergheim    ,      809.45,spre5       ,spost1
+Much        ,      882.79,spre5       ,spost1
+Eitorf      ,      822.36,spre5       ,spost1
+Neuss       ,      972.06,spre5       ,spost18
+MendenSauerl,      855.70,spre5       ,spost1
+Wuelfrath   ,      944.85,spre5       ,spost1
+Lippstadt   ,      873.83,spre3       ,spost1
+Lichtenau   ,      621.89,spre5       ,spost1
+Hallenberg  ,      687.54,spre5       ,spost3
+Gevelsberg  ,      851.92,spre5       ,spost1
+Havixbeck   ,      936.71,spre5       ,spost14
+Petershagen ,      624.61,spre5       ,spost1
+WertherWestf,      875.44,spre3       ,spost1
+Kleve       ,      896.42,spre3       ,spost23
+Verl        ,      815.40,spre5       ,spost1
+HerzebrockCl,      736.92,spre5       ,spost1
+Ibbenbueren ,      849.97,spre5       ,spost1
+Erkrath     ,     1028.74,spre5       ,spost36
+Lennestadt  ,      709.33,spre5       ,spost1
+OerErkenschw,      798.82,spre3       ,spost1
+Huenxe      ,      873.79,spre3       ,spost1
+Lienen      ,      833.03,spre5       ,spost1
+Noervenich  ,      827.94,spre5       ,spost1
+Erndtebrueck,      652.57,spre5       ,spost1
+Marsberg    ,      787.83,spre5       ,spost3
+Everswinkel ,      696.57,spre5       ,spost1
+Euskirchen  ,      749.07,spre5       ,spost1
+BadLippsprin,      644.54,spre5       ,spost1
+Huertgenwald,      640.90,spre5       ,spost1
+Plettenberg ,      783.23,spre5       ,spost1
+Kalletal    ,      867.99,spre5       ,spost13
+GronauWestf ,      898.84,spre5       ,spost1
+Herten      ,      844.05,spre3       ,spost1
+Doerentrup  ,      809.36,spre5       ,spost1
+Welver      ,      818.77,spre3       ,spost1
+Nideggen    ,      757.34,spre5       ,spost1
+Geilenkirche,      806.21,spre5       ,spost1
+Raesfeld    ,      823.57,spre3       ,spost1
+Versmold    ,      831.48,spre5       ,spost1
+Pulheim     ,      780.04,spre5       ,spost1
+Laer        ,      813.69,spre5       ,spost1
+Breckerfeld ,      848.06,spre5       ,spost14
+Westerkappel,     1008.48,spre5       ,spost37
+Velbert     ,      929.75,spre5       ,spost1
+SundernSauer,      749.97,spre5       ,spost1
+Linnich     ,      868.44,spre5       ,spost1
+Detmold     ,      792.00,spre5       ,spost1
+Rosendahl   ,      735.86,spre5       ,spost1
+Espelkamp   ,      698.58,spre5       ,spost1
+BedburgHau  ,      863.97,spre3       ,spost1
+Paderborn   ,      710.98,spre5       ,spost21
+Beverungen  ,      804.39,spre5       ,spost1
+SanktAugusti,      896.70,spre5       ,spost36
+Niederzier  ,      949.76,spre3       ,spost3
+Elsdorf     ,      902.69,spre5       ,spost36
+Isselburg   ,      861.65,spre5       ,spost1
+EmmerichamRh,      800.87,spre3       ,spost1
+Wachtberg   ,      855.82,spre5       ,spost1
+BadMuenstere,      720.15,spre5       ,spost1
+Heiden      ,      912.93,spre5       ,spost12
+Wiehl       ,      769.50,spre5       ,spost1
+Netphen     ,      744.48,spre5       ,spost1
+Huellhorst  ,      891.60,spre3       ,spost1
+Bedburg     ,      864.16,spre5       ,spost1
+Huerth      ,      816.07,spre5       ,spost14
+Hilchenbach ,      683.72,spre5       ,spost1
+Inden       ,      875.25,spre5       ,spost1
+Schmallenber,      618.71,spre5       ,spost1
+Hueckelhoven,      928.83,spre5       ,spost22
+Ennigerloh  ,      596.49,spre5       ,spost37
+Zuelpich    ,      723.84,spre5       ,spost1
+Olfen       ,      827.62,spre3       ,spost1
+Ense        ,      833.11,spre5       ,spost1
+Nordwalde   ,      835.46,spre5       ,spost1
+Warendorf   ,      717.18,spre5       ,spost1
+Sendenhorst ,      660.87,spre3       ,spost1
+Witten      ,      914.47,spre5       ,spost16
+Willebadesse,      783.82,spre5       ,spost1
+Grevenbroich,      891.61,spre5       ,spost1
+Freudenberg ,      796.93,spre5       ,spost1
+Stadtlohn   ,      870.62,spre5       ,spost14
+Bueren      ,      537.63,spre5       ,spost1
+Duelmen     ,      798.41,spre3       ,spost1
+Rheinberg   ,      901.07,spre3       ,spost21
+Morsbach    ,      832.36,spre5       ,spost1
+BadSassendor,      868.92,spre3       ,spost1
+Geldern     ,      796.93,spre3       ,spost1
+Lage        ,      821.60,spre5       ,spost1
+Burbach     ,      675.71,spre5       ,spost1
+Guetersloh  ,      767.87,spre5       ,spost1
+Schwelm     ,      899.55,spre5       ,spost1
+Frechen     ,      806.56,spre3       ,spost23
+Unna        ,      955.54,spre5       ,spost5
+PreussischOl,      852.00,spre5       ,spost1
+Anroechte   ,      684.24,spre5       ,spost1
+BadOeynhause,      883.96,spre3       ,spost1
+Saerbeck    ,      860.31,spre5       ,spost1
+Blankenheim ,      625.31,spre5       ,spost1
+Korschenbroi,      897.19,spre5       ,spost1
+Kreuzau     ,      826.43,spre5       ,spost1
+Bergneustadt,      650.73,spre5       ,spost39
+Kirchhundem ,      664.75,spre5       ,spost1
+Halver      ,      666.71,spre5       ,spost1
+Arnsberg    ,      855.23,spre5       ,spost22
+VoerdeNieder,      871.19,spre5       ,spost1
+Langenberg  ,      873.60,spre5       ,spost1
+Alpen       ,      927.18,spre3       ,spost12
+Warburg     ,      751.75,spre5       ,spost7
+Niederkruech,      798.60,spre5       ,spost1
+Langerwehe  ,      805.30,spre5       ,spost1
+Recklinghaus,      826.76,spre3       ,spost1
+SchlossHolte,      790.25,spre5       ,spost18
+Kreuztal    ,      765.95,spre5       ,spost1
+Ennepetal   ,      751.77,spre5       ,spost1
+Erwitte     ,      769.48,spre3       ,spost1
+Selfkant    ,      818.00,spre5       ,spost1
+BadBerleburg,      656.34,spre5       ,spost1
+Schermbeck  ,      823.42,spre3       ,spost1
+Luebbecke   ,      938.08,spre5       ,spost3
+Sprockhoevel,      901.21,spre5       ,spost1
+Meinerzhagen,      722.22,spre5       ,spost18
+Hattingen   ,      927.03,spre5       ,spost1
+Olsberg     ,      690.31,spre5       ,spost1
+Kall        ,      598.36,spre5       ,spost1
+Blomberg    ,      865.92,spre5       ,spost1
+BadLaasphe  ,      715.25,spre5       ,spost1
+NeunkirchenS,      929.25,spre5       ,spost14
+Schalksmuehl,      822.84,spre5       ,spost1
+Dortmund    ,      835.41,spre3       ,spost1
+Neunkirchen ,      786.87,spre5       ,spost1
+Boenen      ,      822.11,spre3       ,spost1
+Rietberg    ,      862.02,spre5       ,spost1
+KampLintfort,      875.00,spre3       ,spost36
+Kranenburg  ,      811.98,spre3       ,spost1
+Willich     ,      942.30,spre5       ,spost12
+Drensteinfur,      688.78,spre3       ,spost7
+Minden      ,      820.08,spre5       ,spost1
+Moehnesee   ,      775.67,spre5       ,spost1
+Hemer       ,      797.24,spre5       ,spost1
+BadHonnef   ,      846.44,spre5       ,spost37
+Reichshof   ,      727.28,spre5       ,spost1
+Juelich     ,      834.64,spre5       ,spost1
+Borchen     ,      532.97,spre5       ,spost1
+Hiddenhausen,      775.48,spre3       ,spost1
+Nuembrecht  ,      880.14,spre5       ,spost1
+MonheimamRhe,      737.26,spre1       ,spost1
+NeukirchenVl,      812.28,spre3       ,spost1
+Rheinbach   ,      772.98,spre5       ,spost1
+HennefSieg  ,      828.33,spre5       ,spost1
+Swisttal    ,      745.46,spre5       ,spost1
+Lohmar      ,      801.47,spre5       ,spost1
+Weilerswist ,      713.38,spre5       ,spost1
+Borgentreich,      675.71,spre5       ,spost1
+PortaWestfal,      838.16,spre3       ,spost1
+Merzenich   ,      886.51,spre5       ,spost1
+Brilon      ,      738.57,spre5       ,spost1
+Kaarst      ,      896.23,spre5       ,spost1
+Marl        ,      840.77,spre3       ,spost1
+Dorsten     ,      839.78,spre3       ,spost1
+Oerlinghause,      849.08,spre5       ,spost14
+Grefrath    ,      949.93,spre3       ,spost3
+Nettersheim ,      600.17,spre5       ,spost1
+Rhede       ,      822.56,spre5       ,spost1
+Altena      ,      829.53,spre5       ,spost1
+WetterRuhr  ,      763.58,spre3       ,spost1
+BadDriburg  ,      832.24,spre5       ,spost5
+Ruppichterot,      875.24,spre5       ,spost1
+Siegburg    ,      809.20,spre3       ,spost1
+Hagen       ,      873.91,spre5       ,spost1
+Herscheid   ,      768.49,spre5       ,spost39
+Altenbeken  ,      617.28,spre5       ,spost1
+Meckenheim  ,      898.08,spre5       ,spost18
+Reken       ,      817.65,spre3       ,spost1
+Leopoldshoeh,      936.78,spre5       ,spost22
+Wegberg     ,      827.20,spre5       ,spost1
+Dueren      ,      899.39,spre5       ,spost1
+Ladbergen   ,      838.45,spre5       ,spost1
+Neuenkirchen,      842.31,spre5       ,spost21
+Lindlar     ,      634.33,spre5       ,spost1
+Kempen      ,      925.90,spre3       ,spost54
+Legden      ,      804.94,spre5       ,spost1
+Rommerskirch,      866.65,spre5       ,spost1
+Hueckeswagen,      665.54,spre5       ,spost1
+Wadersloh   ,      814.61,spre5       ,spost21
+Bornheim    ,      766.70,spre5       ,spost1
+Waldbroel   ,      856.61,spre5       ,spost1
+Telgte      ,      802.41,spre5       ,spost1
+Dormagen    ,      791.98,spre3       ,spost1
+Nordkirchen ,      812.26,spre3       ,spost39
+Niederkassel,      896.99,spre5       ,spost13
+Balve       ,      789.91,spre5       ,spost1
+Billerbeck  ,      762.78,spre3       ,spost1
+Altenberge  ,      774.76,spre5       ,spost1
+Heiligenhaus,      961.18,spre5       ,spost1
+Ochtrup     ,      863.14,spre5       ,spost1
+Velen       ,      826.21,spre5       ,spost1
+Wassenberg  ,      847.14,spre5       ,spost13
+Harsewinkel ,      806.21,spre5       ,spost1
+Erftstadt   ,      794.11,spre5       ,spost16
+Rees        ,      844.83,spre3       ,spost1
+Heek        ,      900.36,spre5       ,spost1
+Hoexter     ,      818.47,spre5       ,spost1
+Vlotho      ,      946.54,spre5       ,spost36
+Aldenhoven  ,      855.24,spre5       ,spost1
+EsloheSauerl,      664.60,spre5       ,spost1
+Dahlem      ,      551.77,spre5       ,spost14
+Gescher     ,      817.97,spre5       ,spost1
+Wachtendonk ,      829.55,spre3       ,spost1
+Herne       ,      902.11,spre3       ,spost1
+HalternamSee,      899.18,spre3       ,spost18
+Toenisvorst ,      853.36,spre3       ,spost1
+Moers       ,      832.52,spre3       ,spost1
+Schlangen   ,      657.38,spre5       ,spost1
+Meschede    ,      741.94,spre5       ,spost1
+Dinslaken   ,      985.71,spre5       ,spost22
+Kerpen      ,      823.87,spre5       ,spost36
+Koenigswinte,      836.97,spre5       ,spost1
+Kierspe     ,      622.68,spre5       ,spost1
+Marienheide ,      394.87,spre5       ,spost1
+Winterberg  ,      597.09,spre5       ,spost14
+Aachen      ,      842.36,spre5       ,spost1
+Alsdorf     ,      903.65,spre5       ,spost21
+Baesweiler  ,      871.62,spre5       ,spost1
+Eschweiler  ,      920.34,spre5       ,spost1
+Herzogenrath,      829.97,spre5       ,spost1
+Monschau    ,      656.65,spre5       ,spost1
+Roetgen     ,      795.26,spre5       ,spost1
+Simmerath   ,      630.13,spre5       ,spost1
+StolbergRhld,      758.93,spre5       ,spost1
+Vreden      ,      817.29,spre5       ,spost1
+Wuerselen   ,      827.06,spre5       ,spost1

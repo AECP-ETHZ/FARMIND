@@ -108,11 +108,11 @@ public class DecisionCalculatorTests {
 	public static final String TestSocialNetworkFile = "./test_data/social_networks.csv";
 	
 	public static final void useTestData(ReadData reader) {
-			reader.DataFile = TestDataFile;
-			reader.PreferenceFile = TestPreferenceFile;
+			reader.FarmParametersFile = TestDataFile;
+			reader.ActivityPreferenceFile = TestPreferenceFile;
 			reader.InitialActivities = TestInitialActivities;
 			reader.InitialIncomes = TestInitialIncomes;
-			reader.YearsFile = TestYearsFile;
+			reader.PerformingYearsFile = TestYearsFile;
 			reader.SocialNetworkFile = TestSocialNetworkFile;
 	} 
 	

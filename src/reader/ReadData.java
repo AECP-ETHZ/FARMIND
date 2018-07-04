@@ -5,7 +5,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
@@ -14,7 +16,8 @@ import org.jgrapht.graph.SimpleWeightedGraph;
 import activity.Activity;
 import agent.Farm;
 import agent.Location;
-import agent.Person;                 
+import agent.Person;
+import javafx.util.Pair;                 
 
 /** 
  * This class reads input parameters from configuration files and results data from the optimization model.
@@ -39,12 +42,43 @@ public class ReadData {
 	public static final int PHI_PLUS = 14;								       // parameter in the formula for calculating satisfaction
 	public static final int PHI_MINUS = 15;  								   // parameter in the formula for calculating satisfaction
 
-	public String DataFile = "./data/farm_parameters.csv";					   // allow external function to set data files for testing
-	public String PreferenceFile = "./data/activity_preference.csv";
+	public String FarmParametersFile = "./data/farm_parameters.csv";					   // allow external function to set data files for testing
+	public String ActivityPreferenceFile = "./data/activity_preference.csv";
 	public String InitialActivities = "./data/initial_activities.csv";
 	public String InitialIncomes = "./data/initial_incomes.csv";
-	public String YearsFile = "./data/performing_years.csv";
+	public String PerformingYearsFile = "./data/performing_years.csv";
 	public String SocialNetworkFile = "./data/social_networks.csv";
+	
+	public String MPspecificInputFile = "./data/yearly_prices.csv";
+	
+	public void readMPspecificInput() {
+		String MPspecificInputFile = "./data/yearly_prices.csv";
+		
+		String Line;
+		ArrayList<String> yearPrice;
+		BufferedReader Buffer = null;		
+		Map<String, Double> year_priceMap = new HashMap<>();
+		
+		try {
+ 			// read input file
+			Buffer = new BufferedReader(new FileReader(MPspecificInputFile));
+			Line = Buffer.readLine();									       // first line with titles to throw away
+			while ((Line = Buffer.readLine()) != null) { 
+				yearPrice = CSVtoArrayList(Line);						   // Read farm's parameters line by line
+				year_priceMap.put(yearPrice.get(0), Double.parseDouble(yearPrice.get(1)));
+			}
+			System.out.println(year_priceMap);
+		
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (Buffer != null) Buffer.close();
+			} catch (IOException Exception) {
+				Exception.printStackTrace();
+			}
+		}
+	}
 	
 	/**
 	 * Each farm in the list contains a social network, the associated people, and preferred activities
@@ -82,7 +116,7 @@ public class ReadData {
 		try {
 			Calendar now = Calendar.getInstance();                             // Gets the current date and time
 			int currentYear = now.get(Calendar.YEAR); 
-			Buffer = new BufferedReader(new FileReader(DataFile));
+			Buffer = new BufferedReader(new FileReader(FarmParametersFile));
 			Line = Buffer.readLine();									       // first line with titles to throw away
 			
 			while ((Line = Buffer.readLine()) != null) {                       
@@ -103,7 +137,7 @@ public class ReadData {
 				memory = Integer.parseInt( farmParameters.get(MEMORY));
 				if (memory < 4) {
 					memory = 4; 											   // error in calculations if memory is less than 4
-					System.out.println("Please use a memory length greater than 4");
+					System.out.println("Memory length needs to be greater than 4");
 					System.exit(0);
 				}
 				
@@ -241,7 +275,7 @@ public class ReadData {
 		FarmDataMatrix preferences = new FarmDataMatrix();
 
 		try {
-			Buffer = new BufferedReader(new FileReader(PreferenceFile));
+			Buffer = new BufferedReader(new FileReader(ActivityPreferenceFile));
 			Line = Buffer.readLine();
 			matrixRow = CSVtoArrayList(Line);
 			matrixRow.remove(0);
@@ -276,7 +310,7 @@ public class ReadData {
 		FarmDataMatrix experience = new FarmDataMatrix();
 
 		try {
-			Buffer = new BufferedReader(new FileReader(YearsFile));
+			Buffer = new BufferedReader(new FileReader(PerformingYearsFile));
 			Line = Buffer.readLine();
 			matrixRow = CSVtoArrayList(Line);
 			matrixRow.remove(0);
@@ -366,7 +400,7 @@ public class ReadData {
 		BufferedReader Buffer = null;	
 
 		try {
-			Buffer = new BufferedReader(new FileReader(YearsFile));
+			Buffer = new BufferedReader(new FileReader(PerformingYearsFile));
 			Line = Buffer.readLine();									       // first line to be deleted
 			activityRow = CSVtoArrayList(Line);
 			int ID = 100;
@@ -408,5 +442,7 @@ public class ReadData {
 		}
 		return Result;
 	}
+
+
 
 }

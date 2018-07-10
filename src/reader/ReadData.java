@@ -5,9 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
@@ -16,8 +14,7 @@ import org.jgrapht.graph.SimpleWeightedGraph;
 import activity.Activity;
 import agent.Farm;
 import agent.Location;
-import agent.Person;
-import javafx.util.Pair;                 
+import agent.Person;                 
 
 /** 
  * This class reads input parameters from configuration files and results data from the optimization model.
@@ -48,37 +45,6 @@ public class ReadData {
 	public String InitialIncomes = "./data/initial_incomes.csv";
 	public String PerformingYearsFile = "./data/performing_years.csv";
 	public String SocialNetworkFile = "./data/social_networks.csv";
-	
-	public String MPspecificInputFile = "./data/yearly_prices.csv";
-	
-	public void readMPspecificInput() {
-		String MPspecificInputFile = "./data/yearly_prices.csv";
-		
-		String Line;
-		ArrayList<String> yearPrice;
-		BufferedReader Buffer = null;		
-		Map<String, Double> year_priceMap = new HashMap<>();
-		
-		try {
- 			// read input file
-			Buffer = new BufferedReader(new FileReader(MPspecificInputFile));
-			Line = Buffer.readLine();									       // first line with titles to throw away
-			while ((Line = Buffer.readLine()) != null) { 
-				yearPrice = CSVtoArrayList(Line);						   // Read farm's parameters line by line
-				year_priceMap.put(yearPrice.get(0), Double.parseDouble(yearPrice.get(1)));
-			}
-			System.out.println(year_priceMap);
-		
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (Buffer != null) Buffer.close();
-			} catch (IOException Exception) {
-				Exception.printStackTrace();
-			}
-		}
-	}
 	
 	/**
 	 * Each farm in the list contains a social network, the associated people, and preferred activities
@@ -206,8 +172,7 @@ public class ReadData {
 							currentActivity.add(p);
 						}
 					}
-				}
-				
+				}				
 				farms.get(farm_count_index).setCurrentActivity(currentActivity);;
 				farm_count_index++;	
 			}

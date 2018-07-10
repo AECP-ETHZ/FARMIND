@@ -15,7 +15,7 @@ public interface MP_Interface {
 	
 	public void inputsforMP(String farmId, List<String> possibleActivity);
 	
-	public void runModel();
+	public void runModel(int nFarms, int year);
 	
 	public List<Double> readMPIncomes();
 	

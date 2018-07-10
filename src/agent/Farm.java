@@ -412,7 +412,7 @@ public class Farm {
 		
 		if (std == 0) {
 			System.out.println("The standard deviation of historical incomes is 0.");
-			//std = 10;
+			System.exit(0);                                                    // kill program 
 		}
 		NormalDistribution normal = new NormalDistribution(mean, std);		   // distribution of historical incomes
 		

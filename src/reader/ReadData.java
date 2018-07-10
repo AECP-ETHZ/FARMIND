@@ -16,10 +16,7 @@ import org.jgrapht.graph.SimpleWeightedGraph;
 import activity.Activity;
 import agent.Farm;
 import agent.Location;
-
 import agent.Person;                 
-
-
 
 /** 
  * This class reads input parameters from configuration files and results data from the optimization model.

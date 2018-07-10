@@ -16,8 +16,7 @@ import org.jgrapht.graph.SimpleWeightedGraph;
 import activity.Activity;
 import agent.Farm;
 import agent.Location;
-import agent.Person;
-import javafx.util.Pair;                 
+import agent.Person;                 
 
 /** 
  * This class reads input parameters from configuration files and results data from the optimization model.
@@ -52,7 +51,7 @@ public class ReadData {
 	public String MPspecificInputFile = "./data/yearly_prices.csv";
 	
 	public void readMPspecificInput() {
-		String MPspecificInputFile = "./data/yearly_prices.csv";
+		//String MPspecificInputFile = "./data/yearly_prices.csv";
 		
 		String Line;
 		ArrayList<String> yearPrice;

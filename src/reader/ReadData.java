@@ -5,9 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
@@ -47,36 +45,6 @@ public class ReadData {
 	public String InitialIncomes = "./data/initial_incomes.csv";
 	public String PerformingYearsFile = "./data/performing_years.csv";
 	public String SocialNetworkFile = "./data/social_networks.csv";
-	
-	public String MPInputFile = "./data/yearly_prices.csv";
-	
-	public Map<String, Double> readMPyearPrice() {		
-
-		String Line;
-		ArrayList<String> yearPrice;
-		BufferedReader Buffer = null;		
-		Map<String, Double> year_priceMap = new LinkedHashMap<>();
-		
-		try {
- 			// read input file
-			Buffer = new BufferedReader(new FileReader(MPInputFile));
-			Line = Buffer.readLine();									       // first line with titles to throw away
-			while ((Line = Buffer.readLine()) != null) { 
-				yearPrice = CSVtoArrayList(Line);						   // Read farm's parameters line by line
-				year_priceMap.put(yearPrice.get(0), Double.parseDouble(yearPrice.get(1)));
-			}
-		
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (Buffer != null) Buffer.close();
-			} catch (IOException Exception) {
-				Exception.printStackTrace();
-			}
-		}
-		return year_priceMap;
-	}
 	
 	/**
 	 * Each farm in the list contains a social network, the associated people, and preferred activities

@@ -9,7 +9,8 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import logging.CSVLog;
-import mathematical_programming.MPConnection;
+import mathematical_programming.MP_Interface;
+import mathematical_programming.WeedControl;
 import reader.ReadData;
 import activity.Activity;
 import agent.Farm;
@@ -45,6 +46,10 @@ public class Consumat {
 			LOGGER.severe("Exiting Farmind. Input number of iterations.");
 			System.exit(0);
 		} 
+		if (args.length < 2) {
+			LOGGER.severe("Exiting Farmind. Input MP Model: WEEDCONTROL or SWISSLAND.");
+			System.exit(0);
+		} 
 
 		ReadData            reader             = new ReadData();							       // read all input data files
 		List<Farm>          allFarms           = reader.getFarms();					               // build set of farms 
@@ -59,9 +64,15 @@ public class Consumat {
 
 		for (int year = 1; year <= Integer.parseInt(args[0]); year++) {		                       // run simulation for a set of years, getting updated income and activities from the MP model each iteration
 			LOGGER.info(String.format("Year %d simulation started", year));
+			MP_Interface MP;
 			
-			MPConnection MP = new MPConnection();
-						
+			if (args[1] == "WEEDCONTROL") {
+				MP = new WeedControl();
+			} 
+			else {
+				MP = new WeedControl();
+			}
+			
 			farmIndex = 0;
 			for (Farm farm : allFarms) {
 				if (year == 1) {											                       // ignore first year updated as we already have that initialized with input file

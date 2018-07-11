@@ -23,12 +23,12 @@ import reader.ReadData;
  * @author kellerke
  *
  */
-public class MPConnection implements MP_Interface{
+public class WeedControl implements MP_Interface{
 	File file; 
 	Map<String, Double> MP_yearPrice_input;
 	private static final Logger LOGGER = Logger.getLogger("FARMIND_LOGGING");
 	
-	public MPConnection() {
+	public WeedControl() {
 		file = new File("projdir\\p_AllowedStratPrePost.csv");				   // delete last time period's simulation file
 		if (file.exists()) {
 			file.delete();

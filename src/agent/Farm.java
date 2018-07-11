@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import java.util.logging.Logger;
 import reader.FarmDataMatrix;
 
 import org.apache.commons.math3.distribution.NormalDistribution;
@@ -15,6 +16,7 @@ import org.jgrapht.graph.DefaultEdge;
 
 import activity.Activity;
 import fuzzy_logic.FuzzyLogicCalculator;
+
 import java.lang.Math;
 
 /** 
@@ -52,6 +54,8 @@ public class Farm {
 	private double p_alpha_minus ;											   // Parameter for the Alpha Minus used for the Satisfaction Calculation
 	private double p_phi_plus ;												   // Parameter for the Phi Plus used for the Satisfaction Calculation
 	private double p_phi_minus;												   // Parameter for the Phi Minus used for the Satisfaction Calculation
+	
+	private static final Logger LOGGER = Logger.getLogger("FARMIND_LOGGING");
 	
 	/**
 	 * This constructor sets up the parameters associated with a farm. 
@@ -115,13 +119,7 @@ public class Farm {
 	public List<String> decideActivitySet(List<Farm> allFarms) {
 	    List<String> ActivitySet = new ArrayList<String>();				                           // list of activities from fuzzy logic
 		FuzzyLogicCalculator fuzzyLogicCalc = new FuzzyLogicCalculator(this, allFarms);            // calculator for the activity selection
-		/*
-		System.out.println(String.format("Activity_Dissimilarity=%f", this.Activity_Dissimilarity));
-		System.out.println(String.format("Activity_tolerance_coef=%f", this.p_activity_tolerance_coef));
-		System.out.println(String.format("Income_Dissimilarity=%f", this.Income_Dissimilarity));
-		System.out.println(String.format("Income_tolerance_coef=%f", this.p_income_tolerance_coef));
-		System.out.println(String.format("========== Satisfaction ========== %f", this.Satisfaction));
-		*/
+		
 		if ((head.getAge() > 650)) {
 			this.strategy = 1;     //OPT-OUT (The farmer retires.)
 		}
@@ -147,9 +145,7 @@ public class Farm {
 				ActivitySet = fuzzyLogicCalc.getOptimizationActivities();
 			}
 		}
-		
-		//System.out.println(String.format("=================== STRATEGY =================== %d", this.strategy));
-		
+				
 		return ActivitySet;
 	}
 	
@@ -392,11 +388,7 @@ public class Farm {
 		}
 
 		satisfaction = value*probWeighting;
-		/*
-		System.out.println(String.format("Income=%f", income));
-		System.out.println(String.format("Aspiration=%f", this.Aspiration));
-		System.out.println(String.format("Satisfaction=%f", satisfaction));
-		*/
+
 		return satisfaction;
 	}
 	/**
@@ -411,9 +403,10 @@ public class Farm {
 		double std = std(this.IncomeHistory);
 		
 		if (std == 0) {
-			System.out.println("The standard deviation of historical incomes is 0.");
+			LOGGER.severe( String.format("The standard deviation of historical incomes is 0 for farm %S ", this.getFarmName()  ) );
 			System.exit(0);                                                    // kill program 
 		}
+		
 		NormalDistribution normal = new NormalDistribution(mean, std);		   // distribution of historical incomes
 		
 		for (int i = 0; i< this.getMemory(); i++) {

@@ -1,8 +1,12 @@
 package main;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import logging.CSVLog;
 import mathematical_programming.MPConnection;
@@ -20,18 +24,27 @@ public class Consumat {
 	static int file_counter = 1;
 	static String origFileName = createFileName();										           // file name for logging
 	static String FileName = origFileName + String.format("%d",0);								   // given enough lines in the log file, a new file is needed.
-		
+	private static final Logger LOGGER = Logger.getLogger("FARMIND_LOGGING");
+	static FileHandler fh;  
+	 
 	public static void main(String[] args) {
-		System.out.println("Starting FARMIND");
+        try {
+			fh = new FileHandler("ABM.log");
+	        LOGGER.addHandler(fh);
+	        SimpleFormatter formatter = new SimpleFormatter();  
+	        fh.setFormatter(formatter);  
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}  
+		
+		LOGGER.info("Starting FARMIND: version number: 0.6.0");
 
 		if (args.length < 1) {
-			System.out.println("Input number of iterations");
+			LOGGER.severe("Exiting Farmind. Input number of iterations.");
 			System.exit(0);
 		} 
-		
-		if (args.length > 1) {
-			System.out.println("FARMIND version number: 0.6.0");
-		}
 
 		ReadData            reader             = new ReadData();							       // read all input data files
 		List<Farm>          allFarms           = reader.getFarms();					               // build set of farms 
@@ -45,7 +58,7 @@ public class Consumat {
 		initializePopulationIncomeChangeRate(allFarms);						                       // initialize the farms with the input values before starting the full ABM simulation
 
 		for (int year = 1; year <= Integer.parseInt(args[0]); year++) {		                       // run simulation for a set of years, getting updated income and activities from the MP model each iteration
-			System.out.println(String.format("\nYear %d", year));	
+			LOGGER.info(String.format("Year %d simulation started", year));
 			
 			MPConnection MP = new MPConnection();
 						
@@ -76,11 +89,12 @@ public class Consumat {
 			MP.runModel(allFarms.size(),year);													   // if needed, update mp script and then start model
 			MP_Incomes = MP.readMPIncomes();
 			MP_Activities = MP.readMPActivities();
-
 			updatePopulationIncomeChangeRate(allFarms, MP_Incomes);                                // at end of time step update the percent change for population
+			
+			LOGGER.info(String.format("Year %d simulation finished", year));
 		}
 
-		System.out.println("Complete"); 
+		LOGGER.info("ABM Operation Complete.");
 	}
 		
 

@@ -89,7 +89,7 @@ public class WeedControl implements MP_Interface{
 	public void inputsforMP(String farmId, List<String> possibleActivity) {
 		int[][] output = new int[55][6]; 
 
-		for (int i = 0; i<5; i++) {  // set all the first row, except the last column, to 1 as the initialization strategies. 
+		for (int i = 0; i<6; i++) {  // set all the first row, except the last column, to 1 as the initialization strategies. 
 			output[0][i] = 1;
 		}
 		

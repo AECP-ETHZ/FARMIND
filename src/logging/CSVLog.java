@@ -26,6 +26,9 @@ public class CSVLog {
 	private List<Activity> currentActivity;									   // current activity of the agent
 	private List<String> possibleActivity;								       // set of possible activities by the agent
 	private Farm farm;														   // farm holds parameters
+	private double activity_diss;
+	private double income_diss;
+	private double satisfaction;
 	
 	/** 
 	 * Constructor for the CSV Log
@@ -39,7 +42,7 @@ public class CSVLog {
 	 * @param learning_rate: 		learning rate for the agent
 	 * @param farm: 				specific farm for this decision object
 	 */
-	public CSVLog(List<String> allActivities, String farmId, Integer year, Double learning_rate, int strat, double income, List<Activity> currentActivity, List<String> possibleActivities, Farm farm) {
+	public CSVLog(List<String> allActivities, String farmId, Integer year, Double learning_rate, Double activity_diss, Double income_diss, double satisfaction, int strat, double income, List<Activity> currentActivity, List<String> possibleActivities, Farm farm) {
 		setFarmId(farmId);
 		setYear(year);
 		setStrategy(strat);
@@ -49,6 +52,9 @@ public class CSVLog {
 		setAllActivity(allActivities);
 		setLearningRate(learning_rate);
 		setFarm(farm);
+		setIncome_diss(income_diss);
+		setActivity_diss(activity_diss);
+		setSatisfaction(satisfaction);
 	}
 	
 	/** 
@@ -73,10 +79,11 @@ public class CSVLog {
 		PrintWriter writer = new PrintWriter(bw);
 		
 		if (file.length() == 0) {
-			writer.println("year,name,age,education,memory,alpha_plus,alpha_minus,lambda,phi_plus,phi_minus,aspiration_coef,tolerance_activity,learning_rate,tolerance_income,beta,beta_s,strategy,possible_activity1,"
-					+ "possible_activity2,possible_activity3,possible_activity4,possible_activity5,possible_activity6,income,current_activity");
+			writer.println("year,name,age,education,memory,alpha_plus,alpha_minus,lambda,phi_plus,phi_minus,aspiration_coef,"
+					+ "beta,beta_s,tolerance_activity,tolerance_income,activity_dissimilarity,income_dissimilarity,learning_rate,satisfaction," 
+					+ "income,previous_activity,strategy,possible_activity1,"
+					+ "possible_activity2,possible_activity3,possible_activity4,possible_activity5,possible_activity6");
 		}
-		
 		
 		writer.print(String.format("%s,",this.year));
 		writer.print(String.format("%s,",this.getFarmId()));
@@ -91,32 +98,34 @@ public class CSVLog {
 		writer.print(String.format("%s,",this.farm.getP_phi_plus() ));
 		writer.print(String.format("%s,",this.farm.getP_phi_minus() ));
 		writer.print(String.format("%s,",this.farm.getP_aspiration_coef() ));
-		writer.print(String.format("%s,",this.farm.getP_activity_tolerance_coef() ));
-		writer.print(String.format("%.4f,", this.getLearningRate() ) );
-		writer.print(String.format("%s,",this.farm.getP_income_tolerance_coef() ));
 		writer.print(String.format("%s,",this.farm.getP_beta() ));
 		writer.print(String.format("%s,",this.farm.getP_beta_s() ));
-		writer.print(String.format("%s,",this.strategy) );
 		
-		for(int i = 0; i < this.possibleActivity.size(); i++) {
-			//writer.print(String.format("%d,",  1 + this.allActivity.indexOf( this.possibleActivity.get(i)) ) );
-			writer.print(String.format("%s,",   this.possibleActivity.get(i)) );
-		}
+		writer.print(String.format("%s,",this.farm.getP_activity_tolerance_coef() ));
+		writer.print(String.format("%s,",this.farm.getP_income_tolerance_coef() ));
+		writer.print(String.format("%.4f,", this.getActivity_diss() ) );
+		writer.print(String.format("%.4f,", this.getIncome_diss() ) );
 		
-		for(int i = 0; i < 6 - this.possibleActivity.size(); i++) {
-			writer.print("NA," );
-		}
-
+		writer.print(String.format("%.4f,", this.getLearningRate() ) );
+		writer.print(String.format("%.4f,", this.getSatisfaction() ) );
+		
 		writer.print(String.format("%.2f,",this.income ) );
 		
 		for(int i = 0; i < this.currentActivity.size(); i++) {
-			//writer.print(String.format("%d,",  1 + this.allActivity.indexOf(this.currentActivity.get(i).getName() )) );
-			if (i < this.currentActivity.size() - 1) {
-				writer.print(String.format("%s,",  this.currentActivity.get(i).getName()) );
-			}
-			if (i == this.currentActivity.size() - 1) {
-				writer.print(String.format("%s",  this.currentActivity.get(i).getName()) );
-			}
+			writer.print(String.format("%s,",  this.currentActivity.get(i).getName()) );
+		}
+		
+		writer.print(String.format("%s,",this.strategy) );
+		
+		for(int i = 0; i < this.possibleActivity.size(); i++) {
+			writer.print(String.format("%s,", this.possibleActivity.get(i)) );
+		}
+		
+		for(int i = 0; i < 5 - this.possibleActivity.size(); i++) {
+			writer.print("NA," );
+		}
+		if (this.possibleActivity.size() < 2) {
+			writer.print("NA" );
 		}
 		
 		writer.print("\n");
@@ -176,6 +185,30 @@ public class CSVLog {
 	}
 	public void setFarm(Farm farm) {
 		this.farm = farm;
+	}
+
+	public double getActivity_diss() {
+		return activity_diss;
+	}
+
+	public void setActivity_diss(double activity_diss) {
+		this.activity_diss = activity_diss;
+	}
+
+	public double getIncome_diss() {
+		return income_diss;
+	}
+
+	public void setIncome_diss(double income_diss) {
+		this.income_diss = income_diss;
+	}
+
+	public double getSatisfaction() {
+		return satisfaction;
+	}
+
+	public void setSatisfaction(double satisfaction) {
+		this.satisfaction = satisfaction;
 	}
 	
 

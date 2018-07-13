@@ -1,5 +1,5 @@
 ,,spre1,spre2,spre3,spre4,spre5,spre6
-Ahaus,spost1,1,1,1,1,1,0
+Ahaus,spost1,1,1,1,1,1,1
 Ahaus,spost2,0,0,0,0,0,0
 Ahaus,spost3,0,0,0,0,0,0
 Ahaus,spost4,0,0,0,0,0,0
@@ -54,7 +54,7 @@ Ahaus,spost52,0,0,0,0,0,0
 Ahaus,spost53,0,0,0,0,0,0
 Ahaus,spost54,0,0,0,0,0,0
 Ahaus,spost55,0,0,0,0,0,0
-Beckum,spost1,1,1,1,1,1,0
+Beckum,spost1,1,1,1,1,1,1
 Beckum,spost2,0,0,0,0,0,0
 Beckum,spost3,0,0,0,0,0,0
 Beckum,spost4,0,0,0,0,0,0
@@ -71,7 +71,7 @@ Beckum,spost14,0,0,0,0,0,0
 Beckum,spost15,0,0,0,0,0,0
 Beckum,spost16,0,0,0,0,0,0
 Beckum,spost17,0,0,0,0,0,0
-Beckum,spost18,0,0,0,0,0,0
+Beckum,spost18,0,0,1,0,0,0
 Beckum,spost19,0,0,0,0,0,0
 Beckum,spost20,0,0,0,0,0,0
 Beckum,spost21,0,0,0,0,0,0
@@ -92,7 +92,7 @@ Beckum,spost35,0,0,0,0,0,0
 Beckum,spost36,0,0,0,0,0,0
 Beckum,spost37,0,0,0,0,0,0
 Beckum,spost38,0,0,0,0,0,0
-Beckum,spost39,0,0,0,1,1,0
+Beckum,spost39,0,0,0,0,0,0
 Beckum,spost40,0,0,0,0,0,0
 Beckum,spost41,0,0,0,0,0,0
 Beckum,spost42,0,0,0,0,0,0
@@ -106,10 +106,10 @@ Beckum,spost49,0,0,0,0,0,0
 Beckum,spost50,0,0,0,0,0,0
 Beckum,spost51,0,0,0,0,0,0
 Beckum,spost52,0,0,0,0,0,0
-Beckum,spost53,0,0,0,1,0,0
-Beckum,spost54,0,1,1,1,0,0
+Beckum,spost53,0,0,0,0,0,0
+Beckum,spost54,0,0,0,0,0,0
 Beckum,spost55,0,0,0,0,0,0
-Bruehl,spost1,1,1,1,1,1,0
+Bruehl,spost1,1,1,1,1,1,1
 Bruehl,spost2,0,0,0,0,0,0
 Bruehl,spost3,0,0,0,0,0,0
 Bruehl,spost4,0,0,0,0,0,0
@@ -161,10 +161,10 @@ Bruehl,spost49,0,0,0,0,0,0
 Bruehl,spost50,0,0,0,0,0,0
 Bruehl,spost51,0,0,0,0,0,0
 Bruehl,spost52,0,0,0,0,0,0
-Bruehl,spost53,0,0,0,0,0,0
-Bruehl,spost54,0,0,0,0,0,0
+Bruehl,spost53,0,1,1,1,0,0
+Bruehl,spost54,0,1,1,1,0,0
 Bruehl,spost55,0,0,0,0,0,0
-Hoevelhof,spost1,1,1,1,1,1,0
+Hoevelhof,spost1,1,1,1,1,1,1
 Hoevelhof,spost2,0,0,0,0,0,0
 Hoevelhof,spost3,0,0,0,0,0,0
 Hoevelhof,spost4,0,0,0,0,0,0
@@ -219,7 +219,7 @@ Hoevelhof,spost52,0,0,0,0,0,0
 Hoevelhof,spost53,0,0,0,0,0,0
 Hoevelhof,spost54,0,0,0,0,0,0
 Hoevelhof,spost55,0,0,0,0,0,0
-Hopsten,spost1,1,1,1,1,1,0
+Hopsten,spost1,1,1,1,1,1,1
 Hopsten,spost2,0,0,0,0,0,0
 Hopsten,spost3,0,0,0,0,0,0
 Hopsten,spost4,0,0,0,0,0,0
@@ -274,7 +274,7 @@ Hopsten,spost52,0,0,0,0,0,0
 Hopsten,spost53,0,0,0,0,0,0
 Hopsten,spost54,0,0,0,0,0,0
 Hopsten,spost55,0,0,0,0,0,0
-Lippetal,spost1,1,1,1,1,1,0
+Lippetal,spost1,1,1,1,1,1,1
 Lippetal,spost2,0,0,0,0,0,0
 Lippetal,spost3,0,0,0,0,0,0
 Lippetal,spost4,0,0,0,0,0,0
@@ -329,7 +329,7 @@ Lippetal,spost52,0,0,0,0,0,0
 Lippetal,spost53,0,0,1,0,0,0
 Lippetal,spost54,0,0,0,0,0,0
 Lippetal,spost55,0,0,0,0,0,0
-Nottuln,spost1,1,1,1,1,1,0
+Nottuln,spost1,1,1,1,1,1,1
 Nottuln,spost2,0,0,0,0,0,0
 Nottuln,spost3,0,0,0,0,0,0
 Nottuln,spost4,0,0,0,0,0,0
@@ -384,7 +384,7 @@ Nottuln,spost52,0,0,0,0,0,0
 Nottuln,spost53,0,0,0,0,0,0
 Nottuln,spost54,0,0,0,0,0,0
 Nottuln,spost55,0,0,0,0,0,0
-Ostbevern,spost1,1,1,1,1,1,0
+Ostbevern,spost1,1,1,1,1,1,1
 Ostbevern,spost2,0,0,0,0,0,0
 Ostbevern,spost3,0,0,0,0,0,0
 Ostbevern,spost4,0,0,0,0,0,0
@@ -439,7 +439,7 @@ Ostbevern,spost52,0,0,0,0,0,0
 Ostbevern,spost53,0,0,0,0,0,0
 Ostbevern,spost54,0,0,0,0,0,0
 Ostbevern,spost55,0,0,0,0,0,0
-Greven,spost1,1,1,1,1,1,0
+Greven,spost1,1,1,1,1,1,1
 Greven,spost2,0,0,0,0,0,0
 Greven,spost3,0,0,0,0,0,0
 Greven,spost4,0,0,0,0,0,0
@@ -494,7 +494,7 @@ Greven,spost52,0,0,0,0,0,0
 Greven,spost53,0,0,0,0,0,0
 Greven,spost54,0,0,0,0,0,0
 Greven,spost55,0,0,0,0,0,0
-Hamm,spost1,1,1,1,1,1,0
+Hamm,spost1,1,1,1,1,1,1
 Hamm,spost2,0,0,0,0,0,0
 Hamm,spost3,0,0,0,0,0,0
 Hamm,spost4,0,0,0,0,0,0
@@ -549,7 +549,7 @@ Hamm,spost52,0,0,0,0,0,0
 Hamm,spost53,0,0,0,0,0,0
 Hamm,spost54,0,0,0,0,0,0
 Hamm,spost55,0,0,0,0,0,0
-Hamminkeln,spost1,1,1,1,1,1,0
+Hamminkeln,spost1,1,1,1,1,1,1
 Hamminkeln,spost2,0,0,0,0,0,0
 Hamminkeln,spost3,0,0,0,0,0,0
 Hamminkeln,spost4,0,0,0,0,0,0
@@ -604,7 +604,7 @@ Hamminkeln,spost52,0,0,0,0,0,0
 Hamminkeln,spost53,0,0,0,0,0,0
 Hamminkeln,spost54,0,0,0,0,0,0
 Hamminkeln,spost55,0,0,0,0,0,0
-Mechernich,spost1,1,1,1,1,1,0
+Mechernich,spost1,1,1,1,1,1,1
 Mechernich,spost2,0,0,0,0,0,0
 Mechernich,spost3,0,0,0,0,0,0
 Mechernich,spost4,0,0,0,0,0,0
@@ -659,7 +659,7 @@ Mechernich,spost52,0,0,0,0,0,0
 Mechernich,spost53,0,0,0,0,0,0
 Mechernich,spost54,0,0,0,0,0,0
 Mechernich,spost55,0,0,0,0,0,0
-Moenchengladbach,spost1,1,1,1,1,1,0
+Moenchengladbach,spost1,1,1,1,1,1,1
 Moenchengladbach,spost2,0,0,0,0,0,0
 Moenchengladbach,spost3,0,0,0,0,0,0
 Moenchengladbach,spost4,0,0,0,0,0,0
@@ -714,7 +714,7 @@ Moenchengladbach,spost52,0,0,0,0,0,0
 Moenchengladbach,spost53,0,0,0,0,0,0
 Moenchengladbach,spost54,0,0,0,0,0,0
 Moenchengladbach,spost55,0,0,0,0,0,0
-Salzkotten,spost1,1,1,1,1,1,0
+Salzkotten,spost1,1,1,1,1,1,1
 Salzkotten,spost2,0,0,0,0,0,0
 Salzkotten,spost3,0,0,0,0,0,0
 Salzkotten,spost4,0,0,0,0,0,0
@@ -769,7 +769,7 @@ Salzkotten,spost52,0,0,0,0,0,0
 Salzkotten,spost53,0,0,0,0,0,0
 Salzkotten,spost54,0,0,0,0,0,0
 Salzkotten,spost55,0,0,0,0,0,0
-Selm,spost1,1,1,1,1,1,0
+Selm,spost1,1,1,1,1,1,1
 Selm,spost2,0,0,0,0,0,0
 Selm,spost3,0,0,0,0,0,0
 Selm,spost4,0,0,0,0,0,0
@@ -824,7 +824,7 @@ Selm,spost52,0,0,1,0,0,0
 Selm,spost53,0,0,0,0,0,0
 Selm,spost54,0,0,0,0,0,0
 Selm,spost55,0,0,0,0,0,0
-Lotte,spost1,1,1,1,1,1,0
+Lotte,spost1,1,1,1,1,1,1
 Lotte,spost2,0,0,0,0,0,0
 Lotte,spost3,0,0,0,0,0,0
 Lotte,spost4,0,0,0,0,0,0
@@ -879,7 +879,7 @@ Lotte,spost52,0,0,0,0,0,0
 Lotte,spost53,0,0,0,0,0,0
 Lotte,spost54,0,0,0,0,0,0
 Lotte,spost55,0,0,0,0,0,0
-Holzwickede,spost1,1,1,1,1,1,0
+Holzwickede,spost1,1,1,1,1,1,1
 Holzwickede,spost2,0,0,0,0,0,0
 Holzwickede,spost3,0,0,0,0,0,0
 Holzwickede,spost4,0,0,0,0,0,0
@@ -934,7 +934,7 @@ Holzwickede,spost52,0,0,0,0,0,0
 Holzwickede,spost53,0,0,0,0,0,0
 Holzwickede,spost54,0,0,0,0,0,0
 Holzwickede,spost55,0,0,0,0,0,0
-Juechen,spost1,1,1,1,1,1,0
+Juechen,spost1,1,1,1,1,1,1
 Juechen,spost2,0,0,0,0,0,0
 Juechen,spost3,0,0,0,0,0,0
 Juechen,spost4,0,0,0,0,0,0
@@ -989,7 +989,7 @@ Juechen,spost52,0,0,0,0,0,0
 Juechen,spost53,0,0,0,0,0,0
 Juechen,spost54,0,0,0,0,0,0
 Juechen,spost55,0,0,0,0,0,0
-Luedinghausen,spost1,1,1,1,1,1,0
+Luedinghausen,spost1,1,1,1,1,1,1
 Luedinghausen,spost2,0,0,0,0,0,0
 Luedinghausen,spost3,0,0,0,0,0,0
 Luedinghausen,spost4,0,0,0,0,0,0
@@ -1044,7 +1044,7 @@ Luedinghausen,spost52,0,0,0,0,0,0
 Luedinghausen,spost53,0,0,0,0,0,0
 Luedinghausen,spost54,0,0,0,0,0,0
 Luedinghausen,spost55,0,0,0,0,0,0
-Hilden,spost1,1,1,1,1,1,0
+Hilden,spost1,1,1,1,1,1,1
 Hilden,spost2,0,0,0,0,0,0
 Hilden,spost3,0,0,0,0,0,0
 Hilden,spost4,0,0,0,0,0,0
@@ -1099,7 +1099,7 @@ Hilden,spost52,0,0,0,0,0,0
 Hilden,spost53,0,0,0,0,0,0
 Hilden,spost54,0,0,0,0,0,0
 Hilden,spost55,0,0,0,0,0,0
-Borgholzhausen,spost1,1,1,1,1,1,0
+Borgholzhausen,spost1,1,1,1,1,1,1
 Borgholzhausen,spost2,0,0,0,0,0,0
 Borgholzhausen,spost3,0,0,0,0,0,0
 Borgholzhausen,spost4,0,0,0,0,0,0
@@ -1154,7 +1154,7 @@ Borgholzhausen,spost52,0,0,0,0,0,0
 Borgholzhausen,spost53,0,0,0,0,0,0
 Borgholzhausen,spost54,0,0,0,0,0,0
 Borgholzhausen,spost55,0,0,0,0,0,0
-Kirchlengern,spost1,1,1,1,1,1,0
+Kirchlengern,spost1,1,1,1,1,1,1
 Kirchlengern,spost2,0,0,0,0,0,0
 Kirchlengern,spost3,0,0,0,0,0,0
 Kirchlengern,spost4,0,0,0,0,0,0
@@ -1209,7 +1209,7 @@ Kirchlengern,spost52,0,0,0,0,0,0
 Kirchlengern,spost53,0,0,0,0,0,0
 Kirchlengern,spost54,0,0,0,0,0,0
 Kirchlengern,spost55,0,0,0,0,0,0
-Marienmuenster,spost1,1,1,1,1,1,0
+Marienmuenster,spost1,1,1,1,1,1,1
 Marienmuenster,spost2,0,0,0,0,0,0
 Marienmuenster,spost3,0,0,0,0,0,0
 Marienmuenster,spost4,0,0,0,0,0,0
@@ -1264,7 +1264,7 @@ Marienmuenster,spost52,0,0,0,0,0,0
 Marienmuenster,spost53,0,0,0,0,0,0
 Marienmuenster,spost54,0,0,0,0,0,0
 Marienmuenster,spost55,0,0,0,0,0,0
-Sonsbeck,spost1,1,1,1,1,1,0
+Sonsbeck,spost1,1,1,1,1,1,1
 Sonsbeck,spost2,0,0,0,0,0,0
 Sonsbeck,spost3,0,0,0,0,0,0
 Sonsbeck,spost4,0,0,0,0,0,0
@@ -1319,7 +1319,7 @@ Sonsbeck,spost52,0,0,0,0,0,0
 Sonsbeck,spost53,0,0,0,0,0,0
 Sonsbeck,spost54,0,0,0,0,0,0
 Sonsbeck,spost55,0,0,0,0,0,0
-Straelen,spost1,1,1,1,1,1,0
+Straelen,spost1,1,1,1,1,1,1
 Straelen,spost2,0,0,0,0,0,0
 Straelen,spost3,0,0,0,0,0,0
 Straelen,spost4,0,0,0,0,0,0
@@ -1374,7 +1374,7 @@ Straelen,spost52,0,0,0,0,0,0
 Straelen,spost53,0,0,0,0,0,0
 Straelen,spost54,0,0,0,0,0,0
 Straelen,spost55,0,0,0,0,0,0
-Wuppertal,spost1,1,1,1,1,1,0
+Wuppertal,spost1,1,1,1,1,1,1
 Wuppertal,spost2,0,0,0,0,0,0
 Wuppertal,spost3,0,0,0,0,0,0
 Wuppertal,spost4,0,0,0,0,0,0
@@ -1429,7 +1429,7 @@ Wuppertal,spost52,0,0,0,0,0,0
 Wuppertal,spost53,0,0,0,0,0,0
 Wuppertal,spost54,0,0,0,0,0,0
 Wuppertal,spost55,0,0,0,0,0,0
-Suedlohn,spost1,1,1,1,1,1,0
+Suedlohn,spost1,1,1,1,1,1,1
 Suedlohn,spost2,0,0,0,0,0,0
 Suedlohn,spost3,0,0,0,0,0,0
 Suedlohn,spost4,0,0,0,0,0,0
@@ -1484,7 +1484,7 @@ Suedlohn,spost52,0,0,0,0,0,0
 Suedlohn,spost53,0,0,0,0,0,0
 Suedlohn,spost54,0,0,0,0,0,0
 Suedlohn,spost55,0,0,0,0,0,0
-Leverkusen,spost1,1,1,1,1,1,0
+Leverkusen,spost1,1,1,1,1,1,1
 Leverkusen,spost2,0,0,0,0,0,0
 Leverkusen,spost3,0,0,0,0,0,0
 Leverkusen,spost4,0,0,0,0,0,0
@@ -1539,7 +1539,7 @@ Leverkusen,spost52,0,0,0,0,0,0
 Leverkusen,spost53,0,0,0,0,0,0
 Leverkusen,spost54,0,0,0,0,0,0
 Leverkusen,spost55,0,0,0,0,0,0
-Schwerte,spost1,1,1,1,1,1,0
+Schwerte,spost1,1,1,1,1,1,1
 Schwerte,spost2,0,0,0,0,0,0
 Schwerte,spost3,0,0,0,0,0,0
 Schwerte,spost4,0,0,0,0,0,0
@@ -1594,7 +1594,7 @@ Schwerte,spost52,0,0,0,0,0,0
 Schwerte,spost53,0,0,0,0,0,0
 Schwerte,spost54,0,0,0,0,0,0
 Schwerte,spost55,0,0,0,0,0,0
-Engelskirchen,spost1,1,1,1,1,1,0
+Engelskirchen,spost1,1,1,1,1,1,1
 Engelskirchen,spost2,0,0,0,0,0,0
 Engelskirchen,spost3,0,0,0,0,0,0
 Engelskirchen,spost4,0,0,0,0,0,0
@@ -1649,7 +1649,7 @@ Engelskirchen,spost52,0,0,0,0,0,0
 Engelskirchen,spost53,0,0,0,0,0,0
 Engelskirchen,spost54,0,0,0,0,0,0
 Engelskirchen,spost55,0,0,0,0,0,0
-Werl,spost1,1,1,1,1,1,0
+Werl,spost1,1,1,1,1,1,1
 Werl,spost2,0,0,0,0,0,0
 Werl,spost3,0,0,0,0,0,0
 Werl,spost4,0,0,0,0,0,0
@@ -1704,7 +1704,7 @@ Werl,spost52,0,0,0,0,0,0
 Werl,spost53,0,0,0,0,0,0
 Werl,spost54,0,0,0,0,0,0
 Werl,spost55,0,0,0,0,0,0
-Wesseling,spost1,1,1,1,1,1,0
+Wesseling,spost1,1,1,1,1,1,1
 Wesseling,spost2,0,0,0,0,0,0
 Wesseling,spost3,0,0,0,0,0,0
 Wesseling,spost4,0,0,0,0,0,0
@@ -1759,7 +1759,7 @@ Wesseling,spost52,0,0,0,0,0,0
 Wesseling,spost53,0,0,0,0,0,0
 Wesseling,spost54,0,0,0,0,0,0
 Wesseling,spost55,0,0,0,0,0,0
-Tecklenburg,spost1,1,1,1,1,1,0
+Tecklenburg,spost1,1,1,1,1,1,1
 Tecklenburg,spost2,0,0,0,0,0,0
 Tecklenburg,spost3,0,0,0,0,0,0
 Tecklenburg,spost4,0,0,0,0,0,0
@@ -1814,7 +1814,7 @@ Tecklenburg,spost52,0,0,0,0,0,0
 Tecklenburg,spost53,0,0,0,0,0,0
 Tecklenburg,spost54,0,0,0,0,0,0
 Tecklenburg,spost55,0,0,0,0,0,0
-Mettmann,spost1,1,1,1,1,1,0
+Mettmann,spost1,1,1,1,1,1,1
 Mettmann,spost2,0,0,0,0,0,0
 Mettmann,spost3,0,0,0,0,0,0
 Mettmann,spost4,0,0,0,0,0,0
@@ -1869,7 +1869,7 @@ Mettmann,spost52,0,0,0,0,0,0
 Mettmann,spost53,0,0,0,0,0,0
 Mettmann,spost54,0,0,0,0,0,0
 Mettmann,spost55,0,0,0,0,0,0
-Bocholt,spost1,1,1,1,1,1,0
+Bocholt,spost1,1,1,1,1,1,1
 Bocholt,spost2,0,0,0,0,0,0
 Bocholt,spost3,0,0,0,0,0,0
 Bocholt,spost4,0,0,0,0,0,0
@@ -1924,7 +1924,7 @@ Bocholt,spost52,0,0,0,0,0,0
 Bocholt,spost53,0,0,0,0,0,0
 Bocholt,spost54,0,0,0,0,0,0
 Bocholt,spost55,0,0,0,0,0,0
-Schleiden,spost1,1,1,1,1,1,0
+Schleiden,spost1,1,1,1,1,1,1
 Schleiden,spost2,0,0,0,0,0,0
 Schleiden,spost3,0,0,0,0,0,0
 Schleiden,spost4,0,0,0,0,0,0
@@ -1979,7 +1979,7 @@ Schleiden,spost52,0,0,0,0,0,0
 Schleiden,spost53,0,0,0,0,0,0
 Schleiden,spost54,0,0,0,0,0,0
 Schleiden,spost55,0,0,0,0,0,0
-Ratingen,spost1,1,1,1,1,1,0
+Ratingen,spost1,1,1,1,1,1,1
 Ratingen,spost2,0,0,0,0,0,0
 Ratingen,spost3,0,0,0,0,0,0
 Ratingen,spost4,0,0,0,0,0,0
@@ -2034,7 +2034,7 @@ Ratingen,spost52,0,0,0,0,0,0
 Ratingen,spost53,0,0,0,0,0,0
 Ratingen,spost54,0,0,0,0,0,0
 Ratingen,spost55,0,0,0,0,0,0
-Meerbusch,spost1,1,1,1,1,1,0
+Meerbusch,spost1,1,1,1,1,1,1
 Meerbusch,spost2,0,0,0,0,0,0
 Meerbusch,spost3,0,0,0,0,0,0
 Meerbusch,spost4,0,0,0,0,0,0
@@ -2089,7 +2089,7 @@ Meerbusch,spost52,0,0,0,0,0,0
 Meerbusch,spost53,0,0,0,0,0,0
 Meerbusch,spost54,0,0,0,0,0,0
 Meerbusch,spost55,0,0,0,0,0,0
-Hellenthal,spost1,1,1,1,1,1,0
+Hellenthal,spost1,1,1,1,1,1,1
 Hellenthal,spost2,0,0,0,0,0,0
 Hellenthal,spost3,0,0,0,0,0,0
 Hellenthal,spost4,0,0,0,0,0,0
@@ -2144,7 +2144,7 @@ Hellenthal,spost52,0,0,0,0,0,0
 Hellenthal,spost53,0,0,0,0,0,0
 Hellenthal,spost54,0,0,0,0,0,0
 Hellenthal,spost55,0,0,0,0,0,0
-UebachPalenberg,spost1,1,1,1,1,1,0
+UebachPalenberg,spost1,1,1,1,1,1,1
 UebachPalenberg,spost2,0,0,0,0,0,0
 UebachPalenberg,spost3,0,0,0,0,0,0
 UebachPalenberg,spost4,0,0,0,0,0,0
@@ -2199,7 +2199,7 @@ UebachPalenberg,spost52,0,0,0,0,0,0
 UebachPalenberg,spost53,0,0,0,0,0,0
 UebachPalenberg,spost54,0,0,0,0,0,0
 UebachPalenberg,spost55,0,0,0,0,0,0
-Bestwig,spost1,1,1,1,1,1,0
+Bestwig,spost1,1,1,1,1,1,1
 Bestwig,spost2,0,0,0,0,0,0
 Bestwig,spost3,0,0,0,0,0,0
 Bestwig,spost4,0,0,0,0,0,0
@@ -2254,7 +2254,7 @@ Bestwig,spost52,0,0,0,0,0,0
 Bestwig,spost53,0,0,0,0,0,0
 Bestwig,spost54,0,0,0,0,0,0
 Bestwig,spost55,0,0,0,0,0,0
-Lengerich,spost1,1,1,1,1,1,0
+Lengerich,spost1,1,1,1,1,1,1
 Lengerich,spost2,0,0,0,0,0,0
 Lengerich,spost3,0,0,0,0,0,0
 Lengerich,spost4,0,0,0,0,0,0
@@ -2309,7 +2309,7 @@ Lengerich,spost52,0,0,0,0,0,0
 Lengerich,spost53,0,0,0,0,0,0
 Lengerich,spost54,0,0,0,0,0,0
 Lengerich,spost55,0,0,0,0,0,0
-Radevormwald,spost1,1,1,1,1,1,0
+Radevormwald,spost1,1,1,1,1,1,1
 Radevormwald,spost2,0,0,0,0,0,0
 Radevormwald,spost3,0,0,0,0,0,0
 Radevormwald,spost4,0,0,0,0,0,0
@@ -2364,7 +2364,7 @@ Radevormwald,spost52,0,0,0,0,0,0
 Radevormwald,spost53,0,0,0,0,0,0
 Radevormwald,spost54,0,0,0,0,0,0
 Radevormwald,spost55,0,0,0,0,0,0
-Siegen,spost1,1,1,1,1,1,0
+Siegen,spost1,1,1,1,1,1,1
 Siegen,spost2,0,0,0,0,0,0
 Siegen,spost3,0,0,0,0,0,0
 Siegen,spost4,0,0,0,0,0,0
@@ -2419,7 +2419,7 @@ Siegen,spost52,0,0,0,0,0,0
 Siegen,spost53,0,0,0,0,0,0
 Siegen,spost54,0,0,0,0,0,0
 Siegen,spost55,0,0,0,0,0,0
-Soest,spost1,1,1,1,1,1,0
+Soest,spost1,1,1,1,1,1,1
 Soest,spost2,0,0,0,0,0,0
 Soest,spost3,0,0,0,0,0,0
 Soest,spost4,0,0,0,0,0,0
@@ -2474,7 +2474,7 @@ Soest,spost52,0,0,0,0,0,0
 Soest,spost53,0,0,0,0,0,0
 Soest,spost54,0,0,0,0,0,0
 Soest,spost55,0,0,0,0,0,0
-Issum,spost1,1,1,1,1,1,0
+Issum,spost1,1,1,1,1,1,1
 Issum,spost2,0,0,0,0,0,0
 Issum,spost3,0,0,0,0,0,0
 Issum,spost4,0,0,0,0,0,0
@@ -2529,7 +2529,7 @@ Issum,spost52,0,0,0,0,0,0
 Issum,spost53,0,0,0,0,0,0
 Issum,spost54,0,0,0,0,0,0
 Issum,spost55,0,0,0,0,0,0
-Waltrop,spost1,1,1,1,1,1,0
+Waltrop,spost1,1,1,1,1,1,1
 Waltrop,spost2,0,0,0,0,0,0
 Waltrop,spost3,0,0,0,0,0,0
 Waltrop,spost4,0,0,0,0,0,0
@@ -2584,7 +2584,7 @@ Waltrop,spost52,0,0,0,0,0,0
 Waltrop,spost53,0,0,0,0,0,0
 Waltrop,spost54,0,0,0,0,0,0
 Waltrop,spost55,0,0,0,0,0,0
-CastropRauxel,spost1,1,1,1,1,1,0
+CastropRauxel,spost1,1,1,1,1,1,1
 CastropRauxel,spost2,0,0,0,0,0,0
 CastropRauxel,spost3,0,0,0,0,0,0
 CastropRauxel,spost4,0,0,0,0,0,0
@@ -2639,7 +2639,7 @@ CastropRauxel,spost52,0,0,0,0,0,0
 CastropRauxel,spost53,0,0,0,0,0,0
 CastropRauxel,spost54,0,0,0,0,0,0
 CastropRauxel,spost55,0,0,0,0,0,0
-Nettetal,spost1,1,1,1,1,1,0
+Nettetal,spost1,1,1,1,1,1,1
 Nettetal,spost2,0,0,0,0,0,0
 Nettetal,spost3,0,0,0,0,0,0
 Nettetal,spost4,0,0,0,0,0,0
@@ -2694,7 +2694,7 @@ Nettetal,spost52,0,0,0,0,0,0
 Nettetal,spost53,0,0,0,0,0,0
 Nettetal,spost54,0,0,0,0,0,0
 Nettetal,spost55,0,0,0,0,0,0
-BadSalzuflen,spost1,1,1,1,1,1,0
+BadSalzuflen,spost1,1,1,1,1,1,1
 BadSalzuflen,spost2,0,0,0,0,0,0
 BadSalzuflen,spost3,0,0,0,0,0,0
 BadSalzuflen,spost4,0,0,0,0,0,0
@@ -2749,7 +2749,7 @@ BadSalzuflen,spost52,0,0,0,0,0,0
 BadSalzuflen,spost53,0,0,0,0,0,0
 BadSalzuflen,spost54,0,0,0,0,0,0
 BadSalzuflen,spost55,0,0,0,0,0,0
-Rahden,spost1,1,1,1,1,1,0
+Rahden,spost1,1,1,1,1,1,1
 Rahden,spost2,0,0,0,0,0,0
 Rahden,spost3,0,0,0,0,0,0
 Rahden,spost4,0,0,0,0,0,0
@@ -2804,7 +2804,7 @@ Rahden,spost52,0,0,0,0,0,0
 Rahden,spost53,0,0,0,0,0,0
 Rahden,spost54,0,0,0,0,0,0
 Rahden,spost55,0,0,0,0,0,0
-Steinfurt,spost1,1,1,1,1,1,0
+Steinfurt,spost1,1,1,1,1,1,1
 Steinfurt,spost2,0,0,0,0,0,0
 Steinfurt,spost3,0,0,0,0,0,0
 Steinfurt,spost4,0,0,0,0,0,0
@@ -2859,7 +2859,7 @@ Steinfurt,spost52,0,0,0,0,0,0
 Steinfurt,spost53,0,0,0,0,0,0
 Steinfurt,spost54,0,0,0,0,0,0
 Steinfurt,spost55,0,0,0,0,0,0
-Lemgo,spost1,1,1,1,1,1,0
+Lemgo,spost1,1,1,1,1,1,1
 Lemgo,spost2,0,0,0,0,0,0
 Lemgo,spost3,0,0,0,0,0,0
 Lemgo,spost4,0,0,0,0,0,0
@@ -2914,7 +2914,7 @@ Lemgo,spost52,0,0,0,0,0,0
 Lemgo,spost53,0,0,0,0,0,0
 Lemgo,spost54,0,0,0,0,0,0
 Lemgo,spost55,0,0,0,0,0,0
-Hoerstel,spost1,1,1,1,1,1,0
+Hoerstel,spost1,1,1,1,1,1,1
 Hoerstel,spost2,0,0,0,0,0,0
 Hoerstel,spost3,0,0,0,0,0,0
 Hoerstel,spost4,0,0,0,0,0,0
@@ -2969,7 +2969,7 @@ Hoerstel,spost52,0,0,0,0,0,0
 Hoerstel,spost53,0,0,0,0,0,0
 Hoerstel,spost54,0,0,0,0,0,0
 Hoerstel,spost55,0,0,0,0,0,0
-Nieheim,spost1,1,1,1,1,1,0
+Nieheim,spost1,1,1,1,1,1,1
 Nieheim,spost2,0,0,0,0,0,0
 Nieheim,spost3,0,0,0,0,0,0
 Nieheim,spost4,0,0,0,0,0,0
@@ -3024,7 +3024,7 @@ Nieheim,spost52,0,0,0,0,0,0
 Nieheim,spost53,0,0,0,0,0,0
 Nieheim,spost54,0,0,0,0,0,0
 Nieheim,spost55,0,0,0,0,0,0
-Steinheim,spost1,1,1,1,1,1,0
+Steinheim,spost1,1,1,1,1,1,1
 Steinheim,spost2,0,0,0,0,0,0
 Steinheim,spost3,0,0,0,0,0,0
 Steinheim,spost4,0,0,0,0,0,0
@@ -3079,7 +3079,7 @@ Steinheim,spost52,0,0,0,0,0,0
 Steinheim,spost53,0,0,0,0,0,0
 Steinheim,spost54,0,0,0,0,0,0
 Steinheim,spost55,0,0,0,0,0,0
-Ruethen,spost1,1,1,1,1,1,0
+Ruethen,spost1,1,1,1,1,1,1
 Ruethen,spost2,0,0,0,0,0,0
 Ruethen,spost3,0,0,0,0,0,0
 Ruethen,spost4,0,0,0,0,0,0
@@ -3134,7 +3134,7 @@ Ruethen,spost52,0,0,0,0,0,0
 Ruethen,spost53,0,0,0,0,0,0
 Ruethen,spost54,0,0,0,0,0,0
 Ruethen,spost55,0,0,0,0,0,0
-BadWuennenberg,spost1,1,1,1,1,1,0
+BadWuennenberg,spost1,1,1,1,1,1,1
 BadWuennenberg,spost2,0,0,0,0,0,0
 BadWuennenberg,spost3,0,0,0,0,0,0
 BadWuennenberg,spost4,0,0,0,0,0,0
@@ -3189,7 +3189,7 @@ BadWuennenberg,spost52,0,0,0,0,0,0
 BadWuennenberg,spost53,0,0,0,0,0,0
 BadWuennenberg,spost54,0,0,0,0,0,0
 BadWuennenberg,spost55,0,0,0,0,0,0
-Vettweiss,spost1,1,1,1,1,1,0
+Vettweiss,spost1,1,1,1,1,1,1
 Vettweiss,spost2,0,0,0,0,0,0
 Vettweiss,spost3,0,0,0,0,0,0
 Vettweiss,spost4,0,0,0,0,0,0
@@ -3244,7 +3244,7 @@ Vettweiss,spost52,0,0,0,0,0,0
 Vettweiss,spost53,0,0,0,0,0,0
 Vettweiss,spost54,0,0,0,0,0,0
 Vettweiss,spost55,0,0,0,0,0,0
-Luenen,spost1,1,1,1,1,1,0
+Luenen,spost1,1,1,1,1,1,1
 Luenen,spost2,0,0,0,0,0,0
 Luenen,spost3,0,0,0,0,0,0
 Luenen,spost4,0,0,0,0,0,0
@@ -3299,7 +3299,7 @@ Luenen,spost52,0,0,0,0,0,0
 Luenen,spost53,0,0,0,0,0,0
 Luenen,spost54,0,0,0,0,0,0
 Luenen,spost55,0,0,0,0,0,0
-Bochum,spost1,1,1,1,1,1,0
+Bochum,spost1,1,1,1,1,1,1
 Bochum,spost2,0,0,0,0,0,0
 Bochum,spost3,0,0,0,0,0,0
 Bochum,spost4,0,0,0,0,0,0
@@ -3354,7 +3354,7 @@ Bochum,spost52,0,0,0,0,0,0
 Bochum,spost53,0,0,0,0,0,0
 Bochum,spost54,0,0,0,0,0,0
 Bochum,spost55,0,0,0,0,0,0
-Delbrueck,spost1,1,1,1,1,1,0
+Delbrueck,spost1,1,1,1,1,1,1
 Delbrueck,spost2,0,0,0,0,0,0
 Delbrueck,spost3,0,0,0,0,0,0
 Delbrueck,spost4,0,0,0,0,0,0
@@ -3409,7 +3409,7 @@ Delbrueck,spost52,0,0,0,0,0,0
 Delbrueck,spost53,0,0,0,0,0,0
 Delbrueck,spost54,0,0,0,0,0,0
 Delbrueck,spost55,0,0,0,0,0,0
-Gangelt,spost1,1,1,1,1,1,0
+Gangelt,spost1,1,1,1,1,1,1
 Gangelt,spost2,0,0,0,0,0,0
 Gangelt,spost3,0,0,0,0,0,0
 Gangelt,spost4,0,0,0,0,0,0
@@ -3464,7 +3464,7 @@ Gangelt,spost52,0,0,0,0,0,0
 Gangelt,spost53,0,0,0,0,0,0
 Gangelt,spost54,0,0,0,0,0,0
 Gangelt,spost55,0,0,0,0,0,0
-Kerken,spost1,1,1,1,1,1,0
+Kerken,spost1,1,1,1,1,1,1
 Kerken,spost2,0,0,0,0,0,0
 Kerken,spost3,0,0,0,0,0,0
 Kerken,spost4,0,0,0,0,0,0
@@ -3519,7 +3519,7 @@ Kerken,spost52,0,0,0,0,0,0
 Kerken,spost53,0,0,0,0,0,0
 Kerken,spost54,0,0,0,0,0,0
 Kerken,spost55,0,0,0,0,0,0
-Horstmar,spost1,1,1,1,1,1,0
+Horstmar,spost1,1,1,1,1,1,1
 Horstmar,spost2,0,0,0,0,0,0
 Horstmar,spost3,0,0,0,0,0,0
 Horstmar,spost4,0,0,0,0,0,0
@@ -3574,7 +3574,7 @@ Horstmar,spost52,0,0,0,0,0,0
 Horstmar,spost53,0,0,0,0,0,0
 Horstmar,spost54,0,0,0,0,0,0
 Horstmar,spost55,0,0,0,0,0,0
-Barntrup,spost1,1,1,1,1,1,0
+Barntrup,spost1,1,1,1,1,1,1
 Barntrup,spost2,0,0,0,0,0,0
 Barntrup,spost3,0,0,0,0,0,0
 Barntrup,spost4,0,0,0,0,0,0
@@ -3629,7 +3629,7 @@ Barntrup,spost52,0,0,0,0,0,0
 Barntrup,spost53,0,0,0,0,0,0
 Barntrup,spost54,0,0,0,0,0,0
 Barntrup,spost55,0,0,0,0,0,0
-Ascheberg,spost1,1,1,1,1,1,0
+Ascheberg,spost1,1,1,1,1,1,1
 Ascheberg,spost2,0,0,0,0,0,0
 Ascheberg,spost3,0,0,0,0,0,0
 Ascheberg,spost4,0,0,0,0,0,0
@@ -3684,7 +3684,7 @@ Ascheberg,spost52,0,0,0,0,0,0
 Ascheberg,spost53,0,0,0,0,0,0
 Ascheberg,spost54,0,0,0,0,0,0
 Ascheberg,spost55,0,0,0,0,0,0
-Wenden,spost1,1,1,1,1,1,0
+Wenden,spost1,1,1,1,1,1,1
 Wenden,spost2,0,0,0,0,0,0
 Wenden,spost3,0,0,0,0,0,0
 Wenden,spost4,0,0,0,0,0,0
@@ -3739,7 +3739,7 @@ Wenden,spost52,0,0,0,0,0,0
 Wenden,spost53,0,0,0,0,0,0
 Wenden,spost54,0,0,0,0,0,0
 Wenden,spost55,0,0,0,0,0,0
-Drolshagen,spost1,1,1,1,1,1,0
+Drolshagen,spost1,1,1,1,1,1,1
 Drolshagen,spost2,0,0,0,0,0,0
 Drolshagen,spost3,0,0,0,0,0,0
 Drolshagen,spost4,0,0,0,0,0,0
@@ -3794,7 +3794,7 @@ Drolshagen,spost52,0,0,0,0,0,0
 Drolshagen,spost53,0,0,0,0,0,0
 Drolshagen,spost54,0,0,0,0,0,0
 Drolshagen,spost55,0,0,0,0,0,0
-Geseke,spost1,1,1,1,1,1,0
+Geseke,spost1,1,1,1,1,1,1
 Geseke,spost2,0,0,0,0,0,0
 Geseke,spost3,0,0,0,0,0,0
 Geseke,spost4,0,0,0,0,0,0
@@ -3849,7 +3849,7 @@ Geseke,spost52,0,0,0,0,0,0
 Geseke,spost53,0,0,0,0,0,0
 Geseke,spost54,0,0,0,0,0,0
 Geseke,spost55,0,0,0,0,0,0
-Kevelaer,spost1,1,1,1,1,1,0
+Kevelaer,spost1,1,1,1,1,1,1
 Kevelaer,spost2,0,0,0,0,0,0
 Kevelaer,spost3,0,0,0,0,0,0
 Kevelaer,spost4,0,0,0,0,0,0
@@ -3904,7 +3904,7 @@ Kevelaer,spost52,0,0,0,0,0,0
 Kevelaer,spost53,0,0,0,0,0,0
 Kevelaer,spost54,0,0,0,0,0,0
 Kevelaer,spost55,0,0,0,0,0,0
-Hille,spost1,1,1,1,1,1,0
+Hille,spost1,1,1,1,1,1,1
 Hille,spost2,0,0,0,0,0,0
 Hille,spost3,0,0,0,0,0,0
 Hille,spost4,0,0,0,0,0,0
@@ -3959,7 +3959,7 @@ Hille,spost52,0,0,0,0,0,0
 Hille,spost53,0,0,0,0,0,0
 Hille,spost54,0,0,0,0,0,0
 Hille,spost55,0,0,0,0,0,0
-Heinsberg,spost1,1,1,1,1,1,0
+Heinsberg,spost1,1,1,1,1,1,1
 Heinsberg,spost2,0,0,0,0,0,0
 Heinsberg,spost3,0,0,0,0,0,0
 Heinsberg,spost4,0,0,0,0,0,0
@@ -4014,7 +4014,7 @@ Heinsberg,spost52,0,0,0,0,0,0
 Heinsberg,spost53,0,0,0,0,0,0
 Heinsberg,spost54,0,0,0,0,0,0
 Heinsberg,spost55,0,0,0,0,0,0
-Goch,spost1,1,1,1,1,1,0
+Goch,spost1,1,1,1,1,1,1
 Goch,spost2,0,0,0,0,0,0
 Goch,spost3,0,0,0,0,0,0
 Goch,spost4,0,0,0,0,0,0
@@ -4069,7 +4069,7 @@ Goch,spost52,0,0,0,0,0,0
 Goch,spost53,0,0,0,0,0,0
 Goch,spost54,0,0,0,0,0,0
 Goch,spost55,0,0,0,0,0,0
-Neuenrade,spost1,1,1,1,1,1,0
+Neuenrade,spost1,1,1,1,1,1,1
 Neuenrade,spost2,0,0,0,0,0,0
 Neuenrade,spost3,0,0,0,0,0,0
 Neuenrade,spost4,0,0,0,0,0,0
@@ -4124,7 +4124,7 @@ Neuenrade,spost52,0,0,0,0,0,0
 Neuenrade,spost53,0,0,0,0,0,0
 Neuenrade,spost54,0,0,0,0,0,0
 Neuenrade,spost55,0,0,0,0,0,0
-Loehne,spost1,1,1,1,1,1,0
+Loehne,spost1,1,1,1,1,1,1
 Loehne,spost2,0,0,0,0,0,0
 Loehne,spost3,0,0,0,0,0,0
 Loehne,spost4,0,0,0,0,0,0
@@ -4179,7 +4179,7 @@ Loehne,spost52,0,0,0,0,0,0
 Loehne,spost53,0,0,0,0,0,0
 Loehne,spost54,0,0,0,0,0,0
 Loehne,spost55,0,0,0,0,0,0
-Windeck,spost1,1,1,1,1,1,0
+Windeck,spost1,1,1,1,1,1,1
 Windeck,spost2,0,0,0,0,0,0
 Windeck,spost3,0,0,0,0,0,0
 Windeck,spost4,0,0,0,0,0,0
@@ -4234,7 +4234,7 @@ Windeck,spost52,0,0,0,0,0,0
 Windeck,spost53,0,0,0,0,0,0
 Windeck,spost54,0,0,0,0,0,0
 Windeck,spost55,0,0,0,0,0,0
-Mettingen,spost1,1,1,1,1,1,0
+Mettingen,spost1,1,1,1,1,1,1
 Mettingen,spost2,0,0,0,0,0,0
 Mettingen,spost3,0,0,0,0,0,0
 Mettingen,spost4,0,0,0,0,0,0
@@ -4289,7 +4289,7 @@ Mettingen,spost52,0,0,0,0,0,0
 Mettingen,spost53,0,0,0,0,0,0
 Mettingen,spost54,0,0,0,0,0,0
 Mettingen,spost55,0,0,0,0,0,0
-Muenster,spost1,1,1,1,1,1,0
+Muenster,spost1,1,1,1,1,1,1
 Muenster,spost2,0,0,0,0,0,0
 Muenster,spost3,0,0,0,0,0,0
 Muenster,spost4,0,0,0,0,0,0
@@ -4344,7 +4344,7 @@ Muenster,spost52,0,0,0,0,0,0
 Muenster,spost53,0,0,0,0,0,0
 Muenster,spost54,0,0,0,0,0,0
 Muenster,spost55,0,0,0,0,0,0
-Alfter,spost1,1,1,1,1,1,0
+Alfter,spost1,1,1,1,1,1,1
 Alfter,spost2,0,0,0,0,0,0
 Alfter,spost3,0,0,0,0,0,0
 Alfter,spost4,0,0,0,0,0,0
@@ -4399,7 +4399,7 @@ Alfter,spost52,0,0,0,0,0,0
 Alfter,spost53,0,0,0,0,0,0
 Alfter,spost54,0,0,0,0,0,0
 Alfter,spost55,0,0,0,0,0,0
-Rheurdt,spost1,1,1,1,1,1,0
+Rheurdt,spost1,1,1,1,1,1,1
 Rheurdt,spost2,0,0,0,0,0,0
 Rheurdt,spost3,0,0,0,0,0,0
 Rheurdt,spost4,0,0,0,0,0,0
@@ -4454,7 +4454,7 @@ Rheurdt,spost52,0,0,0,0,0,0
 Rheurdt,spost53,0,0,0,0,0,0
 Rheurdt,spost54,0,0,0,0,0,0
 Rheurdt,spost55,0,0,0,0,0,0
-Rheine,spost1,1,1,1,1,1,0
+Rheine,spost1,1,1,1,1,1,1
 Rheine,spost2,0,0,0,0,0,0
 Rheine,spost3,0,0,0,0,0,0
 Rheine,spost4,0,0,0,0,0,0
@@ -4509,7 +4509,7 @@ Rheine,spost52,0,0,0,0,0,0
 Rheine,spost53,0,0,0,0,0,0
 Rheine,spost54,0,0,0,0,0,0
 Rheine,spost55,0,0,0,0,0,0
-Augustdorf,spost1,1,1,1,1,1,0
+Augustdorf,spost1,1,1,1,1,1,1
 Augustdorf,spost2,0,0,0,0,0,0
 Augustdorf,spost3,0,0,0,0,0,0
 Augustdorf,spost4,0,0,0,0,0,0
@@ -4564,7 +4564,7 @@ Augustdorf,spost52,0,0,0,0,0,0
 Augustdorf,spost53,0,0,0,0,0,0
 Augustdorf,spost54,0,0,0,0,0,0
 Augustdorf,spost55,0,0,0,0,0,0
-Stemwede,spost1,1,1,1,1,1,0
+Stemwede,spost1,1,1,1,1,1,1
 Stemwede,spost2,0,0,0,0,0,0
 Stemwede,spost3,0,0,0,0,0,0
 Stemwede,spost4,0,0,0,0,0,0
@@ -4619,7 +4619,7 @@ Stemwede,spost52,0,0,0,0,0,0
 Stemwede,spost53,0,0,0,0,0,0
 Stemwede,spost54,0,0,0,0,0,0
 Stemwede,spost55,0,0,0,0,0,0
-Troisdorf,spost1,1,1,1,1,1,0
+Troisdorf,spost1,1,1,1,1,1,1
 Troisdorf,spost2,0,0,0,0,0,0
 Troisdorf,spost3,0,0,0,0,0,0
 Troisdorf,spost4,0,0,0,0,0,0
@@ -4674,7 +4674,7 @@ Troisdorf,spost52,0,0,1,0,0,0
 Troisdorf,spost53,0,0,0,0,0,0
 Troisdorf,spost54,0,0,0,0,0,0
 Troisdorf,spost55,0,0,0,0,0,0
-LangenfeldRhld,spost1,1,1,1,1,1,0
+LangenfeldRhld,spost1,1,1,1,1,1,1
 LangenfeldRhld,spost2,0,0,0,0,0,0
 LangenfeldRhld,spost3,0,0,0,0,0,0
 LangenfeldRhld,spost4,0,0,0,0,0,0
@@ -4729,7 +4729,7 @@ LangenfeldRhld,spost52,0,0,0,0,0,0
 LangenfeldRhld,spost53,0,0,0,0,0,0
 LangenfeldRhld,spost54,0,0,0,0,0,0
 LangenfeldRhld,spost55,0,0,0,0,0,0
-Extertal,spost1,1,1,1,1,1,0
+Extertal,spost1,1,1,1,1,1,1
 Extertal,spost2,0,0,0,0,0,0
 Extertal,spost3,0,0,0,0,0,0
 Extertal,spost4,0,0,0,0,0,0
@@ -4784,7 +4784,7 @@ Extertal,spost52,0,0,0,0,0,0
 Extertal,spost53,0,0,0,0,0,0
 Extertal,spost54,0,0,0,0,0,0
 Extertal,spost55,0,0,0,0,0,0
-Metelen,spost1,1,1,1,1,1,0
+Metelen,spost1,1,1,1,1,1,1
 Metelen,spost2,0,0,0,0,0,0
 Metelen,spost3,0,0,0,0,0,0
 Metelen,spost4,0,0,0,0,0,0
@@ -4839,7 +4839,7 @@ Metelen,spost52,0,0,0,0,0,0
 Metelen,spost53,0,0,0,0,0,0
 Metelen,spost54,0,0,0,0,0,0
 Metelen,spost55,0,0,0,0,0,0
-Wipperfuerth,spost1,1,1,1,1,1,0
+Wipperfuerth,spost1,1,1,1,1,1,1
 Wipperfuerth,spost2,0,0,0,0,0,0
 Wipperfuerth,spost3,0,0,0,0,0,0
 Wipperfuerth,spost4,0,0,0,0,0,0
@@ -4894,7 +4894,7 @@ Wipperfuerth,spost52,0,0,0,0,0,0
 Wipperfuerth,spost53,0,0,0,0,0,0
 Wipperfuerth,spost54,0,0,0,0,0,0
 Wipperfuerth,spost55,0,0,0,0,0,0
-Schoeppingen,spost1,1,1,1,1,1,0
+Schoeppingen,spost1,1,1,1,1,1,1
 Schoeppingen,spost2,0,0,0,0,0,0
 Schoeppingen,spost3,0,0,0,0,0,0
 Schoeppingen,spost4,0,0,0,0,0,0
@@ -4949,7 +4949,7 @@ Schoeppingen,spost52,0,0,0,0,0,0
 Schoeppingen,spost53,0,0,0,0,0,0
 Schoeppingen,spost54,0,0,0,0,0,0
 Schoeppingen,spost55,0,0,0,0,0,0
-Uedem,spost1,1,1,1,1,1,0
+Uedem,spost1,1,1,1,1,1,1
 Uedem,spost2,0,0,0,0,0,0
 Uedem,spost3,0,0,0,0,0,0
 Uedem,spost4,0,0,0,0,0,0
@@ -5004,7 +5004,7 @@ Uedem,spost52,0,0,0,0,0,0
 Uedem,spost53,0,0,1,0,0,0
 Uedem,spost54,0,0,0,0,0,0
 Uedem,spost55,0,0,0,0,0,0
-FroendenbergRuhr,spost1,1,1,1,1,1,0
+FroendenbergRuhr,spost1,1,1,1,1,1,1
 FroendenbergRuhr,spost2,0,0,0,0,0,0
 FroendenbergRuhr,spost3,0,0,0,0,0,0
 FroendenbergRuhr,spost4,0,0,0,0,0,0
@@ -5059,7 +5059,7 @@ FroendenbergRuhr,spost52,0,0,0,0,0,0
 FroendenbergRuhr,spost53,0,0,0,0,0,0
 FroendenbergRuhr,spost54,0,0,0,0,0,0
 FroendenbergRuhr,spost55,0,0,0,0,0,0
-Coesfeld,spost1,1,1,1,1,1,0
+Coesfeld,spost1,1,1,1,1,1,1
 Coesfeld,spost2,0,0,0,0,0,0
 Coesfeld,spost3,0,0,0,0,0,0
 Coesfeld,spost4,0,0,0,0,0,0
@@ -5114,7 +5114,7 @@ Coesfeld,spost52,0,0,0,0,0,0
 Coesfeld,spost53,0,0,0,0,0,0
 Coesfeld,spost54,0,0,0,0,0,0
 Coesfeld,spost55,0,0,0,0,0,0
-Kalkar,spost1,1,1,1,1,1,0
+Kalkar,spost1,1,1,1,1,1,1
 Kalkar,spost2,0,0,0,0,0,0
 Kalkar,spost3,0,0,0,0,0,0
 Kalkar,spost4,0,0,0,0,0,0
@@ -5169,7 +5169,7 @@ Kalkar,spost52,0,0,0,0,0,0
 Kalkar,spost53,0,0,0,0,0,0
 Kalkar,spost54,0,0,0,0,0,0
 Kalkar,spost55,0,0,0,0,0,0
-Sassenberg,spost1,1,1,1,1,1,0
+Sassenberg,spost1,1,1,1,1,1,1
 Sassenberg,spost2,0,0,0,0,0,0
 Sassenberg,spost3,0,0,0,0,0,0
 Sassenberg,spost4,0,0,0,0,0,0
@@ -5224,7 +5224,7 @@ Sassenberg,spost52,0,0,0,0,0,0
 Sassenberg,spost53,0,0,0,0,0,0
 Sassenberg,spost54,0,0,0,0,0,0
 Sassenberg,spost55,0,0,0,0,0,0
-Viersen,spost1,1,1,1,1,1,0
+Viersen,spost1,1,1,1,1,1,1
 Viersen,spost2,0,0,0,0,0,0
 Viersen,spost3,0,0,0,0,0,0
 Viersen,spost4,0,0,0,0,0,0
@@ -5279,7 +5279,7 @@ Viersen,spost52,0,0,0,0,0,0
 Viersen,spost53,0,0,0,0,0,0
 Viersen,spost54,0,0,0,0,0,0
 Viersen,spost55,0,0,0,0,0,0
-Buende,spost1,1,1,1,1,1,0
+Buende,spost1,1,1,1,1,1,1
 Buende,spost2,0,0,0,0,0,0
 Buende,spost3,0,0,0,0,0,0
 Buende,spost4,0,0,0,0,0,0
@@ -5334,7 +5334,7 @@ Buende,spost52,0,0,0,0,0,0
 Buende,spost53,0,0,0,0,0,0
 Buende,spost54,0,0,0,0,0,0
 Buende,spost55,0,0,0,0,0,0
-Oelde,spost1,1,1,1,1,1,0
+Oelde,spost1,1,1,1,1,1,1
 Oelde,spost2,0,0,0,0,0,0
 Oelde,spost3,0,0,0,0,0,0
 Oelde,spost4,0,0,0,0,0,0
@@ -5389,7 +5389,7 @@ Oelde,spost52,0,0,0,0,0,0
 Oelde,spost53,0,0,0,0,0,0
 Oelde,spost54,0,0,0,0,0,0
 Oelde,spost55,0,0,0,0,0,0
-SchiederSchwalenberg,spost1,1,1,1,1,1,0
+SchiederSchwalenberg,spost1,1,1,1,1,1,1
 SchiederSchwalenberg,spost2,0,0,0,0,0,0
 SchiederSchwalenberg,spost3,0,0,0,0,0,0
 SchiederSchwalenberg,spost4,0,0,0,0,0,0
@@ -5444,7 +5444,7 @@ SchiederSchwalenberg,spost52,0,0,0,0,0,0
 SchiederSchwalenberg,spost53,0,0,0,0,0,0
 SchiederSchwalenberg,spost54,0,0,0,0,0,0
 SchiederSchwalenberg,spost55,0,0,0,0,0,0
-Spenge,spost1,1,1,1,1,1,0
+Spenge,spost1,1,1,1,1,1,1
 Spenge,spost2,0,0,0,0,0,0
 Spenge,spost3,0,0,0,0,0,0
 Spenge,spost4,0,0,0,0,0,0
@@ -5499,7 +5499,7 @@ Spenge,spost52,0,0,0,0,0,0
 Spenge,spost53,0,0,0,0,0,0
 Spenge,spost54,0,0,0,0,0,0
 Spenge,spost55,0,0,0,0,0,0
-Wesel,spost1,1,1,1,1,1,0
+Wesel,spost1,1,1,1,1,1,1
 Wesel,spost2,0,0,0,0,0,0
 Wesel,spost3,0,0,0,0,1,0
 Wesel,spost4,0,0,0,0,0,0
@@ -5554,7 +5554,7 @@ Wesel,spost52,0,0,0,0,0,0
 Wesel,spost53,0,0,0,0,0,0
 Wesel,spost54,0,0,0,0,0,0
 Wesel,spost55,0,0,0,0,0,0
-WickedeRuhr,spost1,1,1,1,1,1,0
+WickedeRuhr,spost1,1,1,1,1,1,1
 WickedeRuhr,spost2,0,0,0,0,0,0
 WickedeRuhr,spost3,0,0,0,0,0,0
 WickedeRuhr,spost4,0,0,0,0,0,0
@@ -5609,7 +5609,7 @@ WickedeRuhr,spost52,0,0,0,0,0,0
 WickedeRuhr,spost53,0,0,0,0,0,0
 WickedeRuhr,spost54,0,0,0,0,0,0
 WickedeRuhr,spost55,0,0,0,0,0,0
-Steinhagen,spost1,1,1,1,1,1,0
+Steinhagen,spost1,1,1,1,1,1,1
 Steinhagen,spost2,0,0,0,0,0,0
 Steinhagen,spost3,0,0,0,0,0,0
 Steinhagen,spost4,0,0,0,0,0,0
@@ -5664,7 +5664,7 @@ Steinhagen,spost52,0,0,0,0,0,0
 Steinhagen,spost53,0,0,0,0,0,0
 Steinhagen,spost54,0,0,0,0,0,0
 Steinhagen,spost55,0,0,0,0,0,0
-Bielefeld,spost1,1,1,1,1,1,0
+Bielefeld,spost1,1,1,1,1,1,1
 Bielefeld,spost2,0,0,0,0,0,0
 Bielefeld,spost3,0,0,0,0,0,0
 Bielefeld,spost4,0,0,0,0,0,0
@@ -5719,7 +5719,7 @@ Bielefeld,spost52,0,0,0,0,0,0
 Bielefeld,spost53,0,0,0,0,0,0
 Bielefeld,spost54,0,0,0,0,0,0
 Bielefeld,spost55,0,0,0,0,0,0
-Olpe,spost1,1,1,1,1,1,0
+Olpe,spost1,1,1,1,1,1,1
 Olpe,spost2,0,0,0,0,0,0
 Olpe,spost3,0,0,0,0,0,0
 Olpe,spost4,0,0,0,0,0,0
@@ -5774,7 +5774,7 @@ Olpe,spost52,0,0,0,0,0,0
 Olpe,spost53,0,0,0,0,0,0
 Olpe,spost54,0,0,0,0,0,0
 Olpe,spost55,0,0,0,0,0,0
-Werdohl,spost1,1,1,1,1,1,0
+Werdohl,spost1,1,1,1,1,1,1
 Werdohl,spost2,0,0,0,0,0,0
 Werdohl,spost3,0,0,0,0,0,0
 Werdohl,spost4,0,0,0,0,0,0
@@ -5829,7 +5829,7 @@ Werdohl,spost52,0,0,0,0,0,0
 Werdohl,spost53,0,0,0,0,0,0
 Werdohl,spost54,0,0,0,0,0,0
 Werdohl,spost55,0,0,0,0,0,0
-Kamen,spost1,1,1,1,1,1,0
+Kamen,spost1,1,1,1,1,1,1
 Kamen,spost2,0,0,0,0,0,0
 Kamen,spost3,0,0,0,0,0,0
 Kamen,spost4,0,0,0,0,0,0
@@ -5884,7 +5884,7 @@ Kamen,spost52,0,0,0,0,0,0
 Kamen,spost53,0,0,0,0,0,0
 Kamen,spost54,0,0,0,0,0,0
 Kamen,spost55,0,0,0,0,0,0
-Emsdetten,spost1,1,1,1,1,1,0
+Emsdetten,spost1,1,1,1,1,1,1
 Emsdetten,spost2,0,0,0,0,0,0
 Emsdetten,spost3,0,0,0,0,0,0
 Emsdetten,spost4,0,0,0,0,0,0
@@ -5939,7 +5939,7 @@ Emsdetten,spost52,0,0,0,0,0,0
 Emsdetten,spost53,0,0,0,0,0,0
 Emsdetten,spost54,0,0,0,0,0,0
 Emsdetten,spost55,0,0,0,0,0,0
-Brakel,spost1,1,1,1,1,1,0
+Brakel,spost1,1,1,1,1,1,1
 Brakel,spost2,0,0,0,0,0,0
 Brakel,spost3,0,0,0,0,0,0
 Brakel,spost4,0,0,0,0,0,0
@@ -5994,7 +5994,7 @@ Brakel,spost52,0,0,0,0,0,0
 Brakel,spost53,0,0,0,0,0,0
 Brakel,spost54,0,0,0,0,0,0
 Brakel,spost55,0,0,0,0,0,0
-Roedinghausen,spost1,1,1,1,1,1,0
+Roedinghausen,spost1,1,1,1,1,1,1
 Roedinghausen,spost2,0,0,0,0,0,0
 Roedinghausen,spost3,0,0,0,0,0,0
 Roedinghausen,spost4,0,0,0,0,0,0
@@ -6049,7 +6049,7 @@ Roedinghausen,spost52,0,0,0,0,0,0
 Roedinghausen,spost53,0,0,0,0,0,0
 Roedinghausen,spost54,0,0,0,0,0,0
 Roedinghausen,spost55,0,0,0,0,0,0
-Xanten,spost1,1,1,1,1,1,0
+Xanten,spost1,1,1,1,1,1,1
 Xanten,spost2,0,0,0,0,0,0
 Xanten,spost3,0,0,0,0,0,0
 Xanten,spost4,0,0,0,0,0,0
@@ -6104,7 +6104,7 @@ Xanten,spost52,0,0,0,0,0,0
 Xanten,spost53,0,0,0,0,0,0
 Xanten,spost54,0,0,0,0,0,0
 Xanten,spost55,0,0,0,0,0,0
-Haan,spost1,1,1,1,1,1,0
+Haan,spost1,1,1,1,1,1,1
 Haan,spost2,0,0,0,0,0,0
 Haan,spost3,0,0,0,0,0,0
 Haan,spost4,0,0,0,0,0,0
@@ -6159,7 +6159,7 @@ Haan,spost52,0,0,0,0,0,0
 Haan,spost53,0,0,0,0,0,0
 Haan,spost54,0,0,0,0,0,0
 Haan,spost55,0,0,0,0,0,0
-HalleWestf,spost1,1,1,1,1,1,0
+HalleWestf,spost1,1,1,1,1,1,1
 HalleWestf,spost2,0,0,0,0,0,0
 HalleWestf,spost3,0,0,0,0,0,0
 HalleWestf,spost4,0,0,0,0,0,0
@@ -6214,7 +6214,7 @@ HalleWestf,spost52,0,0,0,0,0,0
 HalleWestf,spost53,0,0,0,0,0,0
 HalleWestf,spost54,0,0,0,0,0,0
 HalleWestf,spost55,0,0,0,0,0,0
-Gladbeck,spost1,1,1,1,1,1,0
+Gladbeck,spost1,1,1,1,1,1,1
 Gladbeck,spost2,0,0,0,0,0,0
 Gladbeck,spost3,0,0,0,0,0,0
 Gladbeck,spost4,0,0,0,0,0,0
@@ -6269,7 +6269,7 @@ Gladbeck,spost52,0,0,0,0,0,0
 Gladbeck,spost53,0,0,0,0,0,0
 Gladbeck,spost54,0,0,0,0,0,0
 Gladbeck,spost55,0,0,0,0,0,0
-Heimbach,spost1,1,1,1,1,1,0
+Heimbach,spost1,1,1,1,1,1,1
 Heimbach,spost2,0,0,0,0,0,0
 Heimbach,spost3,0,0,0,0,0,0
 Heimbach,spost4,0,0,0,0,0,0
@@ -6324,7 +6324,7 @@ Heimbach,spost52,0,0,0,0,0,0
 Heimbach,spost53,0,0,0,0,0,0
 Heimbach,spost54,0,0,0,0,0,0
 Heimbach,spost55,0,0,0,0,0,0
-Beelen,spost1,1,1,1,1,1,0
+Beelen,spost1,1,1,1,1,1,1
 Beelen,spost2,0,0,0,0,0,0
 Beelen,spost3,0,0,0,0,0,0
 Beelen,spost4,0,0,0,0,0,0
@@ -6379,7 +6379,7 @@ Beelen,spost52,0,0,0,0,0,0
 Beelen,spost53,0,0,0,0,0,0
 Beelen,spost54,0,0,0,0,0,0
 Beelen,spost55,0,0,0,0,0,0
-Medebach,spost1,1,1,1,1,1,0
+Medebach,spost1,1,1,1,1,1,1
 Medebach,spost2,0,0,0,0,0,0
 Medebach,spost3,0,0,0,0,0,0
 Medebach,spost4,0,0,0,0,0,0
@@ -6434,7 +6434,7 @@ Medebach,spost52,0,0,0,0,0,0
 Medebach,spost53,0,0,0,0,0,0
 Medebach,spost54,0,0,0,0,0,0
 Medebach,spost55,0,0,0,0,0,0
-NachrodtWiblingwerde,spost1,1,1,1,1,1,0
+NachrodtWiblingwerde,spost1,1,1,1,1,1,1
 NachrodtWiblingwerde,spost2,0,0,0,0,0,0
 NachrodtWiblingwerde,spost3,0,0,0,0,0,0
 NachrodtWiblingwerde,spost4,0,0,0,0,0,0
@@ -6489,7 +6489,7 @@ NachrodtWiblingwerde,spost52,0,0,0,0,0,0
 NachrodtWiblingwerde,spost53,0,0,0,0,0,0
 NachrodtWiblingwerde,spost54,0,0,0,0,0,0
 NachrodtWiblingwerde,spost55,0,0,0,0,0,0
-HornBadMeinberg,spost1,1,1,1,1,1,0
+HornBadMeinberg,spost1,1,1,1,1,1,1
 HornBadMeinberg,spost2,0,0,0,0,0,0
 HornBadMeinberg,spost3,0,0,0,0,0,0
 HornBadMeinberg,spost4,0,0,0,0,0,0
@@ -6544,7 +6544,7 @@ HornBadMeinberg,spost52,0,0,0,0,0,0
 HornBadMeinberg,spost53,0,0,0,0,0,0
 HornBadMeinberg,spost54,0,0,0,0,0,0
 HornBadMeinberg,spost55,0,0,0,0,0,0
-Warstein,spost1,1,1,1,1,1,0
+Warstein,spost1,1,1,1,1,1,1
 Warstein,spost2,0,0,0,0,0,0
 Warstein,spost3,0,0,0,0,0,0
 Warstein,spost4,0,0,0,0,0,0
@@ -6599,7 +6599,7 @@ Warstein,spost52,0,0,0,0,0,0
 Warstein,spost53,0,0,0,0,0,0
 Warstein,spost54,0,0,0,0,0,0
 Warstein,spost55,0,0,0,0,0,0
-Luegde,spost1,1,1,1,1,1,0
+Luegde,spost1,1,1,1,1,1,1
 Luegde,spost2,0,0,0,0,0,0
 Luegde,spost3,0,0,0,0,0,0
 Luegde,spost4,0,0,0,0,0,0
@@ -6654,7 +6654,7 @@ Luegde,spost52,0,0,0,0,0,0
 Luegde,spost53,0,0,0,0,0,0
 Luegde,spost54,0,0,0,0,0,0
 Luegde,spost55,0,0,0,0,0,0
-Luedenscheid,spost1,1,1,1,1,1,0
+Luedenscheid,spost1,1,1,1,1,1,1
 Luedenscheid,spost2,0,0,0,0,0,0
 Luedenscheid,spost3,0,0,0,0,0,0
 Luedenscheid,spost4,0,0,0,0,0,0
@@ -6709,7 +6709,7 @@ Luedenscheid,spost52,0,0,0,0,0,0
 Luedenscheid,spost53,0,0,0,0,0,0
 Luedenscheid,spost54,0,0,0,0,0,0
 Luedenscheid,spost55,0,0,0,0,0,0
-Schwalmtal,spost1,1,1,1,1,1,0
+Schwalmtal,spost1,1,1,1,1,1,1
 Schwalmtal,spost2,0,0,0,0,0,0
 Schwalmtal,spost3,0,0,0,0,0,0
 Schwalmtal,spost4,0,0,0,0,0,0
@@ -6764,7 +6764,7 @@ Schwalmtal,spost52,0,0,0,0,0,0
 Schwalmtal,spost53,0,0,0,0,0,0
 Schwalmtal,spost54,0,0,0,0,0,0
 Schwalmtal,spost55,0,0,0,0,0,0
-Gummersbach,spost1,1,1,1,1,1,0
+Gummersbach,spost1,1,1,1,1,1,1
 Gummersbach,spost2,0,0,0,0,0,0
 Gummersbach,spost3,0,0,0,0,0,0
 Gummersbach,spost4,0,0,0,0,0,0
@@ -6819,7 +6819,7 @@ Gummersbach,spost52,0,0,0,0,0,0
 Gummersbach,spost53,0,0,0,0,0,0
 Gummersbach,spost54,0,0,0,0,0,0
 Gummersbach,spost55,0,0,0,0,0,0
-Ahlen,spost1,1,1,1,1,1,0
+Ahlen,spost1,1,1,1,1,1,1
 Ahlen,spost2,0,0,0,0,0,0
 Ahlen,spost3,0,0,0,0,0,0
 Ahlen,spost4,0,0,0,0,0,0
@@ -6870,11 +6870,11 @@ Ahlen,spost48,0,0,0,0,0,0
 Ahlen,spost49,0,0,0,0,0,0
 Ahlen,spost50,0,0,0,0,0,0
 Ahlen,spost51,0,0,0,0,0,0
-Ahlen,spost52,0,0,1,1,0,0
-Ahlen,spost53,0,1,0,0,0,0
-Ahlen,spost54,0,1,1,1,0,0
+Ahlen,spost52,0,0,0,0,0,0
+Ahlen,spost53,0,0,0,0,0,0
+Ahlen,spost54,0,0,0,0,0,0
 Ahlen,spost55,0,0,0,0,0,0
-Senden,spost1,1,1,1,1,1,0
+Senden,spost1,1,1,1,1,1,1
 Senden,spost2,0,0,0,0,0,0
 Senden,spost3,0,0,0,0,0,0
 Senden,spost4,0,0,0,0,0,0
@@ -6929,7 +6929,7 @@ Senden,spost52,0,0,0,0,0,0
 Senden,spost53,0,0,0,0,0,0
 Senden,spost54,0,0,0,0,0,0
 Senden,spost55,0,0,0,0,0,0
-Werne,spost1,1,1,1,1,1,0
+Werne,spost1,1,1,1,1,1,1
 Werne,spost2,0,0,0,0,0,0
 Werne,spost3,0,0,0,0,0,0
 Werne,spost4,0,0,0,0,0,0
@@ -6984,7 +6984,7 @@ Werne,spost52,0,0,0,0,0,0
 Werne,spost53,0,0,0,0,0,0
 Werne,spost54,0,0,0,0,0,0
 Werne,spost55,0,0,0,0,0,0
-Iserlohn,spost1,1,1,1,1,1,0
+Iserlohn,spost1,1,1,1,1,1,1
 Iserlohn,spost2,0,0,0,0,0,0
 Iserlohn,spost3,0,0,0,0,0,0
 Iserlohn,spost4,0,0,0,0,0,0
@@ -7039,7 +7039,7 @@ Iserlohn,spost52,0,0,0,0,0,0
 Iserlohn,spost53,0,0,0,0,0,0
 Iserlohn,spost54,0,0,0,0,0,0
 Iserlohn,spost55,0,0,0,0,0,0
-Titz,spost1,1,1,1,1,1,0
+Titz,spost1,1,1,1,1,1,1
 Titz,spost2,0,0,0,0,0,0
 Titz,spost3,0,0,0,0,0,0
 Titz,spost4,0,0,0,0,0,0
@@ -7094,7 +7094,7 @@ Titz,spost52,0,0,0,0,0,0
 Titz,spost53,0,0,0,0,0,0
 Titz,spost54,0,0,0,0,0,0
 Titz,spost55,0,0,0,0,0,0
-Enger,spost1,1,1,1,1,1,0
+Enger,spost1,1,1,1,1,1,1
 Enger,spost2,0,0,0,0,0,0
 Enger,spost3,0,0,0,0,0,0
 Enger,spost4,0,0,0,0,0,0
@@ -7149,7 +7149,7 @@ Enger,spost52,0,0,0,0,0,0
 Enger,spost53,0,0,0,0,0,0
 Enger,spost54,0,0,0,0,0,0
 Enger,spost55,0,0,0,0,0,0
-Herford,spost1,1,1,1,1,1,0
+Herford,spost1,1,1,1,1,1,1
 Herford,spost2,0,0,0,0,0,0
 Herford,spost3,0,0,0,0,0,0
 Herford,spost4,0,0,0,0,0,0
@@ -7204,7 +7204,7 @@ Herford,spost52,0,0,0,0,0,0
 Herford,spost53,0,0,0,0,0,0
 Herford,spost54,0,0,1,0,0,0
 Herford,spost55,0,0,0,0,0,0
-Recke,spost1,1,1,1,1,1,0
+Recke,spost1,1,1,1,1,1,1
 Recke,spost2,0,0,0,0,0,0
 Recke,spost3,0,0,0,0,0,0
 Recke,spost4,0,0,0,0,0,0
@@ -7259,7 +7259,7 @@ Recke,spost52,0,0,0,0,0,0
 Recke,spost53,0,0,0,0,0,0
 Recke,spost54,0,0,0,0,0,0
 Recke,spost55,0,0,0,0,0,0
-Finnentrop,spost1,1,1,1,1,1,0
+Finnentrop,spost1,1,1,1,1,1,1
 Finnentrop,spost2,0,0,0,0,0,0
 Finnentrop,spost3,0,0,0,0,0,0
 Finnentrop,spost4,0,0,0,0,0,0
@@ -7314,7 +7314,7 @@ Finnentrop,spost52,0,0,0,0,0,0
 Finnentrop,spost53,0,0,0,0,0,0
 Finnentrop,spost54,0,0,0,0,0,0
 Finnentrop,spost55,0,0,0,0,0,0
-Waldfeucht,spost1,1,1,1,1,1,0
+Waldfeucht,spost1,1,1,1,1,1,1
 Waldfeucht,spost2,0,0,0,0,0,0
 Waldfeucht,spost3,0,0,0,0,0,0
 Waldfeucht,spost4,0,0,0,0,0,0
@@ -7369,7 +7369,7 @@ Waldfeucht,spost52,0,0,0,0,0,0
 Waldfeucht,spost53,0,0,0,0,0,0
 Waldfeucht,spost54,0,0,0,0,0,0
 Waldfeucht,spost55,0,0,0,0,0,0
-RhedaWiedenbrueck,spost1,1,1,1,1,1,0
+RhedaWiedenbrueck,spost1,1,1,1,1,1,1
 RhedaWiedenbrueck,spost2,0,0,0,0,0,0
 RhedaWiedenbrueck,spost3,0,0,0,0,0,0
 RhedaWiedenbrueck,spost4,0,0,0,0,0,0
@@ -7424,7 +7424,7 @@ RhedaWiedenbrueck,spost52,0,0,0,0,0,0
 RhedaWiedenbrueck,spost53,0,0,0,0,0,0
 RhedaWiedenbrueck,spost54,0,0,0,0,0,0
 RhedaWiedenbrueck,spost55,0,0,0,0,0,0
-Brueggen,spost1,1,1,1,1,1,0
+Brueggen,spost1,1,1,1,1,1,1
 Brueggen,spost2,0,0,0,0,0,0
 Brueggen,spost3,0,0,0,0,0,0
 Brueggen,spost4,0,0,0,0,0,0
@@ -7479,7 +7479,7 @@ Brueggen,spost52,0,0,0,0,0,0
 Brueggen,spost53,0,0,0,0,0,0
 Brueggen,spost54,0,0,0,0,0,0
 Brueggen,spost55,0,0,0,0,0,0
-Erkelenz,spost1,1,1,1,1,1,0
+Erkelenz,spost1,1,1,1,1,1,1
 Erkelenz,spost2,0,0,0,0,0,0
 Erkelenz,spost3,0,0,0,0,0,0
 Erkelenz,spost4,0,0,0,0,0,0
@@ -7534,7 +7534,7 @@ Erkelenz,spost52,0,0,0,0,0,0
 Erkelenz,spost53,0,0,0,0,0,0
 Erkelenz,spost54,0,0,0,0,0,0
 Erkelenz,spost55,0,0,0,0,0,0
-Weeze,spost1,1,1,1,1,1,0
+Weeze,spost1,1,1,1,1,1,1
 Weeze,spost2,0,0,0,0,0,0
 Weeze,spost3,0,0,0,0,0,0
 Weeze,spost4,0,0,0,0,0,0
@@ -7589,7 +7589,7 @@ Weeze,spost52,0,0,0,0,0,0
 Weeze,spost53,0,0,0,0,0,0
 Weeze,spost54,0,0,0,0,0,0
 Weeze,spost55,0,0,0,0,0,0
-Wilnsdorf,spost1,1,1,1,1,1,0
+Wilnsdorf,spost1,1,1,1,1,1,1
 Wilnsdorf,spost2,0,0,0,0,0,0
 Wilnsdorf,spost3,0,0,0,0,0,0
 Wilnsdorf,spost4,0,0,0,0,0,0
@@ -7644,7 +7644,7 @@ Wilnsdorf,spost52,0,0,0,0,0,0
 Wilnsdorf,spost53,0,0,0,0,0,0
 Wilnsdorf,spost54,0,0,0,0,0,0
 Wilnsdorf,spost55,0,0,0,0,0,0
-Datteln,spost1,1,1,1,1,1,0
+Datteln,spost1,1,1,1,1,1,1
 Datteln,spost2,0,0,0,0,0,0
 Datteln,spost3,0,0,0,0,0,0
 Datteln,spost4,0,0,0,0,0,0
@@ -7699,7 +7699,7 @@ Datteln,spost52,0,0,0,0,0,0
 Datteln,spost53,0,0,0,0,0,0
 Datteln,spost54,0,0,0,0,0,0
 Datteln,spost55,0,0,0,0,0,0
-Borken,spost1,1,1,1,1,1,0
+Borken,spost1,1,1,1,1,1,1
 Borken,spost2,0,0,0,0,0,0
 Borken,spost3,0,0,0,0,0,0
 Borken,spost4,0,0,0,0,0,0
@@ -7754,7 +7754,7 @@ Borken,spost52,0,0,0,0,0,0
 Borken,spost53,0,0,0,0,0,0
 Borken,spost54,0,0,0,0,0,0
 Borken,spost55,0,0,0,0,0,0
-Bergkamen,spost1,1,1,1,1,1,0
+Bergkamen,spost1,1,1,1,1,1,1
 Bergkamen,spost2,0,0,0,0,0,0
 Bergkamen,spost3,0,0,0,0,0,0
 Bergkamen,spost4,0,0,0,0,0,0
@@ -7809,7 +7809,7 @@ Bergkamen,spost52,0,0,0,0,0,0
 Bergkamen,spost53,0,0,0,0,0,0
 Bergkamen,spost54,0,0,0,0,0,0
 Bergkamen,spost55,0,0,0,0,0,0
-Oberhausen,spost1,1,1,1,1,1,0
+Oberhausen,spost1,1,1,1,1,1,1
 Oberhausen,spost2,0,0,0,0,0,0
 Oberhausen,spost3,0,0,0,0,0,0
 Oberhausen,spost4,0,0,0,0,0,0
@@ -7864,7 +7864,7 @@ Oberhausen,spost52,0,0,0,0,0,0
 Oberhausen,spost53,0,0,0,0,0,0
 Oberhausen,spost54,0,0,0,0,0,0
 Oberhausen,spost55,0,0,0,0,0,0
-Wettringen,spost1,1,1,1,1,1,0
+Wettringen,spost1,1,1,1,1,1,1
 Wettringen,spost2,0,0,0,0,0,0
 Wettringen,spost3,0,0,0,0,0,0
 Wettringen,spost4,0,0,0,0,0,0
@@ -7919,7 +7919,7 @@ Wettringen,spost52,0,0,0,0,0,0
 Wettringen,spost53,0,0,0,0,0,0
 Wettringen,spost54,0,0,0,0,0,0
 Wettringen,spost55,0,0,0,0,0,0
-Attendorn,spost1,1,1,1,1,1,0
+Attendorn,spost1,1,1,1,1,1,1
 Attendorn,spost2,0,0,0,0,0,0
 Attendorn,spost3,0,0,0,0,0,0
 Attendorn,spost4,0,0,0,0,0,0
@@ -7974,7 +7974,7 @@ Attendorn,spost52,0,0,0,0,0,0
 Attendorn,spost53,0,0,0,0,0,0
 Attendorn,spost54,0,0,0,0,0,0
 Attendorn,spost55,0,0,0,0,0,0
-Herdecke,spost1,1,1,1,1,1,0
+Herdecke,spost1,1,1,1,1,1,1
 Herdecke,spost2,0,0,0,0,0,0
 Herdecke,spost3,0,0,0,0,0,0
 Herdecke,spost4,0,0,0,0,0,0
@@ -8029,7 +8029,7 @@ Herdecke,spost52,0,0,0,0,0,0
 Herdecke,spost53,0,0,0,0,0,0
 Herdecke,spost54,0,0,0,0,0,0
 Herdecke,spost55,0,0,0,0,0,0
-Bergheim,spost1,1,1,1,1,1,0
+Bergheim,spost1,1,1,1,1,1,1
 Bergheim,spost2,0,0,0,0,0,0
 Bergheim,spost3,0,0,0,0,0,0
 Bergheim,spost4,0,0,0,0,0,0
@@ -8084,7 +8084,7 @@ Bergheim,spost52,0,0,0,0,0,0
 Bergheim,spost53,0,0,0,0,0,0
 Bergheim,spost54,0,0,0,0,0,0
 Bergheim,spost55,0,0,0,0,0,0
-Much,spost1,1,1,1,1,1,0
+Much,spost1,1,1,1,1,1,1
 Much,spost2,0,0,0,0,0,0
 Much,spost3,0,0,0,0,0,0
 Much,spost4,0,0,0,0,0,0
@@ -8139,7 +8139,7 @@ Much,spost52,0,0,0,0,0,0
 Much,spost53,0,0,0,0,0,0
 Much,spost54,0,0,0,0,0,0
 Much,spost55,0,0,0,0,0,0
-Eitorf,spost1,1,1,1,1,1,0
+Eitorf,spost1,1,1,1,1,1,1
 Eitorf,spost2,0,0,0,0,0,0
 Eitorf,spost3,0,0,0,0,0,0
 Eitorf,spost4,0,0,0,0,0,0
@@ -8194,7 +8194,7 @@ Eitorf,spost52,0,0,0,0,0,0
 Eitorf,spost53,0,0,0,0,0,0
 Eitorf,spost54,0,0,0,0,0,0
 Eitorf,spost55,0,0,0,0,0,0
-Neuss,spost1,1,1,1,1,1,0
+Neuss,spost1,1,1,1,1,1,1
 Neuss,spost2,0,0,0,0,0,0
 Neuss,spost3,0,0,0,0,0,0
 Neuss,spost4,0,0,0,0,0,0
@@ -8249,7 +8249,7 @@ Neuss,spost52,0,0,0,0,0,0
 Neuss,spost53,0,0,0,0,0,0
 Neuss,spost54,0,0,0,0,0,0
 Neuss,spost55,0,0,0,0,0,0
-MendenSauerland,spost1,1,1,1,1,1,0
+MendenSauerland,spost1,1,1,1,1,1,1
 MendenSauerland,spost2,0,0,0,0,0,0
 MendenSauerland,spost3,0,0,0,0,0,0
 MendenSauerland,spost4,0,0,0,0,0,0
@@ -8304,7 +8304,7 @@ MendenSauerland,spost52,0,0,0,0,0,0
 MendenSauerland,spost53,0,0,0,0,0,0
 MendenSauerland,spost54,0,0,0,0,0,0
 MendenSauerland,spost55,0,0,0,0,0,0
-Wuelfrath,spost1,1,1,1,1,1,0
+Wuelfrath,spost1,1,1,1,1,1,1
 Wuelfrath,spost2,0,0,0,0,0,0
 Wuelfrath,spost3,0,0,0,0,0,0
 Wuelfrath,spost4,0,0,0,0,0,0
@@ -8359,7 +8359,7 @@ Wuelfrath,spost52,0,0,0,0,0,0
 Wuelfrath,spost53,0,0,0,0,0,0
 Wuelfrath,spost54,0,0,0,0,0,0
 Wuelfrath,spost55,0,0,0,0,0,0
-Lippstadt,spost1,1,1,1,1,1,0
+Lippstadt,spost1,1,1,1,1,1,1
 Lippstadt,spost2,0,0,0,0,0,0
 Lippstadt,spost3,0,0,0,0,0,0
 Lippstadt,spost4,0,0,0,0,0,0
@@ -8414,7 +8414,7 @@ Lippstadt,spost52,0,0,0,0,0,0
 Lippstadt,spost53,0,0,0,0,0,0
 Lippstadt,spost54,0,0,0,0,0,0
 Lippstadt,spost55,0,0,0,0,0,0
-Lichtenau,spost1,1,1,1,1,1,0
+Lichtenau,spost1,1,1,1,1,1,1
 Lichtenau,spost2,0,0,0,0,0,0
 Lichtenau,spost3,0,0,0,0,0,0
 Lichtenau,spost4,0,0,0,0,0,0
@@ -8469,7 +8469,7 @@ Lichtenau,spost52,0,0,0,0,0,0
 Lichtenau,spost53,0,0,0,0,0,0
 Lichtenau,spost54,0,0,0,0,0,0
 Lichtenau,spost55,0,0,0,0,0,0
-Hallenberg,spost1,1,1,1,1,1,0
+Hallenberg,spost1,1,1,1,1,1,1
 Hallenberg,spost2,0,0,0,0,0,0
 Hallenberg,spost3,0,0,0,0,1,0
 Hallenberg,spost4,0,0,0,0,0,0
@@ -8524,7 +8524,7 @@ Hallenberg,spost52,0,0,0,0,0,0
 Hallenberg,spost53,0,0,0,0,0,0
 Hallenberg,spost54,0,0,0,0,0,0
 Hallenberg,spost55,0,0,0,0,0,0
-Gevelsberg,spost1,1,1,1,1,1,0
+Gevelsberg,spost1,1,1,1,1,1,1
 Gevelsberg,spost2,0,0,0,0,0,0
 Gevelsberg,spost3,0,0,0,0,0,0
 Gevelsberg,spost4,0,0,0,0,0,0
@@ -8579,7 +8579,7 @@ Gevelsberg,spost52,0,0,0,0,0,0
 Gevelsberg,spost53,0,0,0,0,0,0
 Gevelsberg,spost54,0,0,0,0,0,0
 Gevelsberg,spost55,0,0,0,0,0,0
-Havixbeck,spost1,1,1,1,1,1,0
+Havixbeck,spost1,1,1,1,1,1,1
 Havixbeck,spost2,0,0,0,0,0,0
 Havixbeck,spost3,0,0,0,0,0,0
 Havixbeck,spost4,0,0,0,0,0,0
@@ -8634,7 +8634,7 @@ Havixbeck,spost52,0,0,0,0,0,0
 Havixbeck,spost53,0,0,0,0,0,0
 Havixbeck,spost54,0,0,0,0,0,0
 Havixbeck,spost55,0,0,0,0,0,0
-Petershagen,spost1,1,1,1,1,1,0
+Petershagen,spost1,1,1,1,1,1,1
 Petershagen,spost2,0,0,0,0,0,0
 Petershagen,spost3,0,0,0,0,0,0
 Petershagen,spost4,0,0,0,0,0,0
@@ -8685,11 +8685,11 @@ Petershagen,spost48,0,0,0,0,0,0
 Petershagen,spost49,0,0,0,0,0,0
 Petershagen,spost50,0,0,0,0,0,0
 Petershagen,spost51,0,0,0,0,0,0
-Petershagen,spost52,0,1,1,0,0,0
-Petershagen,spost53,0,0,0,1,0,0
-Petershagen,spost54,0,1,1,1,0,0
+Petershagen,spost52,0,0,0,0,0,0
+Petershagen,spost53,0,0,0,0,0,0
+Petershagen,spost54,0,0,0,0,0,0
 Petershagen,spost55,0,0,0,0,0,0
-WertherWestf,spost1,1,1,1,1,1,0
+WertherWestf,spost1,1,1,1,1,1,1
 WertherWestf,spost2,0,0,0,0,0,0
 WertherWestf,spost3,0,0,0,0,0,0
 WertherWestf,spost4,0,0,0,0,0,0
@@ -8744,7 +8744,7 @@ WertherWestf,spost52,0,0,0,0,0,0
 WertherWestf,spost53,0,0,0,0,0,0
 WertherWestf,spost54,0,0,0,0,0,0
 WertherWestf,spost55,0,0,0,0,0,0
-Kleve,spost1,1,1,1,1,1,0
+Kleve,spost1,1,1,1,1,1,1
 Kleve,spost2,0,0,0,0,0,0
 Kleve,spost3,0,0,0,0,0,0
 Kleve,spost4,0,0,0,0,0,0
@@ -8799,7 +8799,7 @@ Kleve,spost52,0,0,0,0,0,0
 Kleve,spost53,0,0,0,0,0,0
 Kleve,spost54,0,0,0,0,0,0
 Kleve,spost55,0,0,0,0,0,0
-Verl,spost1,1,1,1,1,1,0
+Verl,spost1,1,1,1,1,1,1
 Verl,spost2,0,0,0,0,0,0
 Verl,spost3,0,0,0,0,0,0
 Verl,spost4,0,0,0,0,0,0
@@ -8854,7 +8854,7 @@ Verl,spost52,0,0,0,0,0,0
 Verl,spost53,0,0,0,0,0,0
 Verl,spost54,0,0,0,0,0,0
 Verl,spost55,0,0,0,0,0,0
-HerzebrockClarholz,spost1,1,1,1,1,1,0
+HerzebrockClarholz,spost1,1,1,1,1,1,1
 HerzebrockClarholz,spost2,0,0,0,0,0,0
 HerzebrockClarholz,spost3,0,0,0,0,0,0
 HerzebrockClarholz,spost4,0,0,0,0,0,0
@@ -8909,7 +8909,7 @@ HerzebrockClarholz,spost52,0,0,0,0,0,0
 HerzebrockClarholz,spost53,0,0,0,0,0,0
 HerzebrockClarholz,spost54,0,0,0,0,0,0
 HerzebrockClarholz,spost55,0,0,0,0,0,0
-Ibbenbueren,spost1,1,1,1,1,1,0
+Ibbenbueren,spost1,1,1,1,1,1,1
 Ibbenbueren,spost2,0,0,0,0,0,0
 Ibbenbueren,spost3,0,0,0,0,0,0
 Ibbenbueren,spost4,0,0,0,0,0,0
@@ -8964,7 +8964,7 @@ Ibbenbueren,spost52,0,0,0,0,0,0
 Ibbenbueren,spost53,0,0,0,0,0,0
 Ibbenbueren,spost54,0,0,0,0,0,0
 Ibbenbueren,spost55,0,0,0,0,0,0
-Erkrath,spost1,1,1,1,1,1,0
+Erkrath,spost1,1,1,1,1,1,1
 Erkrath,spost2,0,0,0,0,0,0
 Erkrath,spost3,0,0,0,0,0,0
 Erkrath,spost4,0,0,0,0,0,0
@@ -9019,7 +9019,7 @@ Erkrath,spost52,0,0,0,0,0,0
 Erkrath,spost53,0,0,0,0,0,0
 Erkrath,spost54,0,0,0,0,0,0
 Erkrath,spost55,0,0,0,0,0,0
-Lennestadt,spost1,1,1,1,1,1,0
+Lennestadt,spost1,1,1,1,1,1,1
 Lennestadt,spost2,0,0,0,0,0,0
 Lennestadt,spost3,0,0,0,0,0,0
 Lennestadt,spost4,0,0,0,0,0,0
@@ -9074,7 +9074,7 @@ Lennestadt,spost52,0,0,0,0,0,0
 Lennestadt,spost53,0,0,0,0,0,0
 Lennestadt,spost54,0,0,0,0,0,0
 Lennestadt,spost55,0,0,0,0,0,0
-OerErkenschwick,spost1,1,1,1,1,1,0
+OerErkenschwick,spost1,1,1,1,1,1,1
 OerErkenschwick,spost2,0,0,0,0,0,0
 OerErkenschwick,spost3,0,0,0,0,0,0
 OerErkenschwick,spost4,0,0,0,0,0,0
@@ -9129,7 +9129,7 @@ OerErkenschwick,spost52,0,0,0,0,0,0
 OerErkenschwick,spost53,0,0,0,0,0,0
 OerErkenschwick,spost54,0,0,0,0,0,0
 OerErkenschwick,spost55,0,0,0,0,0,0
-Huenxe,spost1,1,1,1,1,1,0
+Huenxe,spost1,1,1,1,1,1,1
 Huenxe,spost2,0,0,0,0,0,0
 Huenxe,spost3,0,0,0,0,0,0
 Huenxe,spost4,0,0,0,0,0,0
@@ -9184,7 +9184,7 @@ Huenxe,spost52,0,0,0,0,0,0
 Huenxe,spost53,0,0,0,0,0,0
 Huenxe,spost54,0,0,0,0,0,0
 Huenxe,spost55,0,0,0,0,0,0
-Lienen,spost1,1,1,1,1,1,0
+Lienen,spost1,1,1,1,1,1,1
 Lienen,spost2,0,0,0,0,0,0
 Lienen,spost3,0,0,0,0,0,0
 Lienen,spost4,0,0,0,0,0,0
@@ -9239,7 +9239,7 @@ Lienen,spost52,0,0,0,0,0,0
 Lienen,spost53,0,0,0,0,0,0
 Lienen,spost54,0,0,0,0,0,0
 Lienen,spost55,0,0,0,0,0,0
-Noervenich,spost1,1,1,1,1,1,0
+Noervenich,spost1,1,1,1,1,1,1
 Noervenich,spost2,0,0,0,0,0,0
 Noervenich,spost3,0,0,0,0,0,0
 Noervenich,spost4,0,0,0,0,0,0
@@ -9294,7 +9294,7 @@ Noervenich,spost52,0,0,0,0,0,0
 Noervenich,spost53,0,0,0,0,0,0
 Noervenich,spost54,0,0,0,0,0,0
 Noervenich,spost55,0,0,0,0,0,0
-Erndtebrueck,spost1,1,1,1,1,1,0
+Erndtebrueck,spost1,1,1,1,1,1,1
 Erndtebrueck,spost2,0,0,0,0,0,0
 Erndtebrueck,spost3,0,0,0,0,0,0
 Erndtebrueck,spost4,0,0,0,0,0,0
@@ -9349,7 +9349,7 @@ Erndtebrueck,spost52,0,0,0,0,0,0
 Erndtebrueck,spost53,0,0,0,0,0,0
 Erndtebrueck,spost54,0,0,0,0,0,0
 Erndtebrueck,spost55,0,0,0,0,0,0
-Marsberg,spost1,1,1,1,1,1,0
+Marsberg,spost1,1,1,1,1,1,1
 Marsberg,spost2,0,0,0,0,0,0
 Marsberg,spost3,0,0,0,0,1,0
 Marsberg,spost4,0,0,0,0,0,0
@@ -9404,7 +9404,7 @@ Marsberg,spost52,0,0,0,0,0,0
 Marsberg,spost53,0,0,0,0,0,0
 Marsberg,spost54,0,0,0,0,0,0
 Marsberg,spost55,0,0,0,0,0,0
-Everswinkel,spost1,1,1,1,1,1,0
+Everswinkel,spost1,1,1,1,1,1,1
 Everswinkel,spost2,0,0,0,0,0,0
 Everswinkel,spost3,0,0,0,0,0,0
 Everswinkel,spost4,0,0,0,0,0,0
@@ -9459,7 +9459,7 @@ Everswinkel,spost52,0,0,0,0,0,0
 Everswinkel,spost53,0,0,0,0,0,0
 Everswinkel,spost54,0,0,0,0,0,0
 Everswinkel,spost55,0,0,0,0,0,0
-Euskirchen,spost1,1,1,1,1,1,0
+Euskirchen,spost1,1,1,1,1,1,1
 Euskirchen,spost2,0,0,0,0,0,0
 Euskirchen,spost3,0,0,0,0,0,0
 Euskirchen,spost4,0,0,0,0,0,0
@@ -9514,7 +9514,7 @@ Euskirchen,spost52,0,0,0,0,0,0
 Euskirchen,spost53,0,0,0,0,0,0
 Euskirchen,spost54,0,0,0,0,0,0
 Euskirchen,spost55,0,0,0,0,0,0
-BadLippspringe,spost1,1,1,1,1,1,0
+BadLippspringe,spost1,1,1,1,1,1,1
 BadLippspringe,spost2,0,0,0,0,0,0
 BadLippspringe,spost3,0,0,0,0,0,0
 BadLippspringe,spost4,0,0,0,0,0,0
@@ -9569,7 +9569,7 @@ BadLippspringe,spost52,0,0,0,0,0,0
 BadLippspringe,spost53,0,0,0,0,0,0
 BadLippspringe,spost54,0,0,0,0,0,0
 BadLippspringe,spost55,0,0,0,0,0,0
-Huertgenwald,spost1,1,1,1,1,1,0
+Huertgenwald,spost1,1,1,1,1,1,1
 Huertgenwald,spost2,0,0,0,0,0,0
 Huertgenwald,spost3,0,0,0,0,0,0
 Huertgenwald,spost4,0,0,0,0,0,0
@@ -9624,7 +9624,7 @@ Huertgenwald,spost52,0,0,0,0,0,0
 Huertgenwald,spost53,0,0,0,0,0,0
 Huertgenwald,spost54,0,0,0,0,0,0
 Huertgenwald,spost55,0,0,0,0,0,0
-Plettenberg,spost1,1,1,1,1,1,0
+Plettenberg,spost1,1,1,1,1,1,1
 Plettenberg,spost2,0,0,0,0,0,0
 Plettenberg,spost3,0,0,0,0,0,0
 Plettenberg,spost4,0,0,0,0,0,0
@@ -9679,7 +9679,7 @@ Plettenberg,spost52,0,0,0,0,0,0
 Plettenberg,spost53,0,0,0,0,0,0
 Plettenberg,spost54,0,0,0,0,0,0
 Plettenberg,spost55,0,0,0,0,0,0
-Kalletal,spost1,1,1,1,1,1,0
+Kalletal,spost1,1,1,1,1,1,1
 Kalletal,spost2,0,0,0,0,0,0
 Kalletal,spost3,0,0,0,0,0,0
 Kalletal,spost4,0,0,0,0,0,0
@@ -9734,7 +9734,7 @@ Kalletal,spost52,0,0,0,0,0,0
 Kalletal,spost53,0,0,0,0,0,0
 Kalletal,spost54,0,0,0,0,0,0
 Kalletal,spost55,0,0,0,0,0,0
-GronauWestf,spost1,1,1,1,1,1,0
+GronauWestf,spost1,1,1,1,1,1,1
 GronauWestf,spost2,0,0,0,0,0,0
 GronauWestf,spost3,0,0,0,0,0,0
 GronauWestf,spost4,0,0,0,0,0,0
@@ -9789,7 +9789,7 @@ GronauWestf,spost52,0,0,0,0,0,0
 GronauWestf,spost53,0,0,0,0,0,0
 GronauWestf,spost54,0,0,0,0,0,0
 GronauWestf,spost55,0,0,0,0,0,0
-Herten,spost1,1,1,1,1,1,0
+Herten,spost1,1,1,1,1,1,1
 Herten,spost2,0,0,0,0,0,0
 Herten,spost3,0,0,0,0,0,0
 Herten,spost4,0,0,0,0,0,0
@@ -9844,7 +9844,7 @@ Herten,spost52,0,0,0,0,0,0
 Herten,spost53,0,0,0,0,0,0
 Herten,spost54,0,0,0,0,0,0
 Herten,spost55,0,0,0,0,0,0
-Doerentrup,spost1,1,1,1,1,1,0
+Doerentrup,spost1,1,1,1,1,1,1
 Doerentrup,spost2,0,0,0,0,0,0
 Doerentrup,spost3,0,0,0,0,0,0
 Doerentrup,spost4,0,0,0,0,0,0
@@ -9899,7 +9899,7 @@ Doerentrup,spost52,0,0,0,0,0,0
 Doerentrup,spost53,0,0,0,0,0,0
 Doerentrup,spost54,0,0,0,0,0,0
 Doerentrup,spost55,0,0,0,0,0,0
-Welver,spost1,1,1,1,1,1,0
+Welver,spost1,1,1,1,1,1,1
 Welver,spost2,0,0,0,0,0,0
 Welver,spost3,0,0,0,0,0,0
 Welver,spost4,0,0,0,0,0,0
@@ -9954,7 +9954,7 @@ Welver,spost52,0,0,0,0,0,0
 Welver,spost53,0,0,0,0,0,0
 Welver,spost54,0,0,0,0,0,0
 Welver,spost55,0,0,0,0,0,0
-Nideggen,spost1,1,1,1,1,1,0
+Nideggen,spost1,1,1,1,1,1,1
 Nideggen,spost2,0,0,0,0,0,0
 Nideggen,spost3,0,0,0,0,0,0
 Nideggen,spost4,0,0,0,0,0,0
@@ -10009,7 +10009,7 @@ Nideggen,spost52,0,0,0,0,0,0
 Nideggen,spost53,0,0,0,0,0,0
 Nideggen,spost54,0,0,0,0,0,0
 Nideggen,spost55,0,0,0,0,0,0
-Geilenkirchen,spost1,1,1,1,1,1,0
+Geilenkirchen,spost1,1,1,1,1,1,1
 Geilenkirchen,spost2,0,0,0,0,0,0
 Geilenkirchen,spost3,0,0,0,0,0,0
 Geilenkirchen,spost4,0,0,0,0,0,0
@@ -10064,7 +10064,7 @@ Geilenkirchen,spost52,0,0,0,0,0,0
 Geilenkirchen,spost53,0,0,0,0,0,0
 Geilenkirchen,spost54,0,0,0,0,0,0
 Geilenkirchen,spost55,0,0,0,0,0,0
-Raesfeld,spost1,1,1,1,1,1,0
+Raesfeld,spost1,1,1,1,1,1,1
 Raesfeld,spost2,0,0,0,0,0,0
 Raesfeld,spost3,0,0,0,0,0,0
 Raesfeld,spost4,0,0,0,0,0,0
@@ -10119,7 +10119,7 @@ Raesfeld,spost52,0,0,0,0,0,0
 Raesfeld,spost53,0,0,0,0,0,0
 Raesfeld,spost54,0,0,0,0,0,0
 Raesfeld,spost55,0,0,0,0,0,0
-Versmold,spost1,1,1,1,1,1,0
+Versmold,spost1,1,1,1,1,1,1
 Versmold,spost2,0,0,0,0,0,0
 Versmold,spost3,0,0,0,0,0,0
 Versmold,spost4,0,0,0,0,0,0
@@ -10174,7 +10174,7 @@ Versmold,spost52,0,0,0,0,0,0
 Versmold,spost53,0,0,0,0,0,0
 Versmold,spost54,0,0,0,0,0,0
 Versmold,spost55,0,0,0,0,0,0
-Pulheim,spost1,1,1,1,1,1,0
+Pulheim,spost1,1,1,1,1,1,1
 Pulheim,spost2,0,0,0,0,0,0
 Pulheim,spost3,0,0,0,0,0,0
 Pulheim,spost4,0,0,0,0,0,0
@@ -10229,7 +10229,7 @@ Pulheim,spost52,0,0,0,0,0,0
 Pulheim,spost53,0,0,0,0,0,0
 Pulheim,spost54,0,0,0,0,0,0
 Pulheim,spost55,0,0,0,0,0,0
-Laer,spost1,1,1,1,1,1,0
+Laer,spost1,1,1,1,1,1,1
 Laer,spost2,0,0,0,0,0,0
 Laer,spost3,0,0,0,0,0,0
 Laer,spost4,0,0,0,0,0,0
@@ -10284,7 +10284,7 @@ Laer,spost52,0,0,0,0,0,0
 Laer,spost53,0,0,0,0,0,0
 Laer,spost54,0,0,0,0,0,0
 Laer,spost55,0,0,0,0,0,0
-Breckerfeld,spost1,1,1,1,1,1,0
+Breckerfeld,spost1,1,1,1,1,1,1
 Breckerfeld,spost2,0,0,0,0,0,0
 Breckerfeld,spost3,0,0,0,0,0,0
 Breckerfeld,spost4,0,0,0,0,0,0
@@ -10339,7 +10339,7 @@ Breckerfeld,spost52,0,0,0,0,0,0
 Breckerfeld,spost53,0,0,0,0,0,0
 Breckerfeld,spost54,0,0,0,0,0,0
 Breckerfeld,spost55,0,0,0,0,0,0
-Westerkappeln,spost1,1,1,1,1,1,0
+Westerkappeln,spost1,1,1,1,1,1,1
 Westerkappeln,spost2,0,0,0,0,0,0
 Westerkappeln,spost3,0,0,0,0,0,0
 Westerkappeln,spost4,0,0,0,0,0,0
@@ -10394,7 +10394,7 @@ Westerkappeln,spost52,0,0,0,0,0,0
 Westerkappeln,spost53,0,0,0,0,0,0
 Westerkappeln,spost54,0,0,0,0,0,0
 Westerkappeln,spost55,0,0,0,0,0,0
-Velbert,spost1,1,1,1,1,1,0
+Velbert,spost1,1,1,1,1,1,1
 Velbert,spost2,0,0,0,0,0,0
 Velbert,spost3,0,0,0,0,0,0
 Velbert,spost4,0,0,0,0,0,0
@@ -10449,7 +10449,7 @@ Velbert,spost52,0,0,0,0,0,0
 Velbert,spost53,0,0,0,0,0,0
 Velbert,spost54,0,0,0,0,0,0
 Velbert,spost55,0,0,0,0,0,0
-SundernSauerland,spost1,1,1,1,1,1,0
+SundernSauerland,spost1,1,1,1,1,1,1
 SundernSauerland,spost2,0,0,0,0,0,0
 SundernSauerland,spost3,0,0,0,0,0,0
 SundernSauerland,spost4,0,0,0,0,0,0
@@ -10504,7 +10504,7 @@ SundernSauerland,spost52,0,0,0,0,0,0
 SundernSauerland,spost53,0,0,0,0,0,0
 SundernSauerland,spost54,0,0,0,0,0,0
 SundernSauerland,spost55,0,0,0,0,0,0
-Linnich,spost1,1,1,1,1,1,0
+Linnich,spost1,1,1,1,1,1,1
 Linnich,spost2,0,0,0,0,0,0
 Linnich,spost3,0,0,0,0,0,0
 Linnich,spost4,0,0,0,0,0,0
@@ -10559,7 +10559,7 @@ Linnich,spost52,0,0,0,0,0,0
 Linnich,spost53,0,0,0,0,0,0
 Linnich,spost54,0,0,0,0,0,0
 Linnich,spost55,0,0,0,0,0,0
-Detmold,spost1,1,1,1,1,1,0
+Detmold,spost1,1,1,1,1,1,1
 Detmold,spost2,0,0,0,0,0,0
 Detmold,spost3,0,0,0,0,0,0
 Detmold,spost4,0,0,0,0,0,0
@@ -10614,7 +10614,7 @@ Detmold,spost52,0,0,0,0,0,0
 Detmold,spost53,0,0,0,0,0,0
 Detmold,spost54,0,0,0,0,0,0
 Detmold,spost55,0,0,0,0,0,0
-Rosendahl,spost1,1,1,1,1,1,0
+Rosendahl,spost1,1,1,1,1,1,1
 Rosendahl,spost2,0,0,0,0,0,0
 Rosendahl,spost3,0,0,0,0,0,0
 Rosendahl,spost4,0,0,0,0,0,0
@@ -10669,7 +10669,7 @@ Rosendahl,spost52,0,0,0,0,0,0
 Rosendahl,spost53,0,0,0,0,0,0
 Rosendahl,spost54,0,0,0,0,0,0
 Rosendahl,spost55,0,0,0,0,0,0
-Espelkamp,spost1,1,1,1,1,1,0
+Espelkamp,spost1,1,1,1,1,1,1
 Espelkamp,spost2,0,0,0,0,0,0
 Espelkamp,spost3,0,0,0,0,0,0
 Espelkamp,spost4,0,0,0,0,0,0
@@ -10721,10 +10721,10 @@ Espelkamp,spost49,0,0,0,0,0,0
 Espelkamp,spost50,0,0,0,0,0,0
 Espelkamp,spost51,0,0,0,0,0,0
 Espelkamp,spost52,0,0,0,0,0,0
-Espelkamp,spost53,0,1,1,1,0,0
-Espelkamp,spost54,0,1,1,1,0,0
+Espelkamp,spost53,0,0,0,0,0,0
+Espelkamp,spost54,0,0,0,0,0,0
 Espelkamp,spost55,0,0,0,0,0,0
-BedburgHau,spost1,1,1,1,1,1,0
+BedburgHau,spost1,1,1,1,1,1,1
 BedburgHau,spost2,0,0,0,0,0,0
 BedburgHau,spost3,0,0,0,0,0,0
 BedburgHau,spost4,0,0,0,0,0,0
@@ -10779,7 +10779,7 @@ BedburgHau,spost52,0,0,0,0,0,0
 BedburgHau,spost53,0,0,0,0,0,0
 BedburgHau,spost54,0,0,0,0,0,0
 BedburgHau,spost55,0,0,0,0,0,0
-Paderborn,spost1,1,1,1,1,1,0
+Paderborn,spost1,1,1,1,1,1,1
 Paderborn,spost2,0,0,0,0,0,0
 Paderborn,spost3,0,0,0,0,0,0
 Paderborn,spost4,0,0,0,0,0,0
@@ -10834,7 +10834,7 @@ Paderborn,spost52,0,0,0,0,0,0
 Paderborn,spost53,0,0,0,0,0,0
 Paderborn,spost54,0,0,0,0,0,0
 Paderborn,spost55,0,0,0,0,0,0
-Beverungen,spost1,1,1,1,1,1,0
+Beverungen,spost1,1,1,1,1,1,1
 Beverungen,spost2,0,0,0,0,0,0
 Beverungen,spost3,0,0,0,0,0,0
 Beverungen,spost4,0,0,0,0,0,0
@@ -10889,7 +10889,7 @@ Beverungen,spost52,0,0,0,0,0,0
 Beverungen,spost53,0,0,0,0,0,0
 Beverungen,spost54,0,0,0,0,0,0
 Beverungen,spost55,0,0,0,0,0,0
-SanktAugustin,spost1,1,1,1,1,1,0
+SanktAugustin,spost1,1,1,1,1,1,1
 SanktAugustin,spost2,0,0,0,0,0,0
 SanktAugustin,spost3,0,0,0,0,0,0
 SanktAugustin,spost4,0,0,0,0,0,0
@@ -10944,7 +10944,7 @@ SanktAugustin,spost52,0,0,0,0,0,0
 SanktAugustin,spost53,0,0,0,0,0,0
 SanktAugustin,spost54,0,0,0,0,0,0
 SanktAugustin,spost55,0,0,0,0,0,0
-Niederzier,spost1,1,1,1,1,1,0
+Niederzier,spost1,1,1,1,1,1,1
 Niederzier,spost2,0,0,0,0,0,0
 Niederzier,spost3,0,0,1,0,0,0
 Niederzier,spost4,0,0,0,0,0,0
@@ -10999,7 +10999,7 @@ Niederzier,spost52,0,0,0,0,0,0
 Niederzier,spost53,0,0,0,0,0,0
 Niederzier,spost54,0,0,0,0,0,0
 Niederzier,spost55,0,0,0,0,0,0
-Elsdorf,spost1,1,1,1,1,1,0
+Elsdorf,spost1,1,1,1,1,1,1
 Elsdorf,spost2,0,0,0,0,0,0
 Elsdorf,spost3,0,0,0,0,0,0
 Elsdorf,spost4,0,0,0,0,0,0
@@ -11054,7 +11054,7 @@ Elsdorf,spost52,0,0,0,0,0,0
 Elsdorf,spost53,0,0,0,0,0,0
 Elsdorf,spost54,0,0,0,0,0,0
 Elsdorf,spost55,0,0,0,0,0,0
-Isselburg,spost1,1,1,1,1,1,0
+Isselburg,spost1,1,1,1,1,1,1
 Isselburg,spost2,0,0,0,0,0,0
 Isselburg,spost3,0,0,0,0,0,0
 Isselburg,spost4,0,0,0,0,0,0
@@ -11109,7 +11109,7 @@ Isselburg,spost52,0,0,0,0,0,0
 Isselburg,spost53,0,0,0,0,0,0
 Isselburg,spost54,0,0,0,0,0,0
 Isselburg,spost55,0,0,0,0,0,0
-EmmerichamRhein,spost1,1,1,1,1,1,0
+EmmerichamRhein,spost1,1,1,1,1,1,1
 EmmerichamRhein,spost2,0,0,0,0,0,0
 EmmerichamRhein,spost3,0,0,0,0,0,0
 EmmerichamRhein,spost4,0,0,0,0,0,0
@@ -11164,7 +11164,7 @@ EmmerichamRhein,spost52,0,0,0,0,0,0
 EmmerichamRhein,spost53,0,0,0,0,0,0
 EmmerichamRhein,spost54,0,0,0,0,0,0
 EmmerichamRhein,spost55,0,0,0,0,0,0
-Wachtberg,spost1,1,1,1,1,1,0
+Wachtberg,spost1,1,1,1,1,1,1
 Wachtberg,spost2,0,0,0,0,0,0
 Wachtberg,spost3,0,0,0,0,0,0
 Wachtberg,spost4,0,0,0,0,0,0
@@ -11219,7 +11219,7 @@ Wachtberg,spost52,0,0,0,0,0,0
 Wachtberg,spost53,0,0,0,0,0,0
 Wachtberg,spost54,0,0,0,0,0,0
 Wachtberg,spost55,0,0,0,0,0,0
-BadMuenstereifel,spost1,1,1,1,1,1,0
+BadMuenstereifel,spost1,1,1,1,1,1,1
 BadMuenstereifel,spost2,0,0,0,0,0,0
 BadMuenstereifel,spost3,0,0,0,0,0,0
 BadMuenstereifel,spost4,0,0,0,0,0,0
@@ -11274,7 +11274,7 @@ BadMuenstereifel,spost52,0,0,0,0,0,0
 BadMuenstereifel,spost53,0,0,0,0,0,0
 BadMuenstereifel,spost54,0,0,0,0,0,0
 BadMuenstereifel,spost55,0,0,0,0,0,0
-Heiden,spost1,1,1,1,1,1,0
+Heiden,spost1,1,1,1,1,1,1
 Heiden,spost2,0,0,0,0,0,0
 Heiden,spost3,0,0,0,0,0,0
 Heiden,spost4,0,0,0,0,0,0
@@ -11329,7 +11329,7 @@ Heiden,spost52,0,0,0,0,0,0
 Heiden,spost53,0,0,0,0,0,0
 Heiden,spost54,0,0,0,0,0,0
 Heiden,spost55,0,0,0,0,0,0
-Wiehl,spost1,1,1,1,1,1,0
+Wiehl,spost1,1,1,1,1,1,1
 Wiehl,spost2,0,0,0,0,0,0
 Wiehl,spost3,0,0,0,0,0,0
 Wiehl,spost4,0,0,0,0,0,0
@@ -11384,7 +11384,7 @@ Wiehl,spost52,0,0,0,0,0,0
 Wiehl,spost53,0,0,0,0,0,0
 Wiehl,spost54,0,0,0,0,0,0
 Wiehl,spost55,0,0,0,0,0,0
-Netphen,spost1,1,1,1,1,1,0
+Netphen,spost1,1,1,1,1,1,1
 Netphen,spost2,0,0,0,0,0,0
 Netphen,spost3,0,0,0,0,0,0
 Netphen,spost4,0,0,0,0,0,0
@@ -11439,7 +11439,7 @@ Netphen,spost52,0,0,0,0,0,0
 Netphen,spost53,0,0,0,0,0,0
 Netphen,spost54,0,0,0,0,0,0
 Netphen,spost55,0,0,0,0,0,0
-Huellhorst,spost1,1,1,1,1,1,0
+Huellhorst,spost1,1,1,1,1,1,1
 Huellhorst,spost2,0,0,0,0,0,0
 Huellhorst,spost3,0,0,0,0,0,0
 Huellhorst,spost4,0,0,0,0,0,0
@@ -11494,7 +11494,7 @@ Huellhorst,spost52,0,0,0,0,0,0
 Huellhorst,spost53,0,0,0,0,0,0
 Huellhorst,spost54,0,0,0,0,0,0
 Huellhorst,spost55,0,0,0,0,0,0
-Bedburg,spost1,1,1,1,1,1,0
+Bedburg,spost1,1,1,1,1,1,1
 Bedburg,spost2,0,0,0,0,0,0
 Bedburg,spost3,0,0,0,0,0,0
 Bedburg,spost4,0,0,0,0,0,0
@@ -11549,7 +11549,7 @@ Bedburg,spost52,0,0,0,0,0,0
 Bedburg,spost53,0,0,0,0,0,0
 Bedburg,spost54,0,0,0,0,0,0
 Bedburg,spost55,0,0,0,0,0,0
-Huerth,spost1,1,1,1,1,1,0
+Huerth,spost1,1,1,1,1,1,1
 Huerth,spost2,0,0,0,0,0,0
 Huerth,spost3,0,0,0,0,0,0
 Huerth,spost4,0,0,0,0,0,0
@@ -11604,7 +11604,7 @@ Huerth,spost52,0,0,0,0,0,0
 Huerth,spost53,0,0,0,0,0,0
 Huerth,spost54,0,0,0,0,0,0
 Huerth,spost55,0,0,0,0,0,0
-Hilchenbach,spost1,1,1,1,1,1,0
+Hilchenbach,spost1,1,1,1,1,1,1
 Hilchenbach,spost2,0,0,0,0,0,0
 Hilchenbach,spost3,0,0,0,0,0,0
 Hilchenbach,spost4,0,0,0,0,0,0
@@ -11659,7 +11659,7 @@ Hilchenbach,spost52,0,0,0,0,0,0
 Hilchenbach,spost53,0,0,0,0,0,0
 Hilchenbach,spost54,0,0,0,0,0,0
 Hilchenbach,spost55,0,0,0,0,0,0
-Inden,spost1,1,1,1,1,1,0
+Inden,spost1,1,1,1,1,1,1
 Inden,spost2,0,0,0,0,0,0
 Inden,spost3,0,0,0,0,0,0
 Inden,spost4,0,0,0,0,0,0
@@ -11714,7 +11714,7 @@ Inden,spost52,0,0,0,0,0,0
 Inden,spost53,0,0,0,0,0,0
 Inden,spost54,0,0,0,0,0,0
 Inden,spost55,0,0,0,0,0,0
-Schmallenberg,spost1,1,1,1,1,1,0
+Schmallenberg,spost1,1,1,1,1,1,1
 Schmallenberg,spost2,0,0,0,0,0,0
 Schmallenberg,spost3,0,0,0,0,0,0
 Schmallenberg,spost4,0,0,0,0,0,0
@@ -11769,7 +11769,7 @@ Schmallenberg,spost52,0,0,0,0,0,0
 Schmallenberg,spost53,0,0,0,0,0,0
 Schmallenberg,spost54,0,0,0,0,0,0
 Schmallenberg,spost55,0,0,0,0,0,0
-Hueckelhoven,spost1,1,1,1,1,1,0
+Hueckelhoven,spost1,1,1,1,1,1,1
 Hueckelhoven,spost2,0,0,0,0,0,0
 Hueckelhoven,spost3,0,0,0,0,0,0
 Hueckelhoven,spost4,0,0,0,0,0,0
@@ -11824,7 +11824,7 @@ Hueckelhoven,spost52,0,0,0,0,0,0
 Hueckelhoven,spost53,0,0,0,0,0,0
 Hueckelhoven,spost54,0,0,0,0,0,0
 Hueckelhoven,spost55,0,0,0,0,0,0
-Ennigerloh,spost1,1,1,1,1,1,0
+Ennigerloh,spost1,1,1,1,1,1,1
 Ennigerloh,spost2,0,0,0,0,0,0
 Ennigerloh,spost3,0,0,0,0,0,0
 Ennigerloh,spost4,0,0,0,0,0,0
@@ -11860,7 +11860,7 @@ Ennigerloh,spost33,0,0,0,0,0,0
 Ennigerloh,spost34,0,0,0,0,0,0
 Ennigerloh,spost35,0,0,0,0,0,0
 Ennigerloh,spost36,0,0,0,0,0,0
-Ennigerloh,spost37,0,0,0,0,0,0
+Ennigerloh,spost37,0,0,0,0,1,0
 Ennigerloh,spost38,0,0,0,0,0,0
 Ennigerloh,spost39,0,0,0,0,0,0
 Ennigerloh,spost40,0,0,0,0,0,0
@@ -11876,10 +11876,10 @@ Ennigerloh,spost49,0,0,0,0,0,0
 Ennigerloh,spost50,0,0,0,0,0,0
 Ennigerloh,spost51,0,0,0,0,0,0
 Ennigerloh,spost52,0,0,0,0,0,0
-Ennigerloh,spost53,0,1,1,1,0,0
-Ennigerloh,spost54,0,1,1,1,0,0
+Ennigerloh,spost53,0,0,0,0,0,0
+Ennigerloh,spost54,0,0,0,0,0,0
 Ennigerloh,spost55,0,0,0,0,0,0
-Zuelpich,spost1,1,1,1,1,1,0
+Zuelpich,spost1,1,1,1,1,1,1
 Zuelpich,spost2,0,0,0,0,0,0
 Zuelpich,spost3,0,0,0,0,0,0
 Zuelpich,spost4,0,0,0,0,0,0
@@ -11934,7 +11934,7 @@ Zuelpich,spost52,0,0,0,0,0,0
 Zuelpich,spost53,0,0,0,0,0,0
 Zuelpich,spost54,0,0,0,0,0,0
 Zuelpich,spost55,0,0,0,0,0,0
-Olfen,spost1,1,1,1,1,1,0
+Olfen,spost1,1,1,1,1,1,1
 Olfen,spost2,0,0,0,0,0,0
 Olfen,spost3,0,0,0,0,0,0
 Olfen,spost4,0,0,0,0,0,0
@@ -11989,7 +11989,7 @@ Olfen,spost52,0,0,0,0,0,0
 Olfen,spost53,0,0,0,0,0,0
 Olfen,spost54,0,0,0,0,0,0
 Olfen,spost55,0,0,0,0,0,0
-Ense,spost1,1,1,1,1,1,0
+Ense,spost1,1,1,1,1,1,1
 Ense,spost2,0,0,0,0,0,0
 Ense,spost3,0,0,0,0,0,0
 Ense,spost4,0,0,0,0,0,0
@@ -12044,7 +12044,7 @@ Ense,spost52,0,0,0,0,0,0
 Ense,spost53,0,0,0,0,0,0
 Ense,spost54,0,0,0,0,0,0
 Ense,spost55,0,0,0,0,0,0
-Nordwalde,spost1,1,1,1,1,1,0
+Nordwalde,spost1,1,1,1,1,1,1
 Nordwalde,spost2,0,0,0,0,0,0
 Nordwalde,spost3,0,0,0,0,0,0
 Nordwalde,spost4,0,0,0,0,0,0
@@ -12099,7 +12099,7 @@ Nordwalde,spost52,0,0,0,0,0,0
 Nordwalde,spost53,0,0,0,0,0,0
 Nordwalde,spost54,0,0,0,0,0,0
 Nordwalde,spost55,0,0,0,0,0,0
-Warendorf,spost1,1,1,1,1,1,0
+Warendorf,spost1,1,1,1,1,1,1
 Warendorf,spost2,0,0,0,0,0,0
 Warendorf,spost3,0,0,0,0,0,0
 Warendorf,spost4,0,0,0,0,0,0
@@ -12154,7 +12154,7 @@ Warendorf,spost52,0,0,0,0,0,0
 Warendorf,spost53,0,0,0,0,0,0
 Warendorf,spost54,0,0,0,0,0,0
 Warendorf,spost55,0,0,0,0,0,0
-Sendenhorst,spost1,1,1,1,1,1,0
+Sendenhorst,spost1,1,1,1,1,1,1
 Sendenhorst,spost2,0,0,0,0,0,0
 Sendenhorst,spost3,0,0,0,0,0,0
 Sendenhorst,spost4,0,0,0,0,0,0
@@ -12209,7 +12209,7 @@ Sendenhorst,spost52,0,0,0,0,0,0
 Sendenhorst,spost53,0,0,0,0,0,0
 Sendenhorst,spost54,0,0,0,0,0,0
 Sendenhorst,spost55,0,0,0,0,0,0
-Witten,spost1,1,1,1,1,1,0
+Witten,spost1,1,1,1,1,1,1
 Witten,spost2,0,0,0,0,0,0
 Witten,spost3,0,0,0,0,0,0
 Witten,spost4,0,0,0,0,0,0
@@ -12264,7 +12264,7 @@ Witten,spost52,0,0,0,0,0,0
 Witten,spost53,0,0,0,0,0,0
 Witten,spost54,0,0,0,0,0,0
 Witten,spost55,0,0,0,0,0,0
-Willebadessen,spost1,1,1,1,1,1,0
+Willebadessen,spost1,1,1,1,1,1,1
 Willebadessen,spost2,0,0,0,0,0,0
 Willebadessen,spost3,0,0,0,0,0,0
 Willebadessen,spost4,0,0,0,0,0,0
@@ -12319,7 +12319,7 @@ Willebadessen,spost52,0,0,0,0,0,0
 Willebadessen,spost53,0,0,0,0,0,0
 Willebadessen,spost54,0,0,0,0,0,0
 Willebadessen,spost55,0,0,0,0,0,0
-Grevenbroich,spost1,1,1,1,1,1,0
+Grevenbroich,spost1,1,1,1,1,1,1
 Grevenbroich,spost2,0,0,0,0,0,0
 Grevenbroich,spost3,0,0,0,0,0,0
 Grevenbroich,spost4,0,0,0,0,0,0
@@ -12374,7 +12374,7 @@ Grevenbroich,spost52,0,0,0,0,0,0
 Grevenbroich,spost53,0,0,0,0,0,0
 Grevenbroich,spost54,0,0,0,0,0,0
 Grevenbroich,spost55,0,0,0,0,0,0
-Freudenberg,spost1,1,1,1,1,1,0
+Freudenberg,spost1,1,1,1,1,1,1
 Freudenberg,spost2,0,0,0,0,0,0
 Freudenberg,spost3,0,0,0,0,0,0
 Freudenberg,spost4,0,0,0,0,0,0
@@ -12429,7 +12429,7 @@ Freudenberg,spost52,0,0,0,0,0,0
 Freudenberg,spost53,0,0,0,0,0,0
 Freudenberg,spost54,0,0,0,0,0,0
 Freudenberg,spost55,0,0,0,0,0,0
-Stadtlohn,spost1,1,1,1,1,1,0
+Stadtlohn,spost1,1,1,1,1,1,1
 Stadtlohn,spost2,0,0,0,0,0,0
 Stadtlohn,spost3,0,0,0,0,0,0
 Stadtlohn,spost4,0,0,0,0,0,0
@@ -12484,7 +12484,7 @@ Stadtlohn,spost52,0,0,0,0,0,0
 Stadtlohn,spost53,0,0,0,0,0,0
 Stadtlohn,spost54,0,0,0,0,0,0
 Stadtlohn,spost55,0,0,0,0,0,0
-Bueren,spost1,1,1,1,1,1,0
+Bueren,spost1,1,1,1,1,1,1
 Bueren,spost2,0,0,0,0,0,0
 Bueren,spost3,0,0,0,0,0,0
 Bueren,spost4,0,0,0,0,0,0
@@ -12539,7 +12539,7 @@ Bueren,spost52,0,0,0,0,0,0
 Bueren,spost53,0,0,0,0,0,0
 Bueren,spost54,0,0,0,0,0,0
 Bueren,spost55,0,0,0,0,0,0
-Duelmen,spost1,1,1,1,1,1,0
+Duelmen,spost1,1,1,1,1,1,1
 Duelmen,spost2,0,0,0,0,0,0
 Duelmen,spost3,0,0,0,0,0,0
 Duelmen,spost4,0,0,0,0,0,0
@@ -12594,7 +12594,7 @@ Duelmen,spost52,0,0,0,0,0,0
 Duelmen,spost53,0,0,0,0,0,0
 Duelmen,spost54,0,0,0,0,0,0
 Duelmen,spost55,0,0,0,0,0,0
-Rheinberg,spost1,1,1,1,1,1,0
+Rheinberg,spost1,1,1,1,1,1,1
 Rheinberg,spost2,0,0,0,0,0,0
 Rheinberg,spost3,0,0,0,0,0,0
 Rheinberg,spost4,0,0,0,0,0,0
@@ -12649,7 +12649,7 @@ Rheinberg,spost52,0,0,0,0,0,0
 Rheinberg,spost53,0,0,0,0,0,0
 Rheinberg,spost54,0,0,0,0,0,0
 Rheinberg,spost55,0,0,0,0,0,0
-Morsbach,spost1,1,1,1,1,1,0
+Morsbach,spost1,1,1,1,1,1,1
 Morsbach,spost2,0,0,0,0,0,0
 Morsbach,spost3,0,0,0,0,0,0
 Morsbach,spost4,0,0,0,0,0,0
@@ -12704,7 +12704,7 @@ Morsbach,spost52,0,0,0,0,0,0
 Morsbach,spost53,0,0,0,0,0,0
 Morsbach,spost54,0,0,0,0,0,0
 Morsbach,spost55,0,0,0,0,0,0
-BadSassendorf,spost1,1,1,1,1,1,0
+BadSassendorf,spost1,1,1,1,1,1,1
 BadSassendorf,spost2,0,0,0,0,0,0
 BadSassendorf,spost3,0,0,0,0,0,0
 BadSassendorf,spost4,0,0,0,0,0,0
@@ -12759,7 +12759,7 @@ BadSassendorf,spost52,0,0,0,0,0,0
 BadSassendorf,spost53,0,0,0,0,0,0
 BadSassendorf,spost54,0,0,0,0,0,0
 BadSassendorf,spost55,0,0,0,0,0,0
-Geldern,spost1,1,1,1,1,1,0
+Geldern,spost1,1,1,1,1,1,1
 Geldern,spost2,0,0,0,0,0,0
 Geldern,spost3,0,0,0,0,0,0
 Geldern,spost4,0,0,0,0,0,0
@@ -12814,7 +12814,7 @@ Geldern,spost52,0,0,0,0,0,0
 Geldern,spost53,0,0,0,0,0,0
 Geldern,spost54,0,0,0,0,0,0
 Geldern,spost55,0,0,0,0,0,0
-Lage,spost1,1,1,1,1,1,0
+Lage,spost1,1,1,1,1,1,1
 Lage,spost2,0,0,0,0,0,0
 Lage,spost3,0,0,0,0,0,0
 Lage,spost4,0,0,0,0,0,0
@@ -12869,7 +12869,7 @@ Lage,spost52,0,0,0,0,0,0
 Lage,spost53,0,0,0,0,0,0
 Lage,spost54,0,0,0,0,0,0
 Lage,spost55,0,0,0,0,0,0
-Burbach,spost1,1,1,1,1,1,0
+Burbach,spost1,1,1,1,1,1,1
 Burbach,spost2,0,0,0,0,0,0
 Burbach,spost3,0,0,0,0,0,0
 Burbach,spost4,0,0,0,0,0,0
@@ -12924,7 +12924,7 @@ Burbach,spost52,0,0,0,0,0,0
 Burbach,spost53,0,0,0,0,0,0
 Burbach,spost54,0,0,0,0,0,0
 Burbach,spost55,0,0,0,0,0,0
-Guetersloh,spost1,1,1,1,1,1,0
+Guetersloh,spost1,1,1,1,1,1,1
 Guetersloh,spost2,0,0,0,0,0,0
 Guetersloh,spost3,0,0,0,0,0,0
 Guetersloh,spost4,0,0,0,0,0,0
@@ -12979,7 +12979,7 @@ Guetersloh,spost52,0,0,0,0,0,0
 Guetersloh,spost53,0,0,0,0,0,0
 Guetersloh,spost54,0,0,0,0,0,0
 Guetersloh,spost55,0,0,0,0,0,0
-Schwelm,spost1,1,1,1,1,1,0
+Schwelm,spost1,1,1,1,1,1,1
 Schwelm,spost2,0,0,0,0,0,0
 Schwelm,spost3,0,0,0,0,0,0
 Schwelm,spost4,0,0,0,0,0,0
@@ -13034,7 +13034,7 @@ Schwelm,spost52,0,0,0,0,0,0
 Schwelm,spost53,0,0,0,0,0,0
 Schwelm,spost54,0,0,0,0,0,0
 Schwelm,spost55,0,0,0,0,0,0
-Frechen,spost1,1,1,1,1,1,0
+Frechen,spost1,1,1,1,1,1,1
 Frechen,spost2,0,0,0,0,0,0
 Frechen,spost3,0,0,0,0,0,0
 Frechen,spost4,0,0,0,0,0,0
@@ -13089,7 +13089,7 @@ Frechen,spost52,0,0,0,0,0,0
 Frechen,spost53,0,0,0,0,0,0
 Frechen,spost54,0,0,0,0,0,0
 Frechen,spost55,0,0,0,0,0,0
-Unna,spost1,1,1,1,1,1,0
+Unna,spost1,1,1,1,1,1,1
 Unna,spost2,0,0,0,0,0,0
 Unna,spost3,0,0,0,0,0,0
 Unna,spost4,0,0,0,0,0,0
@@ -13144,7 +13144,7 @@ Unna,spost52,0,0,0,0,0,0
 Unna,spost53,0,0,0,0,0,0
 Unna,spost54,0,0,0,0,0,0
 Unna,spost55,0,0,0,0,0,0
-PreussischOldendorf,spost1,1,1,1,1,1,0
+PreussischOldendorf,spost1,1,1,1,1,1,1
 PreussischOldendorf,spost2,0,0,0,0,0,0
 PreussischOldendorf,spost3,0,0,0,0,0,0
 PreussischOldendorf,spost4,0,0,0,0,0,0
@@ -13199,7 +13199,7 @@ PreussischOldendorf,spost52,0,0,0,0,0,0
 PreussischOldendorf,spost53,0,0,0,0,0,0
 PreussischOldendorf,spost54,0,0,0,0,0,0
 PreussischOldendorf,spost55,0,0,0,0,0,0
-Anroechte,spost1,1,1,1,1,1,0
+Anroechte,spost1,1,1,1,1,1,1
 Anroechte,spost2,0,0,0,0,0,0
 Anroechte,spost3,0,0,0,0,0,0
 Anroechte,spost4,0,0,0,0,0,0
@@ -13254,7 +13254,7 @@ Anroechte,spost52,0,0,0,0,0,0
 Anroechte,spost53,0,0,0,0,0,0
 Anroechte,spost54,0,0,0,0,0,0
 Anroechte,spost55,0,0,0,0,0,0
-BadOeynhausen,spost1,1,1,1,1,1,0
+BadOeynhausen,spost1,1,1,1,1,1,1
 BadOeynhausen,spost2,0,0,0,0,0,0
 BadOeynhausen,spost3,0,0,0,0,0,0
 BadOeynhausen,spost4,0,0,0,0,0,0
@@ -13309,7 +13309,7 @@ BadOeynhausen,spost52,0,0,0,0,0,0
 BadOeynhausen,spost53,0,0,0,0,0,0
 BadOeynhausen,spost54,0,0,0,0,0,0
 BadOeynhausen,spost55,0,0,0,0,0,0
-Saerbeck,spost1,1,1,1,1,1,0
+Saerbeck,spost1,1,1,1,1,1,1
 Saerbeck,spost2,0,0,0,0,0,0
 Saerbeck,spost3,0,0,0,0,0,0
 Saerbeck,spost4,0,0,0,0,0,0
@@ -13364,7 +13364,7 @@ Saerbeck,spost52,0,0,0,0,0,0
 Saerbeck,spost53,0,0,0,0,0,0
 Saerbeck,spost54,0,0,0,0,0,0
 Saerbeck,spost55,0,0,0,0,0,0
-Blankenheim,spost1,1,1,1,1,1,0
+Blankenheim,spost1,1,1,1,1,1,1
 Blankenheim,spost2,0,0,0,0,0,0
 Blankenheim,spost3,0,0,0,0,0,0
 Blankenheim,spost4,0,0,0,0,0,0
@@ -13419,7 +13419,7 @@ Blankenheim,spost52,0,0,0,0,0,0
 Blankenheim,spost53,0,0,0,0,0,0
 Blankenheim,spost54,0,0,0,0,0,0
 Blankenheim,spost55,0,0,0,0,0,0
-Korschenbroich,spost1,1,1,1,1,1,0
+Korschenbroich,spost1,1,1,1,1,1,1
 Korschenbroich,spost2,0,0,0,0,0,0
 Korschenbroich,spost3,0,0,0,0,0,0
 Korschenbroich,spost4,0,0,0,0,0,0
@@ -13474,7 +13474,7 @@ Korschenbroich,spost52,0,0,0,0,0,0
 Korschenbroich,spost53,0,0,0,0,0,0
 Korschenbroich,spost54,0,0,0,0,0,0
 Korschenbroich,spost55,0,0,0,0,0,0
-Kreuzau,spost1,1,1,1,1,1,0
+Kreuzau,spost1,1,1,1,1,1,1
 Kreuzau,spost2,0,0,0,0,0,0
 Kreuzau,spost3,0,0,0,0,0,0
 Kreuzau,spost4,0,0,0,0,0,0
@@ -13529,7 +13529,7 @@ Kreuzau,spost52,0,0,0,0,0,0
 Kreuzau,spost53,0,0,0,0,0,0
 Kreuzau,spost54,0,0,0,0,0,0
 Kreuzau,spost55,0,0,0,0,0,0
-Bergneustadt,spost1,1,1,1,1,1,0
+Bergneustadt,spost1,1,1,1,1,1,1
 Bergneustadt,spost2,0,0,0,0,0,0
 Bergneustadt,spost3,0,0,0,0,0,0
 Bergneustadt,spost4,0,0,0,0,0,0
@@ -13584,7 +13584,7 @@ Bergneustadt,spost52,0,0,0,0,0,0
 Bergneustadt,spost53,0,0,0,0,0,0
 Bergneustadt,spost54,0,0,0,0,0,0
 Bergneustadt,spost55,0,0,0,0,0,0
-Kirchhundem,spost1,1,1,1,1,1,0
+Kirchhundem,spost1,1,1,1,1,1,1
 Kirchhundem,spost2,0,0,0,0,0,0
 Kirchhundem,spost3,0,0,0,0,0,0
 Kirchhundem,spost4,0,0,0,0,0,0
@@ -13639,7 +13639,7 @@ Kirchhundem,spost52,0,0,0,0,0,0
 Kirchhundem,spost53,0,0,0,0,0,0
 Kirchhundem,spost54,0,0,0,0,0,0
 Kirchhundem,spost55,0,0,0,0,0,0
-Halver,spost1,1,1,1,1,1,0
+Halver,spost1,1,1,1,1,1,1
 Halver,spost2,0,0,0,0,0,0
 Halver,spost3,0,0,0,0,0,0
 Halver,spost4,0,0,0,0,0,0
@@ -13694,7 +13694,7 @@ Halver,spost52,0,0,0,0,0,0
 Halver,spost53,0,0,0,0,0,0
 Halver,spost54,0,0,0,0,0,0
 Halver,spost55,0,0,0,0,0,0
-Arnsberg,spost1,1,1,1,1,1,0
+Arnsberg,spost1,1,1,1,1,1,1
 Arnsberg,spost2,0,0,0,0,0,0
 Arnsberg,spost3,0,0,0,0,0,0
 Arnsberg,spost4,0,0,0,0,0,0
@@ -13749,7 +13749,7 @@ Arnsberg,spost52,0,0,0,0,0,0
 Arnsberg,spost53,0,0,0,0,0,0
 Arnsberg,spost54,0,0,0,0,0,0
 Arnsberg,spost55,0,0,0,0,0,0
-VoerdeNiederrhein,spost1,1,1,1,1,1,0
+VoerdeNiederrhein,spost1,1,1,1,1,1,1
 VoerdeNiederrhein,spost2,0,0,0,0,0,0
 VoerdeNiederrhein,spost3,0,0,0,0,0,0
 VoerdeNiederrhein,spost4,0,0,0,0,0,0
@@ -13804,7 +13804,7 @@ VoerdeNiederrhein,spost52,0,0,0,0,0,0
 VoerdeNiederrhein,spost53,0,0,0,0,0,0
 VoerdeNiederrhein,spost54,0,0,0,0,0,0
 VoerdeNiederrhein,spost55,0,0,0,0,0,0
-Langenberg,spost1,1,1,1,1,1,0
+Langenberg,spost1,1,1,1,1,1,1
 Langenberg,spost2,0,0,0,0,0,0
 Langenberg,spost3,0,0,0,0,0,0
 Langenberg,spost4,0,0,0,0,0,0
@@ -13859,7 +13859,7 @@ Langenberg,spost52,0,0,0,0,0,0
 Langenberg,spost53,0,0,0,0,0,0
 Langenberg,spost54,0,0,0,0,0,0
 Langenberg,spost55,0,0,0,0,0,0
-Alpen,spost1,1,1,1,1,1,0
+Alpen,spost1,1,1,1,1,1,1
 Alpen,spost2,0,0,0,0,0,0
 Alpen,spost3,0,0,0,0,0,0
 Alpen,spost4,0,0,0,0,0,0
@@ -13914,7 +13914,7 @@ Alpen,spost52,0,0,0,0,0,0
 Alpen,spost53,0,0,0,0,0,0
 Alpen,spost54,0,0,0,0,0,0
 Alpen,spost55,0,0,0,0,0,0
-Warburg,spost1,1,1,1,1,1,0
+Warburg,spost1,1,1,1,1,1,1
 Warburg,spost2,0,0,0,0,0,0
 Warburg,spost3,0,0,0,0,0,0
 Warburg,spost4,0,0,0,0,0,0
@@ -13969,7 +13969,7 @@ Warburg,spost52,0,0,0,0,0,0
 Warburg,spost53,0,0,0,0,0,0
 Warburg,spost54,0,0,0,0,0,0
 Warburg,spost55,0,0,0,0,0,0
-Niederkruechten,spost1,1,1,1,1,1,0
+Niederkruechten,spost1,1,1,1,1,1,1
 Niederkruechten,spost2,0,0,0,0,0,0
 Niederkruechten,spost3,0,0,0,0,0,0
 Niederkruechten,spost4,0,0,0,0,0,0
@@ -14024,7 +14024,7 @@ Niederkruechten,spost52,0,0,0,0,0,0
 Niederkruechten,spost53,0,0,0,0,0,0
 Niederkruechten,spost54,0,0,0,0,0,0
 Niederkruechten,spost55,0,0,0,0,0,0
-Langerwehe,spost1,1,1,1,1,1,0
+Langerwehe,spost1,1,1,1,1,1,1
 Langerwehe,spost2,0,0,0,0,0,0
 Langerwehe,spost3,0,0,0,0,0,0
 Langerwehe,spost4,0,0,0,0,0,0
@@ -14079,7 +14079,7 @@ Langerwehe,spost52,0,0,0,0,0,0
 Langerwehe,spost53,0,0,0,0,0,0
 Langerwehe,spost54,0,0,0,0,0,0
 Langerwehe,spost55,0,0,0,0,0,0
-Recklinghausen,spost1,1,1,1,1,1,0
+Recklinghausen,spost1,1,1,1,1,1,1
 Recklinghausen,spost2,0,0,0,0,0,0
 Recklinghausen,spost3,0,0,0,0,0,0
 Recklinghausen,spost4,0,0,0,0,0,0
@@ -14134,7 +14134,7 @@ Recklinghausen,spost52,0,0,0,0,0,0
 Recklinghausen,spost53,0,0,0,0,0,0
 Recklinghausen,spost54,0,0,0,0,0,0
 Recklinghausen,spost55,0,0,0,0,0,0
-SchlossHolteStukenbrock,spost1,1,1,1,1,1,0
+SchlossHolteStukenbrock,spost1,1,1,1,1,1,1
 SchlossHolteStukenbrock,spost2,0,0,0,0,0,0
 SchlossHolteStukenbrock,spost3,0,0,0,0,0,0
 SchlossHolteStukenbrock,spost4,0,0,0,0,0,0
@@ -14189,7 +14189,7 @@ SchlossHolteStukenbrock,spost52,0,0,0,0,0,0
 SchlossHolteStukenbrock,spost53,0,0,0,0,0,0
 SchlossHolteStukenbrock,spost54,0,0,0,0,0,0
 SchlossHolteStukenbrock,spost55,0,0,0,0,0,0
-Kreuztal,spost1,1,1,1,1,1,0
+Kreuztal,spost1,1,1,1,1,1,1
 Kreuztal,spost2,0,0,0,0,0,0
 Kreuztal,spost3,0,0,0,0,0,0
 Kreuztal,spost4,0,0,0,0,0,0
@@ -14244,7 +14244,7 @@ Kreuztal,spost52,0,0,0,0,0,0
 Kreuztal,spost53,0,0,0,0,0,0
 Kreuztal,spost54,0,0,0,0,0,0
 Kreuztal,spost55,0,0,0,0,0,0
-Ennepetal,spost1,1,1,1,1,1,0
+Ennepetal,spost1,1,1,1,1,1,1
 Ennepetal,spost2,0,0,0,0,0,0
 Ennepetal,spost3,0,0,0,0,0,0
 Ennepetal,spost4,0,0,0,0,0,0
@@ -14299,7 +14299,7 @@ Ennepetal,spost52,0,0,0,0,0,0
 Ennepetal,spost53,0,0,0,0,0,0
 Ennepetal,spost54,0,0,0,0,0,0
 Ennepetal,spost55,0,0,0,0,0,0
-Erwitte,spost1,1,1,1,1,1,0
+Erwitte,spost1,1,1,1,1,1,1
 Erwitte,spost2,0,0,0,0,0,0
 Erwitte,spost3,0,0,0,0,0,0
 Erwitte,spost4,0,0,0,0,0,0
@@ -14354,7 +14354,7 @@ Erwitte,spost52,0,0,0,0,0,0
 Erwitte,spost53,0,0,0,0,0,0
 Erwitte,spost54,0,0,0,0,0,0
 Erwitte,spost55,0,0,0,0,0,0
-Selfkant,spost1,1,1,1,1,1,0
+Selfkant,spost1,1,1,1,1,1,1
 Selfkant,spost2,0,0,0,0,0,0
 Selfkant,spost3,0,0,0,0,0,0
 Selfkant,spost4,0,0,0,0,0,0
@@ -14409,7 +14409,7 @@ Selfkant,spost52,0,0,0,0,0,0
 Selfkant,spost53,0,0,0,0,0,0
 Selfkant,spost54,0,0,0,0,0,0
 Selfkant,spost55,0,0,0,0,0,0
-BadBerleburg,spost1,1,1,1,1,1,0
+BadBerleburg,spost1,1,1,1,1,1,1
 BadBerleburg,spost2,0,0,0,0,0,0
 BadBerleburg,spost3,0,0,0,0,0,0
 BadBerleburg,spost4,0,0,0,0,0,0
@@ -14464,7 +14464,7 @@ BadBerleburg,spost52,0,0,0,0,0,0
 BadBerleburg,spost53,0,0,0,0,0,0
 BadBerleburg,spost54,0,0,0,0,0,0
 BadBerleburg,spost55,0,0,0,0,0,0
-Schermbeck,spost1,1,1,1,1,1,0
+Schermbeck,spost1,1,1,1,1,1,1
 Schermbeck,spost2,0,0,0,0,0,0
 Schermbeck,spost3,0,0,0,0,0,0
 Schermbeck,spost4,0,0,0,0,0,0
@@ -14519,7 +14519,7 @@ Schermbeck,spost52,0,0,0,0,0,0
 Schermbeck,spost53,0,0,0,0,0,0
 Schermbeck,spost54,0,0,0,0,0,0
 Schermbeck,spost55,0,0,0,0,0,0
-Luebbecke,spost1,1,1,1,1,1,0
+Luebbecke,spost1,1,1,1,1,1,1
 Luebbecke,spost2,0,0,0,0,0,0
 Luebbecke,spost3,0,0,0,0,1,0
 Luebbecke,spost4,0,0,0,0,0,0
@@ -14574,7 +14574,7 @@ Luebbecke,spost52,0,0,0,0,0,0
 Luebbecke,spost53,0,0,0,0,0,0
 Luebbecke,spost54,0,0,0,0,0,0
 Luebbecke,spost55,0,0,0,0,0,0
-Sprockhoevel,spost1,1,1,1,1,1,0
+Sprockhoevel,spost1,1,1,1,1,1,1
 Sprockhoevel,spost2,0,0,0,0,0,0
 Sprockhoevel,spost3,0,0,0,0,0,0
 Sprockhoevel,spost4,0,0,0,0,0,0
@@ -14629,7 +14629,7 @@ Sprockhoevel,spost52,0,0,0,0,0,0
 Sprockhoevel,spost53,0,0,0,0,0,0
 Sprockhoevel,spost54,0,0,0,0,0,0
 Sprockhoevel,spost55,0,0,0,0,0,0
-Meinerzhagen,spost1,1,1,1,1,1,0
+Meinerzhagen,spost1,1,1,1,1,1,1
 Meinerzhagen,spost2,0,0,0,0,0,0
 Meinerzhagen,spost3,0,0,0,0,0,0
 Meinerzhagen,spost4,0,0,0,0,0,0
@@ -14684,7 +14684,7 @@ Meinerzhagen,spost52,0,0,0,0,0,0
 Meinerzhagen,spost53,0,0,0,0,0,0
 Meinerzhagen,spost54,0,0,0,0,0,0
 Meinerzhagen,spost55,0,0,0,0,0,0
-Hattingen,spost1,1,1,1,1,1,0
+Hattingen,spost1,1,1,1,1,1,1
 Hattingen,spost2,0,0,0,0,0,0
 Hattingen,spost3,0,0,0,0,0,0
 Hattingen,spost4,0,0,0,0,0,0
@@ -14739,7 +14739,7 @@ Hattingen,spost52,0,0,0,0,0,0
 Hattingen,spost53,0,0,0,0,0,0
 Hattingen,spost54,0,0,0,0,0,0
 Hattingen,spost55,0,0,0,0,0,0
-Olsberg,spost1,1,1,1,1,1,0
+Olsberg,spost1,1,1,1,1,1,1
 Olsberg,spost2,0,0,0,0,0,0
 Olsberg,spost3,0,0,0,0,0,0
 Olsberg,spost4,0,0,0,0,0,0
@@ -14794,7 +14794,7 @@ Olsberg,spost52,0,0,0,0,0,0
 Olsberg,spost53,0,0,0,0,0,0
 Olsberg,spost54,0,0,0,0,0,0
 Olsberg,spost55,0,0,0,0,0,0
-Kall,spost1,1,1,1,1,1,0
+Kall,spost1,1,1,1,1,1,1
 Kall,spost2,0,0,0,0,0,0
 Kall,spost3,0,0,0,0,0,0
 Kall,spost4,0,0,0,0,0,0
@@ -14849,7 +14849,7 @@ Kall,spost52,0,0,0,0,0,0
 Kall,spost53,0,0,0,0,0,0
 Kall,spost54,0,0,0,0,0,0
 Kall,spost55,0,0,0,0,0,0
-Blomberg,spost1,1,1,1,1,1,0
+Blomberg,spost1,1,1,1,1,1,1
 Blomberg,spost2,0,0,0,0,0,0
 Blomberg,spost3,0,0,0,0,0,0
 Blomberg,spost4,0,0,0,0,0,0
@@ -14904,7 +14904,7 @@ Blomberg,spost52,0,0,0,0,0,0
 Blomberg,spost53,0,0,0,0,0,0
 Blomberg,spost54,0,0,0,0,0,0
 Blomberg,spost55,0,0,0,0,0,0
-BadLaasphe,spost1,1,1,1,1,1,0
+BadLaasphe,spost1,1,1,1,1,1,1
 BadLaasphe,spost2,0,0,0,0,0,0
 BadLaasphe,spost3,0,0,0,0,0,0
 BadLaasphe,spost4,0,0,0,0,0,0
@@ -14959,7 +14959,7 @@ BadLaasphe,spost52,0,0,0,0,0,0
 BadLaasphe,spost53,0,0,0,0,0,0
 BadLaasphe,spost54,0,0,0,0,0,0
 BadLaasphe,spost55,0,0,0,0,0,0
-NeunkirchenSeelscheid,spost1,1,1,1,1,1,0
+NeunkirchenSeelscheid,spost1,1,1,1,1,1,1
 NeunkirchenSeelscheid,spost2,0,0,0,0,0,0
 NeunkirchenSeelscheid,spost3,0,0,0,0,0,0
 NeunkirchenSeelscheid,spost4,0,0,0,0,0,0
@@ -15014,7 +15014,7 @@ NeunkirchenSeelscheid,spost52,0,0,0,0,0,0
 NeunkirchenSeelscheid,spost53,0,0,0,0,0,0
 NeunkirchenSeelscheid,spost54,0,0,0,0,0,0
 NeunkirchenSeelscheid,spost55,0,0,0,0,0,0
-Schalksmuehle,spost1,1,1,1,1,1,0
+Schalksmuehle,spost1,1,1,1,1,1,1
 Schalksmuehle,spost2,0,0,0,0,0,0
 Schalksmuehle,spost3,0,0,0,0,0,0
 Schalksmuehle,spost4,0,0,0,0,0,0
@@ -15069,7 +15069,7 @@ Schalksmuehle,spost52,0,0,0,0,0,0
 Schalksmuehle,spost53,0,0,0,0,0,0
 Schalksmuehle,spost54,0,0,0,0,0,0
 Schalksmuehle,spost55,0,0,0,0,0,0
-Dortmund,spost1,1,1,1,1,1,0
+Dortmund,spost1,1,1,1,1,1,1
 Dortmund,spost2,0,0,0,0,0,0
 Dortmund,spost3,0,0,0,0,0,0
 Dortmund,spost4,0,0,0,0,0,0
@@ -15124,7 +15124,7 @@ Dortmund,spost52,0,0,0,0,0,0
 Dortmund,spost53,0,0,0,0,0,0
 Dortmund,spost54,0,0,0,0,0,0
 Dortmund,spost55,0,0,0,0,0,0
-Neunkirchen,spost1,1,1,1,1,1,0
+Neunkirchen,spost1,1,1,1,1,1,1
 Neunkirchen,spost2,0,0,0,0,0,0
 Neunkirchen,spost3,0,0,0,0,0,0
 Neunkirchen,spost4,0,0,0,0,0,0
@@ -15179,7 +15179,7 @@ Neunkirchen,spost52,0,0,0,0,0,0
 Neunkirchen,spost53,0,0,0,0,0,0
 Neunkirchen,spost54,0,0,0,0,0,0
 Neunkirchen,spost55,0,0,0,0,0,0
-Boenen,spost1,1,1,1,1,1,0
+Boenen,spost1,1,1,1,1,1,1
 Boenen,spost2,0,0,0,0,0,0
 Boenen,spost3,0,0,0,0,0,0
 Boenen,spost4,0,0,0,0,0,0
@@ -15234,7 +15234,7 @@ Boenen,spost52,0,0,0,0,0,0
 Boenen,spost53,0,0,0,0,0,0
 Boenen,spost54,0,0,0,0,0,0
 Boenen,spost55,0,0,0,0,0,0
-Rietberg,spost1,1,1,1,1,1,0
+Rietberg,spost1,1,1,1,1,1,1
 Rietberg,spost2,0,0,0,0,0,0
 Rietberg,spost3,0,0,0,0,0,0
 Rietberg,spost4,0,0,0,0,0,0
@@ -15289,7 +15289,7 @@ Rietberg,spost52,0,0,0,0,0,0
 Rietberg,spost53,0,0,0,0,0,0
 Rietberg,spost54,0,0,0,0,0,0
 Rietberg,spost55,0,0,0,0,0,0
-KampLintfort,spost1,1,1,1,1,1,0
+KampLintfort,spost1,1,1,1,1,1,1
 KampLintfort,spost2,0,0,0,0,0,0
 KampLintfort,spost3,0,0,0,0,0,0
 KampLintfort,spost4,0,0,0,0,0,0
@@ -15344,7 +15344,7 @@ KampLintfort,spost52,0,0,0,0,0,0
 KampLintfort,spost53,0,0,0,0,0,0
 KampLintfort,spost54,0,0,0,0,0,0
 KampLintfort,spost55,0,0,0,0,0,0
-Kranenburg,spost1,1,1,1,1,1,0
+Kranenburg,spost1,1,1,1,1,1,1
 Kranenburg,spost2,0,0,0,0,0,0
 Kranenburg,spost3,0,0,0,0,0,0
 Kranenburg,spost4,0,0,0,0,0,0
@@ -15399,7 +15399,7 @@ Kranenburg,spost52,0,0,0,0,0,0
 Kranenburg,spost53,0,0,0,0,0,0
 Kranenburg,spost54,0,0,0,0,0,0
 Kranenburg,spost55,0,0,0,0,0,0
-Willich,spost1,1,1,1,1,1,0
+Willich,spost1,1,1,1,1,1,1
 Willich,spost2,0,0,0,0,0,0
 Willich,spost3,0,0,0,0,0,0
 Willich,spost4,0,0,0,0,0,0
@@ -15454,7 +15454,7 @@ Willich,spost52,0,0,0,0,0,0
 Willich,spost53,0,0,0,0,0,0
 Willich,spost54,0,0,0,0,0,0
 Willich,spost55,0,0,0,0,0,0
-Drensteinfurt,spost1,1,1,1,1,1,0
+Drensteinfurt,spost1,1,1,1,1,1,1
 Drensteinfurt,spost2,0,0,0,0,0,0
 Drensteinfurt,spost3,0,0,0,0,0,0
 Drensteinfurt,spost4,0,0,0,0,0,0
@@ -15509,7 +15509,7 @@ Drensteinfurt,spost52,0,0,0,0,0,0
 Drensteinfurt,spost53,0,0,0,0,0,0
 Drensteinfurt,spost54,0,0,0,0,0,0
 Drensteinfurt,spost55,0,0,0,0,0,0
-Minden,spost1,1,1,1,1,1,0
+Minden,spost1,1,1,1,1,1,1
 Minden,spost2,0,0,0,0,0,0
 Minden,spost3,0,0,0,0,0,0
 Minden,spost4,0,0,0,0,0,0
@@ -15564,7 +15564,7 @@ Minden,spost52,0,0,0,0,0,0
 Minden,spost53,0,0,0,0,0,0
 Minden,spost54,0,0,0,0,0,0
 Minden,spost55,0,0,0,0,0,0
-Moehnesee,spost1,1,1,1,1,1,0
+Moehnesee,spost1,1,1,1,1,1,1
 Moehnesee,spost2,0,0,0,0,0,0
 Moehnesee,spost3,0,0,0,0,0,0
 Moehnesee,spost4,0,0,0,0,0,0
@@ -15619,7 +15619,7 @@ Moehnesee,spost52,0,0,0,0,0,0
 Moehnesee,spost53,0,0,0,0,0,0
 Moehnesee,spost54,0,0,0,0,0,0
 Moehnesee,spost55,0,0,0,0,0,0
-Hemer,spost1,1,1,1,1,1,0
+Hemer,spost1,1,1,1,1,1,1
 Hemer,spost2,0,0,0,0,0,0
 Hemer,spost3,0,0,0,0,0,0
 Hemer,spost4,0,0,0,0,0,0
@@ -15674,7 +15674,7 @@ Hemer,spost52,0,0,0,0,0,0
 Hemer,spost53,0,0,0,0,0,0
 Hemer,spost54,0,0,0,0,0,0
 Hemer,spost55,0,0,0,0,0,0
-BadHonnef,spost1,1,1,1,1,1,0
+BadHonnef,spost1,1,1,1,1,1,1
 BadHonnef,spost2,0,0,0,0,0,0
 BadHonnef,spost3,0,0,0,0,0,0
 BadHonnef,spost4,0,0,0,0,0,0
@@ -15729,7 +15729,7 @@ BadHonnef,spost52,0,0,0,0,0,0
 BadHonnef,spost53,0,0,0,0,0,0
 BadHonnef,spost54,0,0,0,0,0,0
 BadHonnef,spost55,0,0,0,0,0,0
-Reichshof,spost1,1,1,1,1,1,0
+Reichshof,spost1,1,1,1,1,1,1
 Reichshof,spost2,0,0,0,0,0,0
 Reichshof,spost3,0,0,0,0,0,0
 Reichshof,spost4,0,0,0,0,0,0
@@ -15784,7 +15784,7 @@ Reichshof,spost52,0,0,0,0,0,0
 Reichshof,spost53,0,0,0,0,0,0
 Reichshof,spost54,0,0,0,0,0,0
 Reichshof,spost55,0,0,0,0,0,0
-Juelich,spost1,1,1,1,1,1,0
+Juelich,spost1,1,1,1,1,1,1
 Juelich,spost2,0,0,0,0,0,0
 Juelich,spost3,0,0,0,0,0,0
 Juelich,spost4,0,0,0,0,0,0
@@ -15839,7 +15839,7 @@ Juelich,spost52,0,0,0,0,0,0
 Juelich,spost53,0,0,0,0,0,0
 Juelich,spost54,0,0,0,0,0,0
 Juelich,spost55,0,0,0,0,0,0
-Borchen,spost1,1,1,1,1,1,0
+Borchen,spost1,1,1,1,1,1,1
 Borchen,spost2,0,0,0,0,0,0
 Borchen,spost3,0,0,0,0,0,0
 Borchen,spost4,0,0,0,0,0,0
@@ -15894,7 +15894,7 @@ Borchen,spost52,0,0,0,0,0,0
 Borchen,spost53,0,0,0,0,0,0
 Borchen,spost54,0,0,0,0,0,0
 Borchen,spost55,0,0,0,0,0,0
-Hiddenhausen,spost1,1,1,1,1,1,0
+Hiddenhausen,spost1,1,1,1,1,1,1
 Hiddenhausen,spost2,0,0,0,0,0,0
 Hiddenhausen,spost3,0,0,0,0,0,0
 Hiddenhausen,spost4,0,0,0,0,0,0
@@ -15949,7 +15949,7 @@ Hiddenhausen,spost52,0,0,0,0,0,0
 Hiddenhausen,spost53,0,0,0,0,0,0
 Hiddenhausen,spost54,0,0,0,0,0,0
 Hiddenhausen,spost55,0,0,0,0,0,0
-Nuembrecht,spost1,1,1,1,1,1,0
+Nuembrecht,spost1,1,1,1,1,1,1
 Nuembrecht,spost2,0,0,0,0,0,0
 Nuembrecht,spost3,0,0,0,0,0,0
 Nuembrecht,spost4,0,0,0,0,0,0
@@ -16004,7 +16004,7 @@ Nuembrecht,spost52,0,0,0,0,0,0
 Nuembrecht,spost53,0,0,0,0,0,0
 Nuembrecht,spost54,0,0,0,0,0,0
 Nuembrecht,spost55,0,0,0,0,0,0
-MonheimamRhein,spost1,1,1,1,1,1,0
+MonheimamRhein,spost1,1,1,1,1,1,1
 MonheimamRhein,spost2,0,0,0,0,0,0
 MonheimamRhein,spost3,0,0,0,0,0,0
 MonheimamRhein,spost4,0,0,0,0,0,0
@@ -16059,7 +16059,7 @@ MonheimamRhein,spost52,0,0,0,0,0,0
 MonheimamRhein,spost53,0,0,0,0,0,0
 MonheimamRhein,spost54,0,0,0,0,0,0
 MonheimamRhein,spost55,0,0,0,0,0,0
-NeukirchenVluyn,spost1,1,1,1,1,1,0
+NeukirchenVluyn,spost1,1,1,1,1,1,1
 NeukirchenVluyn,spost2,0,0,0,0,0,0
 NeukirchenVluyn,spost3,0,0,0,0,0,0
 NeukirchenVluyn,spost4,0,0,0,0,0,0
@@ -16114,7 +16114,7 @@ NeukirchenVluyn,spost52,0,0,0,0,0,0
 NeukirchenVluyn,spost53,0,0,0,0,0,0
 NeukirchenVluyn,spost54,0,0,0,0,0,0
 NeukirchenVluyn,spost55,0,0,0,0,0,0
-Rheinbach,spost1,1,1,1,1,1,0
+Rheinbach,spost1,1,1,1,1,1,1
 Rheinbach,spost2,0,0,0,0,0,0
 Rheinbach,spost3,0,0,0,0,0,0
 Rheinbach,spost4,0,0,0,0,0,0
@@ -16169,7 +16169,7 @@ Rheinbach,spost52,0,0,0,0,0,0
 Rheinbach,spost53,0,0,0,0,0,0
 Rheinbach,spost54,0,0,0,0,0,0
 Rheinbach,spost55,0,0,0,0,0,0
-HennefSieg,spost1,1,1,1,1,1,0
+HennefSieg,spost1,1,1,1,1,1,1
 HennefSieg,spost2,0,0,0,0,0,0
 HennefSieg,spost3,0,0,0,0,0,0
 HennefSieg,spost4,0,0,0,0,0,0
@@ -16224,7 +16224,7 @@ HennefSieg,spost52,0,0,0,0,0,0
 HennefSieg,spost53,0,0,0,0,0,0
 HennefSieg,spost54,0,0,0,0,0,0
 HennefSieg,spost55,0,0,0,0,0,0
-Swisttal,spost1,1,1,1,1,1,0
+Swisttal,spost1,1,1,1,1,1,1
 Swisttal,spost2,0,0,0,0,0,0
 Swisttal,spost3,0,0,0,0,0,0
 Swisttal,spost4,0,0,0,0,0,0
@@ -16279,7 +16279,7 @@ Swisttal,spost52,0,0,0,0,0,0
 Swisttal,spost53,0,0,0,0,0,0
 Swisttal,spost54,0,0,0,0,0,0
 Swisttal,spost55,0,0,0,0,0,0
-Lohmar,spost1,1,1,1,1,1,0
+Lohmar,spost1,1,1,1,1,1,1
 Lohmar,spost2,0,0,0,0,0,0
 Lohmar,spost3,0,0,0,0,0,0
 Lohmar,spost4,0,0,0,0,0,0
@@ -16334,7 +16334,7 @@ Lohmar,spost52,0,0,0,0,0,0
 Lohmar,spost53,0,0,0,0,0,0
 Lohmar,spost54,0,0,0,0,0,0
 Lohmar,spost55,0,0,0,0,0,0
-Weilerswist,spost1,1,1,1,1,1,0
+Weilerswist,spost1,1,1,1,1,1,1
 Weilerswist,spost2,0,0,0,0,0,0
 Weilerswist,spost3,0,0,0,0,0,0
 Weilerswist,spost4,0,0,0,0,0,0
@@ -16389,7 +16389,7 @@ Weilerswist,spost52,0,0,0,0,0,0
 Weilerswist,spost53,0,0,0,0,0,0
 Weilerswist,spost54,0,0,0,0,0,0
 Weilerswist,spost55,0,0,0,0,0,0
-Borgentreich,spost1,1,1,1,1,1,0
+Borgentreich,spost1,1,1,1,1,1,1
 Borgentreich,spost2,0,0,0,0,0,0
 Borgentreich,spost3,0,0,0,0,0,0
 Borgentreich,spost4,0,0,0,0,0,0
@@ -16444,7 +16444,7 @@ Borgentreich,spost52,0,0,0,0,0,0
 Borgentreich,spost53,0,0,0,0,0,0
 Borgentreich,spost54,0,0,0,0,0,0
 Borgentreich,spost55,0,0,0,0,0,0
-PortaWestfalica,spost1,1,1,1,1,1,0
+PortaWestfalica,spost1,1,1,1,1,1,1
 PortaWestfalica,spost2,0,0,0,0,0,0
 PortaWestfalica,spost3,0,0,0,0,0,0
 PortaWestfalica,spost4,0,0,0,0,0,0
@@ -16499,7 +16499,7 @@ PortaWestfalica,spost52,0,0,0,0,0,0
 PortaWestfalica,spost53,0,0,0,0,0,0
 PortaWestfalica,spost54,0,0,0,0,0,0
 PortaWestfalica,spost55,0,0,0,0,0,0
-Merzenich,spost1,1,1,1,1,1,0
+Merzenich,spost1,1,1,1,1,1,1
 Merzenich,spost2,0,0,0,0,0,0
 Merzenich,spost3,0,0,0,0,0,0
 Merzenich,spost4,0,0,0,0,0,0
@@ -16554,7 +16554,7 @@ Merzenich,spost52,0,0,0,0,0,0
 Merzenich,spost53,0,0,0,0,0,0
 Merzenich,spost54,0,0,0,0,0,0
 Merzenich,spost55,0,0,0,0,0,0
-Brilon,spost1,1,1,1,1,1,0
+Brilon,spost1,1,1,1,1,1,1
 Brilon,spost2,0,0,0,0,0,0
 Brilon,spost3,0,0,0,0,0,0
 Brilon,spost4,0,0,0,0,0,0
@@ -16609,7 +16609,7 @@ Brilon,spost52,0,0,0,0,0,0
 Brilon,spost53,0,0,0,0,0,0
 Brilon,spost54,0,0,0,0,0,0
 Brilon,spost55,0,0,0,0,0,0
-Kaarst,spost1,1,1,1,1,1,0
+Kaarst,spost1,1,1,1,1,1,1
 Kaarst,spost2,0,0,0,0,0,0
 Kaarst,spost3,0,0,0,0,0,0
 Kaarst,spost4,0,0,0,0,0,0
@@ -16664,7 +16664,7 @@ Kaarst,spost52,0,0,0,0,0,0
 Kaarst,spost53,0,0,0,0,0,0
 Kaarst,spost54,0,0,0,0,0,0
 Kaarst,spost55,0,0,0,0,0,0
-Marl,spost1,1,1,1,1,1,0
+Marl,spost1,1,1,1,1,1,1
 Marl,spost2,0,0,0,0,0,0
 Marl,spost3,0,0,0,0,0,0
 Marl,spost4,0,0,0,0,0,0
@@ -16719,7 +16719,7 @@ Marl,spost52,0,0,0,0,0,0
 Marl,spost53,0,0,0,0,0,0
 Marl,spost54,0,0,0,0,0,0
 Marl,spost55,0,0,0,0,0,0
-Dorsten,spost1,1,1,1,1,1,0
+Dorsten,spost1,1,1,1,1,1,1
 Dorsten,spost2,0,0,0,0,0,0
 Dorsten,spost3,0,0,0,0,0,0
 Dorsten,spost4,0,0,0,0,0,0
@@ -16774,7 +16774,7 @@ Dorsten,spost52,0,0,0,0,0,0
 Dorsten,spost53,0,0,0,0,0,0
 Dorsten,spost54,0,0,0,0,0,0
 Dorsten,spost55,0,0,0,0,0,0
-Oerlinghausen,spost1,1,1,1,1,1,0
+Oerlinghausen,spost1,1,1,1,1,1,1
 Oerlinghausen,spost2,0,0,0,0,0,0
 Oerlinghausen,spost3,0,0,0,0,0,0
 Oerlinghausen,spost4,0,0,0,0,0,0
@@ -16829,7 +16829,7 @@ Oerlinghausen,spost52,0,0,0,0,0,0
 Oerlinghausen,spost53,0,0,0,0,0,0
 Oerlinghausen,spost54,0,0,0,0,0,0
 Oerlinghausen,spost55,0,0,0,0,0,0
-Grefrath,spost1,1,1,1,1,1,0
+Grefrath,spost1,1,1,1,1,1,1
 Grefrath,spost2,0,0,0,0,0,0
 Grefrath,spost3,0,0,1,0,0,0
 Grefrath,spost4,0,0,0,0,0,0
@@ -16884,7 +16884,7 @@ Grefrath,spost52,0,0,0,0,0,0
 Grefrath,spost53,0,0,0,0,0,0
 Grefrath,spost54,0,0,0,0,0,0
 Grefrath,spost55,0,0,0,0,0,0
-Nettersheim,spost1,1,1,1,1,1,0
+Nettersheim,spost1,1,1,1,1,1,1
 Nettersheim,spost2,0,0,0,0,0,0
 Nettersheim,spost3,0,0,0,0,0,0
 Nettersheim,spost4,0,0,0,0,0,0
@@ -16939,7 +16939,7 @@ Nettersheim,spost52,0,0,0,0,0,0
 Nettersheim,spost53,0,0,0,0,0,0
 Nettersheim,spost54,0,0,0,0,0,0
 Nettersheim,spost55,0,0,0,0,0,0
-Rhede,spost1,1,1,1,1,1,0
+Rhede,spost1,1,1,1,1,1,1
 Rhede,spost2,0,0,0,0,0,0
 Rhede,spost3,0,0,0,0,0,0
 Rhede,spost4,0,0,0,0,0,0
@@ -16994,7 +16994,7 @@ Rhede,spost52,0,0,0,0,0,0
 Rhede,spost53,0,0,0,0,0,0
 Rhede,spost54,0,0,0,0,0,0
 Rhede,spost55,0,0,0,0,0,0
-Altena,spost1,1,1,1,1,1,0
+Altena,spost1,1,1,1,1,1,1
 Altena,spost2,0,0,0,0,0,0
 Altena,spost3,0,0,0,0,0,0
 Altena,spost4,0,0,0,0,0,0
@@ -17049,7 +17049,7 @@ Altena,spost52,0,0,0,0,0,0
 Altena,spost53,0,0,0,0,0,0
 Altena,spost54,0,0,0,0,0,0
 Altena,spost55,0,0,0,0,0,0
-WetterRuhr,spost1,1,1,1,1,1,0
+WetterRuhr,spost1,1,1,1,1,1,1
 WetterRuhr,spost2,0,0,0,0,0,0
 WetterRuhr,spost3,0,0,0,0,0,0
 WetterRuhr,spost4,0,0,0,0,0,0
@@ -17104,7 +17104,7 @@ WetterRuhr,spost52,0,0,0,0,0,0
 WetterRuhr,spost53,0,0,0,0,0,0
 WetterRuhr,spost54,0,0,0,0,0,0
 WetterRuhr,spost55,0,0,0,0,0,0
-BadDriburg,spost1,1,1,1,1,1,0
+BadDriburg,spost1,1,1,1,1,1,1
 BadDriburg,spost2,0,0,0,0,0,0
 BadDriburg,spost3,0,0,0,0,0,0
 BadDriburg,spost4,0,0,0,0,0,0
@@ -17159,7 +17159,7 @@ BadDriburg,spost52,0,0,0,0,0,0
 BadDriburg,spost53,0,0,0,0,0,0
 BadDriburg,spost54,0,0,0,0,0,0
 BadDriburg,spost55,0,0,0,0,0,0
-Ruppichteroth,spost1,1,1,1,1,1,0
+Ruppichteroth,spost1,1,1,1,1,1,1
 Ruppichteroth,spost2,0,0,0,0,0,0
 Ruppichteroth,spost3,0,0,0,0,0,0
 Ruppichteroth,spost4,0,0,0,0,0,0
@@ -17214,7 +17214,7 @@ Ruppichteroth,spost52,0,0,0,0,0,0
 Ruppichteroth,spost53,0,0,0,0,0,0
 Ruppichteroth,spost54,0,0,0,0,0,0
 Ruppichteroth,spost55,0,0,0,0,0,0
-Siegburg,spost1,1,1,1,1,1,0
+Siegburg,spost1,1,1,1,1,1,1
 Siegburg,spost2,0,0,0,0,0,0
 Siegburg,spost3,0,0,0,0,0,0
 Siegburg,spost4,0,0,0,0,0,0
@@ -17269,7 +17269,7 @@ Siegburg,spost52,0,0,0,0,0,0
 Siegburg,spost53,0,0,0,0,0,0
 Siegburg,spost54,0,0,0,0,0,0
 Siegburg,spost55,0,0,0,0,0,0
-Hagen,spost1,1,1,1,1,1,0
+Hagen,spost1,1,1,1,1,1,1
 Hagen,spost2,0,0,0,0,0,0
 Hagen,spost3,0,0,0,0,0,0
 Hagen,spost4,0,0,0,0,0,0
@@ -17324,7 +17324,7 @@ Hagen,spost52,0,0,0,0,0,0
 Hagen,spost53,0,0,0,0,0,0
 Hagen,spost54,0,0,0,0,0,0
 Hagen,spost55,0,0,0,0,0,0
-Herscheid,spost1,1,1,1,1,1,0
+Herscheid,spost1,1,1,1,1,1,1
 Herscheid,spost2,0,0,0,0,0,0
 Herscheid,spost3,0,0,0,0,0,0
 Herscheid,spost4,0,0,0,0,0,0
@@ -17379,7 +17379,7 @@ Herscheid,spost52,0,0,0,0,0,0
 Herscheid,spost53,0,0,0,0,0,0
 Herscheid,spost54,0,0,0,0,0,0
 Herscheid,spost55,0,0,0,0,0,0
-Altenbeken,spost1,1,1,1,1,1,0
+Altenbeken,spost1,1,1,1,1,1,1
 Altenbeken,spost2,0,0,0,0,0,0
 Altenbeken,spost3,0,0,0,0,0,0
 Altenbeken,spost4,0,0,0,0,0,0
@@ -17434,7 +17434,7 @@ Altenbeken,spost52,0,0,0,0,0,0
 Altenbeken,spost53,0,0,0,0,0,0
 Altenbeken,spost54,0,0,0,0,0,0
 Altenbeken,spost55,0,0,0,0,0,0
-Meckenheim,spost1,1,1,1,1,1,0
+Meckenheim,spost1,1,1,1,1,1,1
 Meckenheim,spost2,0,0,0,0,0,0
 Meckenheim,spost3,0,0,0,0,0,0
 Meckenheim,spost4,0,0,0,0,0,0
@@ -17489,7 +17489,7 @@ Meckenheim,spost52,0,0,0,0,0,0
 Meckenheim,spost53,0,0,0,0,0,0
 Meckenheim,spost54,0,0,0,0,0,0
 Meckenheim,spost55,0,0,0,0,0,0
-Reken,spost1,1,1,1,1,1,0
+Reken,spost1,1,1,1,1,1,1
 Reken,spost2,0,0,0,0,0,0
 Reken,spost3,0,0,0,0,0,0
 Reken,spost4,0,0,0,0,0,0
@@ -17544,7 +17544,7 @@ Reken,spost52,0,0,0,0,0,0
 Reken,spost53,0,0,0,0,0,0
 Reken,spost54,0,0,0,0,0,0
 Reken,spost55,0,0,0,0,0,0
-Leopoldshoehe,spost1,1,1,1,1,1,0
+Leopoldshoehe,spost1,1,1,1,1,1,1
 Leopoldshoehe,spost2,0,0,0,0,0,0
 Leopoldshoehe,spost3,0,0,0,0,0,0
 Leopoldshoehe,spost4,0,0,0,0,0,0
@@ -17599,7 +17599,7 @@ Leopoldshoehe,spost52,0,0,0,0,0,0
 Leopoldshoehe,spost53,0,0,0,0,0,0
 Leopoldshoehe,spost54,0,0,0,0,0,0
 Leopoldshoehe,spost55,0,0,0,0,0,0
-Wegberg,spost1,1,1,1,1,1,0
+Wegberg,spost1,1,1,1,1,1,1
 Wegberg,spost2,0,0,0,0,0,0
 Wegberg,spost3,0,0,0,0,0,0
 Wegberg,spost4,0,0,0,0,0,0
@@ -17654,7 +17654,7 @@ Wegberg,spost52,0,0,0,0,0,0
 Wegberg,spost53,0,0,0,0,0,0
 Wegberg,spost54,0,0,0,0,0,0
 Wegberg,spost55,0,0,0,0,0,0
-Dueren,spost1,1,1,1,1,1,0
+Dueren,spost1,1,1,1,1,1,1
 Dueren,spost2,0,0,0,0,0,0
 Dueren,spost3,0,0,0,0,0,0
 Dueren,spost4,0,0,0,0,0,0
@@ -17709,7 +17709,7 @@ Dueren,spost52,0,0,0,0,0,0
 Dueren,spost53,0,0,0,0,0,0
 Dueren,spost54,0,0,0,0,0,0
 Dueren,spost55,0,0,0,0,0,0
-Ladbergen,spost1,1,1,1,1,1,0
+Ladbergen,spost1,1,1,1,1,1,1
 Ladbergen,spost2,0,0,0,0,0,0
 Ladbergen,spost3,0,0,0,0,0,0
 Ladbergen,spost4,0,0,0,0,0,0
@@ -17764,7 +17764,7 @@ Ladbergen,spost52,0,0,0,0,0,0
 Ladbergen,spost53,0,0,0,0,0,0
 Ladbergen,spost54,0,0,0,0,0,0
 Ladbergen,spost55,0,0,0,0,0,0
-Neuenkirchen,spost1,1,1,1,1,1,0
+Neuenkirchen,spost1,1,1,1,1,1,1
 Neuenkirchen,spost2,0,0,0,0,0,0
 Neuenkirchen,spost3,0,0,0,0,0,0
 Neuenkirchen,spost4,0,0,0,0,0,0
@@ -17819,7 +17819,7 @@ Neuenkirchen,spost52,0,0,0,0,0,0
 Neuenkirchen,spost53,0,0,0,0,0,0
 Neuenkirchen,spost54,0,0,0,0,0,0
 Neuenkirchen,spost55,0,0,0,0,0,0
-Lindlar,spost1,1,1,1,1,1,0
+Lindlar,spost1,1,1,1,1,1,1
 Lindlar,spost2,0,0,0,0,0,0
 Lindlar,spost3,0,0,0,0,0,0
 Lindlar,spost4,0,0,0,0,0,0
@@ -17874,7 +17874,7 @@ Lindlar,spost52,0,0,0,0,0,0
 Lindlar,spost53,0,0,0,0,0,0
 Lindlar,spost54,0,0,0,0,0,0
 Lindlar,spost55,0,0,0,0,0,0
-Kempen,spost1,1,1,1,1,1,0
+Kempen,spost1,1,1,1,1,1,1
 Kempen,spost2,0,0,0,0,0,0
 Kempen,spost3,0,0,0,0,0,0
 Kempen,spost4,0,0,0,0,0,0
@@ -17929,7 +17929,7 @@ Kempen,spost52,0,0,0,0,0,0
 Kempen,spost53,0,0,0,0,0,0
 Kempen,spost54,0,0,1,0,0,0
 Kempen,spost55,0,0,0,0,0,0
-Legden,spost1,1,1,1,1,1,0
+Legden,spost1,1,1,1,1,1,1
 Legden,spost2,0,0,0,0,0,0
 Legden,spost3,0,0,0,0,0,0
 Legden,spost4,0,0,0,0,0,0
@@ -17984,7 +17984,7 @@ Legden,spost52,0,0,0,0,0,0
 Legden,spost53,0,0,0,0,0,0
 Legden,spost54,0,0,0,0,0,0
 Legden,spost55,0,0,0,0,0,0
-Rommerskirchen,spost1,1,1,1,1,1,0
+Rommerskirchen,spost1,1,1,1,1,1,1
 Rommerskirchen,spost2,0,0,0,0,0,0
 Rommerskirchen,spost3,0,0,0,0,0,0
 Rommerskirchen,spost4,0,0,0,0,0,0
@@ -18039,7 +18039,7 @@ Rommerskirchen,spost52,0,0,0,0,0,0
 Rommerskirchen,spost53,0,0,0,0,0,0
 Rommerskirchen,spost54,0,0,0,0,0,0
 Rommerskirchen,spost55,0,0,0,0,0,0
-Hueckeswagen,spost1,1,1,1,1,1,0
+Hueckeswagen,spost1,1,1,1,1,1,1
 Hueckeswagen,spost2,0,0,0,0,0,0
 Hueckeswagen,spost3,0,0,0,0,0,0
 Hueckeswagen,spost4,0,0,0,0,0,0
@@ -18094,7 +18094,7 @@ Hueckeswagen,spost52,0,0,0,0,0,0
 Hueckeswagen,spost53,0,0,0,0,0,0
 Hueckeswagen,spost54,0,0,0,0,0,0
 Hueckeswagen,spost55,0,0,0,0,0,0
-Wadersloh,spost1,1,1,1,1,1,0
+Wadersloh,spost1,1,1,1,1,1,1
 Wadersloh,spost2,0,0,0,0,0,0
 Wadersloh,spost3,0,0,0,0,0,0
 Wadersloh,spost4,0,0,0,0,0,0
@@ -18149,7 +18149,7 @@ Wadersloh,spost52,0,0,0,0,0,0
 Wadersloh,spost53,0,0,0,0,0,0
 Wadersloh,spost54,0,0,0,0,0,0
 Wadersloh,spost55,0,0,0,0,0,0
-Bornheim,spost1,1,1,1,1,1,0
+Bornheim,spost1,1,1,1,1,1,1
 Bornheim,spost2,0,0,0,0,0,0
 Bornheim,spost3,0,0,0,0,0,0
 Bornheim,spost4,0,0,0,0,0,0
@@ -18204,7 +18204,7 @@ Bornheim,spost52,0,0,0,0,0,0
 Bornheim,spost53,0,0,0,0,0,0
 Bornheim,spost54,0,0,0,0,0,0
 Bornheim,spost55,0,0,0,0,0,0
-Waldbroel,spost1,1,1,1,1,1,0
+Waldbroel,spost1,1,1,1,1,1,1
 Waldbroel,spost2,0,0,0,0,0,0
 Waldbroel,spost3,0,0,0,0,0,0
 Waldbroel,spost4,0,0,0,0,0,0
@@ -18259,7 +18259,7 @@ Waldbroel,spost52,0,0,0,0,0,0
 Waldbroel,spost53,0,0,0,0,0,0
 Waldbroel,spost54,0,0,0,0,0,0
 Waldbroel,spost55,0,0,0,0,0,0
-Telgte,spost1,1,1,1,1,1,0
+Telgte,spost1,1,1,1,1,1,1
 Telgte,spost2,0,0,0,0,0,0
 Telgte,spost3,0,0,0,0,0,0
 Telgte,spost4,0,0,0,0,0,0
@@ -18314,7 +18314,7 @@ Telgte,spost52,0,0,0,0,0,0
 Telgte,spost53,0,0,0,0,0,0
 Telgte,spost54,0,0,0,0,0,0
 Telgte,spost55,0,0,0,0,0,0
-Dormagen,spost1,1,1,1,1,1,0
+Dormagen,spost1,1,1,1,1,1,1
 Dormagen,spost2,0,0,0,0,0,0
 Dormagen,spost3,0,0,0,0,0,0
 Dormagen,spost4,0,0,0,0,0,0
@@ -18369,7 +18369,7 @@ Dormagen,spost52,0,0,0,0,0,0
 Dormagen,spost53,0,0,0,0,0,0
 Dormagen,spost54,0,0,0,0,0,0
 Dormagen,spost55,0,0,0,0,0,0
-Nordkirchen,spost1,1,1,1,1,1,0
+Nordkirchen,spost1,1,1,1,1,1,1
 Nordkirchen,spost2,0,0,0,0,0,0
 Nordkirchen,spost3,0,0,0,0,0,0
 Nordkirchen,spost4,0,0,0,0,0,0
@@ -18424,7 +18424,7 @@ Nordkirchen,spost52,0,0,0,0,0,0
 Nordkirchen,spost53,0,0,0,0,0,0
 Nordkirchen,spost54,0,0,0,0,0,0
 Nordkirchen,spost55,0,0,0,0,0,0
-Niederkassel,spost1,1,1,1,1,1,0
+Niederkassel,spost1,1,1,1,1,1,1
 Niederkassel,spost2,0,0,0,0,0,0
 Niederkassel,spost3,0,0,0,0,0,0
 Niederkassel,spost4,0,0,0,0,0,0
@@ -18479,7 +18479,7 @@ Niederkassel,spost52,0,0,0,0,0,0
 Niederkassel,spost53,0,0,0,0,0,0
 Niederkassel,spost54,0,0,0,0,0,0
 Niederkassel,spost55,0,0,0,0,0,0
-Balve,spost1,1,1,1,1,1,0
+Balve,spost1,1,1,1,1,1,1
 Balve,spost2,0,0,0,0,0,0
 Balve,spost3,0,0,0,0,0,0
 Balve,spost4,0,0,0,0,0,0
@@ -18534,7 +18534,7 @@ Balve,spost52,0,0,0,0,0,0
 Balve,spost53,0,0,0,0,0,0
 Balve,spost54,0,0,0,0,0,0
 Balve,spost55,0,0,0,0,0,0
-Billerbeck,spost1,1,1,1,1,1,0
+Billerbeck,spost1,1,1,1,1,1,1
 Billerbeck,spost2,0,0,0,0,0,0
 Billerbeck,spost3,0,0,0,0,0,0
 Billerbeck,spost4,0,0,0,0,0,0
@@ -18589,7 +18589,7 @@ Billerbeck,spost52,0,0,0,0,0,0
 Billerbeck,spost53,0,0,0,0,0,0
 Billerbeck,spost54,0,0,0,0,0,0
 Billerbeck,spost55,0,0,0,0,0,0
-Altenberge,spost1,1,1,1,1,1,0
+Altenberge,spost1,1,1,1,1,1,1
 Altenberge,spost2,0,0,0,0,0,0
 Altenberge,spost3,0,0,0,0,0,0
 Altenberge,spost4,0,0,0,0,0,0
@@ -18644,7 +18644,7 @@ Altenberge,spost52,0,0,0,0,0,0
 Altenberge,spost53,0,0,0,0,0,0
 Altenberge,spost54,0,0,0,0,0,0
 Altenberge,spost55,0,0,0,0,0,0
-Heiligenhaus,spost1,1,1,1,1,1,0
+Heiligenhaus,spost1,1,1,1,1,1,1
 Heiligenhaus,spost2,0,0,0,0,0,0
 Heiligenhaus,spost3,0,0,0,0,0,0
 Heiligenhaus,spost4,0,0,0,0,0,0
@@ -18699,7 +18699,7 @@ Heiligenhaus,spost52,0,0,0,0,0,0
 Heiligenhaus,spost53,0,0,0,0,0,0
 Heiligenhaus,spost54,0,0,0,0,0,0
 Heiligenhaus,spost55,0,0,0,0,0,0
-Ochtrup,spost1,1,1,1,1,1,0
+Ochtrup,spost1,1,1,1,1,1,1
 Ochtrup,spost2,0,0,0,0,0,0
 Ochtrup,spost3,0,0,0,0,0,0
 Ochtrup,spost4,0,0,0,0,0,0
@@ -18754,7 +18754,7 @@ Ochtrup,spost52,0,0,0,0,0,0
 Ochtrup,spost53,0,0,0,0,0,0
 Ochtrup,spost54,0,0,0,0,0,0
 Ochtrup,spost55,0,0,0,0,0,0
-Velen,spost1,1,1,1,1,1,0
+Velen,spost1,1,1,1,1,1,1
 Velen,spost2,0,0,0,0,0,0
 Velen,spost3,0,0,0,0,0,0
 Velen,spost4,0,0,0,0,0,0
@@ -18809,7 +18809,7 @@ Velen,spost52,0,0,0,0,0,0
 Velen,spost53,0,0,0,0,0,0
 Velen,spost54,0,0,0,0,0,0
 Velen,spost55,0,0,0,0,0,0
-Wassenberg,spost1,1,1,1,1,1,0
+Wassenberg,spost1,1,1,1,1,1,1
 Wassenberg,spost2,0,0,0,0,0,0
 Wassenberg,spost3,0,0,0,0,0,0
 Wassenberg,spost4,0,0,0,0,0,0
@@ -18864,7 +18864,7 @@ Wassenberg,spost52,0,0,0,0,0,0
 Wassenberg,spost53,0,0,0,0,0,0
 Wassenberg,spost54,0,0,0,0,0,0
 Wassenberg,spost55,0,0,0,0,0,0
-Harsewinkel,spost1,1,1,1,1,1,0
+Harsewinkel,spost1,1,1,1,1,1,1
 Harsewinkel,spost2,0,0,0,0,0,0
 Harsewinkel,spost3,0,0,0,0,0,0
 Harsewinkel,spost4,0,0,0,0,0,0
@@ -18919,7 +18919,7 @@ Harsewinkel,spost52,0,0,0,0,0,0
 Harsewinkel,spost53,0,0,0,0,0,0
 Harsewinkel,spost54,0,0,0,0,0,0
 Harsewinkel,spost55,0,0,0,0,0,0
-Erftstadt,spost1,1,1,1,1,1,0
+Erftstadt,spost1,1,1,1,1,1,1
 Erftstadt,spost2,0,0,0,0,0,0
 Erftstadt,spost3,0,0,0,0,0,0
 Erftstadt,spost4,0,0,0,0,0,0
@@ -18974,7 +18974,7 @@ Erftstadt,spost52,0,0,0,0,0,0
 Erftstadt,spost53,0,0,0,0,0,0
 Erftstadt,spost54,0,0,0,0,0,0
 Erftstadt,spost55,0,0,0,0,0,0
-Rees,spost1,1,1,1,1,1,0
+Rees,spost1,1,1,1,1,1,1
 Rees,spost2,0,0,0,0,0,0
 Rees,spost3,0,0,0,0,0,0
 Rees,spost4,0,0,0,0,0,0
@@ -19029,7 +19029,7 @@ Rees,spost52,0,0,0,0,0,0
 Rees,spost53,0,0,0,0,0,0
 Rees,spost54,0,0,0,0,0,0
 Rees,spost55,0,0,0,0,0,0
-Heek,spost1,1,1,1,1,1,0
+Heek,spost1,1,1,1,1,1,1
 Heek,spost2,0,0,0,0,0,0
 Heek,spost3,0,0,0,0,0,0
 Heek,spost4,0,0,0,0,0,0
@@ -19084,7 +19084,7 @@ Heek,spost52,0,0,0,0,0,0
 Heek,spost53,0,0,0,0,0,0
 Heek,spost54,0,0,0,0,0,0
 Heek,spost55,0,0,0,0,0,0
-Hoexter,spost1,1,1,1,1,1,0
+Hoexter,spost1,1,1,1,1,1,1
 Hoexter,spost2,0,0,0,0,0,0
 Hoexter,spost3,0,0,0,0,0,0
 Hoexter,spost4,0,0,0,0,0,0
@@ -19139,7 +19139,7 @@ Hoexter,spost52,0,0,0,0,0,0
 Hoexter,spost53,0,0,0,0,0,0
 Hoexter,spost54,0,0,0,0,0,0
 Hoexter,spost55,0,0,0,0,0,0
-Vlotho,spost1,1,1,1,1,1,0
+Vlotho,spost1,1,1,1,1,1,1
 Vlotho,spost2,0,0,0,0,0,0
 Vlotho,spost3,0,0,0,0,0,0
 Vlotho,spost4,0,0,0,0,0,0
@@ -19194,7 +19194,7 @@ Vlotho,spost52,0,0,0,0,0,0
 Vlotho,spost53,0,0,0,0,0,0
 Vlotho,spost54,0,0,0,0,0,0
 Vlotho,spost55,0,0,0,0,0,0
-Aldenhoven,spost1,1,1,1,1,1,0
+Aldenhoven,spost1,1,1,1,1,1,1
 Aldenhoven,spost2,0,0,0,0,0,0
 Aldenhoven,spost3,0,0,0,0,0,0
 Aldenhoven,spost4,0,0,0,0,0,0
@@ -19249,7 +19249,7 @@ Aldenhoven,spost52,0,0,0,0,0,0
 Aldenhoven,spost53,0,0,0,0,0,0
 Aldenhoven,spost54,0,0,0,0,0,0
 Aldenhoven,spost55,0,0,0,0,0,0
-EsloheSauerland,spost1,1,1,1,1,1,0
+EsloheSauerland,spost1,1,1,1,1,1,1
 EsloheSauerland,spost2,0,0,0,0,0,0
 EsloheSauerland,spost3,0,0,0,0,0,0
 EsloheSauerland,spost4,0,0,0,0,0,0
@@ -19304,7 +19304,7 @@ EsloheSauerland,spost52,0,0,0,0,0,0
 EsloheSauerland,spost53,0,0,0,0,0,0
 EsloheSauerland,spost54,0,0,0,0,0,0
 EsloheSauerland,spost55,0,0,0,0,0,0
-Dahlem,spost1,1,1,1,1,1,0
+Dahlem,spost1,1,1,1,1,1,1
 Dahlem,spost2,0,0,0,0,0,0
 Dahlem,spost3,0,0,0,0,0,0
 Dahlem,spost4,0,0,0,0,0,0
@@ -19359,7 +19359,7 @@ Dahlem,spost52,0,0,0,0,0,0
 Dahlem,spost53,0,0,0,0,0,0
 Dahlem,spost54,0,0,0,0,0,0
 Dahlem,spost55,0,0,0,0,0,0
-Gescher,spost1,1,1,1,1,1,0
+Gescher,spost1,1,1,1,1,1,1
 Gescher,spost2,0,0,0,0,0,0
 Gescher,spost3,0,0,0,0,0,0
 Gescher,spost4,0,0,0,0,0,0
@@ -19414,7 +19414,7 @@ Gescher,spost52,0,0,0,0,0,0
 Gescher,spost53,0,0,0,0,0,0
 Gescher,spost54,0,0,0,0,0,0
 Gescher,spost55,0,0,0,0,0,0
-Wachtendonk,spost1,1,1,1,1,1,0
+Wachtendonk,spost1,1,1,1,1,1,1
 Wachtendonk,spost2,0,0,0,0,0,0
 Wachtendonk,spost3,0,0,0,0,0,0
 Wachtendonk,spost4,0,0,0,0,0,0
@@ -19469,7 +19469,7 @@ Wachtendonk,spost52,0,0,0,0,0,0
 Wachtendonk,spost53,0,0,0,0,0,0
 Wachtendonk,spost54,0,0,0,0,0,0
 Wachtendonk,spost55,0,0,0,0,0,0
-Herne,spost1,1,1,1,1,1,0
+Herne,spost1,1,1,1,1,1,1
 Herne,spost2,0,0,0,0,0,0
 Herne,spost3,0,0,0,0,0,0
 Herne,spost4,0,0,0,0,0,0
@@ -19524,7 +19524,7 @@ Herne,spost52,0,0,0,0,0,0
 Herne,spost53,0,0,0,0,0,0
 Herne,spost54,0,0,0,0,0,0
 Herne,spost55,0,0,0,0,0,0
-HalternamSee,spost1,1,1,1,1,1,0
+HalternamSee,spost1,1,1,1,1,1,1
 HalternamSee,spost2,0,0,0,0,0,0
 HalternamSee,spost3,0,0,0,0,0,0
 HalternamSee,spost4,0,0,0,0,0,0
@@ -19579,7 +19579,7 @@ HalternamSee,spost52,0,0,0,0,0,0
 HalternamSee,spost53,0,0,0,0,0,0
 HalternamSee,spost54,0,0,0,0,0,0
 HalternamSee,spost55,0,0,0,0,0,0
-Toenisvorst,spost1,1,1,1,1,1,0
+Toenisvorst,spost1,1,1,1,1,1,1
 Toenisvorst,spost2,0,0,0,0,0,0
 Toenisvorst,spost3,0,0,0,0,0,0
 Toenisvorst,spost4,0,0,0,0,0,0
@@ -19634,7 +19634,7 @@ Toenisvorst,spost52,0,0,0,0,0,0
 Toenisvorst,spost53,0,0,0,0,0,0
 Toenisvorst,spost54,0,0,0,0,0,0
 Toenisvorst,spost55,0,0,0,0,0,0
-Moers,spost1,1,1,1,1,1,0
+Moers,spost1,1,1,1,1,1,1
 Moers,spost2,0,0,0,0,0,0
 Moers,spost3,0,0,0,0,0,0
 Moers,spost4,0,0,0,0,0,0
@@ -19689,7 +19689,7 @@ Moers,spost52,0,0,0,0,0,0
 Moers,spost53,0,0,0,0,0,0
 Moers,spost54,0,0,0,0,0,0
 Moers,spost55,0,0,0,0,0,0
-Schlangen,spost1,1,1,1,1,1,0
+Schlangen,spost1,1,1,1,1,1,1
 Schlangen,spost2,0,0,0,0,0,0
 Schlangen,spost3,0,0,0,0,0,0
 Schlangen,spost4,0,0,0,0,0,0
@@ -19744,7 +19744,7 @@ Schlangen,spost52,0,0,0,0,0,0
 Schlangen,spost53,0,0,0,0,0,0
 Schlangen,spost54,0,0,0,0,0,0
 Schlangen,spost55,0,0,0,0,0,0
-Meschede,spost1,1,1,1,1,1,0
+Meschede,spost1,1,1,1,1,1,1
 Meschede,spost2,0,0,0,0,0,0
 Meschede,spost3,0,0,0,0,0,0
 Meschede,spost4,0,0,0,0,0,0
@@ -19799,7 +19799,7 @@ Meschede,spost52,0,0,0,0,0,0
 Meschede,spost53,0,0,0,0,0,0
 Meschede,spost54,0,0,0,0,0,0
 Meschede,spost55,0,0,0,0,0,0
-Dinslaken,spost1,1,1,1,1,1,0
+Dinslaken,spost1,1,1,1,1,1,1
 Dinslaken,spost2,0,0,0,0,0,0
 Dinslaken,spost3,0,0,0,0,0,0
 Dinslaken,spost4,0,0,0,0,0,0
@@ -19854,7 +19854,7 @@ Dinslaken,spost52,0,0,0,0,0,0
 Dinslaken,spost53,0,0,0,0,0,0
 Dinslaken,spost54,0,0,0,0,0,0
 Dinslaken,spost55,0,0,0,0,0,0
-Kerpen,spost1,1,1,1,1,1,0
+Kerpen,spost1,1,1,1,1,1,1
 Kerpen,spost2,0,0,0,0,0,0
 Kerpen,spost3,0,0,0,0,0,0
 Kerpen,spost4,0,0,0,0,0,0
@@ -19909,7 +19909,7 @@ Kerpen,spost52,0,0,0,0,0,0
 Kerpen,spost53,0,0,0,0,0,0
 Kerpen,spost54,0,0,0,0,0,0
 Kerpen,spost55,0,0,0,0,0,0
-Koenigswinter,spost1,1,1,1,1,1,0
+Koenigswinter,spost1,1,1,1,1,1,1
 Koenigswinter,spost2,0,0,0,0,0,0
 Koenigswinter,spost3,0,0,0,0,0,0
 Koenigswinter,spost4,0,0,0,0,0,0
@@ -19964,7 +19964,7 @@ Koenigswinter,spost52,0,0,0,0,0,0
 Koenigswinter,spost53,0,0,0,0,0,0
 Koenigswinter,spost54,0,0,0,0,0,0
 Koenigswinter,spost55,0,0,0,0,0,0
-Kierspe,spost1,1,1,1,1,1,0
+Kierspe,spost1,1,1,1,1,1,1
 Kierspe,spost2,0,0,0,0,0,0
 Kierspe,spost3,0,0,0,0,0,0
 Kierspe,spost4,0,0,0,0,0,0
@@ -20019,7 +20019,7 @@ Kierspe,spost52,0,0,0,0,0,0
 Kierspe,spost53,0,0,0,0,0,0
 Kierspe,spost54,0,0,0,0,0,0
 Kierspe,spost55,0,0,0,0,0,0
-Marienheide,spost1,1,1,1,1,1,0
+Marienheide,spost1,1,1,1,1,1,1
 Marienheide,spost2,0,0,0,0,0,0
 Marienheide,spost3,0,0,0,0,0,0
 Marienheide,spost4,0,0,0,0,0,0
@@ -20074,7 +20074,7 @@ Marienheide,spost52,0,0,0,0,0,0
 Marienheide,spost53,0,0,0,0,0,0
 Marienheide,spost54,0,0,0,0,0,0
 Marienheide,spost55,0,0,0,0,0,0
-Winterberg,spost1,1,1,1,1,1,0
+Winterberg,spost1,1,1,1,1,1,1
 Winterberg,spost2,0,0,0,0,0,0
 Winterberg,spost3,0,0,0,0,0,0
 Winterberg,spost4,0,0,0,0,0,0
@@ -20129,7 +20129,7 @@ Winterberg,spost52,0,0,0,0,0,0
 Winterberg,spost53,0,0,0,0,0,0
 Winterberg,spost54,0,0,0,0,0,0
 Winterberg,spost55,0,0,0,0,0,0
-Aachen,spost1,1,1,1,1,1,0
+Aachen,spost1,1,1,1,1,1,1
 Aachen,spost2,0,0,0,0,0,0
 Aachen,spost3,0,0,0,0,0,0
 Aachen,spost4,0,0,0,0,0,0
@@ -20184,7 +20184,7 @@ Aachen,spost52,0,0,0,0,0,0
 Aachen,spost53,0,0,0,0,0,0
 Aachen,spost54,0,0,0,0,0,0
 Aachen,spost55,0,0,0,0,0,0
-Alsdorf,spost1,1,1,1,1,1,0
+Alsdorf,spost1,1,1,1,1,1,1
 Alsdorf,spost2,0,0,0,0,0,0
 Alsdorf,spost3,0,0,0,0,0,0
 Alsdorf,spost4,0,0,0,0,0,0
@@ -20239,7 +20239,7 @@ Alsdorf,spost52,0,0,0,0,0,0
 Alsdorf,spost53,0,0,0,0,0,0
 Alsdorf,spost54,0,0,0,0,0,0
 Alsdorf,spost55,0,0,0,0,0,0
-Baesweiler,spost1,1,1,1,1,1,0
+Baesweiler,spost1,1,1,1,1,1,1
 Baesweiler,spost2,0,0,0,0,0,0
 Baesweiler,spost3,0,0,0,0,0,0
 Baesweiler,spost4,0,0,0,0,0,0
@@ -20294,7 +20294,7 @@ Baesweiler,spost52,0,0,0,0,0,0
 Baesweiler,spost53,0,0,0,0,0,0
 Baesweiler,spost54,0,0,0,0,0,0
 Baesweiler,spost55,0,0,0,0,0,0
-Eschweiler,spost1,1,1,1,1,1,0
+Eschweiler,spost1,1,1,1,1,1,1
 Eschweiler,spost2,0,0,0,0,0,0
 Eschweiler,spost3,0,0,0,0,0,0
 Eschweiler,spost4,0,0,0,0,0,0
@@ -20349,7 +20349,7 @@ Eschweiler,spost52,0,0,0,0,0,0
 Eschweiler,spost53,0,0,0,0,0,0
 Eschweiler,spost54,0,0,0,0,0,0
 Eschweiler,spost55,0,0,0,0,0,0
-Herzogenrath,spost1,1,1,1,1,1,0
+Herzogenrath,spost1,1,1,1,1,1,1
 Herzogenrath,spost2,0,0,0,0,0,0
 Herzogenrath,spost3,0,0,0,0,0,0
 Herzogenrath,spost4,0,0,0,0,0,0
@@ -20404,7 +20404,7 @@ Herzogenrath,spost52,0,0,0,0,0,0
 Herzogenrath,spost53,0,0,0,0,0,0
 Herzogenrath,spost54,0,0,0,0,0,0
 Herzogenrath,spost55,0,0,0,0,0,0
-Monschau,spost1,1,1,1,1,1,0
+Monschau,spost1,1,1,1,1,1,1
 Monschau,spost2,0,0,0,0,0,0
 Monschau,spost3,0,0,0,0,0,0
 Monschau,spost4,0,0,0,0,0,0
@@ -20459,7 +20459,7 @@ Monschau,spost52,0,0,0,0,0,0
 Monschau,spost53,0,0,0,0,0,0
 Monschau,spost54,0,0,0,0,0,0
 Monschau,spost55,0,0,0,0,0,0
-Roetgen,spost1,1,1,1,1,1,0
+Roetgen,spost1,1,1,1,1,1,1
 Roetgen,spost2,0,0,0,0,0,0
 Roetgen,spost3,0,0,0,0,0,0
 Roetgen,spost4,0,0,0,0,0,0
@@ -20514,7 +20514,7 @@ Roetgen,spost52,0,0,0,0,0,0
 Roetgen,spost53,0,0,0,0,0,0
 Roetgen,spost54,0,0,0,0,0,0
 Roetgen,spost55,0,0,0,0,0,0
-Simmerath,spost1,1,1,1,1,1,0
+Simmerath,spost1,1,1,1,1,1,1
 Simmerath,spost2,0,0,0,0,0,0
 Simmerath,spost3,0,0,0,0,0,0
 Simmerath,spost4,0,0,0,0,0,0
@@ -20569,7 +20569,7 @@ Simmerath,spost52,0,0,0,0,0,0
 Simmerath,spost53,0,0,0,0,0,0
 Simmerath,spost54,0,0,0,0,0,0
 Simmerath,spost55,0,0,0,0,0,0
-StolbergRhld,spost1,1,1,1,1,1,0
+StolbergRhld,spost1,1,1,1,1,1,1
 StolbergRhld,spost2,0,0,0,0,0,0
 StolbergRhld,spost3,0,0,0,0,0,0
 StolbergRhld,spost4,0,0,0,0,0,0
@@ -20624,7 +20624,7 @@ StolbergRhld,spost52,0,0,0,0,0,0
 StolbergRhld,spost53,0,0,0,0,0,0
 StolbergRhld,spost54,0,0,0,0,0,0
 StolbergRhld,spost55,0,0,0,0,0,0
-Vreden,spost1,1,1,1,1,1,0
+Vreden,spost1,1,1,1,1,1,1
 Vreden,spost2,0,0,0,0,0,0
 Vreden,spost3,0,0,0,0,0,0
 Vreden,spost4,0,0,0,0,0,0
@@ -20679,7 +20679,7 @@ Vreden,spost52,0,0,0,0,0,0
 Vreden,spost53,0,0,0,0,0,0
 Vreden,spost54,0,0,0,0,0,0
 Vreden,spost55,0,0,0,0,0,0
-Wuerselen,spost1,1,1,1,1,1,0
+Wuerselen,spost1,1,1,1,1,1,1
 Wuerselen,spost2,0,0,0,0,0,0
 Wuerselen,spost3,0,0,0,0,0,0
 Wuerselen,spost4,0,0,0,0,0,0

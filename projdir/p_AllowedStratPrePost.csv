@@ -71,7 +71,7 @@ Beckum,spost14,0,0,0,0,0,0
 Beckum,spost15,0,0,0,0,0,0
 Beckum,spost16,0,0,0,0,0,0
 Beckum,spost17,0,0,0,0,0,0
-Beckum,spost18,0,0,1,0,0,0
+Beckum,spost18,0,0,0,0,0,0
 Beckum,spost19,0,0,0,0,0,0
 Beckum,spost20,0,0,0,0,0,0
 Beckum,spost21,0,0,0,0,0,0
@@ -92,7 +92,7 @@ Beckum,spost35,0,0,0,0,0,0
 Beckum,spost36,0,0,0,0,0,0
 Beckum,spost37,0,0,0,0,0,0
 Beckum,spost38,0,0,0,0,0,0
-Beckum,spost39,0,0,0,0,0,0
+Beckum,spost39,0,0,0,1,1,0
 Beckum,spost40,0,0,0,0,0,0
 Beckum,spost41,0,0,0,0,0,0
 Beckum,spost42,0,0,0,0,0,0
@@ -106,8 +106,8 @@ Beckum,spost49,0,0,0,0,0,0
 Beckum,spost50,0,0,0,0,0,0
 Beckum,spost51,0,0,0,0,0,0
 Beckum,spost52,0,0,0,0,0,0
-Beckum,spost53,0,0,0,0,0,0
-Beckum,spost54,0,0,0,0,0,0
+Beckum,spost53,0,0,0,1,0,0
+Beckum,spost54,0,1,1,1,0,0
 Beckum,spost55,0,0,0,0,0,0
 Bruehl,spost1,1,1,1,1,1,0
 Bruehl,spost2,0,0,0,0,0,0
@@ -161,8 +161,8 @@ Bruehl,spost49,0,0,0,0,0,0
 Bruehl,spost50,0,0,0,0,0,0
 Bruehl,spost51,0,0,0,0,0,0
 Bruehl,spost52,0,0,0,0,0,0
-Bruehl,spost53,0,1,1,1,0,0
-Bruehl,spost54,0,1,1,1,0,0
+Bruehl,spost53,0,0,0,0,0,0
+Bruehl,spost54,0,0,0,0,0,0
 Bruehl,spost55,0,0,0,0,0,0
 Hoevelhof,spost1,1,1,1,1,1,0
 Hoevelhof,spost2,0,0,0,0,0,0
@@ -6870,9 +6870,9 @@ Ahlen,spost48,0,0,0,0,0,0
 Ahlen,spost49,0,0,0,0,0,0
 Ahlen,spost50,0,0,0,0,0,0
 Ahlen,spost51,0,0,0,0,0,0
-Ahlen,spost52,0,0,0,0,0,0
-Ahlen,spost53,0,0,0,0,0,0
-Ahlen,spost54,0,0,0,0,0,0
+Ahlen,spost52,0,0,1,1,0,0
+Ahlen,spost53,0,1,0,0,0,0
+Ahlen,spost54,0,1,1,1,0,0
 Ahlen,spost55,0,0,0,0,0,0
 Senden,spost1,1,1,1,1,1,0
 Senden,spost2,0,0,0,0,0,0
@@ -8685,9 +8685,9 @@ Petershagen,spost48,0,0,0,0,0,0
 Petershagen,spost49,0,0,0,0,0,0
 Petershagen,spost50,0,0,0,0,0,0
 Petershagen,spost51,0,0,0,0,0,0
-Petershagen,spost52,0,0,0,0,0,0
-Petershagen,spost53,0,0,0,0,0,0
-Petershagen,spost54,0,0,0,0,0,0
+Petershagen,spost52,0,1,1,0,0,0
+Petershagen,spost53,0,0,0,1,0,0
+Petershagen,spost54,0,1,1,1,0,0
 Petershagen,spost55,0,0,0,0,0,0
 WertherWestf,spost1,1,1,1,1,1,0
 WertherWestf,spost2,0,0,0,0,0,0
@@ -10721,8 +10721,8 @@ Espelkamp,spost49,0,0,0,0,0,0
 Espelkamp,spost50,0,0,0,0,0,0
 Espelkamp,spost51,0,0,0,0,0,0
 Espelkamp,spost52,0,0,0,0,0,0
-Espelkamp,spost53,0,0,0,0,0,0
-Espelkamp,spost54,0,0,0,0,0,0
+Espelkamp,spost53,0,1,1,1,0,0
+Espelkamp,spost54,0,1,1,1,0,0
 Espelkamp,spost55,0,0,0,0,0,0
 BedburgHau,spost1,1,1,1,1,1,0
 BedburgHau,spost2,0,0,0,0,0,0
@@ -11860,7 +11860,7 @@ Ennigerloh,spost33,0,0,0,0,0,0
 Ennigerloh,spost34,0,0,0,0,0,0
 Ennigerloh,spost35,0,0,0,0,0,0
 Ennigerloh,spost36,0,0,0,0,0,0
-Ennigerloh,spost37,0,0,0,0,1,0
+Ennigerloh,spost37,0,0,0,0,0,0
 Ennigerloh,spost38,0,0,0,0,0,0
 Ennigerloh,spost39,0,0,0,0,0,0
 Ennigerloh,spost40,0,0,0,0,0,0
@@ -11876,8 +11876,8 @@ Ennigerloh,spost49,0,0,0,0,0,0
 Ennigerloh,spost50,0,0,0,0,0,0
 Ennigerloh,spost51,0,0,0,0,0,0
 Ennigerloh,spost52,0,0,0,0,0,0
-Ennigerloh,spost53,0,0,0,0,0,0
-Ennigerloh,spost54,0,0,0,0,0,0
+Ennigerloh,spost53,0,1,1,1,0,0
+Ennigerloh,spost54,0,1,1,1,0,0
 Ennigerloh,spost55,0,0,0,0,0,0
 Zuelpich,spost1,1,1,1,1,1,0
 Zuelpich,spost2,0,0,0,0,0,0

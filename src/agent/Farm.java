@@ -368,7 +368,7 @@ public class Farm {
 	 * @param probability: probability that the income occurs
 	 * @return satisfaction satisfaction derived from income
 	 */
-	private double calculateSatisfaction(double income, double probability) {
+	private double calculateSatisfaction(double income, double probability, double prob_delta_pos, double prob_delta_neg) {
 		double satisfaction = 0;	
 		double alpha_plus = this.getP_alpha_plus();
 		double alpha_minus = this.getP_alpha_minus();
@@ -377,17 +377,32 @@ public class Farm {
 		double lambda = this.getP_lambda();
 		double value = 0;                                                      // value function
 		double probWeighting = 0;                                              // probability weighting function
+		double probWeighting_delta = 0;
+		
+		double phi = 0;
 
 		if (income >= this.Aspiration) {
 			value = Math.pow(income, alpha_plus);
+			probability = 1-probability;
 			probWeighting = ( Math.pow(probability, phi_plus) ) / Math.pow( (Math.pow(probability, phi_plus) + Math.pow((1 - probability), phi_plus)), (1/phi_plus) );
+			
+			probability = 1 - prob_delta_pos;
+			probWeighting_delta = ( Math.pow(probability, phi_plus) ) / Math.pow( (Math.pow(probability, phi_plus) + Math.pow((1 - probability), phi_plus)), (1/phi_plus) );
+			
+			phi = probWeighting - probWeighting_delta;
 		} 
 		else {
 			value = (-1)*lambda*Math.pow(income, alpha_minus);
+			
 			probWeighting = ( Math.pow(probability, phi_minus) ) / Math.pow( (Math.pow(probability, phi_minus) + Math.pow((1 - probability), phi_minus)), (1/phi_minus) );
+			
+			probability = prob_delta_neg;
+			probWeighting_delta = ( Math.pow(probability, phi_minus) ) / Math.pow( (Math.pow(probability, phi_minus) + Math.pow((1 - probability), phi_minus)), (1/phi_minus) );
+			
+			phi = probWeighting - probWeighting_delta;
 		}
 
-		satisfaction = value*probWeighting;
+		satisfaction = value*phi;
 
 		return satisfaction;
 	}
@@ -399,6 +414,8 @@ public class Farm {
 	private double currentSatisfaction() {
 		List<Double> current_satisfaction = new ArrayList<Double>();						       // calculate satisfaction for each income value in the list of income history
 		double probability = 0;
+		double prob_delta_pos = 0; 
+		double prob_delta_neg = 0; 
 		double mean = mean(this.IncomeHistory);
 		double std = std(this.IncomeHistory);
 		
@@ -411,7 +428,9 @@ public class Farm {
 		
 		for (int i = 0; i< this.getMemory(); i++) {
 			probability = normal.cumulativeProbability(this.IncomeHistory.get(i));
-			current_satisfaction.add(calculateSatisfaction(this.IncomeHistory.get(i),probability ));
+			prob_delta_pos = normal.cumulativeProbability(this.IncomeHistory.get(i) + 1);
+			prob_delta_neg = normal.cumulativeProbability(this.IncomeHistory.get(i) - 1);
+			current_satisfaction.add(calculateSatisfaction(this.IncomeHistory.get(i),probability,prob_delta_pos,prob_delta_neg ));
 		}
 				
 		return mean(current_satisfaction);

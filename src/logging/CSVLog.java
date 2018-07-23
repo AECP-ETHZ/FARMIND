@@ -128,7 +128,7 @@ public class CSVLog {
 			writer.print("NA" );
 		}
 		
-		writer.print("\n");
+		writer.println("");
 		writer.close();
 	}
 	

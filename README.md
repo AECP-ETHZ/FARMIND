@@ -10,9 +10,9 @@ After extraction into a jar file, run the program using the 'run_java_ABM.bat' b
 
 The ABM requires two additional commands: the number of years, and the specific model. For example:
 
-java -jar ABM.jar 5 WEEDCONTROL 
+	java -jar ABM.jar 5 WEEDCONTROL 
 
-will start the ABM for five years running with the weedcontrol model. 
+will start the ABM for five years running with the WEEDCONTROL gams model. 
 
 ### ABM Requirements
 The initial conditions of the agents with all parameters need to be specified in the /data/ directory before starting the model. The /test_data/ folder contains example initialization files. 

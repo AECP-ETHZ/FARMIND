@@ -5,7 +5,16 @@ The model represents each farm as an agent as well as a node in social networks.
 
 A linear programming model, integrated into the agent-based model, is then used to select an optimal activity for each agent to perform and generate an income value. Agents' satisfaction and uncertainty are updated accordingly. This sets the base for decision-making of next period.
 
-### Program Overview and Requirements
+### Running the ABM
+After extraction into a jar file, run the program using the 'run_java_ABM.bat' batch file. 
+
+The ABM requires two additional commands: the number of years, and the specific model. For example:
+
+java -jar ABM.jar 5 WEEDCONTROL 
+
+will start the ABM for five years running with the weedcontrol model. 
+
+### ABM Requirements
 The initial conditions of the agents with all parameters need to be specified in the /data/ directory before starting the model. The /test_data/ folder contains example initialization files. 
 
 The complete system documentation is available in the documentation folder. 
@@ -59,3 +68,11 @@ If the issue persists, try removing the libraries and reinstalling them again.
 	The gams program will produce a results file for the ABM to process. Until then it will wait. 
 	
 	When the model is running in test mode, the batch file 'run_gams.bat' will copy a output file (stored in /data/ folder as 'Grossmargin_P4,00'). 
+
+3. "Exiting Farmind. Input number of iterations."
+
+	Input number of years (integer) required for the simulation when running the batch file
+
+4. "Exiting Farmind. Input MP Model: WEEDCONTROL or SWISSLAND."
+	
+	Input which model you want the ABM to interface with during operations. 

@@ -118,7 +118,12 @@ public class CSVLog {
 		writer.print(String.format("%s,",this.strategy) );
 		
 		for(int i = 0; i < this.possibleActivity.size(); i++) {
-			writer.print(String.format("%s,", this.possibleActivity.get(i)) );
+			if (i == this.possibleActivity.size()-1) {
+				writer.print(String.format("%s", this.possibleActivity.get(i)) );
+			}
+			else {
+				writer.print(String.format("%s,", this.possibleActivity.get(i)) );
+			}
 		}
 		
 		for(int i = 0; i < 5 - this.possibleActivity.size(); i++) {

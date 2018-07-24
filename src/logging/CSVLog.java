@@ -117,20 +117,34 @@ public class CSVLog {
 		
 		writer.print(String.format("%s,",this.strategy) );
 		
-		for(int i = 0; i < this.possibleActivity.size(); i++) {
-			if (i == this.possibleActivity.size()-1) {
-				writer.print(String.format("%s", this.possibleActivity.get(i)) );
+		// if there are no possible activities, print NA
+		if (this.possibleActivity.size() == 0) {
+			for(int i = 0; i < (6 - this.possibleActivity.size()); i++) {
+				writer.print("NA," );
 			}
-			else {
-				writer.print(String.format("%s,", this.possibleActivity.get(i)) );
-			}
+			writer.print("NA" );
 		}
 		
-		for(int i = 0; i < 5 - this.possibleActivity.size(); i++) {
-			writer.print("NA," );
-		}
-		if (this.possibleActivity.size() < 2) {
+		// if there is one activity print it, followed by NA
+		else if (this.possibleActivity.size() == 1) {
+			writer.print(String.format("%s,", this.possibleActivity.get(0)) );
+			
+			for(int i = 0; i < (5 - this.possibleActivity.size()); i++) {
+				writer.print("NA," );
+			}
 			writer.print("NA" );
+		}
+		
+		// print all activities
+		else {
+			for(int i = 0; i < this.possibleActivity.size(); i++) {
+				if (i == this.possibleActivity.size()-1) {
+					writer.print(String.format("%s", this.possibleActivity.get(i)) );
+				}
+				else {
+					writer.print(String.format("%s,", this.possibleActivity.get(i)) );
+				}
+			}
 		}
 		
 		writer.println("");

@@ -80,7 +80,7 @@ public class CSVLog {
 		
 		if (file.length() == 0) {
 			writer.println("year,name,age,education,memory,alpha_plus,alpha_minus,lambda,phi_plus,phi_minus,aspiration_coef,"
-					+ "beta,beta_s,tolerance_activity,tolerance_income,activity_dissimilarity,income_dissimilarity,learning_rate,satisfaction," 
+					+ "beta,beta_s,beta_p,tolerance_activity,tolerance_income,activity_dissimilarity,income_dissimilarity,learning_rate,satisfaction," 
 					+ "income,previous_activity,strategy,possible_activity1,"
 					+ "possible_activity2,possible_activity3,possible_activity4,possible_activity5,possible_activity6");
 		}
@@ -100,6 +100,7 @@ public class CSVLog {
 		writer.print(String.format("%s,",this.farm.getP_aspiration_coef() ));
 		writer.print(String.format("%s,",this.farm.getP_beta_l() )); 
 		writer.print(String.format("%s,",this.farm.getP_beta_s() ));
+		writer.print(String.format("%s,",this.farm.getP_beta_p() ));
 		
 		writer.print(String.format("%s,",this.farm.getP_activity_tolerance_coef() ));
 		writer.print(String.format("%s,",this.farm.getP_income_tolerance_coef() ));

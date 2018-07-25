@@ -98,7 +98,7 @@ public class CSVLog {
 		writer.print(String.format("%s,",this.farm.getP_phi_plus() ));
 		writer.print(String.format("%s,",this.farm.getP_phi_minus() ));
 		writer.print(String.format("%s,",this.farm.getP_aspiration_coef() ));
-		writer.print(String.format("%s,",this.farm.getP_beta() )); 
+		writer.print(String.format("%s,",this.farm.getP_beta_l() )); 
 		writer.print(String.format("%s,",this.farm.getP_beta_s() ));
 		
 		writer.print(String.format("%s,",this.farm.getP_activity_tolerance_coef() ));

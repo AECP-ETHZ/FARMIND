@@ -119,7 +119,7 @@ public class CSVLog {
 		
 		// if there are no possible activities, print NA
 		if (this.possibleActivity.size() == 0) {
-			for(int i = 0; i < (6 - this.possibleActivity.size()); i++) {
+			for(int i = 0; i < (5 - this.possibleActivity.size()); i++) {
 				writer.print("NA," );
 			}
 			writer.print("NA" );

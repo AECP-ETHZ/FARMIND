@@ -43,7 +43,7 @@ public class ReadData {
 	public String ActivityPreferenceFile = "./data/activity_preference.csv";
 	public String InitialActivities = "./data/initial_activities.csv";
 	public String InitialIncomes = "./data/initial_incomes.csv";
-	public String PerformingYearsFile = "./data/performing_years.csv";
+	public String InitialPerformingYears = "./data/initial_performing_years.csv";
 	public String SocialNetworkFile = "./data/social_networks.csv";
 	
 	/**
@@ -275,7 +275,7 @@ public class ReadData {
 		FarmDataMatrix experience = new FarmDataMatrix();
 
 		try {
-			Buffer = new BufferedReader(new FileReader(PerformingYearsFile));
+			Buffer = new BufferedReader(new FileReader(InitialPerformingYears));
 			Line = Buffer.readLine();
 			matrixRow = CSVtoArrayList(Line);
 			matrixRow.remove(0);
@@ -365,7 +365,7 @@ public class ReadData {
 		BufferedReader Buffer = null;	
 
 		try {
-			Buffer = new BufferedReader(new FileReader(PerformingYearsFile));
+			Buffer = new BufferedReader(new FileReader(InitialPerformingYears));
 			Line = Buffer.readLine();									       // first line to be deleted
 			activityRow = CSVtoArrayList(Line);
 			int ID = 100;

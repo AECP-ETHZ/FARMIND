@@ -235,7 +235,7 @@ public class FarmTests {
 			reader.ActivityPreferenceFile = TestPreferenceFile;
 			reader.InitialActivities = TestInitialActivities;
 			reader.InitialIncomes = TestInitialIncomes;
-			reader.PerformingYearsFile = TestYearsFile;
+			reader.InitialPerformingYears = TestYearsFile;
 			reader.SocialNetworkFile = TestSocialNetworkFile;
 	} 
 

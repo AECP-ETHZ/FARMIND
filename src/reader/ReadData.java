@@ -41,10 +41,10 @@ public class ReadData {
 
 	public String FarmParametersFile = "./data/farm_parameters.csv";					   // allow external function to set data files for testing
 	public String ActivityPreferenceFile = "./data/activity_preference.csv";
+	public String SocialNetworkFile = "./data/social_networks.csv";
 	public String InitialActivities = "./data/initial_activities.csv";
 	public String InitialIncomes = "./data/initial_incomes.csv";
-	public String PerformingYearsFile = "./data/performing_years.csv";
-	public String SocialNetworkFile = "./data/social_networks.csv";
+	public String PerformingYearsFile = "./data/initial_performing_years.csv";
 	
 	/**
 	 * Each farm in the list contains a social network, the associated people, and preferred activities

@@ -44,9 +44,8 @@ public class Farm {
 	private double learning_rate;											   // learning rate for specific farm. Calculated based on education level
 	private List<Double> q_range;											   // q range (+,- values) for the learning rate vectors for the individual farm
 	
-	private double p_beta_l ;												   // Parameter for the Beta Learning
-	private double p_beta_s ;											       // Parameter for the Beta Social
-	private double p_beta_p;												   // Parameter for the Beta Preference
+	private double p_beta ;													   // Parameter for the Beta
+	private double p_beta_s ;											       // Parameter for the Beta S 
 	private double p_aspiration_coef ;										   // Parameter for the Aspiration Calculation
 	private double p_activity_tolerance_coef ;								   // Parameter for the individual level of tolerance to differences in activities on the network
 	private double p_income_tolerance_coef ;								   // Parameter for the individual level of tolerance to differences in personal vs population income changes
@@ -83,7 +82,7 @@ public class Farm {
 	 */
 	public Farm(String name, Location location, Graph<String, DefaultEdge> socialNetwork, List<Double> incomeHistory,  
 			FarmDataMatrix farmingExperience, FarmDataMatrix preferences, List<Activity> activities, double activity_tolerance, double income_tolerance, 
-			List<Activity> currentActivity, Person farmHead, double beta, double beta_s, double beta_p, double aspiration_coef, double lambda, double alpha_plus, 
+			List<Activity> currentActivity, Person farmHead, double beta, double beta_s, double aspiration_coef, double lambda, double alpha_plus, 
 			double alpha_minus, double phi_plus, double phi_minus) {
 		
 		this.setFarmName(name);
@@ -97,9 +96,8 @@ public class Farm {
 		this.setCurrentActivity(currentActivity);
 		this.setHead(farmHead);
 		
-		this.setP_beta_l(beta);
+		this.setP_beta(beta);
 		this.setP_beta_s(beta_s);
-		this.setP_beta_p(beta_p);
 		this.setP_aspiration_coef(aspiration_coef);
 		this.setP_lambda(lambda);
 		this.setP_alpha_plus(alpha_plus);
@@ -651,11 +649,11 @@ public class Farm {
 	public void setLearningRate() {
 		this.learning_rate = init_learning_rate();
 	}
-	public double getP_beta_l() {
-		return this.p_beta_l;
+	public double getP_beta() {
+		return this.p_beta;
 	}
-	public void setP_beta_l(double p_beta_l) {
-		this.p_beta_l = p_beta_l;
+	public void setP_beta(double p_beta) {
+		this.p_beta = p_beta;
 	}
 	public double getP_beta_s() {
 		return this.p_beta_s;
@@ -710,11 +708,5 @@ public class Farm {
 	}
 	public void setP_phi_minus(double p_phi_minus) {
 		this.p_phi_minus = p_phi_minus;
-	}
-	public double getP_beta_p() {
-		return p_beta_p;
-	}
-	public void setP_beta_p(double p_beta_p) {
-		this.p_beta_p = p_beta_p;
 	}
 }

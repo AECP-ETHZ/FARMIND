@@ -258,7 +258,7 @@ public class WeedControl implements MP_Interface{
 					}
 				}
 				
-				//LOGGER.info( String.format("PreStrat %s, PostStrat %s, Activity: %s", pre, post, index+1 ) );
+				LOGGER.info( String.format("PreStrat %s, PostStrat %s, Activity: %s", pre, post, index+1 ) );
 				
 				for(int i = 0; i < allPossibleActivities.size(); i++) {
 					String name = String.format("\"activity%d\"", index+1);

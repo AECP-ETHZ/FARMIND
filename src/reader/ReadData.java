@@ -28,17 +28,16 @@ public class ReadData {
 	public static final int AGE = 3;										   // Agent age
 	public static final int EDUCATION = 4;									   // Agent education level
 	public static final int MEMORY = 5;										   // Agent memory length
-	public static final int BETA_L = 6;										   // learning multiplier for fuzzy logic
-	public static final int BETA_S = 7;									       // social learning multiplier for fuzzy logic
-	public static final int BETA_P = 8;										   // preference multiplier for fuzzy logic
-	public static final int ASPIRATION_COEF = 9;							   // set aspiration level
-	public static final int INCOME_TOLERANCE = 10;							   // set income change dissimilarity tolerance
-	public static final int ACTIVITY_TOLERANCE = 11;						   // set dissimilarity in activity tolerance
-	public static final int LAMBDA = 12;									   // parameter in the formula for calculating satisfaction
-	public static final int ALPHA_PLUS = 13;								   // parameter in the formula for calculating satisfaction
-	public static final int ALPHA_MINUS = 14;								   // parameter in the formula for calculating satisfaction
-	public static final int PHI_PLUS = 15;								       // parameter in the formula for calculating satisfaction
-	public static final int PHI_MINUS = 16;  								   // parameter in the formula for calculating satisfaction
+	public static final int BETA = 6;										   // learning multiplier
+	public static final int BETA_S = 7;									       // social learning multiplier
+	public static final int ASPIRATION_COEF = 8;							   // set aspiration level
+	public static final int INCOME_TOLERANCE = 9;							   // set income change dissimilarity tolerance
+	public static final int ACTIVITY_TOLERANCE = 10;						   // set dissimilarity in activity tolerance
+	public static final int LAMBDA = 11;									   // parameter in the formula for calculating satisfaction
+	public static final int ALPHA_PLUS = 12;								   // parameter in the formula for calculating satisfaction
+	public static final int ALPHA_MINUS = 13;								   // parameter in the formula for calculating satisfaction
+	public static final int PHI_PLUS = 14;								       // parameter in the formula for calculating satisfaction
+	public static final int PHI_MINUS = 15;  								   // parameter in the formula for calculating satisfaction
 
 	public String FarmParametersFile = "./data/farm_parameters.csv";					   // allow external function to set data files for testing
 	public String ActivityPreferenceFile = "./data/activity_preference.csv";
@@ -63,9 +62,8 @@ public class ReadData {
 		int age = 0;
 		int education = 0;
 		int memory = 0;
-		double beta_l = 0;
+		double beta = 0;
 		double beta_s = 0;
-		double beta_p = 0;
 		double aspiration_coef = 0;
 		double activity_tolerance = 0;
 		double income_tolerance = 0;
@@ -109,10 +107,8 @@ public class ReadData {
 					System.exit(0);
 				}
 				
-				beta_l = Double.parseDouble( farmParameters.get(BETA_L) );
-				beta_s = Double.parseDouble( farmParameters.get(BETA_S) );
-				beta_p = Double.parseDouble( farmParameters.get(BETA_P) );
-				
+				beta = Double.parseDouble( farmParameters.get(BETA));
+				beta_s = Double.parseDouble( farmParameters.get(BETA_S));
 				aspiration_coef = Double.parseDouble( farmParameters.get(ASPIRATION_COEF));
 				activity_tolerance = Double.parseDouble( farmParameters.get(ACTIVITY_TOLERANCE));
 				income_tolerance = Double.parseDouble( farmParameters.get(INCOME_TOLERANCE));
@@ -126,7 +122,7 @@ public class ReadData {
 				Farm farm = new Farm(name, location, network.get(farm_count_index), 
 						income, experience, preference, activities, 
 						activity_tolerance, income_tolerance, currentActivity, farmHead, 
-						beta_l, beta_s, beta_p, aspiration_coef, lambda, alpha_plus, alpha_minus, phi_plus, phi_minus);
+						beta, beta_s, aspiration_coef, lambda, alpha_plus, alpha_minus, phi_plus, phi_minus);
 				
 				farms.add(farm);
 				farm_count_index++;	

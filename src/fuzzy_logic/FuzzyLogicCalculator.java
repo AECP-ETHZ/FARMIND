@@ -90,7 +90,9 @@ public class FuzzyLogicCalculator {
 		 
 		for (int i = 0; i< len - 2; i++) {
 			for (int j = 0; j < len - 2; j++) {
-				matrix[i][j] = ( p_p[i][j] + farm.getP_beta() * ( p_l[i][j] + farm.getP_beta_s()*p_s[i][j] ) ) / (1 + farm.getP_beta() + farm.getP_beta_s());
+				//matrix[i][j] = ( p_p[i][j] + farm.getP_beta_l() * ( p_l[i][j] + farm.getP_beta_s()*p_s[i][j] ) ) / (1 + farm.getP_beta_l() + farm.getP_beta_s());
+				
+				matrix[i][j] = ( farm.getP_beta_p()*p_p[i][j] + farm.getP_beta_l()*p_l[i][j] + farm.getP_beta_s()*p_s[i][j] )  / (p_p[i][j] + p_l[i][j] + p_s[i][j]);
 			}
 		}
 		
@@ -127,7 +129,8 @@ public class FuzzyLogicCalculator {
 		 
 		for (int i = 0; i< len - 2; i++) {
 			for (int j = 0; j < len - 2; j++) {
-				matrix[i][j] = p_p[i][j] + farm.getP_beta() * ( p_l[i][j] );
+				//matrix[i][j] = p_p[i][j] + farm.getP_beta_l() * ( p_l[i][j] );
+				matrix[i][j] = ( farm.getP_beta_p()*p_p[i][j] + farm.getP_beta_l()*p_l[i][j])  / (p_p[i][j] + p_l[i][j]);
 			}
 		}
 		

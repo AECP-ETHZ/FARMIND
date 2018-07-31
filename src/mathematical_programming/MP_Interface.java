@@ -21,4 +21,6 @@ public interface MP_Interface {
 	
 	public List<ArrayList<Activity>> readMPActivities();
 	
+	public ArrayList<Activity> getExitActivity();
+	
 }

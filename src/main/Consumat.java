@@ -84,8 +84,12 @@ public class Consumat {
 					//LOGGER.info( String.format("Farm %s, year %d, updated Activities: %s", farm.getFarmName(), year, activity.get(0).getName() ) );
 				}
 				
+				if (farm.getStrategy() == 1) {													   // Exit from farming
+					activity = MP.getExitActivity();
+				}
+				
 				farm.updateExperience();                              			                   // each time period update experience
-				farm.updateFarmParameters(allFarms, income, activity);                             
+				farm.updateFarmParameters(allFarms, income, activity);         
 				
 				List<String> possibleActivitySet = farm.decideActivitySet(allFarms);      
 				

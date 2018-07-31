@@ -31,4 +31,10 @@ public class SwissLand implements MP_Interface{
 		return null;
 	}
 
+	@Override
+	public ArrayList<Activity> getExitActivity() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

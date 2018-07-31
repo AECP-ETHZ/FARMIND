@@ -122,6 +122,11 @@ public class Farm {
 	    List<String> ActivitySet = new ArrayList<String>();				                           // list of activities from fuzzy logic
 		FuzzyLogicCalculator fuzzyLogicCalc = new FuzzyLogicCalculator(this, allFarms);            // calculator for the activity selection
 		
+		if (this.strategy == 1) {
+			this.strategy = 1;
+			return ActivitySet;
+		}
+		
 		if ((head.getAge() > 650)) {
 			this.strategy = 1;     //OPT-OUT (The farmer retires.)
 		}

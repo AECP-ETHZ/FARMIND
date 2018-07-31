@@ -131,6 +131,16 @@ public class WeedControl implements MP_Interface{
 		}	
 	}
 	
+	@Override
+	public ArrayList<Activity> getExitActivity() {
+		ArrayList<Activity> activities = new ArrayList<Activity>();	   	 	       // list of all farm activities selected by MP model
+		Activity exit = new Activity(0,"\"Activity00\"");
+		
+		activities.add(exit);
+	
+		return activities;
+	}
+	
 	/**
 	 * edit the MP gams script with the updated year and price information
 	 * @param nFarm: number of farms
@@ -310,7 +320,7 @@ public class WeedControl implements MP_Interface{
 		}
 		return Result;
 	}
-	
+
 	
 	/**
 	 *  The following tuples correspond to the 72 activities in the application. The first element in the tuple is a row in the activity matrix, and the second element is the column.

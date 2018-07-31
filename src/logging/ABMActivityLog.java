@@ -63,7 +63,7 @@ public class ABMActivityLog {
 		PrintWriter writer = new PrintWriter(bw);
 		
 		if (file.length() == 0) {
-			writer.println("year,name,income,previous_activity,selected_activity,strategy");
+			writer.println("year,name,previous_activity,selected_activity,strategy");
 		}
 		
 		writer.print(String.format("%s,",this.year));

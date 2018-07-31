@@ -20,29 +20,20 @@ public class Parameters {
 		this.sim_year = sim_year;
 	}
 
-
-
 	public String getModelName() {
 		return modelName;
 	}
-
-
 
 	public void setModelName(String modelName) {
 		this.modelName = modelName;
 	}
 
-
-
 	public boolean isUncertainty() {
 		return uncertainty;
 	}
 
-
-
 	public void setUncertainty(boolean uncertainty) {
 		this.uncertainty = uncertainty;
 	}
-	
 
 }

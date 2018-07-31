@@ -80,7 +80,7 @@ public class Consumat {
 				} else {
 					income = MP_Incomes.get(farmIndex);										       // for all other years get the MP income and the MP activities to update each farm
 					activity = MP_Activities.get(farmIndex);
-					LOGGER.info( String.format("Farm %s, year %d, updated Activities: %s", farm.getFarmName(), year, activity.get(0).getName() ) );
+					//LOGGER.info( String.format("Farm %s, year %d, updated Activities: %s", farm.getFarmName(), year, activity.get(0).getName() ) );
 				}
 				
 				farm.updateExperience();                              			                   // each time period update experience

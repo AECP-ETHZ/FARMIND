@@ -8,7 +8,8 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-import logging.CSVLog;
+import logging.ABMActivityLog;
+import logging.ABMTimeStepLog;
 import mathematical_programming.MP_Interface;
 import mathematical_programming.WeedControl;
 import reader.ReadData;
@@ -88,7 +89,7 @@ public class Consumat {
 				
 				List<String> possibleActivitySet = farm.decideActivitySet(allFarms);      
 				
-				CSVLog log = new CSVLog(farm.getPreferences().getDataElementName(), farm.getFarmName(), year, farm.getLearningRate(), farm.getActivity_Dissimilarity(), farm.getIncome_Dissimilarity(), farm.getSatisfaction(), farm.getStrategy(), farm.getIncomeHistory().get(0), farm.getCurrentActivity(), possibleActivitySet, farm);
+				ABMTimeStepLog log = new ABMTimeStepLog(farm.getPreferences().getDataElementName(), farm.getFarmName(), year, farm.getLearningRate(), farm.getActivity_Dissimilarity(), farm.getIncome_Dissimilarity(), farm.getSatisfaction(), farm.getStrategy(), farm.getIncomeHistory().get(0), farm.getCurrentActivity(), possibleActivitySet, farm);
 				updateLogFileName();
 				log.appendLogFile(FileName);
 				
@@ -101,6 +102,14 @@ public class Consumat {
 			MP.runModel(allFarms.size(),year);													   // if needed, update mp script and then start model
 			MP_Incomes = MP.readMPIncomes();
 			MP_Activities = MP.readMPActivities();
+			
+			farmIndex = 0;
+			for (Farm farm : allFarms) {
+				ABMActivityLog log = new ABMActivityLog(farm.getPreferences().getDataElementName(), farm.getFarmName(), year, farm.getStrategy(), farm.getCurrentActivity(), MP_Activities.get(farmIndex));
+				log.appendLogFile(FileName);
+				farmIndex++; 
+			}
+			
 			updatePopulationIncomeChangeRate(allFarms, MP_Incomes);                                // at end of time step update the percent change for population
 			
 			LOGGER.info(String.format("Year %d simulation finished", year));

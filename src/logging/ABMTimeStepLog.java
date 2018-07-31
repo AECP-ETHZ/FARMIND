@@ -15,7 +15,7 @@ import agent.Farm;
  * @author kellerke
  *
  */
-public class CSVLog {
+public class ABMTimeStepLog {
 
 	private String farmId;													   // unique farm id
 	private Integer year;													   // which time step this decision was made in
@@ -42,7 +42,7 @@ public class CSVLog {
 	 * @param learning_rate: 		learning rate for the agent
 	 * @param farm: 				specific farm for this decision object
 	 */
-	public CSVLog(List<String> allActivities, String farmId, Integer year, Double learning_rate, Double activity_diss, Double income_diss, double satisfaction, int strat, double income, List<Activity> currentActivity, List<String> possibleActivities, Farm farm) {
+	public ABMTimeStepLog(List<String> allActivities, String farmId, Integer year, Double learning_rate, Double activity_diss, Double income_diss, double satisfaction, int strat, double income, List<Activity> currentActivity, List<String> possibleActivities, Farm farm) {
 		setFarmId(farmId);
 		setYear(year);
 		setStrategy(strat);

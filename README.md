@@ -15,9 +15,13 @@ The ABM requires two additional commands to run: the number of years, and the sp
 will start the ABM for five years running with the WEEDCONTROL gams model. 
 
 Additional commands to fine tune the ABM simulation are available. The following flags turn off portions of the default simulation:
+
 -uncertainty :: if set to 0, then ABM will not use the dissimilarity calculations during simulations
+
 -individual_learning :: if set to 0, then the ABM will not use individual learning for activities during simulation
+
 -social_learning :: if set to 0, then the ABM will not use social learning for activities during simulation
+
 -activity_preference :: if set to 0, then the ABM will not use activity preference during simulation
 
 ### ABM Requirements

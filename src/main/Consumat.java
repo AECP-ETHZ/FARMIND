@@ -8,6 +8,8 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+import org.apache.commons.cli.*;
+
 import logging.ABMActivityLog;
 import logging.ABMTimeStepLog;
 import mathematical_programming.MP_Interface;
@@ -30,28 +32,10 @@ public class Consumat {
 	static FileHandler fh;  
 	 
 	public static void main(String[] args) {
-        try {
-			fh = new FileHandler("ABM.log");
-	        LOGGER.addHandler(fh);
-	        SimpleFormatter formatter = new SimpleFormatter();  
-	        fh.setFormatter(formatter);  
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}  
+		initializeLogging();
+		LOGGER.info("Starting FARMIND: version number: 0.7.0");
+		CommandLine cmd = parseInput(args);														   // parse input arguments
 		
-		LOGGER.info("Starting FARMIND: version number: 0.6.0");
-
-		if (args.length < 1) {
-			LOGGER.severe("Exiting Farmind. Input number of iterations.");
-			System.exit(0);
-		} 
-		if (args.length < 2) {
-			LOGGER.severe("Exiting Farmind. Input MP Model: WEEDCONTROL or SWISSLAND.");
-			System.exit(0);
-		} 
-
 		ReadData            reader             = new ReadData();							       // read all input data files
 		List<Farm>          allFarms           = reader.getFarms();					               // build set of farms 
 		
@@ -60,14 +44,15 @@ public class Consumat {
 		double income = 0;													                       // specific income of farm 		
 		ArrayList<Activity> activity = null;											           // specific activity list of the farm
 		int farmIndex = 0;													                       // index of specific farm in list
+		int simYear = Integer.parseInt(cmd.getOptionValue("year"));								   // number of simulation years for ABM to run
 		
 		initializePopulationIncomeChangeRate(allFarms);						                       // initialize the farms with the input values before starting the full ABM simulation
 
-		for (int year = 1; year <= Integer.parseInt(args[0]); year++) {		                       // run simulation for a set of years, getting updated income and activities from the MP model each iteration
+		for (int year = 1; year <= simYear; year++) {		                       // run simulation for a set of years, getting updated income and activities from the MP model each iteration
 			LOGGER.info(String.format("Year %d simulation started", year));
 			MP_Interface MP;
 			
-			if (args[1] == "WEEDCONTROL") {
+			if (cmd.getOptionValue("modelName") == "WEEDCONTROL") {
 				MP = new WeedControl();
 			} 
 			else {
@@ -81,7 +66,6 @@ public class Consumat {
 				} else {
 					income = MP_Incomes.get(farmIndex);										       // for all other years get the MP income and the MP activities to update each farm
 					activity = MP_Activities.get(farmIndex);
-					//LOGGER.info( String.format("Farm %s, year %d, updated Activities: %s", farm.getFarmName(), year, activity.get(0).getName() ) );
 				}
 				
 				if (farm.getStrategy() == 1) {													   // Exit from farming
@@ -120,6 +104,59 @@ public class Consumat {
 		}
 
 		LOGGER.info("ABM Operation Complete.");
+	}
+	
+	private static void initializeLogging() {
+        try {
+			fh = new FileHandler("ABM.log");
+	        LOGGER.addHandler(fh);
+	        SimpleFormatter formatter = new SimpleFormatter();  
+	        fh.setFormatter(formatter);  
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}  
+	}
+	
+	private static CommandLine parseInput(String[] args) {
+		
+		if (args.length < 1) {
+			LOGGER.severe("Exiting Farmind. Input number of iterations.");
+			System.exit(0);
+		} 
+		if (args.length < 2) {
+			LOGGER.severe("Exiting Farmind. Input MP Model: WEEDCONTROL or SWISSLAND.");
+			System.exit(0);
+		} 
+		
+        Options options = new Options();
+
+        Option yearCLI = new Option("year", true, "input years of simulation");
+        yearCLI.setRequired(true);
+        options.addOption(yearCLI);
+        
+        Option modelName = new Option("modelName", true, "input model name");
+        modelName.setRequired(true);
+        options.addOption(modelName);
+        
+        Option uncertaintyCLI = new Option("uncertainty", true, "use uncertainty in model");
+        uncertaintyCLI.setRequired(true);
+        options.addOption(uncertaintyCLI);
+
+        CommandLineParser parser = new DefaultParser();
+        HelpFormatter formatter = new HelpFormatter();
+        CommandLine cmd = null;
+
+        try {
+            cmd = parser.parse(options, args);
+        } catch (ParseException e) {
+            System.out.println(e.getMessage());
+            formatter.printHelp("utility-name", options);
+            System.exit(1);
+        }
+		
+		return cmd;
 	}
 		
 

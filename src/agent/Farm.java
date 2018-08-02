@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 import reader.FarmDataMatrix;
 
+import org.apache.commons.cli.CommandLine;
 import org.apache.commons.math3.distribution.NormalDistribution;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
@@ -118,10 +119,11 @@ public class Farm {
 	 * @param allFarms: full list of all farms in system
 	 * @return ActivitySet: list of activity options for a farm to select 
 	 */
-	public List<String> decideActivitySet(List<Farm> allFarms) {
+	public List<String> decideActivitySet(List<Farm> allFarms, CommandLine cmd) {
 	    List<String> ActivitySet = new ArrayList<String>();				                           // list of activities from fuzzy logic
 		FuzzyLogicCalculator fuzzyLogicCalc = new FuzzyLogicCalculator(this, allFarms);            // calculator for the activity selection
 		
+		// if the farming is currently performing opt-out, then continue performing opt-out
 		if (this.strategy == 1) {
 			this.strategy = 1;
 			return ActivitySet;
@@ -130,17 +132,9 @@ public class Farm {
 		if ((head.getAge() > 650)) {
 			this.strategy = 1;     //OPT-OUT (The farmer retires.)
 		}
-		else if ( (this.Activity_Dissimilarity >= this.p_activity_tolerance_coef) || (this.Income_Dissimilarity >= this.p_income_tolerance_coef) ) {  
-			if (this.Satisfaction >= 0) {
-				this.strategy = 2; //IMITATION
-				ActivitySet = fuzzyLogicCalc.getImitationActivities();
-			}
-			else {
-				this.strategy = 1; //OPT-OUT
-				LOGGER.info("Opt-out strategy chosen and returning an empty activity set");
-			}
-		}
-		else {
+		
+		// modified simulation using only satisfaction
+		if ( Integer.parseInt(cmd.getOptionValue("uncertainty")) == 0) {
 			if (this.Satisfaction >= 0) {
 				this.strategy = 4; //REPETITION
 				for (int i = 0; i < this.getCurrentActivity().size(); i++) {
@@ -148,8 +142,36 @@ public class Farm {
 				} 
 			}
 			else {
-				this.strategy = 3; //OPTIMIZATION
-				ActivitySet = fuzzyLogicCalc.getOptimizationActivities();
+				if (this.Satisfaction < 0) {
+					this.strategy = 3; //OPTIMIZATION
+					ActivitySet = fuzzyLogicCalc.getOptimizationActivities();
+				} 
+			}
+		}
+		
+		// Full simulation using dissimilarity and satisfaction
+		else {
+			if ( (this.Activity_Dissimilarity >= this.p_activity_tolerance_coef) || (this.Income_Dissimilarity >= this.p_income_tolerance_coef) ) {  
+				if (this.Satisfaction >= 0) {
+					this.strategy = 2; //IMITATION
+					ActivitySet = fuzzyLogicCalc.getImitationActivities();
+				}
+				else {
+					this.strategy = 1; //OPT-OUT
+					LOGGER.info("Opt-out strategy chosen and returning an empty activity set");
+				}
+			}
+			else {
+				if (this.Satisfaction >= 0) {
+					this.strategy = 4; //REPETITION
+					for (int i = 0; i < this.getCurrentActivity().size(); i++) {
+						ActivitySet.add(this.getCurrentActivity().get(i).getName());
+					} 
+				}
+				else {
+					this.strategy = 3; //OPTIMIZATION
+					ActivitySet = fuzzyLogicCalc.getOptimizationActivities();
+				}
 			}
 		}
 				

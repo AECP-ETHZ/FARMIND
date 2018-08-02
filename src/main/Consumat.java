@@ -75,7 +75,7 @@ public class Consumat {
 				farm.updateExperience();                              			                   // each time period update experience
 				farm.updateFarmParameters(allFarms, income, activity);         
 				
-				List<String> possibleActivitySet = farm.decideActivitySet(allFarms);      
+				List<String> possibleActivitySet = farm.decideActivitySet(allFarms,cmd);      
 				
 				ABMTimeStepLog log = new ABMTimeStepLog(farm.getPreferences().getDataElementName(), farm.getFarmName(), year, farm.getLearningRate(), farm.getActivity_Dissimilarity(), farm.getIncome_Dissimilarity(), farm.getSatisfaction(), farm.getStrategy(), farm.getIncomeHistory().get(0), farm.getCurrentActivity(), possibleActivitySet, farm);
 				updateLogFileName();

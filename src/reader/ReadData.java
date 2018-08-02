@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
@@ -46,6 +47,8 @@ public class ReadData {
 	public String InitialIncomes = "./data/initial_incomes.csv";
 	public String InitialPerformingYears = "./data/initial_performing_years.csv";
 	public String SocialNetworkFile = "./data/social_networks.csv";
+	
+	private static final Logger LOGGER = Logger.getLogger("FARMIND_LOGGING");
 	
 	/**
 	 * Each farm in the list contains a social network, the associated people, and preferred activities
@@ -89,6 +92,11 @@ public class ReadData {
 			
 			while ((Line = Buffer.readLine()) != null) {                       
 				farmParameters = CSVtoArrayList(Line);						   // Read farm's parameters line by line
+				
+				if( farmParameters.size() != (PHI_MINUS+1) ) {
+					LOGGER.severe("Exiting Farmind. Input Farm Parameter file smaller than expected.");
+					System.exit(0);
+				}
 				
 				Location location = new Location();							   // create new location for each farm
 				List<Activity> currentActivity = new ArrayList<Activity>();    // dummy variable to create initial farm object. Initialized after creation. 

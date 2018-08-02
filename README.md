@@ -6,13 +6,19 @@ The model represents each farm as an agent as well as a node in social networks.
 A linear programming model, integrated into the agent-based model, is then used to select an optimal activity for each agent to perform and generate an income value. Agents' satisfaction and uncertainty are updated accordingly. This sets the base for decision-making of next period.
 
 ### Running the ABM
-After extraction into a jar file, run the program using the 'run_java_ABM.bat' batch file. 
+After extraction into a jar file, run the program using the 'run_java_ABM.bat' batch file or directly from the command line. 
 
-The ABM requires two additional commands: the number of years, and the specific model. For example:
+The ABM requires two additional commands to run: the number of years, and the specific model. For example:
 
-	java -jar ABM.jar 5 WEEDCONTROL 
+	java -jar ABM.jar -year 5 -modelName WEEDCONTROL 
 
 will start the ABM for five years running with the WEEDCONTROL gams model. 
+
+Additional commands to fine tune the ABM simulation are available. The following flags turn off portions of the default simulation:
+-uncertainty :: if set to 0, then ABM will not use the dissimilarity calculations during simulations
+-individual_learning :: if set to 0, then the ABM will not use individual learning for activities during simulation
+-social_learning :: if set to 0, then the ABM will not use social learning for activities during simulation
+-activity_preference :: if set to 0, then the ABM will not use activity preference during simulation
 
 ### ABM Requirements
 The initial conditions of the agents with all parameters need to be specified in the /data/ directory before starting the model. The /test_data/ folder contains example initialization files. 

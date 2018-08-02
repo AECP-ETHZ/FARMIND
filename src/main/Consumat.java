@@ -119,6 +119,19 @@ public class Consumat {
 		}  
 	}
 	
+	/** 
+	 * Parse command line input arguments for simulation control
+	 * Required arguments are:
+	 * -year :: number of years of simulation
+	 * -modelName :: which specific optimization model to use
+	 * Optional Arguments are as follows:
+	 * -uncertainty :: if set to 0, then ABM will not use the dissimilarity calculations during simulations
+	 * -individual_learning :: if set to 0, then the ABM will not use individual learning for activities during simulation
+	 * -social_learning :: if set to 0, then the ABM will not use social learning for activities during simulation
+	 * -activity_preference :: if set to 0, then the ABM will not use activity preference during simulation
+	 * @param args
+	 * @return
+	 */
 	private static CommandLine parseInput(String[] args) {
 		
 		if (args.length < 1) {
@@ -132,17 +145,29 @@ public class Consumat {
 		
         Options options = new Options();
 
-        Option yearCLI = new Option("year", true, "input years of simulation");
+        Option yearCLI = new Option("year", true, "ABM simulation years");
         yearCLI.setRequired(true);
         options.addOption(yearCLI);
         
-        Option modelName = new Option("modelName", true, "input model name");
+        Option modelName = new Option("modelName", true, "model: WEEDCONTROL or SWISSLAND");
         modelName.setRequired(true);
         options.addOption(modelName);
         
-        Option uncertaintyCLI = new Option("uncertainty", true, "use uncertainty in model");
-        uncertaintyCLI.setRequired(true);
+        Option uncertaintyCLI = new Option("uncertainty", true, "1 or 0 to use uncertainty in ABM");
+        uncertaintyCLI.setRequired(false);
         options.addOption(uncertaintyCLI);
+        
+        Option individual_learning = new Option("individual_learning", true, "1 or 0 to use individual learning in ABM");
+        individual_learning.setRequired(false);
+        options.addOption(individual_learning);
+        
+        Option social_learning = new Option("social_learning", true, "1 or 0 to use social learning in ABM");
+        social_learning.setRequired(false);
+        options.addOption(social_learning);
+        
+        Option activity_preference = new Option("activity_preference", true, "1 or 0 to use activity preference in ABM");
+        activity_preference.setRequired(false);
+        options.addOption(activity_preference);
 
         CommandLineParser parser = new DefaultParser();
         HelpFormatter formatter = new HelpFormatter();
@@ -152,7 +177,7 @@ public class Consumat {
             cmd = parser.parse(options, args);
         } catch (ParseException e) {
             System.out.println(e.getMessage());
-            formatter.printHelp("utility-name", options);
+            formatter.printHelp("Each argument is formatted as \"-argument VALUE\"", options);
             System.exit(1);
         }
 		

@@ -10,11 +10,18 @@ After extraction into a jar file, run the program using the 'run_java_ABM.bat' b
 
 The ABM requires two additional commands to run: the number of years, and the specific model. For example:
 
-	java -jar ABM.jar -year 5 -modelName WEEDCONTROL 
+	java -jar ABM.jar -year 5 -modelName WEEDCONTROL -uncertainty 1
 
-will start the ABM for five years running with the WEEDCONTROL gams model. 
+will start the ABM for five years running with the WEEDCONTROL gams model. The uncertainty flag set to 1 runs the normal simulation. When the uncertainty flag is set to 0 it only uses the model satisfaction when making the decisions. 
 
-Additional commands to fine tune the ABM simulation are available. The following flags turn off portions of the default simulation:
+### ABM Requirements
+1. /data/ folder containing input data files:
+	
+	The initial conditions of the agents with all parameters need to be specified in the /data/ directory before starting the model. The /test_data/ folder contains example initialization files. 
+
+2. /projdir/ folder containing the MP optimization model
+
+<!--Additional commands to fine tune the ABM simulation are available. The following flags turn off portions of the default simulation:
 
 -uncertainty :: if set to 0, then ABM will not use the dissimilarity calculations during simulations
 
@@ -24,32 +31,7 @@ Additional commands to fine tune the ABM simulation are available. The following
 
 -activity_preference :: if set to 0, then the ABM will not use activity preference during simulation
 
-### ABM Requirements
-The initial conditions of the agents with all parameters need to be specified in the /data/ directory before starting the model. The /test_data/ folder contains example initialization files. 
-
-The complete system documentation is available in the documentation folder. 
-
-### Library Installation in Eclipse
-Required libraries:
-1. Download jgrapht-1.1.0.zip file from here: http://jgrapht.org/
-2. Download commons-math3-3.6.1-bin.zip from here: http://commons.apache.org/proper/commons-math/download_math.cgi
-
-Both of the those libraries should already be downloaded and included in the /lib/ directory. 
-
-1. In Eclipse Open:
-	Window->Preferences->java->Build Path->User Libraries 
-
-2. Select "New" and input the name of the library:
-	Either *jgrapht* or *commons-math3-3.6.1*
-	
-3. After creating the library, link the new library with the jar files.
-	Select "Add JAR" and select the JAR files from the /lib/ folder in the project that correspond to the library name. 
-	
-4. In the main Eclipse window, right click on the "FARMIND" project and select "Build Path->Add Libraries".
-
-5. In the window, select "User Libraries" and then select the newly created library. 
-
-6. Refresh the project (F5) and compile.
+-->
 
 ### Java JAR File Extraction
 To extract the required JAR file for the external MP model integration in eclipse do the following:
@@ -61,6 +43,30 @@ To extract the required JAR file for the external MP model integration in eclips
 3. Make sure the "Launch Configuration" is set to "FARMIND - Consumat" as the entry point for the program and make sure to select 'Extract required libraries' to ensure that the jar file is a stand alone file. 
 
 4. Choose a file location and hit 'Finish'.
+
+
+### Library Installation in Eclipse
+All of the those libraries should already be downloaded and included in the /lib/ directory. 
+
+1. In Eclipse Open:
+	Window->Preferences->java->Build Path->User Libraries 
+
+2. Select "New" and input the name of the library:
+	Either *jgrapht*, *commons-math3-3.6.1*, or *commons-cli-1.4*
+	
+3. After creating the library, link the new library with the jar files.
+	Select "Add JAR" and select the JAR files from the /lib/ folder in the project that correspond to the library name. 
+	
+4. In the main Eclipse window, right click on the "FARMIND" project and select "Build Path->Add Libraries".
+
+5. In the window, select "User Libraries" and then select the newly created library. 
+
+6. Refresh the project (F5) and compile.
+
+The libraries can be downloaded here if required:
+1. Download jgrapht-1.1.0.zip file from here: http://jgrapht.org/
+2. Download commons-math3-3.6.1-bin.zip from here: http://commons.apache.org/proper/commons-math/download_math.cgi
+3. Download the apache command line interface (cli) tool used for reading the input parameters: http://commons.apache.org/proper/commons-cli/
 
 ### Troubleshooting Guide
 1. Issue related to graph library:
@@ -86,3 +92,13 @@ If the issue persists, try removing the libraries and reinstalling them again.
 4. "Exiting Farmind. Input MP Model: WEEDCONTROL or SWISSLAND."
 	
 	Input which model you want the ABM to interface with during operations. 
+	
+5. Error related to input parameters:
+
+	"Missing required option: uncertainty
+	usage: Each argument is formatted as "-argument VALUE"
+	 -modelName <arg>             model: WEEDCONTROL or SWISSLAND
+	 -uncertainty <arg>           1 or 0 to use uncertainty in ABM
+	 -year <arg>                  ABM simulation years
+	 
+	 Make sure you are running the full command to start the ABM jar file. Three commands are necessary when starting. 

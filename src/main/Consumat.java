@@ -154,10 +154,10 @@ public class Consumat {
         options.addOption(modelName);
         
         Option uncertaintyCLI = new Option("uncertainty", true, "1 or 0 to use uncertainty in ABM");
-        uncertaintyCLI.setRequired(false);
+        uncertaintyCLI.setRequired(true);
         options.addOption(uncertaintyCLI);
         
-        Option individual_learning = new Option("individual_learning", true, "1 or 0 to use individual learning in ABM");
+        /*Option individual_learning = new Option("individual_learning", true, "1 or 0 to use individual learning in ABM");
         individual_learning.setRequired(false);
         options.addOption(individual_learning);
         
@@ -168,6 +168,7 @@ public class Consumat {
         Option activity_preference = new Option("activity_preference", true, "1 or 0 to use activity preference in ABM");
         activity_preference.setRequired(false);
         options.addOption(activity_preference);
+        */
 
         CommandLineParser parser = new DefaultParser();
         HelpFormatter formatter = new HelpFormatter();

@@ -5,5 +5,5 @@
 :: -social_learning :: if set to 0, then the ABM will not use social learning for activities during simulation
 :: -activity_preference :: if set to 0, then the ABM will not use activity preference during simulation
 
-java -jar abm.jar -year 5 -modelName WEEDCONTROL
+java -jar ABM.jar -year 5 -modelName WEEDCONTROL -uncertainty 1
 pause

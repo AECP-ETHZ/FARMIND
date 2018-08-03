@@ -95,10 +95,12 @@ If the issue persists, try removing the libraries and reinstalling them again.
 	
 5. Error related to input parameters:
 
-	"Missing required option: uncertainty
-	usage: Each argument is formatted as "-argument VALUE"
+	"Missing required option: uncertainty usage: Each argument is formatted as "-argument VALUE"
+	
 	 -modelName <arg>             model: WEEDCONTROL or SWISSLAND
+	 
 	 -uncertainty <arg>           1 or 0 to use uncertainty in ABM
+	 
 	 -year <arg>                  ABM simulation years
 	 
 	 Make sure you are running the full command to start the ABM jar file. Three commands are necessary when starting. 

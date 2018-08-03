@@ -131,6 +131,7 @@ public class Farm {
 		
 		if ((head.getAge() > 650)) {
 			this.strategy = 1;     //OPT-OUT (The farmer retires.)
+			return ActivitySet;
 		}
 		
 		// modified simulation using only satisfaction

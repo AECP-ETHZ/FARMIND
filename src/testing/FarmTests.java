@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import org.apache.commons.cli.CommandLine;
 import org.junit.Before;
 import org.junit.Test;
 //import org.junit.jupiter.api.Test;
@@ -18,6 +20,7 @@ import agent.Farm;
  */
 public class FarmTests {
 	List<Farm>     allFarms = new ArrayList<Farm>();
+	CommandLine cmd = null;
 	
 	@Before 
 	public void setup() {
@@ -26,7 +29,8 @@ public class FarmTests {
 		allFarms = reader.getFarms();						                   // build set of farms with new parameters
 		
 		main.Consumat.initializePopulationIncomeChangeRate(allFarms);
-
+		String[] args = {"-year", "2","-modelName", "WEEDCONTROL", "-uncertainty", "1"};
+		cmd = main.Consumat.parseInput(args);
 	}
 	
 	@Test
@@ -39,7 +43,7 @@ public class FarmTests {
 	public void testAgeExitDecision() {
 		Farm farm = allFarms.get(0);
 		farm.getHead().setAge(700);
-		farm.decideActivitySet(allFarms);
+		farm.decideActivitySet(allFarms,cmd);
 		
 		int strat = farm.getStrategy();
 		assertEquals(strat, 1);	// exit
@@ -52,7 +56,7 @@ public class FarmTests {
 		farm.setSatisfaction(100);
 		farm.setActivity_Dissimilarity(10);
 		farm.setIncome_Dissimilarity(0);
-		farm.decideActivitySet(allFarms);
+		farm.decideActivitySet(allFarms,cmd);
 		
 		int strat = farm.getStrategy();
 		assertEquals(strat, 2);	
@@ -65,7 +69,7 @@ public class FarmTests {
 		farm.setSatisfaction(100);
 		farm.setActivity_Dissimilarity(0);
 		farm.setIncome_Dissimilarity(10);
-		farm.decideActivitySet(allFarms);
+		farm.decideActivitySet(allFarms,cmd);
 		
 		int strat = farm.getStrategy();
 		assertEquals(strat, 2);	
@@ -78,7 +82,7 @@ public class FarmTests {
 		farm.setSatisfaction(100);
 		farm.setActivity_Dissimilarity(0);
 		farm.setIncome_Dissimilarity(0);
-		farm.decideActivitySet(allFarms);
+		farm.decideActivitySet(allFarms,cmd);
 		
 		int strat = farm.getStrategy();
 		assertEquals(strat, 4);	
@@ -91,7 +95,7 @@ public class FarmTests {
 		farm.setSatisfaction(-1);
 		farm.setActivity_Dissimilarity(0);
 		farm.setIncome_Dissimilarity(0);
-		farm.decideActivitySet(allFarms);
+		farm.decideActivitySet(allFarms,cmd);
 		
 		int strat = farm.getStrategy();
 		assertEquals(strat, 3);	
@@ -104,12 +108,65 @@ public class FarmTests {
 		farm.setSatisfaction(-1);
 		farm.setActivity_Dissimilarity(10);
 		farm.setIncome_Dissimilarity(0);
-		farm.decideActivitySet(allFarms);
+		farm.decideActivitySet(allFarms,cmd);
 		
 		int strat = farm.getStrategy();
 		assertEquals(strat, 1);	
 	}
 
+	@Test
+	public void testRepetionDecisionNoUncertainty() {
+		Farm farm = allFarms.get(0);
+		
+		farm.setSatisfaction(100);
+		farm.setActivity_Dissimilarity(0);
+		farm.setIncome_Dissimilarity(0);
+		
+		String[] args = {"-year", "2","-modelName", "WEEDCONTROL", "-uncertainty", "0"};
+		cmd = main.Consumat.parseInput(args);
+		
+		farm.decideActivitySet(allFarms,cmd);
+		
+		int strat = farm.getStrategy();
+		assertEquals(strat, 4);	
+	}
+	
+	@Test
+	public void testOptimizationDecisionNoUncertainty() {
+		Farm farm = allFarms.get(0);
+		
+		farm.setSatisfaction(-1);
+		farm.setActivity_Dissimilarity(0);
+		farm.setIncome_Dissimilarity(0);
+		
+		String[] args = {"-year", "2","-modelName", "WEEDCONTROL", "-uncertainty", "0"};
+		cmd = main.Consumat.parseInput(args);
+		
+		farm.decideActivitySet(allFarms,cmd);
+		
+		int strat = farm.getStrategy();
+		assertEquals(strat, 3);	
+	}
+	
+	@Test
+	public void testOptOutDecisionNoUncertainty() {
+		// this should force to opt out but since the decision is now repetition or optimization, the system selects optimization
+		
+		Farm farm = allFarms.get(0);
+		
+		farm.setSatisfaction(-1);
+		farm.setActivity_Dissimilarity(10);
+		farm.setIncome_Dissimilarity(0);
+		
+		String[] args = {"-year", "2","-modelName", "WEEDCONTROL", "-uncertainty", "0"};
+		cmd = main.Consumat.parseInput(args);
+		
+		farm.decideActivitySet(allFarms,cmd);
+		
+		int strat = farm.getStrategy();
+		assertEquals(strat, 3);	
+	}
+		
 	@Test
 	public void testUpdateAge() {
 		allFarms.get(0).updateAge();
@@ -209,7 +266,7 @@ public class FarmTests {
 		farm.updateFarmParameters(allFarms, -1, MP_Activities);
 
 		double sat = farm.getSatisfaction();
-		assertEquals(sat, 24.824767697286585);                                // hand calculation
+		assertEquals(sat, 0.047365115790282415);                                // hand calculation
 	} 
 	
 	@Test
@@ -220,7 +277,7 @@ public class FarmTests {
 		farm.updateFarmParameters(allFarms, -1, MP_Activities);
 
 		double sat = farm.getSatisfaction();
-		assertEquals(sat, -21.2035632114007);                                // hand calculation
+		assertEquals(sat, -0.1769965217965832);                                // hand calculation
 	} 
 	
 	public static final String TestDataFile = "./test_data/farm_parameters.csv";

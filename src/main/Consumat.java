@@ -124,15 +124,15 @@ public class Consumat {
 	 * Required arguments are:
 	 * -year :: number of years of simulation
 	 * -modelName :: which specific optimization model to use
-	 * Optional Arguments are as follows:
 	 * -uncertainty :: if set to 0, then ABM will not use the dissimilarity calculations during simulations
+	 * Optional Arguments are as follows:
 	 * -individual_learning :: if set to 0, then the ABM will not use individual learning for activities during simulation
 	 * -social_learning :: if set to 0, then the ABM will not use social learning for activities during simulation
 	 * -activity_preference :: if set to 0, then the ABM will not use activity preference during simulation
 	 * @param args
 	 * @return
 	 */
-	private static CommandLine parseInput(String[] args) {
+	public static CommandLine parseInput(String[] args) {
 		
 		if (args.length < 1) {
 			LOGGER.severe("Exiting Farmind. Input number of iterations.");

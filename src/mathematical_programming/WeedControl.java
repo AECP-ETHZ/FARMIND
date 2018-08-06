@@ -226,7 +226,7 @@ public class WeedControl implements MP_Interface{
 	
 	/** 
 	 * Read the MP output files to get income and activities
-	 * @return
+	 * @return return incomes and activities produced by the MP model
 	 */
 	public List<Object> readMPOutputFiles() {
 		List<Double> incomesFromMP = new ArrayList<Double>();				       // list of all agents' incomes produced by the MP

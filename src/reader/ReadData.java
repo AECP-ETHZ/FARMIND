@@ -113,7 +113,7 @@ public class ReadData {
 				memory = Integer.parseInt( farmParameters.get(MEMORY));
 				if (memory < 4) {
 					memory = 4; 											   // error in calculations if memory is less than 4
-					System.out.println("Memory length needs to be greater than 4");
+					LOGGER.severe("Exiting Farmind. Memory length needs to be greater than 4.");
 					System.exit(0);
 				}
 				
@@ -150,17 +150,27 @@ public class ReadData {
 			}
 		}
 		
-		initializeFarmActivities(farms);                                       // read initialization activity data from data file and set all initialize all activities
-		initializeFarmIncomes(farms);                                          // read initialization income data from data file and set all initialize all incomes
+		boolean success = false;
+		success = initializeFarmActivities(farms);                             // read initialization activity data from data file and set all initialize all activities
+		if (success == false) {
+			LOGGER.severe("Error setting initial farm activities");
+		}                                   
+		
+		success = initializeFarmIncomes(farms);                                // read initialization income data from data file and set all initialize all incomes
+		if (success == false) {
+			LOGGER.severe("Error setting initial farm activities");
+		}
 		
 		return farms;
 	}
 	
 	/** 
 	 * initialize farm activity by reading activity file
-	 * @param farms List of farms in system
+	 * @param farms:: List of farms in system
+	 * @return success:: if the farms have been updated correctly 
 	 */
-	private void initializeFarmActivities(List<Farm> farms) {
+	private boolean initializeFarmActivities(List<Farm> farms) {
+		boolean success = false;
 		String Line;
 		ArrayList<String> farmParameters;
 		BufferedReader Buffer = null;	 									   // read input file
@@ -188,25 +198,31 @@ public class ReadData {
 				farms.get(farm_count_index).setCurrentActivity(currentActivity);;
 				farm_count_index++;	
 			}
+			
+			success = true;
 		
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			LOGGER.severe(  String.format("%s", e ));
 		} finally {
 			try {
 				if (Buffer != null) Buffer.close();
 			} catch (IOException Exception) {
-				Exception.printStackTrace();
+				//Exception.printStackTrace();
+				LOGGER.severe(  String.format("%s", Exception ));
 			}
 		}
 		
+		return success;
 	}
 	
 	/** 
 	 * Read the initial income data file and update each farm with the proper income
-	 * @param farms List of farms in system
-	 * @return farms List of farms in system
+	 * @param farms:: List of farms in system
+	 * @return success :: success if the farms have been updated correctly
 	 */
-	private void initializeFarmIncomes(List<Farm> farms) {
+	private boolean initializeFarmIncomes(List<Farm> farms) {
+		boolean success = false;
 		String Line;
 		ArrayList<String> farmParameters;
 		BufferedReader Buffer = null;	 									   // read input file
@@ -230,6 +246,8 @@ public class ReadData {
 				farm_count_index++;	
 			}
 		
+			success = true;
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -239,6 +257,8 @@ public class ReadData {
 				Exception.printStackTrace();
 			}
 		}
+		
+		return success; 
 	}
 	
 	/**

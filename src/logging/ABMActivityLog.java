@@ -19,18 +19,14 @@ public class ABMActivityLog {
 	private List<String> possibleActivity;								       // set of possible activities by the agent
 	private List<Activity> MPSelectedActivity;								   // activity actually selected by the MP
 
-	
 	/** 
 	 * Constructor for the CSV Log
 	 * @param allActivities:		full set of activities
 	 * @param farmId:		    	ID of the farm
-	 * @param possibleActivities:	full activity set
 	 * @param year:					time period
 	 * @param strat:				strategy
 	 * @param currentActivity:		current activity(ies) in system
-	 * @param income:				income of farm
-	 * @param learning_rate: 		learning rate for the agent
-	 * @param farm: 				specific farm for this decision object
+	 * @param MPSelectedActivity:   best activity from the MP model
 	 */
 	public ABMActivityLog(List<String> allActivities, String farmId, Integer year, int strat, List<Activity> currentActivity, List<Activity> MPSelectedActivity) {
 		setFarmId(farmId);

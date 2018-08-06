@@ -197,7 +197,7 @@ public class FarmTests {
 		MP_Activities = null;
 		farm.updateFarmParameters(allFarms, -1, MP_Activities);
 		
-		Double[] verify = {611.0, 770.0, 488.0, 792.0, 511.0};		   // manually created based on input file
+		Double[] verify = {611.0, 770.0, 488.0, 792.0, 511.0};		           // manually created based on input file
 		List<Double> y_list = allFarms.get(0).getIncomeHistory();
 		Double[] y = y_list.toArray(new Double[0]);
 	 	assertArrayEquals(y, verify);
@@ -245,7 +245,6 @@ public class FarmTests {
 		Farm farm = allFarms.get(0);
 		double rate = farm.getAveragePersonalIncomeChangeRate();
 		assertEquals(rate,0.18568767298275496);							       // hand calculated from data file
-		
 	}
 	
 	@Test
@@ -254,7 +253,6 @@ public class FarmTests {
 		farm.updateIncomeDissimilarity();
 		
 		double diff = farm.getIncome_Dissimilarity(); 
-		
 		assertEquals(-0.1762316074687296, diff);							   // excel calculation
 	}
 	
@@ -270,7 +268,7 @@ public class FarmTests {
 	} 
 	
 	@Test
-	public void testUpdateSatisfactionFarm2() {
+	public void testUpdateSatisfactionFarm4() {
 		Farm farm = allFarms.get(3);
 		List<Activity> MP_Activities = new ArrayList<Activity>();	           // list of all farm activities selected by MP model. MP returns list of activities for each farm, thus a list of lists
 		MP_Activities = null;
@@ -279,6 +277,23 @@ public class FarmTests {
 		double sat = farm.getSatisfaction();
 		assertEquals(sat, -0.1769965217965832);                                // hand calculation
 	} 
+	
+	@Test
+	public void testUpdateAspiration() {
+		Farm farm = allFarms.get(0);
+		List<Activity> MP_Activities = new ArrayList<Activity>();	           // list of all farm activities selected by MP model. MP returns list of activities for each farm, thus a list of lists
+		MP_Activities = null;
+		
+		farm.updateFarmParameters(allFarms, -1, MP_Activities);				   // aspiration level is initially set to 0, then we update to the coefficient value
+		double orig_aspiration = farm.getAspiration();
+		
+		farm.updateFarmParameters(allFarms, 100, MP_Activities);			   // real update should not change aspiration level 
+		double new_aspiration = farm.getAspiration();
+		
+		assertEquals(new_aspiration, orig_aspiration);                               
+	} 
+	
+	
 	
 	public static final String TestDataFile = "./test_data/farm_parameters.csv";
 	public static final String TestPreferenceFile = "./test_data/activity_preference.csv";

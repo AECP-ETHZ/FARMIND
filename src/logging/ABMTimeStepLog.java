@@ -30,17 +30,20 @@ public class ABMTimeStepLog {
 	private double income_diss;
 	private double satisfaction;
 	
-	/** 
-	 * Constructor for the CSV Log
-	 * @param allActivities:		full set of activities
-	 * @param farmId:		    	ID of the farm
-	 * @param possibleActivities:	full activity set
-	 * @param year:					time period
-	 * @param strat:				strategy
-	 * @param currentActivity:		current activity(ies) in system
+	/**
+	 * Constructor for the CSV log
+	 * @param allActivities:		full set of system activities
+	 * @param farmId:				ID of the farm
+	 * @param year:					which simulation time step
+	 * @param learning_rate:		learning rate for the agent
+	 * @param activity_diss:
+	 * @param income_diss:
+	 * @param satisfaction:
+	 * @param strat:				strategy (set of four possible)
 	 * @param income:				income of farm
-	 * @param learning_rate: 		learning rate for the agent
-	 * @param farm: 				specific farm for this decision object
+	 * @param currentActivity:		current activity(ies) in system
+	 * @param possibleActivities:	all possible activities
+	 * @param farm:					specific farm for this decision object
 	 */
 	public ABMTimeStepLog(List<String> allActivities, String farmId, Integer year, Double learning_rate, Double activity_diss, Double income_diss, double satisfaction, int strat, double income, List<Activity> currentActivity, List<String> possibleActivities, Farm farm) {
 		setFarmId(farmId);

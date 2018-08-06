@@ -73,8 +73,9 @@ public class Farm {
 	 * @param income_tolerance: tolerance for income differences
 	 * @param currentActivity: current activity for agent
 	 * @param farmHead: person object to represent main farmer
-	 * @param beta: parameter for fuzzy logic
+	 * @param beta_l: parameter for fuzzy logic
 	 * @param beta_s: parameter for fuzzy logic
+	 * @param beta_p: parameter for fuzzy logic
 	 * @param aspiration_coef: aspiration value
 	 * @param lambda: value for lambda for satisfaction
 	 * @param alpha_plus: for satisfaction calculation
@@ -84,7 +85,7 @@ public class Farm {
 	 */
 	public Farm(String name, Location location, Graph<String, DefaultEdge> socialNetwork, List<Double> incomeHistory,  
 			FarmDataMatrix farmingExperience, FarmDataMatrix preferences, List<Activity> activities, double activity_tolerance, double income_tolerance, 
-			List<Activity> currentActivity, Person farmHead, double beta, double beta_s, double beta_p, double aspiration_coef, double lambda, double alpha_plus, 
+			List<Activity> currentActivity, Person farmHead, double beta_l, double beta_s, double beta_p, double aspiration_coef, double lambda, double alpha_plus, 
 			double alpha_minus, double phi_plus, double phi_minus) {
 		
 		this.setFarmName(name);
@@ -98,7 +99,7 @@ public class Farm {
 		this.setCurrentActivity(currentActivity);
 		this.setHead(farmHead);
 		
-		this.setP_beta_l(beta);
+		this.setP_beta_l(beta_l);
 		this.setP_beta_s(beta_s);
 		this.setP_beta_p(beta_p);
 		this.setP_aspiration_coef(aspiration_coef);
@@ -117,6 +118,7 @@ public class Farm {
 	 * Comparing satisfaction to aspiration and dissimilarities to tolerance, agents decide which of the four strategies to pursue: repetition, optimization, imitation or opt-out.
 	 * 
 	 * @param allFarms: full list of all farms in system
+	 * @param cmd: command line object that contains parameters for model
 	 * @return ActivitySet: list of activity options for a farm to select 
 	 */
 	public List<String> decideActivitySet(List<Farm> allFarms, CommandLine cmd) {
@@ -159,7 +161,7 @@ public class Farm {
 				}
 				else {
 					this.strategy = 1; //OPT-OUT
-					LOGGER.info("Opt-out strategy chosen and returning an empty activity set");
+					//LOGGER.info("Opt-out strategy chosen and returning an empty activity set");
 				}
 			}
 			else {
@@ -297,9 +299,9 @@ public class Farm {
 	 */
 	private void updateAspiration() {
 		double aspiration = 0;												   // calculated aspiration level
-		double aspi_value = this.getP_aspiration_coef();					   // aspiration value / coefficient
+		double aspi_value = this.getP_aspiration_coef();					   // aspiration value is externally input coefficient value
 		
-		aspiration = aspi_value;                                               // if as a coefficient: *mean(IncomeHistory);
+		aspiration = aspi_value;                                               
 
 		setAspiration(aspiration);
 	}	

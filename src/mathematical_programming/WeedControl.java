@@ -72,6 +72,7 @@ public class WeedControl implements MP_Interface{
 		incomes = (List<Double>) data.get(0);
 
 		return incomes;
+		// testing merge
 	}
 	
 	@SuppressWarnings("unchecked")

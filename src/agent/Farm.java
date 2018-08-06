@@ -193,7 +193,7 @@ public class Farm {
 		updateIncomeHistoryList(income);									   // for year = 1, we pass in -1 for income so we don't update the income 
 	    updateAveragePersonalIncomeChangeRate();
 	    
-	    if (income != -1) {
+	    if (income != -1 && activity != null) {
 	    	setCurrentActivity(activity);
 	    }    
 	    updateAspiration();

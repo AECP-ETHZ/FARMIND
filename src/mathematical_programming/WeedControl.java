@@ -320,7 +320,6 @@ public class WeedControl implements MP_Interface{
 		}
 		return Result;
 	}
-
 	
 	/**
 	 *  The following tuples correspond to the 72 activities in the application. The first element in the tuple is a row in the activity matrix, and the second element is the column.

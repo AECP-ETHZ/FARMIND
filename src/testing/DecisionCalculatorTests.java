@@ -93,7 +93,7 @@ public class DecisionCalculatorTests {
 		cal.S = crit3;
 		cal.getImitationActivities();
 		
-		List<Double> verify = Arrays.asList(0.9828936170212765, 0.9531063829787234, 0.46399999999999997); 
+		List<Double> verify = Arrays.asList(1.0, 0.7466666666666666, 0.566); 
 		List<Double> x = cal.ND;
 		assertEquals(x,verify);
 		

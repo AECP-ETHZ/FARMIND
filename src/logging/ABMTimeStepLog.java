@@ -71,7 +71,9 @@ public class ABMTimeStepLog {
 			directory.mkdir();
 		}
 		
-		File file = new File(String.format("./output/%s.csv", fileName));
+		String filename = fileName + "_parameters";
+		
+		File file = new File(String.format("./output/%s.csv", filename));
 		FileWriter fw = null;
 		try {
 			fw = new FileWriter(file,true);

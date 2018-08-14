@@ -74,7 +74,7 @@ public class ABMActivityLog {
 			writer.print(String.format("%s,",  this.MPSelectedActivity.get(i).getName()) );
 		}
 		
-		writer.print(String.format("%s,",this.strategy) );
+		writer.print(String.format("%s",this.strategy) );
 		
 		
 		writer.println("");

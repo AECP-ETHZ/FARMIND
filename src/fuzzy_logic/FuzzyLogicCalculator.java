@@ -179,16 +179,19 @@ public class FuzzyLogicCalculator {
 	private List<Double> cluster(List<Double> sorted) {
 		List<Double> cluster = new ArrayList<Double>(); 
 		List<Double> cluster_smaller = new ArrayList<Double>(); 
-		double mean = mean(sorted);
+		//double mean = mean(sorted);
 
-		for(int i = 0; i < sorted.size(); i++) {
-			if (sorted.get(i) > mean) {
-				cluster.add(sorted.get(i));
-			}
-		}
+//		for(int i = 0; i < sorted.size(); i++) {
+//			if (sorted.get(i) > mean) {
+//				cluster.add(sorted.get(i));
+//			}
+//		}
 		
-		if (cluster.size() > 6) {											   // limit returned cluster to 6 elements
-			for (int i = 0; i< 6; i++) {
+		int fuzzy_size = (int) farm.getP_fuzzy_size();
+		
+		cluster = sorted;
+		if (cluster.size() > fuzzy_size) {											   // limit returned cluster to 6 elements
+			for (int i = 0; i< fuzzy_size; i++) {
 				cluster_smaller.add(cluster.get(cluster.size() - i - 1));
 			}
 			return cluster_smaller;
@@ -197,20 +200,20 @@ public class FuzzyLogicCalculator {
 		return cluster;		
 	}
 	
-	/** 
-	 * Return mean value of provided list 
-	 * @param list of values to calculate mean with
-	 * @return mean
-	 */
-	private double mean(List<Double> list) {
-		double mean = 0;
-		
-		for (int i = 0; i<list.size(); i++) {
-			mean = mean + list.get(i);
-		}
-		
-		return mean / list.size();
-	}
+//	/** 
+//	 * Return mean value of provided list 
+//	 * @param list of values to calculate mean with
+//	 * @return mean
+//	 */
+//	private double mean(List<Double> list) {
+//		double mean = 0;
+//		
+//		for (int i = 0; i<list.size(); i++) {
+//			mean = mean + list.get(i);
+//		}
+//		
+//		return mean / list.size();
+//	}
 		
 	/** 
 	 * Non Domination score for a fuzzy logic preference matrix

@@ -30,6 +30,8 @@ public class ABMTimeStepLog {
 	private double income_diss;
 	private double satisfaction;
 	
+	public static final int POSSIBLE_ACTIVITY_SET_PRINTING_SIZE = 6;					
+	
 	/**
 	 * Constructor for the CSV log
 	 * @param allActivities:		full set of system activities
@@ -58,6 +60,7 @@ public class ABMTimeStepLog {
 		setIncome_diss(income_diss);
 		setActivity_diss(activity_diss);
 		setSatisfaction(satisfaction);
+		
 	}
 	
 	/** 
@@ -83,11 +86,22 @@ public class ABMTimeStepLog {
 		BufferedWriter bw = new BufferedWriter(fw);
 		PrintWriter writer = new PrintWriter(bw);
 		
+		String name = "year,name,age,education,memory,alpha_plus,alpha_minus,lambda,phi_plus,phi_minus,reference_income,aspiration_coef,"
+				+ "beta_l,beta_s,beta_p,tolerance_activity,tolerance_income,activity_dissimilarity,income_dissimilarity,learning_rate,satisfaction," 
+				+ "income,strategy,";
+		
+		for(int i = 0; i < this.currentActivity.size(); i++) {
+			name = name + String.format("previous_activity_%s,",  i+1 );
+		}
+
+		for(int i = 0; i < POSSIBLE_ACTIVITY_SET_PRINTING_SIZE -1 ; i++) {
+			name = name + String.format("possible_activity_%s,",  i+1 );
+		}
+		
+		name = name + String.format("possible_activity_%s",  POSSIBLE_ACTIVITY_SET_PRINTING_SIZE );
+		
 		if (file.length() == 0) {
-			writer.println("year,name,age,education,memory,alpha_plus,alpha_minus,lambda,phi_plus,phi_minus,reference_income,aspiration_coef,"
-					+ "beta_l,beta_s,beta_p,tolerance_activity,tolerance_income,activity_dissimilarity,income_dissimilarity,learning_rate,satisfaction," 
-					+ "income,previous_activity,strategy,possible_activity1,"
-					+ "possible_activity2,possible_activity3,possible_activity4,possible_activity5,possible_activity6");
+			writer.println(name);
 		}
 		
 		writer.print(String.format("%s,",this.year));
@@ -117,41 +131,41 @@ public class ABMTimeStepLog {
 		writer.print(String.format("%.4f,", this.getSatisfaction() ) );
 		
 		writer.print(String.format("%.2f,",this.income ) );
+		writer.print(String.format("%s,",this.strategy) );
 		
 		for(int i = 0; i < this.currentActivity.size(); i++) {
 			writer.print(String.format("%s,",  this.currentActivity.get(i).getName()) );
 		}
 		
-		writer.print(String.format("%s,",this.strategy) );
-		
-		// if there are no possible activities, print NA
-		if (this.possibleActivity.size() == 0) {
-			for(int i = 0; i < (5 - this.possibleActivity.size()); i++) {
+		// if there are no possible activities or more than we want to print, print NA for all places
+		if (this.possibleActivity.size() == 0 || this.possibleActivity.size() > POSSIBLE_ACTIVITY_SET_PRINTING_SIZE) {
+			for(int i = 0; i < POSSIBLE_ACTIVITY_SET_PRINTING_SIZE-1 ; i++) {
 				writer.print("NA," );
 			}
 			writer.print("NA" );
 		}
 		
-		// if there is one activity print it, followed by NA
-		else if (this.possibleActivity.size() == 1) {
-			writer.print(String.format("%s,", this.possibleActivity.get(0)) );
-			
-			for(int i = 0; i < (5 - this.possibleActivity.size()); i++) {
-				writer.print("NA," );
+		// if we have the exact amount print them, and print the last one without a comma 
+		else if (this.possibleActivity.size() == POSSIBLE_ACTIVITY_SET_PRINTING_SIZE){
+			for(int i = 0; i < POSSIBLE_ACTIVITY_SET_PRINTING_SIZE-1; i++) {
+				writer.print(String.format("%s,", this.possibleActivity.get(i)) );
 			}
-			writer.print("NA" );
+				writer.print(String.format("%s", this.possibleActivity.get(POSSIBLE_ACTIVITY_SET_PRINTING_SIZE-1)) );
 		}
 		
-		// print all activities
+		// possible activity set is smaller than largest possible, but not empty (ie 2 possible activities with a maximum print size of 10)
+		// in this case print the two possible activities and then print NA for the following with the last NA without a comma
 		else {
+			int NA_count = POSSIBLE_ACTIVITY_SET_PRINTING_SIZE -  this.possibleActivity.size();
+			
 			for(int i = 0; i < this.possibleActivity.size(); i++) {
-				if (i == this.possibleActivity.size()-1) {
-					writer.print(String.format("%s", this.possibleActivity.get(i)) );
-				}
-				else {
-					writer.print(String.format("%s,", this.possibleActivity.get(i)) );
-				}
+				writer.print(String.format("%s,", this.possibleActivity.get(i)) );
 			}
+			
+			for(int i = 0; i < NA_count-1 ; i++) {
+				writer.print("NA," );
+			}
+			writer.print("NA" );
 		}
 		
 		writer.println("");

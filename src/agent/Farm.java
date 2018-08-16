@@ -152,7 +152,7 @@ public class Farm {
 				} 
 			}
 			else {
-				if (this.Satisfaction < 0) {
+				if (this.Satisfaction < this.getP_aspiration_coef()) {
 					this.strategy = 3; //OPTIMIZATION
 					ActivitySet = fuzzyLogicCalc.getOptimizationActivities();
 				} 
@@ -172,7 +172,7 @@ public class Farm {
 				}
 			}
 			else {
-				if (this.Satisfaction >= 0) {
+				if (this.Satisfaction >= this.getP_aspiration_coef()) {
 					this.strategy = 4; //REPETITION
 					for (int i = 0; i < this.getCurrentActivity().size(); i++) {
 						ActivitySet.add(this.getCurrentActivity().get(i).getName());

@@ -84,7 +84,7 @@ public class ABMTimeStepLog {
 		PrintWriter writer = new PrintWriter(bw);
 		
 		if (file.length() == 0) {
-			writer.println("year,name,age,education,memory,alpha_plus,alpha_minus,lambda,phi_plus,phi_minus,aspiration_coef,"
+			writer.println("year,name,age,education,memory,alpha_plus,alpha_minus,lambda,phi_plus,phi_minus,reference_income,aspiration_coef,"
 					+ "beta_l,beta_s,beta_p,tolerance_activity,tolerance_income,activity_dissimilarity,income_dissimilarity,learning_rate,satisfaction," 
 					+ "income,previous_activity,strategy,possible_activity1,"
 					+ "possible_activity2,possible_activity3,possible_activity4,possible_activity5,possible_activity6");
@@ -102,6 +102,7 @@ public class ABMTimeStepLog {
 		writer.print(String.format("%s,",this.farm.getP_lambda()));
 		writer.print(String.format("%s,",this.farm.getP_phi_plus() ));
 		writer.print(String.format("%s,",this.farm.getP_phi_minus() ));
+		writer.print(String.format("%s,",this.farm.getP_reference_income() ));
 		writer.print(String.format("%s,",this.farm.getP_aspiration_coef() ));
 		writer.print(String.format("%s,",this.farm.getP_beta_l() )); 
 		writer.print(String.format("%s,",this.farm.getP_beta_s() ));

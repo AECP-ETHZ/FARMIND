@@ -32,14 +32,16 @@ public class ReadData {
 	public static final int BETA_L = 6;										   // learning multiplier for fuzzy logic
 	public static final int BETA_S = 7;									       // social learning multiplier for fuzzy logic
 	public static final int BETA_P = 8;										   // preference multiplier for fuzzy logic
-	public static final int ASPIRATION_COEF = 9;							   // set aspiration level
-	public static final int INCOME_TOLERANCE = 10;							   // set income change dissimilarity tolerance
-	public static final int ACTIVITY_TOLERANCE = 11;						   // set dissimilarity in activity tolerance
-	public static final int LAMBDA = 12;									   // parameter in the formula for calculating satisfaction
-	public static final int ALPHA_PLUS = 13;								   // parameter in the formula for calculating satisfaction
-	public static final int ALPHA_MINUS = 14;								   // parameter in the formula for calculating satisfaction
-	public static final int PHI_PLUS = 15;								       // parameter in the formula for calculating satisfaction
-	public static final int PHI_MINUS = 16;  								   // parameter in the formula for calculating satisfaction
+	public static final int REFERENCE_INCOME = 9;							   // set reference income for agent
+	public static final int ASPIRATION = 10;
+	public static final int INCOME_TOLERANCE = 11;							   // set income change dissimilarity tolerance
+	public static final int ACTIVITY_TOLERANCE = 12;						   // set dissimilarity in activity tolerance
+	public static final int LAMBDA = 13;									   // parameter in the formula for calculating satisfaction
+	public static final int ALPHA_PLUS = 14;								   // parameter in the formula for calculating satisfaction
+	public static final int ALPHA_MINUS = 15;								   // parameter in the formula for calculating satisfaction
+	public static final int PHI_PLUS = 16;								       // parameter in the formula for calculating satisfaction
+	public static final int PHI_MINUS = 17;  								   // parameter in the formula for calculating satisfaction
+	public static final int FUZZY_SIZE = 18;						           // size of fuzzy logic
 
 	public String FarmParametersFile = "./data/farm_parameters.csv";					   // allow external function to set data files for testing
 	public String ActivityPreferenceFile = "./data/activity_preference.csv";
@@ -69,6 +71,7 @@ public class ReadData {
 		double beta_l = 0;
 		double beta_s = 0;
 		double beta_p = 0;
+		double reference_income = 0;
 		double aspiration_coef = 0;
 		double activity_tolerance = 0;
 		double income_tolerance = 0;
@@ -77,6 +80,7 @@ public class ReadData {
 		double alpha_minus = 0;
 		double phi_plus = 0;
 		double phi_minus = 0;		
+		double fuzzy_size = 0;
 	
 		List<Graph<String, DefaultEdge>> network = this.getSocialNetworks();   
 		List<Activity>                   activities = getActivityList();
@@ -93,7 +97,7 @@ public class ReadData {
 			while ((Line = Buffer.readLine()) != null) {                       
 				farmParameters = CSVtoArrayList(Line);						   // Read farm's parameters line by line
 				
-				if( farmParameters.size() != (PHI_MINUS+1) ) {
+				if( farmParameters.size() != (FUZZY_SIZE+1) ) {
 					LOGGER.severe("Exiting Farmind. Input Farm Parameter file smaller than expected.");
 					System.exit(0);
 				}
@@ -120,8 +124,10 @@ public class ReadData {
 				beta_l = Double.parseDouble( farmParameters.get(BETA_L) );
 				beta_s = Double.parseDouble( farmParameters.get(BETA_S) );
 				beta_p = Double.parseDouble( farmParameters.get(BETA_P) );
+				reference_income = Double.parseDouble( farmParameters.get(REFERENCE_INCOME) );
 				
-				aspiration_coef = Double.parseDouble( farmParameters.get(ASPIRATION_COEF));
+				aspiration_coef = Double.parseDouble( farmParameters.get(ASPIRATION));
+				
 				activity_tolerance = Double.parseDouble( farmParameters.get(ACTIVITY_TOLERANCE));
 				income_tolerance = Double.parseDouble( farmParameters.get(INCOME_TOLERANCE));
 				lambda = Double.parseDouble( farmParameters.get(LAMBDA));
@@ -129,12 +135,13 @@ public class ReadData {
 				alpha_minus = Double.parseDouble( farmParameters.get(ALPHA_MINUS));
 				phi_plus = Double.parseDouble( farmParameters.get(PHI_PLUS));
 				phi_minus = Double.parseDouble( farmParameters.get(PHI_MINUS));
+				fuzzy_size = Double.parseDouble(   farmParameters.get(FUZZY_SIZE) );
 
 				Person farmHead = new Person(age, education, memory);        
 				Farm farm = new Farm(name, location, network.get(farm_count_index), 
 						income, experience, preference, activities, 
 						activity_tolerance, income_tolerance, currentActivity, farmHead, 
-						beta_l, beta_s, beta_p, aspiration_coef, lambda, alpha_plus, alpha_minus, phi_plus, phi_minus);
+						beta_l, beta_s, beta_p, reference_income, aspiration_coef, lambda, alpha_plus, alpha_minus, phi_plus, phi_minus,fuzzy_size);
 				
 				farms.add(farm);
 				farm_count_index++;	

@@ -30,7 +30,7 @@ public class Farm {
 	private Location location;												   // geographic location of farm
 	private double Satisfaction;											   // Satisfaction level of farm
 	private List<Double> IncomeHistory;										   // list of previous income values
-	private double Aspiration;												   // Aspiration level of the farm	
+	//private double Aspiration;												   // Aspiration level of the farm	
 	private double Activity_Dissimilarity;									   // Dissimilarity of this farm with respect to network for each Activity
 	private double Income_Dissimilarity;									   // Dissimilarity of this farm with respect to network for each Income
 	
@@ -48,7 +48,8 @@ public class Farm {
 	private double p_beta_l ;												   // Parameter for the Beta Learning
 	private double p_beta_s ;											       // Parameter for the Beta Social
 	private double p_beta_p;												   // Parameter for the Beta Preference
-	private double p_aspiration_coef ;										   // Parameter for the Aspiration Calculation
+	private double p_reference_income;										   // Parameter for reference for historical income 
+	private double p_aspiration_coef ;										   // Parameter for the Satisfaction Calculation
 	private double p_activity_tolerance_coef ;								   // Parameter for the individual level of tolerance to differences in activities on the network
 	private double p_income_tolerance_coef ;								   // Parameter for the individual level of tolerance to differences in personal vs population income changes
 	private double p_lambda ;												   // Parameter for the Lambda used for the Satisfaction Calculation
@@ -56,6 +57,7 @@ public class Farm {
 	private double p_alpha_minus ;											   // Parameter for the Alpha Minus used for the Satisfaction Calculation
 	private double p_phi_plus ;												   // Parameter for the Phi Plus used for the Satisfaction Calculation
 	private double p_phi_minus;												   // Parameter for the Phi Minus used for the Satisfaction Calculation
+	private double p_fuzzy_size;											   // Parameter to control fuzzy logic size
 	
 	private static final Logger LOGGER = Logger.getLogger("FARMIND_LOGGING");
 	
@@ -76,17 +78,19 @@ public class Farm {
 	 * @param beta_l: parameter for fuzzy logic
 	 * @param beta_s: parameter for fuzzy logic
 	 * @param beta_p: parameter for fuzzy logic
+	 * @param reference_income: parameter for agent to select high or low income levels
 	 * @param aspiration_coef: aspiration value
 	 * @param lambda: value for lambda for satisfaction
 	 * @param alpha_plus: for satisfaction calculation
 	 * @param alpha_minus: for satisfaction calculation
 	 * @param phi_plus: for satisfaction calculation
 	 * @param phi_minus: for satisfaction calculation
+	 * @param fuzzy_size: how large of a fuzzy set to return
 	 */
 	public Farm(String name, Location location, Graph<String, DefaultEdge> socialNetwork, List<Double> incomeHistory,  
 			FarmDataMatrix farmingExperience, FarmDataMatrix preferences, List<Activity> activities, double activity_tolerance, double income_tolerance, 
-			List<Activity> currentActivity, Person farmHead, double beta_l, double beta_s, double beta_p, double aspiration_coef, double lambda, double alpha_plus, 
-			double alpha_minus, double phi_plus, double phi_minus) {
+			List<Activity> currentActivity, Person farmHead, double beta_l, double beta_s, double beta_p, double reference_income, double aspiration_coef, double lambda, double alpha_plus, 
+			double alpha_minus, double phi_plus, double phi_minus, double fuzzy_size) {
 		
 		this.setFarmName(name);
 		this.setLocation(location);
@@ -102,6 +106,8 @@ public class Farm {
 		this.setP_beta_l(beta_l);
 		this.setP_beta_s(beta_s);
 		this.setP_beta_p(beta_p);
+		
+		this.setP_reference_income(reference_income);
 		this.setP_aspiration_coef(aspiration_coef);
 		this.setP_lambda(lambda);
 		this.setP_alpha_plus(alpha_plus);
@@ -111,6 +117,7 @@ public class Farm {
 		
 		this.setP_activity_tolerance_coef(activity_tolerance);
 		this.setP_income_tolerance_coef(income_tolerance);
+		this.setP_fuzzy_size(fuzzy_size);
 	}
 	
 	/** 
@@ -138,7 +145,7 @@ public class Farm {
 		
 		// modified simulation using only satisfaction
 		if ( Integer.parseInt(cmd.getOptionValue("uncertainty")) == 0) {
-			if (this.Satisfaction >= 0) {
+			if (this.Satisfaction >= this.getP_aspiration_coef() ) {
 				this.strategy = 4; //REPETITION
 				for (int i = 0; i < this.getCurrentActivity().size(); i++) {
 					ActivitySet.add(this.getCurrentActivity().get(i).getName());
@@ -155,13 +162,13 @@ public class Farm {
 		// Full simulation using dissimilarity and satisfaction
 		else {
 			if ( (this.Activity_Dissimilarity >= this.p_activity_tolerance_coef) || (this.Income_Dissimilarity >= this.p_income_tolerance_coef) ) {  
-				if (this.Satisfaction >= 0) {
+				if (this.Satisfaction >= this.getP_aspiration_coef()) {
 					this.strategy = 2; //IMITATION
 					ActivitySet = fuzzyLogicCalc.getImitationActivities();
 				}
 				else {
 					this.strategy = 1; //OPT-OUT
-					//LOGGER.info("Opt-out strategy chosen and returning an empty activity set");
+					//LOGGER.info("Opt-out strategy chosen and returning an empty activity set"); 
 				}
 			}
 			else {
@@ -196,7 +203,7 @@ public class Farm {
 	    if (income != -1 && activity != null) {
 	    	setCurrentActivity(activity);
 	    }    
-	    updateAspiration();
+	    //updateAspiration();
 	    updateSatisfaction();									
 	    updateIncomeDissimilarity();										   // in the simulation loop in Main, we update the populationIncomeChangePercent 
 		updateActivityDissimilarity(allFarms);
@@ -294,17 +301,17 @@ public class Farm {
 		setSatisfaction(current_satisfaction);                                 // uses updated income history
 	}
 	
-	/** 
-	 * Based on the historical income data, calculate the aspiration level as a percentage of historical income.
-	 */
-	private void updateAspiration() {
-		double aspiration = 0;												   // calculated aspiration level
-		double aspi_value = this.getP_aspiration_coef();					   // aspiration value is externally input coefficient value
-		
-		aspiration = aspi_value;                                               
-
-		setAspiration(aspiration);
-	}	
+//	/** 
+//	 * Based on the historical income data, calculate the aspiration level as a percentage of historical income.
+//	 */
+//	private void updateAspiration() {
+//		double aspiration = 0;												   // calculated aspiration level
+//		double aspi_value = this.getP_reference_income();					   // aspiration value is externally input coefficient value
+//		
+//		aspiration = aspi_value;                                               
+//
+//		setAspiration(aspiration);
+//	}	
 
 	/** 
 	 * Each time period, t, call this function to increment the experience vector of this farm. 
@@ -413,7 +420,7 @@ public class Farm {
 		
 		double phi = 0;
 
-		if (income >= this.Aspiration) {
+		if (income >= this.p_reference_income) {
 			value = Math.pow(income, alpha_plus);
 			probability = 1-probability;
 			probWeighting = ( Math.pow(probability, phi_plus) ) / Math.pow( (Math.pow(probability, phi_plus) + Math.pow((1 - probability), phi_plus)), (1/phi_plus) );
@@ -561,9 +568,9 @@ public class Farm {
 	}
 
 	// getters and setters for all fields
-	public void setAspiration(double aspiration) {
-		this.Aspiration = aspiration;
-	}
+//	public void setAspiration(double aspiration) {
+//		this.Aspiration = aspiration;
+//	}
 	public void setActivity_Dissimilarity(double activity_dissimilarity) {
 		this.Activity_Dissimilarity = activity_dissimilarity;
 	}
@@ -609,9 +616,9 @@ public class Farm {
 	public double getActivity_Dissimilarity() {
 		return this.Activity_Dissimilarity;
 	}
-	public double getAspiration() {
-		return this.Aspiration;
-	}
+//	public double getAspiration() {
+//		return this.Aspiration;
+//	}
 	public double getSatisfaction() {
 		return this.Satisfaction;
 	}
@@ -746,5 +753,21 @@ public class Farm {
 	}
 	public void setP_beta_p(double p_beta_p) {
 		this.p_beta_p = p_beta_p;
+	}
+
+	public double getP_reference_income() {
+		return p_reference_income;
+	}
+
+	public void setP_reference_income(double p_reference_income) {
+		this.p_reference_income = p_reference_income;
+	}
+
+	public double getP_fuzzy_size() {
+		return p_fuzzy_size;
+	}
+
+	public void setP_fuzzy_size(double p_fuzzy_size) {
+		this.p_fuzzy_size = p_fuzzy_size;
 	}
 }

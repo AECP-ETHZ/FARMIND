@@ -40,6 +40,27 @@ public class FarmTests {
 	}
 	
 	@Test
+	public void testFarmParameters() {
+		Farm farm = allFarms.get(0);
+		
+		assertEquals( farm.getEducation(), 9);
+		assertEquals( farm.getMemory(), 5);
+		assertEquals( farm.getP_beta_l(), 0.91 );
+		assertEquals( farm.getP_beta_p(), 0.5);
+		assertEquals( farm.getP_beta_s(), 0.44 );
+		assertEquals( farm.getP_reference_income(), 572 );
+		assertEquals( farm.getP_aspiration_coef(), 0 );
+		assertEquals( farm.getP_income_tolerance_coef(), 0.9 );
+		assertEquals( farm.getP_activity_tolerance_coef(), 0.69 );
+		assertEquals( farm.getP_lambda(), 0.7 );
+		assertEquals( farm.getP_alpha_plus(), 0.65 );
+		assertEquals( farm.getP_alpha_minus(), 0.65 );
+		assertEquals( farm.getP_phi_plus(), 0.7 );
+		assertEquals( farm.getP_phi_minus(), 0.7 );
+		assertEquals( farm.getP_fuzzy_size(),6 );
+	}
+	
+	@Test
 	public void testAgeExitDecision() {
 		Farm farm = allFarms.get(0);
 		farm.getHead().setAge(700);
@@ -277,22 +298,6 @@ public class FarmTests {
 		double sat = farm.getSatisfaction();
 		assertEquals(sat, -0.1769965217965832);                                // hand calculation
 	} 
-	
-	@Test
-	public void testUpdateAspiration() {
-		Farm farm = allFarms.get(0);
-		List<Activity> MP_Activities = new ArrayList<Activity>();	           // list of all farm activities selected by MP model. MP returns list of activities for each farm, thus a list of lists
-		MP_Activities = null;
-		
-		farm.updateFarmParameters(allFarms, -1, MP_Activities);				   // aspiration level is initially set to 0, then we update to the coefficient value
-		double orig_aspiration = farm.getAspiration();
-		
-		farm.updateFarmParameters(allFarms, 100, MP_Activities);			   // real update should not change aspiration level 
-		double new_aspiration = farm.getAspiration();
-		
-		assertEquals(new_aspiration, orig_aspiration);                               
-	} 
-	
 	
 	
 	public static final String TestDataFile = "./test_data/farm_parameters.csv";

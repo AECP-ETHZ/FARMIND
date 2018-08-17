@@ -12,7 +12,7 @@ The ABM requires two additional commands to run: the number of years, and the sp
 
 	java -jar ABM.jar -year 5 -modelName WEEDCONTROL -uncertainty 1
 
-will start the ABM for five years running with the WEEDCONTROL gams model. The uncertainty flag set to 1 runs the normal simulation. When the uncertainty flag is set to 0 it only uses the model satisfaction when making the decisions. 
+will start the ABM for five years running with the WEEDCONTROL gams model on . The uncertainty flag set to 1 runs the normal simulation. When the uncertainty flag is set to 0 it only uses the model satisfaction when making the decisions. 
 
 ### ABM Requirements
 1. /data/ folder containing input data files:
@@ -20,18 +20,6 @@ will start the ABM for five years running with the WEEDCONTROL gams model. The u
 	The initial conditions of the agents with all parameters need to be specified in the /data/ directory before starting the model. The /test_data/ folder contains example initialization files. 
 
 2. /projdir/ folder containing the MP optimization model
-
-<!--Additional commands to fine tune the ABM simulation are available. The following flags turn off portions of the default simulation:
-
--uncertainty :: if set to 0, then ABM will not use the dissimilarity calculations during simulations
-
--individual_learning :: if set to 0, then the ABM will not use individual learning for activities during simulation
-
--social_learning :: if set to 0, then the ABM will not use social learning for activities during simulation
-
--activity_preference :: if set to 0, then the ABM will not use activity preference during simulation
-
--->
 
 ### Java JAR File Extraction
 To extract the required JAR file for the external MP model integration in eclipse do the following:
@@ -43,7 +31,6 @@ To extract the required JAR file for the external MP model integration in eclips
 3. Make sure the "Launch Configuration" is set to "FARMIND - Consumat" as the entry point for the program and make sure to select 'Extract required libraries' to ensure that the jar file is a stand alone file. 
 
 4. Choose a file location and hit 'Finish'.
-
 
 ### Library Installation in Eclipse
 All of the those libraries should already be downloaded and included in the /lib/ directory. 
@@ -67,6 +54,17 @@ The libraries can be downloaded here if required:
 1. Download jgrapht-1.1.0.zip file from here: http://jgrapht.org/
 2. Download commons-math3-3.6.1-bin.zip from here: http://commons.apache.org/proper/commons-math/download_math.cgi
 3. Download the apache command line interface (cli) tool used for reading the input parameters: http://commons.apache.org/proper/commons-cli/
+
+### Eclipse Development Environment
+The code is developed and debugged using eclipse 4.7 or greater using JUnit5 for unit testing. 
+
+1. Clone the github repository to your computer
+
+2. After opening eclipse, right click on the command window (left side) and select "Import"
+
+3. Under "General" select "Projects from folders or archives" and select the git repository. 
+
+4. Install libraries in eclipse from the \lib folder and compile. 
 
 ### Troubleshooting Guide
 1. Issue related to graph library:
@@ -104,3 +102,7 @@ If the issue persists, try removing the libraries and reinstalling them again.
 	 -year <arg>                  ABM simulation years
 	 
 	 Make sure you are running the full command to start the ABM jar file. Three commands are necessary when starting. 
+	 
+6. Error relating to JNI issues when running jar file OR issues related to library usage. 
+	
+	JNI issues come from incorrect library settings. The easiest option to fix library issues is usually to uninstall all user libraries and re-add the libraries. 

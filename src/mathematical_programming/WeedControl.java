@@ -19,7 +19,7 @@ import activity.Activity;
 import reader.ReadData;
 
 /** 
- * Mathematical Programming Class for input and output files from the ABM.
+ * Use the weedcontrol model from the AECP group as an optimizer on the activities. This class runs the model, reads the input, and modifies the required control files. 
  * @author kellerke
  *
  */

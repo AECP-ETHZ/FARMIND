@@ -190,7 +190,7 @@ public class Farm {
 	
 	// Update functions for farm parameters
 	/** 
-	 * This function updates farms with new income values, as well as the probabilities the values occur, returned by the optimization model. 
+	 * This function updates all updatedable parameters on the farm based on new income and activity
 	 * 
 	 * @param allFarms: list of all farms
 	 * @param income: income value of farm
@@ -200,10 +200,9 @@ public class Farm {
 		updateIncomeHistoryList(income);									   // for year = 1, we pass in -1 for income so we don't update the income 
 	    updateAveragePersonalIncomeChangeRate();
 	    
-	    if (income != -1 && activity != null) {
+	    if (income != -1 && activity != null) {								   // if no activity, then skip update
 	    	setCurrentActivity(activity);
 	    }    
-	    //updateAspiration();
 	    updateSatisfaction();									
 	    updateIncomeDissimilarity();										   // in the simulation loop in Main, we update the populationIncomeChangePercent 
 		updateActivityDissimilarity(allFarms);
@@ -300,18 +299,6 @@ public class Farm {
 		double current_satisfaction = currentSatisfaction();			       // current satisfaction level
 		setSatisfaction(current_satisfaction);                                 // uses updated income history
 	}
-	
-//	/** 
-//	 * Based on the historical income data, calculate the aspiration level as a percentage of historical income.
-//	 */
-//	private void updateAspiration() {
-//		double aspiration = 0;												   // calculated aspiration level
-//		double aspi_value = this.getP_reference_income();					   // aspiration value is externally input coefficient value
-//		
-//		aspiration = aspi_value;                                               
-//
-//		setAspiration(aspiration);
-//	}	
 
 	/** 
 	 * Each time period, t, call this function to increment the experience vector of this farm. 
@@ -356,7 +343,6 @@ public class Farm {
 	public void updateAge() {
 		int age = this.head.getAge();										   // age of the farmer
 		this.head.setAge(age + 1);                                             // increment farmers age each time period
-
 	}
 		
 	/**

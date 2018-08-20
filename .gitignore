@@ -7,3 +7,4 @@
 /output
 *.log
 *AllowedStratPrePost.CSV
+projdir/Fit_StratABM_Cal.gms

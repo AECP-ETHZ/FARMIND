@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import activity.Activity;
+import agent.Farm;
 
 
 /** 
@@ -13,7 +14,7 @@ import activity.Activity;
  */
 public interface MP_Interface {
 	
-	public void inputsforMP(String farmId, List<String> possibleActivity);
+	public void inputsforMP(Farm farm, List<String> possibleActivity);
 	
 	public void runModel(int nFarms, int year);
 	

@@ -13,6 +13,7 @@ import org.apache.commons.cli.*;
 import logging.ABMActivityLog;
 import logging.ABMTimeStepLog;
 import mathematical_programming.MP_Interface;
+import mathematical_programming.SwissLand;
 import mathematical_programming.WeedControl;
 import reader.ReadData;
 import activity.Activity;
@@ -56,7 +57,7 @@ public class Consumat {
 				MP = new WeedControl();
 			} 
 			else {
-				MP = new WeedControl();
+				MP = new SwissLand();
 			}
 			
 			farmIndex = 0;
@@ -81,7 +82,7 @@ public class Consumat {
 				updateLogFileName();
 				log.appendLogFile(FileName);
 				
-				MP.inputsforMP(farm.getFarmName(), possibleActivitySet);
+				MP.inputsforMP(farm, possibleActivitySet);
 				
 				farm.updateAge();                              				                       // each time period update age
 				farmIndex++;                                                                       // go to next farm in list

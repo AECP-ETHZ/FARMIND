@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import activity.Activity;
+import agent.Farm;
 import reader.ReadData;
 
 /** 
@@ -87,7 +88,7 @@ public class WeedControl implements MP_Interface{
 	}
 	
 	@Override
-	public void inputsforMP(String farmId, List<String> possibleActivity) {
+	public void inputsforMP(Farm farm, List<String> possibleActivity) {
 		int[][] output = new int[55][6]; 
 
 		for (int i = 0; i<6; i++) {  // set all the first row, except the last column, to 1 as the initialization strategies. 
@@ -114,6 +115,8 @@ public class WeedControl implements MP_Interface{
 					output[row-1][column-1] = 1;							   // set correct bit to 1 in output matrix if this strategy is selected
 				}
 			}
+			
+			String farmId = farm.getFarmName();
 			
 			for(int i = 1; i < 56; i++) {	
 				int[] row = output[i-1];									   // print each output row to build full gams file

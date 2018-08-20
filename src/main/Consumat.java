@@ -53,7 +53,7 @@ public class Consumat {
 			LOGGER.info(String.format("Year %d simulation started", year));
 			MP_Interface MP;
 			
-			if (cmd.getOptionValue("modelName") == "WEEDCONTROL") {
+			if (cmd.getOptionValue("modelName").equals("WEEDCONTROL")) {
 				MP = new WeedControl();
 			} 
 			else {

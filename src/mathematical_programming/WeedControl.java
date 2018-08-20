@@ -104,9 +104,9 @@ public class WeedControl implements MP_Interface{
 			}
 						
 			for(int i = 1; i < activitySets.length + 1; i++) {
-				String name = String.format("\"activity%d\"", i);
+				String name = String.format("activity%d", i);
 				if (i < 10) {
-					name = String.format("\"activity0%d\"", i);
+					name = String.format("activity0%d", i);
 				}
 				if (possibleActivity.contains(name)) {
 					int[] ind = activitySets[i-1];
@@ -120,13 +120,8 @@ public class WeedControl implements MP_Interface{
 			
 			for(int i = 1; i < 56; i++) {	
 				int[] row = output[i-1];									   // print each output row to build full gams file
-				String name = farmId.substring(1, farmId.length() - 1);
-				if (name.charAt(0) == '\\') {
-					name = name.substring(1, name.length() - 1);               // in the input csv files, we use a \ to indicate a " in the output name. This is a workaround for an ugly issue with csv file input in R.
-					name = "\"" + name + "\"";
-				}
 				
-				writer.println(String.format("%s,spost%d,%d,%d,%d,%d,%d,%d", name, i, row[0],row[1],row[2],row[3],row[4],row[5]));
+				writer.println(String.format("%s,spost%d,%d,%d,%d,%d,%d,%d", farmId, i, row[0],row[1],row[2],row[3],row[4],row[5]));
 			}
 			writer.close();
 			
@@ -275,10 +270,10 @@ public class WeedControl implements MP_Interface{
 				//LOGGER.info( String.format("PreStrat %s, PostStrat %s, Activity: %s", pre, post, index+1 ) );
 				
 				for(int i = 0; i < allPossibleActivities.size(); i++) {
-					String name = String.format("\"activity%d\"", index+1);
+					String name = String.format("activity%d", index+1);
 					List<Activity> farmActivityList = new ArrayList<Activity>();
 					if (index < 9) {
-						name = String.format("\"activity0%d\"", index+1);
+						name = String.format("activity0%d", index+1);
 					}
 					if (allPossibleActivities.get(i).getName().equals(name) ) {
 						int ID = allPossibleActivities.get(i).getID();

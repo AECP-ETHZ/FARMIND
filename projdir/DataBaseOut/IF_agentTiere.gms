@@ -951,4 +951,5 @@ Parameter IF_agentTiere(s_agentenID,s_tiere) /
 36970.pferde 1.00
 36970.schafe 1.00
 36970.ziegen 1.00
-36970.kaelber_miku 1.00/;
+36970.kaelber_miku 1.00
+/;

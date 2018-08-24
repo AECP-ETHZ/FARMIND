@@ -1723,4 +1723,5 @@ Parameter          IF_agentPflanze(s_agentenID,s_pflanzen)
 36970.naturWeide 1.00
 36970.forst 1.00
 36970.hochstamm 1.00
-36970.gemuese 1.00/;
+36970.gemuese 1.00
+/;

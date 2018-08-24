@@ -31,7 +31,7 @@ public class ABMTimeStepLog {
 	private double satisfaction;
 	
 	public static final int POSSIBLE_ACTIVITY_SET_PRINTING_SIZE = 6;
-	public static final int PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 3;
+	public static final int PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 4;
 	
 	/**
 	 * Constructor for the CSV log
@@ -133,12 +133,22 @@ public class ABMTimeStepLog {
 		writer.print(String.format("%.2f,",this.income ) );
 		writer.print(String.format("%s,",this.strategy) );
 		
-		for(int i = 0; i < PREVIOUS_ACTIVITY_SET_PRINTING_SIZE; i++) {
-			if (this.currentActivity.size() >= (i+1)) {
-				writer.print(String.format("%s,",  this.currentActivity.get(i).getName()) );
-			}
-			else {
+		// if previous activity set is larger than printing limit, print NA for all options
+		if(this.currentActivity.size() == 0 || this.currentActivity.size() > PREVIOUS_ACTIVITY_SET_PRINTING_SIZE) {
+			for(int i = 0; i < PREVIOUS_ACTIVITY_SET_PRINTING_SIZE-1 ; i++) {
 				writer.print("NA," );
+			}
+		}
+		
+		// if previous activity set is smaller than printing limit, print those activities plus NA if required
+		else {
+			for(int i = 0; i < PREVIOUS_ACTIVITY_SET_PRINTING_SIZE; i++) {
+				if (this.currentActivity.size() >= (i+1)) {
+					writer.print(String.format("%s,",  this.currentActivity.get(i).getName()) );
+				}
+				else {
+					writer.print("NA," );
+				}
 			}
 		}
 		

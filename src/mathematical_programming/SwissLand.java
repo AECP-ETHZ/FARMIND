@@ -25,6 +25,7 @@ public class SwissLand implements MP_Interface{
 			allActivities.add(act.getName());
 		}
 
+		// edit animal activity file
 		try {
             BufferedReader oldScript = new BufferedReader(new FileReader("projdir/DataBaseOut/If_agentTiere.gms"));
             String line;
@@ -35,7 +36,7 @@ public class SwissLand implements MP_Interface{
             		String Farm_Activity = String.format("%s.%s", farm.getFarmName(), activity);
             		if (line.contains(Farm_Activity)) {
             			if( possibleActivity.contains(activity) ) {
-            				line = String.format("%s.%s %f", farm.getFarmName(), activity, 0.0);
+            				line = String.format("%s.%s %.2f", farm.getFarmName(), activity, 1.0);
             			}
             			else {
             				line = String.format("%s.%s %.2f", farm.getFarmName(), activity, 0.0);
@@ -55,6 +56,39 @@ public class SwissLand implements MP_Interface{
         catch (IOException ioe) {
         	ioe.printStackTrace();
         }
+		
+		// edit plant activity file
+		try {
+            BufferedReader oldScript = new BufferedReader(new FileReader("projdir/DataBaseOut/If_agentPflanze.gms"));
+            String line;
+            String script = "";
+            while ((line = oldScript.readLine()) != null) {
+            	
+            	for(String activity: allActivities ) {
+            		String Farm_Activity = String.format("%s.%s", farm.getFarmName(), activity);
+            		if (line.contains(Farm_Activity)) {
+            			if( possibleActivity.contains(activity) ) {
+            				line = String.format("%s.%s %.2f", farm.getFarmName(), activity, 1.0);
+            			}
+            			else {
+            				line = String.format("%s.%s %.2f", farm.getFarmName(), activity, 0.0);
+            			}	
+            		}	
+            	}
+            	
+                script += line + '\n';
+            }
+            
+            oldScript.close();
+            FileOutputStream newScript = new FileOutputStream("projdir/DataBaseOut/If_agentPflanze.gms");
+            newScript.write(script.getBytes());
+            newScript.close();
+        }
+		
+        catch (IOException ioe) {
+        	ioe.printStackTrace();
+        }
+		
 		
 	}
 

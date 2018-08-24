@@ -30,7 +30,8 @@ public class ABMTimeStepLog {
 	private double income_diss;
 	private double satisfaction;
 	
-	public static final int POSSIBLE_ACTIVITY_SET_PRINTING_SIZE = 6;					
+	public static final int POSSIBLE_ACTIVITY_SET_PRINTING_SIZE = 6;
+	public static final int PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 3;
 	
 	/**
 	 * Constructor for the CSV log
@@ -60,7 +61,6 @@ public class ABMTimeStepLog {
 		setIncome_diss(income_diss);
 		setActivity_diss(activity_diss);
 		setSatisfaction(satisfaction);
-		
 	}
 	
 	/** 
@@ -90,7 +90,7 @@ public class ABMTimeStepLog {
 				+ "beta_l,beta_s,beta_p,tolerance_activity,tolerance_income,activity_dissimilarity,income_dissimilarity,learning_rate,satisfaction," 
 				+ "income,strategy,";
 		
-		for(int i = 0; i < this.currentActivity.size(); i++) {
+		for(int i = 0; i < PREVIOUS_ACTIVITY_SET_PRINTING_SIZE; i++) {
 			name = name + String.format("previous_activity_%s,",  i+1 );
 		}
 
@@ -98,7 +98,7 @@ public class ABMTimeStepLog {
 			name = name + String.format("possible_activity_%s,",  i+1 );
 		}
 		
-		name = name + String.format("possible_activity_%s",  POSSIBLE_ACTIVITY_SET_PRINTING_SIZE );
+		name = name + String.format("possible_activity_%s",  POSSIBLE_ACTIVITY_SET_PRINTING_SIZE );          // print last element without comma
 		
 		if (file.length() == 0) {
 			writer.println(name);
@@ -133,8 +133,13 @@ public class ABMTimeStepLog {
 		writer.print(String.format("%.2f,",this.income ) );
 		writer.print(String.format("%s,",this.strategy) );
 		
-		for(int i = 0; i < this.currentActivity.size(); i++) {
-			writer.print(String.format("%s,",  this.currentActivity.get(i).getName()) );
+		for(int i = 0; i < PREVIOUS_ACTIVITY_SET_PRINTING_SIZE; i++) {
+			if (this.currentActivity.size() >= (i+1)) {
+				writer.print(String.format("%s,",  this.currentActivity.get(i).getName()) );
+			}
+			else {
+				writer.print("NA," );
+			}
 		}
 		
 		// if there are no possible activities or more than we want to print, print NA for all places

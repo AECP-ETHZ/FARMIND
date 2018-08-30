@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.logging.FileHandler;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
@@ -35,6 +36,7 @@ public class Consumat {
 	public static void main(String[] args) {
 		initializeLogging();
 		LOGGER.info("Starting FARMIND: version number: 0.7.0");
+		LOGGER.finest("meow");
 		CommandLine cmd = parseInput(args);														   // parse input arguments
 		
 		ReadData            reader             = new ReadData();							       // read all input data files
@@ -92,6 +94,11 @@ public class Consumat {
 			MP_Incomes = MP.readMPIncomes();
 			MP_Activities = MP.readMPActivities();
 			
+			if (MP_Activities.size() != allFarms.size()) {
+				LOGGER.severe("Exiting Farmind. Output log is incomplete.");
+				System.exit(0);
+			} 
+			
 			farmIndex = 0;
 			for (Farm farm : allFarms) {
 				ABMActivityLog log = new ABMActivityLog(farm.getPreferences().getDataElementName(), farm.getFarmName(), year, farm.getStrategy(), farm.getCurrentActivity(), MP_Activities.get(farmIndex));
@@ -112,6 +119,7 @@ public class Consumat {
 			fh = new FileHandler("ABM.log");
 	        LOGGER.addHandler(fh);
 	        SimpleFormatter formatter = new SimpleFormatter();  
+	        LOGGER.log(Level.SEVERE, "severe");
 	        fh.setFormatter(formatter);  
 		} catch (SecurityException e) {
 			e.printStackTrace();

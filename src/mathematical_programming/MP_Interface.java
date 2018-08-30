@@ -18,9 +18,9 @@ public interface MP_Interface {
 	
 	public void runModel(int nFarms, int year);
 	
-	public List<Double> readMPIncomes();
+	public List<Double> readMPIncomes(List<Farm> allFarms);
 	
-	public List<ArrayList<Activity>> readMPActivities();
+	public List<ArrayList<Activity>> readMPActivities(List<Farm> allFarms);
 	
 	public ArrayList<Activity> getExitActivity();
 	

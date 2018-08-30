@@ -302,7 +302,8 @@ public class FuzzyLogicCalculator {
 	}
 	
 	/** 
-	 * Each farm has a preference vector and we scale this vector based on the number of activities in the system
+	 * Each farm has a preference vector and we scale this vector based on the number of activities in the system. 
+	 * The vector contains values between 1 and 5 that correspond to the preference of the farmer for that specific activity with 5 being most preferred and 1 being least preferred. 
 	 * @param farm that we are performing the calculations for
 	 * @param m number of activities in the system
 	 * @return vector of farming preference for this farm

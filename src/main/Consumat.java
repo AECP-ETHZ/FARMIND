@@ -91,8 +91,8 @@ public class Consumat {
 			}
 			
 			MP.runModel(allFarms.size(),year);													   // if needed, update mp script and then start model
-			MP_Incomes = MP.readMPIncomes();
-			MP_Activities = MP.readMPActivities();
+			MP_Incomes = MP.readMPIncomes(allFarms);
+			MP_Activities = MP.readMPActivities(allFarms);
 			
 			if (MP_Activities.size() != allFarms.size()) {
 				LOGGER.severe("Exiting Farmind. Output log is incomplete.");

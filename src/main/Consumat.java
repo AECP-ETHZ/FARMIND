@@ -35,8 +35,7 @@ public class Consumat {
 	 
 	public static void main(String[] args) {
 		initializeLogging();
-		LOGGER.info("Starting FARMIND: version number: 0.7.0");
-		LOGGER.finest("meow");
+		LOGGER.info("Starting FARMIND: version number: 0.7.5");
 		CommandLine cmd = parseInput(args);														   // parse input arguments
 		
 		ReadData            reader             = new ReadData();							       // read all input data files
@@ -119,7 +118,6 @@ public class Consumat {
 			fh = new FileHandler("ABM.log");
 	        LOGGER.addHandler(fh);
 	        SimpleFormatter formatter = new SimpleFormatter();  
-	        LOGGER.log(Level.SEVERE, "severe");
 	        fh.setFormatter(formatter);  
 		} catch (SecurityException e) {
 			e.printStackTrace();

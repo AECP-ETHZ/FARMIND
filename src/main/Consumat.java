@@ -101,7 +101,7 @@ public class Consumat {
 			
 			farmIndex = 0;
 			for (Farm farm : allFarms) {
-				ABMActivityLog log = new ABMActivityLog(farm.getPreferences().getDataElementName(), farm.getFarmName(), year, farm.getStrategy(), farm.getCurrentActivity(), MP_Activities.get(farmIndex));
+				ABMActivityLog log = new ABMActivityLog(cmd.getOptionValue("modelName"), farm.getPreferences().getDataElementName(), farm.getFarmName(), year, farm.getStrategy(), farm.getCurrentActivity(), MP_Activities.get(farmIndex));
 				log.appendLogFile(FileName);
 				farmIndex++; 
 			}

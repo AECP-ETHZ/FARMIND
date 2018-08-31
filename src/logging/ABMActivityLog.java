@@ -18,9 +18,8 @@ public class ABMActivityLog {
 	private List<Activity> currentActivity;									   // current activity of the agent
 	private List<String> possibleActivity;								       // set of possible activities by the agent
 	private List<Activity> MPSelectedActivity;								   // activity actually selected by the MP
-	
-	public static final int SELECTED_ACTIVITY_SET_PRINTING_SIZE = 2;
-	public static final int PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 2;
+	private int PREVIOUS_ACTIVITY_SET_PRINTING_SIZE;						   // how many activities to print
+	private int SELECTED_ACTIVITY_SET_PRINTING_SIZE;						   // how many activities to print
 
 	/** 
 	 * Constructor for the CSV Log
@@ -31,13 +30,22 @@ public class ABMActivityLog {
 	 * @param currentActivity:		current activity(ies) in system
 	 * @param MPSelectedActivity:   best activity from the MP model
 	 */
-	public ABMActivityLog(List<String> allActivities, String farmId, Integer year, int strat, List<Activity> currentActivity, List<Activity> MPSelectedActivity) {
+	public ABMActivityLog(String modelName, List<String> allActivities, String farmId, Integer year, int strat, List<Activity> currentActivity, List<Activity> MPSelectedActivity) {
 		setFarmId(farmId);
 		setYear(year);
 		setStrategy(strat);
 		setCurrentActivity(currentActivity);
 		setAllActivity(allActivities);
 		setMPSelectedActivity(MPSelectedActivity);
+		
+		if(modelName.equals("WEEDCONTROL")) {
+			SELECTED_ACTIVITY_SET_PRINTING_SIZE = 1;
+			PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 1;
+		}
+		else {
+			SELECTED_ACTIVITY_SET_PRINTING_SIZE = 3;
+			PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 3;
+		}
 	}
 	
 	/** 

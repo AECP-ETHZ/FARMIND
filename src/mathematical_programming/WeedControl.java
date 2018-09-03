@@ -136,7 +136,7 @@ public class WeedControl implements MP_Interface{
 	@Override
 	public ArrayList<Activity> getExitActivity() {
 		ArrayList<Activity> activities = new ArrayList<Activity>();	   	 	       // list of all farm activities selected by MP model
-		Activity exit = new Activity(0,"\"Activity00\"");
+		Activity exit = new Activity(0,"activity00");
 		
 		activities.add(exit);
 	
@@ -227,6 +227,13 @@ public class WeedControl implements MP_Interface{
 			} catch (IOException Exception) {
 				Exception.printStackTrace();
 			}
+		}
+		
+		double std = std(prices);
+		
+		if(std < 0.000001) {
+			LOGGER.info("Weedcontrol price information variance is too small. Please modify prices.");
+			System.exit(0);
 		}
 		
 		year_price.add(years);
@@ -344,6 +351,37 @@ public class WeedControl implements MP_Interface{
 			}
 		}
 		return Result;
+	}
+	
+	/** 
+	 * Return mean value of provided list 
+	 * @param list: list of values to calculate mean with
+	 * @return mean: mean value of list
+	 */
+	private double mean(List<Double> list) {
+		double mean = 0;												       // mean value to return
+		
+		for (int i = 0; i<list.size(); i++) {
+			mean = mean + list.get(i);
+		}
+		
+		mean  = mean / list.size();
+		return mean;
+	}
+	/**
+	 * This function calculates the standard deviation of provided list.
+	 * @param list: list for calculating standard deviation
+	 * @return std: standard deviation value
+	 */
+	private double std(List<Double> list) {
+		double std = 0;		
+		for (int i=0; i<list.size();i++)
+		{
+		    std = std + Math.pow(list.get(i) - mean(list), 2);
+		}
+		
+		std = Math.sqrt(std/list.size());
+		return std;
 	}
 	
 	/**

@@ -444,9 +444,15 @@ public class Farm {
 		double mean = mean(this.IncomeHistory);
 		double std = std(this.IncomeHistory);
 		
-		if (std == 0) {
+		if (mean == 0 && std == 0) {
+			mean = 1;
+			std = 1;
+		}
+		if (mean != 0 && std == 0) {
+			System.out.println(this.getStrategy());
+			System.out.println(mean);
 			LOGGER.severe( String.format("The standard deviation of historical incomes is 0 for farm %S ", this.getFarmName()  ) );
-			System.exit(0);                                                    // kill program 
+			System.exit(0);     
 		}
 		
 		NormalDistribution normal = new NormalDistribution(mean, std);		   // distribution of historical incomes

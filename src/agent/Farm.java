@@ -184,7 +184,8 @@ public class Farm {
 				}
 			}
 		}
-				
+		LOGGER.fine("Decision made");
+
 		return ActivitySet;
 	}
 	

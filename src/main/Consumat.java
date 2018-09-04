@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.logging.FileHandler;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
@@ -30,11 +31,12 @@ public class Consumat {
 	static String origFileName = createFileName();										           // file name for logging
 	static String FileName = origFileName + String.format("%d",0);								   // given enough lines in the log file, a new file is needed.
 	private static final Logger LOGGER = Logger.getLogger("FARMIND_LOGGING");
-	static FileHandler fh;  
+	static FileHandler fh;
 	 
 	public static void main(String[] args) {
 		initializeLogging();
 		LOGGER.info("Starting FARMIND: version number: 0.7.6");
+		
 		CommandLine cmd = parseInput(args);														   // parse input arguments
 		
 		ReadData            reader             = new ReadData();							       // read all input data files
@@ -115,9 +117,15 @@ public class Consumat {
 	private static void initializeLogging() {
         try {
 			fh = new FileHandler("ABM.log");
+			
+	        fh.setLevel(Level.ALL);
+	        
 	        LOGGER.addHandler(fh);
 	        SimpleFormatter formatter = new SimpleFormatter();  
 	        fh.setFormatter(formatter);  
+	        
+	        LOGGER.setLevel(Level.ALL);
+	        
 		} catch (SecurityException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

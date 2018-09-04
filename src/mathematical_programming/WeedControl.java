@@ -136,7 +136,7 @@ public class WeedControl implements MP_Interface{
 	@Override
 	public ArrayList<Activity> getExitActivity() {
 		ArrayList<Activity> activities = new ArrayList<Activity>();	   	 	       // list of all farm activities selected by MP model
-		Activity exit = new Activity(0,"activity00");
+		Activity exit = new Activity(0,"activity01");
 		
 		activities.add(exit);
 	

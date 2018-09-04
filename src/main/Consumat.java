@@ -78,7 +78,7 @@ public class Consumat {
 				
 				List<String> possibleActivitySet = farm.decideActivitySet(allFarms,cmd);      
 				
-				ABMTimeStepLog log = new ABMTimeStepLog(farm.getPreferences().getDataElementName(), farm.getFarmName(), year, farm.getLearningRate(), farm.getActivity_Dissimilarity(), farm.getIncome_Dissimilarity(), farm.getSatisfaction(), farm.getStrategy(), farm.getIncomeHistory().get(0), farm.getCurrentActivity(), possibleActivitySet, farm);
+				ABMTimeStepLog log = new ABMTimeStepLog(cmd.getOptionValue("modelName"), farm.getPreferences().getDataElementName(), farm.getFarmName(), year, farm.getLearningRate(), farm.getActivity_Dissimilarity(), farm.getIncome_Dissimilarity(), farm.getSatisfaction(), farm.getStrategy(), farm.getIncomeHistory().get(0), farm.getCurrentActivity(), possibleActivitySet, farm);
 				updateLogFileName();
 				log.appendLogFile(FileName);
 				

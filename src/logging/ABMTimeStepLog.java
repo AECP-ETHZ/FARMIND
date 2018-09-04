@@ -30,8 +30,8 @@ public class ABMTimeStepLog {
 	private double income_diss;
 	private double satisfaction;
 	
-	public static final int POSSIBLE_ACTIVITY_SET_PRINTING_SIZE = 6;
-	public static final int PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 4;
+	private int POSSIBLE_ACTIVITY_SET_PRINTING_SIZE = 6;
+	private int PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 4;
 	
 	/**
 	 * Constructor for the CSV log
@@ -48,7 +48,7 @@ public class ABMTimeStepLog {
 	 * @param possibleActivities:	all possible activities
 	 * @param farm:					specific farm for this decision object
 	 */
-	public ABMTimeStepLog(List<String> allActivities, String farmId, Integer year, Double learning_rate, Double activity_diss, Double income_diss, double satisfaction, int strat, double income, List<Activity> currentActivity, List<String> possibleActivities, Farm farm) {
+	public ABMTimeStepLog(String modelName, List<String> allActivities, String farmId, Integer year, Double learning_rate, Double activity_diss, Double income_diss, double satisfaction, int strat, double income, List<Activity> currentActivity, List<String> possibleActivities, Farm farm) {
 		setFarmId(farmId);
 		setYear(year);
 		setStrategy(strat);
@@ -61,6 +61,16 @@ public class ABMTimeStepLog {
 		setIncome_diss(income_diss);
 		setActivity_diss(activity_diss);
 		setSatisfaction(satisfaction);
+		
+		if (modelName.equals("WEEDCONTROL")) {
+			PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 1;
+			POSSIBLE_ACTIVITY_SET_PRINTING_SIZE = 9;
+		}
+		else {
+			PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 4;
+			POSSIBLE_ACTIVITY_SET_PRINTING_SIZE = 6;
+		}
+		
 	}
 	
 	/** 

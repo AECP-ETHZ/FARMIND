@@ -76,7 +76,7 @@ public class ABMActivityLog {
 		}
 
 		for(int i = 0; i < SELECTED_ACTIVITY_SET_PRINTING_SIZE; i++) {
-			name = name + String.format("possible_activity_%s,",  i+1 );
+			name = name + String.format("selected_activity_%s,",  i+1 );
 		}
 		
 		name = name + "strategy";

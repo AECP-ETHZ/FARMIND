@@ -168,7 +168,7 @@ public class Farm {
 				}
 				else {
 					this.strategy = 1; //OPT-OUT
-					//LOGGER.info("Opt-out strategy chosen and returning an empty activity set"); 
+					LOGGER.fine(String.format("Opt-out made: %d for farm %s", this.strategy, this.farmName));
 				}
 			}
 			else {
@@ -184,7 +184,6 @@ public class Farm {
 				}
 			}
 		}
-		LOGGER.fine("Decision made");
 
 		return ActivitySet;
 	}
@@ -448,6 +447,7 @@ public class Farm {
 		if (mean == 0 && std == 0) {
 			mean = 1;
 			std = 1;
+			LOGGER.finer( String.format("Mean/STD set to 1 for farm %S as it is in opt-out", this.getFarmName()  ) );
 		}
 		if (mean != 0 && std == 0) {
 			System.out.println(this.getStrategy());

@@ -35,7 +35,7 @@ public class Consumat {
 	 
 	public static void main(String[] args) {
 		initializeLogging();
-		LOGGER.info("Starting FARMIND: version number: 0.7.6");
+		LOGGER.info("Starting FARMIND: version number: 0.8.6");
 		
 		CommandLine cmd = parseInput(args);														   // parse input arguments
 		
@@ -48,6 +48,8 @@ public class Consumat {
 		ArrayList<Activity> activity = null;											           // specific activity list of the farm
 		int farmIndex = 0;													                       // index of specific farm in list
 		int simYear = Integer.parseInt(cmd.getOptionValue("year"));								   // number of simulation years for ABM to run
+		int memoryLengthAverage = averageMemoryLength(allFarms);								   // average memory length of all agents/farms
+		boolean pricingAverage = true;															   // use the average pricing information for the historical memory length
 		
 		initializePopulationIncomeChangeRate(allFarms);						                       // initialize the farms with the input values before starting the full ABM simulation
 
@@ -56,7 +58,7 @@ public class Consumat {
 			MP_Interface MP;
 			
 			if (cmd.getOptionValue("modelName").equals("WEEDCONTROL")) {
-				MP = new WeedControl();
+				MP = new WeedControl(simYear,memoryLengthAverage);
 			} 
 			else {
 				MP = new SwissLand();
@@ -90,21 +92,55 @@ public class Consumat {
 				farmIndex++;                                                                       // go to next farm in list
 			}
 			
-			MP.runModel(allFarms.size(),year);													   // if needed, update mp script and then start model
+			pricingAverage = true;
+			MP.runModel(allFarms.size(),year,pricingAverage,memoryLengthAverage);				   // if needed, update mp script and then start model
 			MP_Incomes = MP.readMPIncomes(allFarms);
 			MP_Activities = MP.readMPActivities(allFarms);
 			
+			// original pricing information logging
+			farmIndex = 0;
+			for (Farm farm : allFarms) {
+				ABMActivityLog log = new ABMActivityLog(cmd.getOptionValue("modelName"), farm.getPreferences().getDataElementName(), farm.getFarmName(), year, farm.getStrategy(), farm.getCurrentActivity(), MP_Activities.get(farmIndex), MP_Incomes.get(farmIndex));
+				log.appendLogFile(FileName,pricingAverage);
+				farmIndex++; 
+			}
+					
+			// rerun Weedcontrol model using selected strategy, but actual pricing information
+			// this needs to be done twice as the first time gets the activity based on EXPECTED income
+			// the second time we use the selected activity(ies) and get the ACTUAL income of that agent for the selected strategy
+			if (MP instanceof WeedControl) {
+				farmIndex = 0;
+				for (Farm farm : allFarms) {
+					
+					List<Activity> selectedActivity = MP_Activities.get(farmIndex); 
+					List<String>   selectedActivityString = new ArrayList<>();                     // create string list of final selected activities
+					
+					pricingAverage = false;
+					for (Activity act: selectedActivity) {
+						selectedActivityString.add(act.getName());
+					}
+					
+					MP.inputsforMP(farm, selectedActivityString);
+					farmIndex++;
+				}
+				
+				MP.runModel(allFarms.size(),year,pricingAverage,memoryLengthAverage);			   // if needed, update mp script and then start model
+				MP_Incomes = MP.readMPIncomes(allFarms);
+				MP_Activities = MP.readMPActivities(allFarms);
+				
+				// second pricing information logging
+				farmIndex = 0;
+				for (Farm farm : allFarms) {
+					ABMActivityLog log = new ABMActivityLog(cmd.getOptionValue("modelName"), farm.getPreferences().getDataElementName(), farm.getFarmName(), year, farm.getStrategy(), farm.getCurrentActivity(), MP_Activities.get(farmIndex), MP_Incomes.get(farmIndex));
+					log.appendLogFile(FileName,pricingAverage);
+					farmIndex++; 
+				}
+			}
+				
 			if (MP_Activities.size() != allFarms.size()) {
 				LOGGER.severe("Exiting Farmind. Output log is incomplete.");
 				System.exit(0);
 			} 
-			
-			farmIndex = 0;
-			for (Farm farm : allFarms) {
-				ABMActivityLog log = new ABMActivityLog(cmd.getOptionValue("modelName"), farm.getPreferences().getDataElementName(), farm.getFarmName(), year, farm.getStrategy(), farm.getCurrentActivity(), MP_Activities.get(farmIndex));
-				log.appendLogFile(FileName);
-				farmIndex++; 
-			}
 			
 			updatePopulationIncomeChangeRate(allFarms, MP_Incomes);                                // at end of time step update the percent change for population
 			
@@ -131,6 +167,18 @@ public class Consumat {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}  
+	}
+	
+	private static int averageMemoryLength(List<Farm> allFarms) {
+		int memoryLength = 0;
+		
+		for (Farm farm:allFarms) {
+			memoryLength += farm.getMemory();
+		}
+		
+		memoryLength = memoryLength / allFarms.size();
+		
+		return memoryLength;
 	}
 	
 	/** 

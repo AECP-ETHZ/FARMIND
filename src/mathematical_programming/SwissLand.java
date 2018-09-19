@@ -94,7 +94,8 @@ public class SwissLand implements MP_Interface{
 	}
 
 	@Override
-	public void runModel(int nFarm, int year ) {
+	// throwaway pricing average and memoryLength average value as it is not used in the Swissland model
+	public void runModel(int nFarm, int year, boolean pricingAverage, int memoryLengthAverage) {
 		Runtime runtime = Runtime.getRuntime();						           // java runtime to run commands
 		
 		this.editMPscript(nFarm, year);										   // edit the gams script with updated pricing information

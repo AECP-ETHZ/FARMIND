@@ -13,6 +13,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.apache.commons.math3.util.Precision;
+
 import activity.Activity;
 import agent.Farm;
 import reader.ReadData;
@@ -31,22 +33,22 @@ public class WeedControl implements MP_Interface{
 	private static final Logger LOGGER = Logger.getLogger("FARMIND_LOGGING");
 	
 	@SuppressWarnings("unchecked")
-	public WeedControl() {
+	public WeedControl(int simYear, int memoryLengthAverage) {
 		file = new File("projdir\\p_AllowedStratPrePost.csv");				   // delete last time period's simulation file
 		if (file.exists()) {
 			file.delete();
 		}
 		
-		year_price = readMPyearPrice();                                // Initialize MP inputs (edit number of agents, year and price)
+		year_price = readMPyearPrice(simYear,memoryLengthAverage);             // Initialize MP inputs (edit number of agents, year and price)
 		yearlyPrices = (List<Double>) year_price.get(1);
 		listOfYears = (List<String>) year_price.get(0);
 	}
 
 	@Override
-	public void runModel(int nFarm, int year ) {
+	public void runModel(int nFarm, int year, boolean pricingAverage, int memoryLengthAverage ) {
 		Runtime runtime = Runtime.getRuntime();						           // java runtime to run commands
 		
-		this.editMPscript(nFarm, year);										   // edit the gams script with updated pricing information
+		this.editMPscript(nFarm, year, pricingAverage, memoryLengthAverage);   // edit the gams script with updated pricing information
 		
 		File f = new File("projdir\\Grossmargin_P4,00.csv");
 		f.delete();
@@ -148,16 +150,28 @@ public class WeedControl implements MP_Interface{
 	 * @param nFarm: number of farms
 	 * @param year: which year in iteration so we can select the proper price information
 	 */
-    private void editMPscript(int nFarm, int year) {	
+    private void editMPscript(int nFarm, int year, boolean pricingAverage, int memoryLengthAverage) {	
     	    	
 		if(year > listOfYears.size()) {
 			System.out.println("Out of iteration years - limited by number of years for MP "
 					+ "- the number of interation years should be less than that of total MP years minus 1");
 		}
         
-		Object MP_year = listOfYears.get(year-1);
-		Object MP_price = yearlyPrices.get(year-1); 
+		Object MP_year = listOfYears.get(memoryLengthAverage + year-1);
+		Object MP_price = yearlyPrices.get(memoryLengthAverage + year-1); 
 		
+		if (pricingAverage == true) {		
+			List<Double> memoryPrice = new ArrayList<Double>();
+			for(int i = memoryLengthAverage; i > 0; i--) {
+				memoryPrice.add(yearlyPrices.get( memoryLengthAverage - i + (year - 1)));
+			}
+			
+			MP_price = mean(memoryPrice);
+		} 
+		
+		MP_price = Precision.round((double) MP_price,2);		
+		LOGGER.fine(String.format("MP year price: %f",MP_price));
+			
 		try {
             BufferedReader oldScript = new BufferedReader(new FileReader("projdir/Fit_StratABM_Cal.gms"));
             String line;
@@ -195,9 +209,11 @@ public class WeedControl implements MP_Interface{
     
     /** 
      * Read yearly pricing information for Thomas' gams model
+     * @param memoryLengthAverage 
+     * @param simYear 
      * @return Map of pricing information
      */
-	public List<Object> readMPyearPrice() {	
+	public List<Object> readMPyearPrice(int simYear, int memoryLengthAverage) {	
 		String MPInputFile = "./data/yearly_prices.csv";
 		String Line;
 		ArrayList<String> yearPrice;
@@ -214,9 +230,7 @@ public class WeedControl implements MP_Interface{
 			while ((Line = Buffer.readLine()) != null) { 
 				yearPrice = CSVtoArrayList(Line);						   // Read farm's parameters line by line
 				years.add(yearPrice.get(0));
-				prices.add(Double.parseDouble(yearPrice.get(1)));
-				
-				//year_priceMap.put(yearPrice.get(0), Double.parseDouble(yearPrice.get(1)));
+				prices.add(Double.parseDouble(yearPrice.get(1)));				
 			}
 		
 		} catch (IOException e) {
@@ -232,7 +246,12 @@ public class WeedControl implements MP_Interface{
 		double std = std(prices);
 		
 		if(std < 0.000001) {
-			LOGGER.info("Weedcontrol price information variance is too small. Please modify prices.");
+			LOGGER.severe("Weedcontrol price information variance is too small. Please modify prices.");
+			System.exit(0);
+		}
+		
+		if (years.size() < (simYear + memoryLengthAverage)) {
+			LOGGER.severe("Require more pricing information: memory length + simulation years.");
 			System.exit(0);
 		}
 		
@@ -331,6 +350,12 @@ public class WeedControl implements MP_Interface{
 
 		incomes_activitiesOutput.add(incomesFromMP);
 		incomes_activitiesOutput.add(activitiesFromMP);
+		
+		// delete previous gams control file
+		file = new File("projdir\\p_AllowedStratPrePost.csv");				   // delete last time period's simulation file
+		if (file.exists()) {
+			file.delete();
+		}
 		return incomes_activitiesOutput;
 	}
 	

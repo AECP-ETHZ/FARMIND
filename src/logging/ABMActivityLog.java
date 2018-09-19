@@ -20,7 +20,8 @@ public class ABMActivityLog {
 	private List<Activity> MPSelectedActivity;								   // activity actually selected by the MP
 	private int PREVIOUS_ACTIVITY_SET_PRINTING_SIZE;						   // how many activities to print
 	private int SELECTED_ACTIVITY_SET_PRINTING_SIZE;						   // how many activities to print
-
+	private double income;													   // income of farm
+	
 	/** 
 	 * Constructor for the CSV Log
 	 * @param allActivities:		full set of activities
@@ -30,13 +31,14 @@ public class ABMActivityLog {
 	 * @param currentActivity:		current activity(ies) in system
 	 * @param MPSelectedActivity:   best activity from the MP model
 	 */
-	public ABMActivityLog(String modelName, List<String> allActivities, String farmId, Integer year, int strat, List<Activity> currentActivity, List<Activity> MPSelectedActivity) {
+	public ABMActivityLog(String modelName, List<String> allActivities, String farmId, Integer year, int strat, List<Activity> currentActivity, List<Activity> MPSelectedActivity, Double MP_Incomes) {
 		setFarmId(farmId);
 		setYear(year);
 		setStrategy(strat);
 		setCurrentActivity(currentActivity);
 		setAllActivity(allActivities);
 		setMPSelectedActivity(MPSelectedActivity);
+		this.income = MP_Incomes;
 		
 		if(modelName.equals("WEEDCONTROL")) {
 			SELECTED_ACTIVITY_SET_PRINTING_SIZE = 1;
@@ -52,20 +54,31 @@ public class ABMActivityLog {
 	 * write output CSV log file based on decision object. This log file can be updated each time period for each agent. 
 	 * @param fileName of output file which is previously checked to ensure we will not exceed 1 million lines of data. 
 	 */
-	public void appendLogFile(String fileName) {
+	public void appendLogFile(String fileName, boolean averagePrice) {
 		String PATH = "./output";
 		File directory = new File(PATH);
 		if(!directory.exists()) {
 			directory.mkdir();
 		}
 		
-		File file = new File(String.format("./output/%s_activity.csv", fileName));
+		File file = new File(String.format("./output/%s_activity_actualPrice.csv", fileName));
 		FileWriter fw = null;
 		try {
 			fw = new FileWriter(file,true);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		if(averagePrice) {
+			file = new File(String.format("./output/%s_activity_averagePrice.csv", fileName));
+			fw = null;
+			try {
+				fw = new FileWriter(file,true);
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+		}
+ 
 		BufferedWriter bw = new BufferedWriter(fw);
 		PrintWriter writer = new PrintWriter(bw);
 		
@@ -80,6 +93,7 @@ public class ABMActivityLog {
 		}
 		
 		name = name + "strategy";
+		name = name + ",income";
 		
 		if (file.length() == 0) {
 			writer.println(name);
@@ -127,6 +141,7 @@ public class ABMActivityLog {
 		}
 		
 		writer.print(String.format("%s",this.strategy) );
+		writer.print(String.format("%s",this.income) );
 		
 		writer.println("");
 		writer.close();

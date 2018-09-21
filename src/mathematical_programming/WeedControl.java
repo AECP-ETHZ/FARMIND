@@ -209,8 +209,8 @@ public class WeedControl implements MP_Interface{
     
     /** 
      * Read yearly pricing information for Thomas' gams model
-     * @param memoryLengthAverage 
-     * @param simYear 
+     * @param memoryLengthAverage: how many years to use in the average of historical pricing
+     * @param simYear: specific simulation year
      * @return Map of pricing information
      */
 	public List<Object> readMPyearPrice(int simYear, int memoryLengthAverage) {	
@@ -263,6 +263,7 @@ public class WeedControl implements MP_Interface{
 	
 	/** 
 	 * Read the MP output files to get income and activities
+	 * @param allFarms: list of all farms in system
 	 * @return return incomes and activities produced by the MP model
 	 */
 	public List<Object> readMPOutputFiles(List<Farm> allFarms) {

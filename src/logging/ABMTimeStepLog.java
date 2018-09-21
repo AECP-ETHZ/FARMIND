@@ -47,6 +47,7 @@ public class ABMTimeStepLog {
 	 * @param currentActivity:		current activity(ies) in system
 	 * @param possibleActivities:	all possible activities
 	 * @param farm:					specific farm for this decision object
+	 * @param modelName:			String name of model
 	 */
 	public ABMTimeStepLog(String modelName, List<String> allActivities, String farmId, Integer year, Double learning_rate, Double activity_diss, Double income_diss, double satisfaction, int strat, double income, List<Activity> currentActivity, List<String> possibleActivities, Farm farm) {
 		setFarmId(farmId);

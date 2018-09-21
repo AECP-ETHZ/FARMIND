@@ -30,6 +30,8 @@ public class ABMActivityLog {
 	 * @param strat:				strategy
 	 * @param currentActivity:		current activity(ies) in system
 	 * @param MPSelectedActivity:   best activity from the MP model
+	 * @param MP_Incomes:			income of agent at time period
+	 * @param modelName:			string name of agent
 	 */
 	public ABMActivityLog(String modelName, List<String> allActivities, String farmId, Integer year, int strat, List<Activity> currentActivity, List<Activity> MPSelectedActivity, Double MP_Incomes) {
 		setFarmId(farmId);
@@ -53,6 +55,7 @@ public class ABMActivityLog {
 	/** 
 	 * write output CSV log file based on decision object. This log file can be updated each time period for each agent. 
 	 * @param fileName of output file which is previously checked to ensure we will not exceed 1 million lines of data. 
+	 * @param averagePrice: boolean to indicate which log file to write to
 	 */
 	public void appendLogFile(String fileName, boolean averagePrice) {
 		String PATH = "./output";

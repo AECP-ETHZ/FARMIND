@@ -140,7 +140,7 @@ public class ABMActivityLog {
 			}
 		}
 		
-		writer.print(String.format("%s",this.strategy) );
+		writer.print(String.format("%s,",this.strategy) );
 		writer.print(String.format("%s",this.income) );
 		
 		writer.println("");

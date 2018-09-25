@@ -138,7 +138,7 @@ public class Consumat {
 			}
 				
 			if (MP_Activities.size() != allFarms.size()) {
-				LOGGER.severe("Exiting Farmind. Output log is incomplete.");
+				LOGGER.severe("Exiting FARMIND. Output log is incomplete.");
 				System.exit(0);
 			} 
 			
@@ -192,11 +192,11 @@ public class Consumat {
 	public static CommandLine parseInput(String[] args) {
 		
 		if (args.length < 1) {
-			LOGGER.severe("Exiting Farmind. Input number of iterations.");
+			LOGGER.severe("Exiting FARMIND. Input number of iterations.");
 			System.exit(0);
 		} 
 		if (args.length < 2) {
-			LOGGER.severe("Exiting Farmind. Input MP Model: WEEDCONTROL or SWISSLAND.");
+			LOGGER.severe("Exiting FARMIND. Input MP Model: WEEDCONTROL or SWISSLAND.");
 			System.exit(0);
 		} 
 		
@@ -210,7 +210,7 @@ public class Consumat {
         modelName.setRequired(true);
         options.addOption(modelName);
         
-        Option uncertaintyCLI = new Option("uncertainty", true, "1 or 0 to use uncertainty in ABM");
+        Option uncertaintyCLI = new Option("uncertainty", true, "1 or 0 to include uncertainty in ABM");
         uncertaintyCLI.setRequired(true);
         options.addOption(uncertaintyCLI);
 

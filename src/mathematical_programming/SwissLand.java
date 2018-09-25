@@ -182,14 +182,14 @@ public class SwissLand implements MP_Interface{
 			Line = Buffer.readLine();
 			Line = Buffer.readLine();
 			while (( (Line = Buffer.readLine()) != null ) && Line.matches(".*\\d+.*")) {                       
-				dataArray = CSVtoArrayList(Line);						          // Read farm's parameters line by line
+				dataArray = CSVtoArrayList(Line);						          // file has 'farm','activity' on each row.
 				
 				ArrayList<Activity> farmActivityList = new ArrayList<Activity>();
 				if (map.get(dataArray.get(0)) != null) {
-					farmActivityList = map.get(dataArray.get(0));
+					farmActivityList = map.get(dataArray.get(0));              // if farm already in map, reuse so we can add next activity
 				}
 								
-				for(int i = 0; i < allPossibleActivities.size(); i++) {
+				for(int i = 0; i < allPossibleActivities.size(); i++) { 
 					String name = dataArray.get(1);
 
 					if (allPossibleActivities.get(i).getName().equals(name) ) {
@@ -200,7 +200,6 @@ public class SwissLand implements MP_Interface{
 				}
 				
 				map.put(dataArray.get(0), farmActivityList);
-				
 			}
 			
 		} catch (IOException e) {
@@ -213,7 +212,7 @@ public class SwissLand implements MP_Interface{
 			e.printStackTrace();
 		}
 		
-		
+		// convert map to ordered list
 		for (Farm farm:allFarms) {
 			activitiesFromMP.add(map.get(farm.getFarmName()));
 		}
@@ -234,70 +233,6 @@ public class SwissLand implements MP_Interface{
 	 */
     private void editMPscript(int nFarm, int year) {	
     	    	
-	}
-    
-    /** 
-	 * Read the MP output files to get income and activities
-	 * @return return incomes and activities produced by the MP model
-	 */
-	public List<Object> readMPOutputFiles() {
-		List<Double> incomesFromMP = new ArrayList<Double>();				       // list of all agents' incomes produced by the MP
-		List<List<Activity>> activitiesFromMP = new ArrayList<List<Activity>>();   // list of all agents' final activities selected by the MP
-		List<Object> incomes_activitiesOutput = new ArrayList<Object>();		   // combination list of incomes and activities to return
-		BufferedReader Buffer = null;	 									       // read input file
-		String Line;														       // read each line of the file individually
-		ArrayList<String> dataArray;										       // separate data line
-		ReadData reader = new ReadData();
-		
-		List<Activity> allPossibleActivities = reader.getActivityList();		   // generated activity list with ID and name 
-		
-		File f = new File("projdir\\DatabaseIn\\output.csv");					   // actual results file
-		while (!f.exists()) {try {
-			Thread.sleep(1000);												       // wait until the MP finishes running
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}}
-
-		try {
-			Buffer = new BufferedReader(new FileReader("projdir\\DatabaseIn\\output.csv"));
-			
-			Line = Buffer.readLine();
-			while ((Line = Buffer.readLine()) != null) {                       
-				dataArray = CSVtoArrayList(Line);						          // Read farm's parameters line by line
-				incomesFromMP.add( Double.parseDouble(dataArray.get(1)) );
-				int size_activity = dataArray.size();
-				
-				List<Activity> farmActivityList = new ArrayList<Activity>();
-				for (int k = 2; k < size_activity; k++) {
-					for(int i = 0; i < allPossibleActivities.size(); i++) {
-						String name = dataArray.get(k);
-
-						if (allPossibleActivities.get(i).getName().equals(name) ) {
-							int ID = allPossibleActivities.get(i).getID();
-							Activity p = new Activity(ID, name); 
-							farmActivityList.add(p);
-						}
-					}
-				}
-				if (farmActivityList.size() > 0) {
-					activitiesFromMP.add(farmActivityList);
-				}
-				
-			}
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}									       
-
-		try {
-			Buffer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		incomes_activitiesOutput.add(incomesFromMP);
-		incomes_activitiesOutput.add(activitiesFromMP);
-		return incomes_activitiesOutput;
 	}
     
 	/**

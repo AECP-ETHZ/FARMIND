@@ -30,7 +30,6 @@ public class Farm {
 	private Location location;												   // geographic location of farm
 	private double Satisfaction;											   // Satisfaction level of farm
 	private List<Double> IncomeHistory;										   // list of previous income values
-	//private double Aspiration;												   // Aspiration level of the farm	
 	private double Activity_Dissimilarity;									   // Dissimilarity of this farm with respect to network for each Activity
 	private double Income_Dissimilarity;									   // Dissimilarity of this farm with respect to network for each Income
 	
@@ -58,34 +57,33 @@ public class Farm {
 	private double p_phi_plus ;												   // Parameter for the Phi Plus used for the Satisfaction Calculation
 	private double p_phi_minus;												   // Parameter for the Phi Minus used for the Satisfaction Calculation
 	private double p_fuzzy_size;											   // Parameter to control fuzzy logic size
-	
-	private static final Logger LOGGER = Logger.getLogger("FARMIND_LOGGING");
+	private static final Logger LOGGER = Logger.getLogger("FARMIND_LOGGING");  // logger for system 
 	
 	/**
 	 * This constructor sets up the parameters associated with a farm. 
 	 * 
-	 * @param name: name of the farm agent
-	 * @param location: location of the farm agent
-	 * @param socialNetwork: social network of the agent shared among the population
-	 * @param incomeHistory: income history for each agent
-	 * @param farmingExperience: matrix of farming experience for each activity
-	 * @param preferences: agent preference matrix for activities
-	 * @param activities: list of all activities
-	 * @param activity_tolerance: tolerance for activity differences
-	 * @param income_tolerance: tolerance for income differences
-	 * @param currentActivity: current activity for agent
-	 * @param farmHead: person object to represent main farmer
-	 * @param beta_l: parameter for fuzzy logic
-	 * @param beta_s: parameter for fuzzy logic
-	 * @param beta_p: parameter for fuzzy logic
-	 * @param reference_income: parameter for agent to select high or low income levels
-	 * @param aspiration_coef: aspiration value
-	 * @param lambda: value for lambda for satisfaction
-	 * @param alpha_plus: for satisfaction calculation
-	 * @param alpha_minus: for satisfaction calculation
-	 * @param phi_plus: for satisfaction calculation
-	 * @param phi_minus: for satisfaction calculation
-	 * @param fuzzy_size: how large of a fuzzy set to return
+	 * @param name :: name of the farm agent
+	 * @param location :: location of the farm agent
+	 * @param socialNetwork :: social network of the agent shared among the population
+	 * @param incomeHistory :: income history for each agent
+	 * @param farmingExperience :: matrix of farming experience for each activity
+	 * @param preferences :: agent preference matrix for activities
+	 * @param activities :: list of all activities
+	 * @param activity_tolerance :: tolerance for activity differences
+	 * @param income_tolerance :: tolerance for income differences
+	 * @param currentActivity :: current activity for agent
+	 * @param farmHead :: person object to represent main farmer
+	 * @param beta_l :: parameter for fuzzy logic
+	 * @param beta_s :: parameter for fuzzy logic
+	 * @param beta_p :: parameter for fuzzy logic
+	 * @param reference_income :: parameter for agent to select high or low income levels
+	 * @param aspiration_coef :: aspiration value
+	 * @param lambda :: value for lambda for satisfaction
+	 * @param alpha_plus :: for satisfaction calculation
+	 * @param alpha_minus :: for satisfaction calculation
+	 * @param phi_plus :: for satisfaction calculation
+	 * @param phi_minus :: for satisfaction calculation
+	 * @param fuzzy_size :: how large of a fuzzy set to return
 	 */
 	public Farm(String name, Location location, Graph<String, DefaultEdge> socialNetwork, List<Double> incomeHistory,  
 			FarmDataMatrix farmingExperience, FarmDataMatrix preferences, List<Activity> activities, double activity_tolerance, double income_tolerance, 
@@ -96,17 +94,14 @@ public class Farm {
 		this.setLocation(location);
 		this.setNetwork(socialNetwork);
 		this.setIncomeHistory(incomeHistory);
-		
 		this.setExperience(farmingExperience);
 		this.setPreferences(preferences);
 		this.setActivities(activities);
 		this.setCurrentActivity(currentActivity);
 		this.setHead(farmHead);
-		
 		this.setP_beta_l(beta_l);
 		this.setP_beta_s(beta_s);
 		this.setP_beta_p(beta_p);
-		
 		this.setP_reference_income(reference_income);
 		this.setP_aspiration_coef(aspiration_coef);
 		this.setP_lambda(lambda);
@@ -114,7 +109,6 @@ public class Farm {
 		this.setP_alpha_minus(alpha_minus);
 		this.setP_phi_plus(phi_plus);
 		this.setP_phi_minus(phi_minus);
-		
 		this.setP_activity_tolerance_coef(activity_tolerance);
 		this.setP_income_tolerance_coef(income_tolerance);
 		this.setP_fuzzy_size(fuzzy_size);
@@ -363,7 +357,6 @@ public class Farm {
 		
 		setIncomeHistory(income_hist); 
 	}
-	
 	/** 
 	 * Update personal income change rate over the previous time periods and include the current year. 
 	 * Income is an array of [year1_income, year2_income, year3_income, ... yearN_income]
@@ -512,9 +505,7 @@ public class Farm {
 		double delta = 0.005;
 		double k_upper = 1;
 		double k_lower = 0.1;
-		
 		double ln_ratio = 0;
-		
 		double memory_limit = this.getMemory();
 
 		while (k_upper > k_lower) {
@@ -561,9 +552,6 @@ public class Farm {
 	}
 
 	// getters and setters for all fields
-//	public void setAspiration(double aspiration) {
-//		this.Aspiration = aspiration;
-//	}
 	public void setActivity_Dissimilarity(double activity_dissimilarity) {
 		this.Activity_Dissimilarity = activity_dissimilarity;
 	}
@@ -609,9 +597,6 @@ public class Farm {
 	public double getActivity_Dissimilarity() {
 		return this.Activity_Dissimilarity;
 	}
-//	public double getAspiration() {
-//		return this.Aspiration;
-//	}
 	public double getSatisfaction() {
 		return this.Satisfaction;
 	}
@@ -747,19 +732,15 @@ public class Farm {
 	public void setP_beta_p(double p_beta_p) {
 		this.p_beta_p = p_beta_p;
 	}
-
 	public double getP_reference_income() {
 		return p_reference_income;
 	}
-
 	public void setP_reference_income(double p_reference_income) {
 		this.p_reference_income = p_reference_income;
 	}
-
 	public double getP_fuzzy_size() {
 		return p_fuzzy_size;
 	}
-
 	public void setP_fuzzy_size(double p_fuzzy_size) {
 		this.p_fuzzy_size = p_fuzzy_size;
 	}

@@ -87,6 +87,21 @@ public class ReadData {
 		FarmDataMatrix                   preference = getPreferences();
 		FarmDataMatrix                   experience = getExperience();
 		
+		if( experience.sizeFarms() != preference.sizeFarms() ) {
+			LOGGER.severe("Exiting Farmind. Experience and preference list do not match in size. Please confirm input data.");
+			System.exit(0);
+		}
+		
+		if( activities.size() != preference.sizeData() ) {
+			LOGGER.severe("Exiting Farmind. Preference file and activity list do not match. Please confirm input data.");
+			System.exit(0);
+		}
+		
+		if( network.size() != preference.sizeFarms() ) {
+			LOGGER.severe("Exiting Farmind. Social network size and preferences do not match. Please confirm input data.");
+			System.exit(0);
+		}
+		
 		// Read data files and create list of farms
 		try {
 			Calendar now = Calendar.getInstance();                             // Gets the current date and time
@@ -190,7 +205,7 @@ public class ReadData {
 			farm_count_index = 0;	
 			while ((Line = Buffer.readLine()) != null) { 
 				farmParameters = CSVtoArrayList(Line);						   // Read farm's parameters line by line
-				List<Activity> currentActivity = new ArrayList<Activity>();  // each farm has list of activities
+				List<Activity> currentActivity = new ArrayList<Activity>();    // each farm has list of activities
 
 				currentActivity.clear();
 				for (int k = 0; k < farmParameters.size(); k++) {
@@ -336,7 +351,6 @@ public class ReadData {
 		}
 		
 		return experience;
-		
 	}
 	
 	/**
@@ -347,7 +361,6 @@ public class ReadData {
 	 */
 	private List<Graph<String, DefaultEdge>> getSocialNetworks(){
 		List<Graph<String, DefaultEdge>> NetworkList = new ArrayList<Graph<String, DefaultEdge>>();
-		
 		BufferedReader Buffer = null;	
 		String Line;
 		ArrayList<String> data;
@@ -407,7 +420,7 @@ public class ReadData {
 			Buffer = new BufferedReader(new FileReader(InitialPerformingYears));
 			Line = Buffer.readLine();									       // first line to be deleted
 			activityRow = CSVtoArrayList(Line);
-			int ID = 100;
+			int ID = 100;													   // initial ID value of 100
 			activityRow.remove(0);
 			for (String act: activityRow) {
 				ID = ID + 100;
@@ -446,7 +459,4 @@ public class ReadData {
 		}
 		return Result;
 	}
-
-
-
 }

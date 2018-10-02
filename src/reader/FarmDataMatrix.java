@@ -32,6 +32,24 @@ public class FarmDataMatrix {
 		return val;
 	}
 	
+	/**
+	 * Number of farms in matrix
+	 * @return count of farms in matrix
+	 */
+	public int sizeFarms() {
+		int size = elementFarmMap.size();
+		return size;
+	}
+	
+	/**
+	 * Number of activities in matrix
+	 * @return count of activities in matrix
+	 */
+	public int sizeData() {
+		int size = dataElementNames.size();
+		return size;
+	}
+	
 	/** 
 	 * Given a farmID and a name, set the value of that cell in the matrix. 
 	 * 

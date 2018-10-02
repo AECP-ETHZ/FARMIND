@@ -1,27 +1,10 @@
 Parameter data_FARMINDLandData(s_agentenID,s_pflanzen) /
 
-10110,silomais, 9.56
-10110,andKulturen, 5.62
 10110,andDauerkulturen, 1.10
-10110,wenigIntWiese, 0.45
-10110,naturWiese, 1.60
-10110,naturWeide, 0.70
-10110,forst, 3.74
-10110,hochstamm, 70.00
-10290,silomais, 10.74
-10290,futterrueben, 1.23
-10290,andKulturen, 12.37
-10290,naturWiese, 3.39
+10110,naturWeide, -0.14
 10290,forst, 7.00
-10290,hochstamm, 150.07
-10310,wenigIntWiese, 12.99
-10310,naturWiese, 11.17
 10310,soemmerung, 7.00
 10310,forst, 5.84
-11730,wenigIntWiese, 2.01
-11730,naturWiese, 9.44
-11730,forst, 0.57
-11730,hochstamm, 35.00
 11740,wenigIntWiese, 0.90
 11740,naturWiese, 12.39
 11740,forst, 1.17

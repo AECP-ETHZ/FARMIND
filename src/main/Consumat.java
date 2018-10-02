@@ -8,9 +8,7 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-
 import org.apache.commons.cli.*;
-
 import logging.ABMActivityLog;
 import logging.ABMTimeStepLog;
 import mathematical_programming.MP_Interface;
@@ -23,7 +21,7 @@ import agent.Farm;
 /** 
  * This class contains the main() method of this program. 
  * Full simulation runs inside of the main() method by creating farm objects and making decisions for each farm.
- *
+ * Each time period, update the farm and run the linear optimization model. 
  */
 public class Consumat {
 	static long line_counter = 0;
@@ -38,7 +36,6 @@ public class Consumat {
 		LOGGER.info("Starting FARMIND: version number: 0.8.6");
 		
 		CommandLine cmd = parseInput(args);														   // parse input arguments
-		
 		ReadData            reader             = new ReadData();							       // read all input data files
 		List<Farm>          allFarms           = reader.getFarms();					               // build set of farms 
 		
@@ -53,7 +50,7 @@ public class Consumat {
 		
 		initializePopulationIncomeChangeRate(allFarms);						                       // initialize the farms with the input values before starting the full ABM simulation
 
-		for (int year = 1; year <= simYear; year++) {		                       // run simulation for a set of years, getting updated income and activities from the MP model each iteration
+		for (int year = 1; year <= simYear; year++) {		                                       // run simulation for a set of years, getting updated income and activities from the MP model each iteration
 			LOGGER.info(String.format("Year %d simulation started", year));
 			MP_Interface MP;
 			
@@ -150,6 +147,9 @@ public class Consumat {
 		LOGGER.info("ABM Operation Complete.");
 	}
 	
+	/** 
+	 * Setup logging for system to allow easier debugging of issues caused by runtime decisions
+	 */
 	private static void initializeLogging() {
         try {
 			fh = new FileHandler("ABM.log");
@@ -169,6 +169,12 @@ public class Consumat {
 		}  
 	}
 	
+	/**
+	 * Calculate average memory length for all agents in system. 
+	 * This is used to set an average crop price during simulation years. 
+	 * @param allFarms ::      list of all farms in system
+	 * @return memoryLength :: length of average memory in system for all farms
+	 */
 	private static int averageMemoryLength(List<Farm> allFarms) {
 		int memoryLength = 0;
 		
@@ -177,7 +183,6 @@ public class Consumat {
 		}
 		
 		memoryLength = memoryLength / allFarms.size();
-		
 		return memoryLength;
 	}
 	
@@ -186,8 +191,8 @@ public class Consumat {
 	 * -year :: number of years of simulation
 	 * -modelName :: which specific optimization model to use
 	 * -uncertainty :: if set to 0, then ABM will not use the dissimilarity calculations during simulations
-	 * @param args: command line arguments to control the system
-	 * @return cmd: return the parsed command line as an object we can use later in the model
+	 * @param args :: command line arguments to control the system
+	 * @return cmd :: return the parsed command line as an object we can use later in the model
 	 */
 	public static CommandLine parseInput(String[] args) {
 		
@@ -229,9 +234,9 @@ public class Consumat {
 		return cmd;
 	}
 		
-
 	/**
-	 * For the output log file, we update the name after 1 million lines. Excel is not able to parse CSV files with more than 1 Million lines of data
+	 * For the output log file, we update the name after 1 million lines. 
+	 * Since Excel is not able to parse CSV files with more than 1 Million lines of data we need to add to the file name
 	 */
     private static void updateLogFileName() {
 		line_counter++;
@@ -244,7 +249,7 @@ public class Consumat {
 	
 	/** 
 	 * This function initializes the income growth rate of the population (in a region) for all farms.
-	 * @param allFarms: list of all farms in region
+	 * @param allFarms :: list of all farms in region
 	 */
 	public static void initializePopulationIncomeChangeRate(List<Farm> allFarms) {	
 		List<Double> differenceIncomeYears = new ArrayList<Double>();
@@ -275,8 +280,8 @@ public class Consumat {
 	
 	/** 
 	 * This function updates the income growth rates based on new income for farms.
-	 * @param allFarms: list of all farms in region
-	 * @param thisYearIncome: list of income values for all farms
+	 * @param allFarms :: list of all farms in region
+	 * @param thisYearIncome :: list of income values for all farms
 	 */
 	public static void updatePopulationIncomeChangeRate(List<Farm> allFarms, List<Double> thisYearIncome) {
 		List<Double> differenceIncomeYears = new ArrayList<Double>();
@@ -311,8 +316,8 @@ public class Consumat {
 	
 	/** 
 	 * This function calculates the mean of provided list 
-	 * @param list of values to calculate mean with
-	 * @return mean: average of the input list
+	 * @param list :: values for mean calculation
+	 * @return mean :: average of the input list
 	 */
 	private static double mean(List<Double> list) {
 		double mean = 0;												       // mean value to return
@@ -326,7 +331,7 @@ public class Consumat {
 
 	/** 
 	 * This function creates generic file name so that version number can be appended to end. 
-	 * @return fileName
+	 * @return fileName :: base name of output logging file
 	 */
 	public static String createFileName() {
 		Calendar now = Calendar.getInstance();                             // Gets the current date and time

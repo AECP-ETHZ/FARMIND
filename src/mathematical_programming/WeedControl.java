@@ -96,7 +96,7 @@ public class WeedControl implements MP_Interface{
 	public void inputsforMP(Farm farm, List<String> possibleActivity) {
 		int[][] output = new int[55][6]; 
 
-		for (int i = 0; i<6; i++) {  // set all the first row, except the last column, to 1 as the initialization strategies. 
+		for (int i = 0; i<6; i++) {                                            // set all the first row, except the last column, to 1 as the initialization strategies. 
 			output[0][i] = 1;
 		}
 		
@@ -139,7 +139,6 @@ public class WeedControl implements MP_Interface{
 	public ArrayList<Activity> getExitActivity() {
 		ArrayList<Activity> activities = new ArrayList<Activity>();	   	 	       // list of all farm activities selected by MP model
 		Activity exit = new Activity(0,"activity01");
-		
 		activities.add(exit);
 	
 		return activities;

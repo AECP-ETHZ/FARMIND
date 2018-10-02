@@ -23,5 +23,4 @@ public interface MP_Interface {
 	public List<ArrayList<Activity>> readMPActivities(List<Farm> allFarms);
 	
 	public ArrayList<Activity> getExitActivity();
-	
 }

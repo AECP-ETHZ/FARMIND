@@ -101,7 +101,9 @@ public class SwissLand implements MP_Interface{
 		
 		this.editMPscript(nFarm, year);										   // edit the gams script with updated pricing information
 		
-		File f = new File("projdir\\Grossmargin_P4,00.csv");
+		File f = new File("projdir\\DataModelIn\\data_FARMIND.gms");
+		f.delete();
+		f = new File("projdir\\DataModelIn\\data_FARMINDLandData.gms");
 		f.delete();
 		
 		LOGGER.info("Starting MP model");
@@ -129,7 +131,7 @@ public class SwissLand implements MP_Interface{
 		String Line;														       // read each line of the file individually
 		ArrayList<String> dataArray;										       // separate data line
 				
-		File f = new File("projdir\\DatabaseIn\\data_FARMIND.GMS");					   // actual results file
+		File f = new File("projdir\\DataModelIn\\data_FARMIND.gms");					   // actual results file
 		while (!f.exists()) {try {
 			Thread.sleep(1000);												       // wait until the MP finishes running
 		} catch (InterruptedException e) {
@@ -137,7 +139,7 @@ public class SwissLand implements MP_Interface{
 		}}
 
 		try {
-			Buffer = new BufferedReader(new FileReader("projdir\\DatabaseIn\\data_FARMIND.GMS"));
+			Buffer = new BufferedReader(new FileReader("projdir\\DataModelIn\\data_FARMIND.gms"));
 			
 			Line = Buffer.readLine();
 			Line = Buffer.readLine();
@@ -169,7 +171,7 @@ public class SwissLand implements MP_Interface{
 		List<Activity> allPossibleActivities = reader.getActivityList();		   // generated activity list with ID and name 
 		HashMap<String, ArrayList<Activity>> map = new HashMap<String, ArrayList<Activity>>();
 		
-		File f = new File("projdir\\DatabaseIn\\data_FARMINDLandData.gms");					   // actual results file
+		File f = new File("projdir\\DataModelIn\\data_FARMINDLandData.gms");	   // actual results file
 		while (!f.exists()) {try {
 			Thread.sleep(1000);												       // wait until the MP finishes running
 		} catch (InterruptedException e) {
@@ -177,7 +179,7 @@ public class SwissLand implements MP_Interface{
 		}}
 
 		try {
-			Buffer = new BufferedReader(new FileReader("projdir\\DatabaseIn\\data_FARMINDLandData.gms"));
+			Buffer = new BufferedReader(new FileReader("projdir\\DataModelIn\\data_FARMINDLandData.gms"));
 			
 			Line = Buffer.readLine();
 			Line = Buffer.readLine();
@@ -191,7 +193,6 @@ public class SwissLand implements MP_Interface{
 								
 				for(int i = 0; i < allPossibleActivities.size(); i++) { 
 					String name = dataArray.get(1);
-
 					if (allPossibleActivities.get(i).getName().equals(name) ) {
 						int ID = allPossibleActivities.get(i).getID();
 						Activity p = new Activity(ID, name); 
@@ -213,8 +214,12 @@ public class SwissLand implements MP_Interface{
 		}
 		
 		// convert map to ordered list
-		for (Farm farm:allFarms) {
-			activitiesFromMP.add(map.get(farm.getFarmName()));
+		for (Farm farm:allFarms) {	
+			if (map.get(farm.getFarmName()) != null) {
+				activitiesFromMP.add(map.get(farm.getFarmName()));
+			} else {
+				activitiesFromMP.add( getExitActivity() );
+			}
 		}
 
 		return activitiesFromMP;
@@ -222,8 +227,11 @@ public class SwissLand implements MP_Interface{
 
 	@Override
 	public ArrayList<Activity> getExitActivity() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Activity> activities = new ArrayList<Activity>();	   	 	       // list of all farm activities selected by MP model
+		Activity exit = new Activity(0,"exit_activity");
+		activities.add(exit);
+	
+		return activities;
 	}
 
 	/**

@@ -1,6 +1,6 @@
 Parameter IF_agentTiere(s_agentenID,s_tiere) /
 
-10110.milchkuehe 1.00
+10110.milchkuehe 0.00
 10110.mutterkuehe 0.00
 10110.aufzucht_miku 0.00
 10110.jungvieh_miku 0.00
@@ -38,7 +38,7 @@ Parameter IF_agentTiere(s_agentenID,s_tiere) /
 10310.mastsauen 0.00
 10310.mastpoulets 0.00
 10310.legehennen 0.00
-10310.pferde 1.00
+10310.pferde 0.00
 10310.schafe 0.00
 10310.ziegen 0.00
 10310.kaelber_miku 0.00

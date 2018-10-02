@@ -33,7 +33,7 @@ public class Consumat {
 	 
 	public static void main(String[] args) {
 		initializeLogging();
-		LOGGER.info("Starting FARMIND: version number: 0.8.6");
+		LOGGER.info("Starting FARMIND: version number: 0.8.7");
 		
 		CommandLine cmd = parseInput(args);														   // parse input arguments
 		ReadData            reader             = new ReadData();							       // read all input data files

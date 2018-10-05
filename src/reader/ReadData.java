@@ -123,6 +123,10 @@ public class ReadData {
 				double[] coordinates = {0,0};								   // location of farm
 				
 				name = farmParameters.get(NAME);
+				if (name.contains("\"")) {
+						LOGGER.severe("Exiting Farmind. Please do not use quotation marks around agent names or anywhere in files");
+						System.exit(0);
+				}
 				coordinates[0] = Double.parseDouble(farmParameters.get(COORDINATE1));
 				coordinates[1] = Double.parseDouble(farmParameters.get(COORDINATE2));
 				location.setCoordinates(coordinates);

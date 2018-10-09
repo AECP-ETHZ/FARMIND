@@ -1,0 +1,6 @@
+data_folder = "data"
+model = "SWISSLAND"
+uncertainty = 1
+year = 5
+project_folder = "projdir"
+debug = 0

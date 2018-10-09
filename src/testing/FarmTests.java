@@ -9,8 +9,6 @@ import java.util.List;
 import org.apache.commons.cli.CommandLine;
 import org.junit.Before;
 import org.junit.Test;
-//import org.junit.jupiter.api.Test;
-
 import activity.Activity;
 import agent.Farm;
 
@@ -300,7 +298,7 @@ public class FarmTests {
 	} 
 	
 	
-	public static final String TestDataFile = "./test_data/farm_parameters.csv";
+	public static String TestDataFile = "./test_data/farm_parameters.csv";
 	public static final String TestPreferenceFile = "./test_data/activity_preference.csv";
 	public static final String TestInitialActivities = "./test_data/initial_activities.csv";
 	public static final String TestInitialIncomes = "./test_data/initial_incomes.csv";
@@ -308,12 +306,22 @@ public class FarmTests {
 	public static final String TestSocialNetworkFile = "./test_data/social_networks.csv";
 	
 	public static final void useTestData(ReadData reader) {
-			reader.FarmParametersFile = TestDataFile;
-			reader.ActivityPreferenceFile = TestPreferenceFile;
-			reader.InitialActivities = TestInitialActivities;
-			reader.InitialIncomes = TestInitialIncomes;
-			reader.InitialPerformingYears = TestYearsFile;
-			reader.SocialNetworkFile = TestSocialNetworkFile;
+		reader.FarmParametersFile = TestDataFile;
+		reader.ActivityPreferenceFile = TestPreferenceFile;
+		reader.InitialActivities = TestInitialActivities;
+		reader.InitialIncomes = TestInitialIncomes;
+		reader.InitialPerformingYears = TestYearsFile;
+		reader.SocialNetworkFile = TestSocialNetworkFile;
+	} 
+	
+	public static final void useTestDataBad(ReadData reader) {
+		TestDataFile = "./test_data/farm_parameters_bad.csv";
+		reader.FarmParametersFile = TestDataFile;
+		reader.ActivityPreferenceFile = TestPreferenceFile;
+		reader.InitialActivities = TestInitialActivities;
+		reader.InitialIncomes = TestInitialIncomes;
+		reader.InitialPerformingYears = TestYearsFile;
+		reader.SocialNetworkFile = TestSocialNetworkFile;
 	} 
 
 }

@@ -91,8 +91,11 @@ public class FuzzyLogicCalculator {
 		for (int i = 0; i< len - 2; i++) {
 			for (int j = 0; j < len - 2; j++) {
 				//matrix[i][j] = ( p_p[i][j] + farm.getP_beta_l() * ( p_l[i][j] + farm.getP_beta_s()*p_s[i][j] ) ) / (1 + farm.getP_beta_l() + farm.getP_beta_s());
-				
-				matrix[i][j] = ( farm.getP_beta_p()*p_p[i][j] + farm.getP_beta_l()*p_l[i][j] + farm.getP_beta_s()*p_s[i][j] )  / (p_p[i][j] + p_l[i][j] + p_s[i][j]);
+				double score = ( farm.getP_beta_p()*p_p[i][j] + farm.getP_beta_l()*p_l[i][j] + farm.getP_beta_s()*p_s[i][j] )  / (p_p[i][j] + p_l[i][j] + p_s[i][j]);
+				if(Double.isNaN(score)) {
+					score = 0;
+				}
+				matrix[i][j] = score ;
 			}
 		}
 		
@@ -130,7 +133,11 @@ public class FuzzyLogicCalculator {
 		for (int i = 0; i< len - 2; i++) {
 			for (int j = 0; j < len - 2; j++) {
 				//matrix[i][j] = p_p[i][j] + farm.getP_beta_l() * ( p_l[i][j] );
-				matrix[i][j] = ( farm.getP_beta_p()*p_p[i][j] + farm.getP_beta_l()*p_l[i][j])  / (p_p[i][j] + p_l[i][j]);
+				double score = ( farm.getP_beta_p()*p_p[i][j] + farm.getP_beta_l()*p_l[i][j])  / (p_p[i][j] + p_l[i][j]);
+				if(Double.isNaN(score)) {
+					score = 0;
+				}
+				matrix[i][j] = score ;
 			}
 		}
 		
@@ -152,12 +159,12 @@ public class FuzzyLogicCalculator {
 	 */
 	private List<String> activityList(List<Double> x){
 		List<String> list = new ArrayList<String>();                           // final activity list
-		List<Double> original = new ArrayList<Double>();					   // backup list					
-		List<Double> sorted = new ArrayList<Double>();						   // sorted list
-		List<Double> cluster = new ArrayList<Double>();						   // final selected activity values from clustering algoritm
+		List<Double> original = new ArrayList<Double>(x);					   // backup list					
+		List<Double> sorted = new ArrayList<Double>(x);						   // sorted list
+		List<Double> cluster = new ArrayList<Double>();						   // final selected activity values from clustering algorithm
 
-		original = normalizeList(x);
-		sorted = original;
+		//original = x; //normalizeList(x);
+		//sorted = x;
 		Collections.sort(sorted);											   // returns ascending order 0->1
 		cluster = cluster(sorted);
 		

@@ -121,6 +121,20 @@ public class FarmTests {
 	}
 	
 	@Test
+	public void testOptimizationDecisionSize() {
+		Farm farm = allFarms.get(0);
+		
+		farm.setSatisfaction(-1);
+		farm.setActivity_Dissimilarity(0);
+		farm.setIncome_Dissimilarity(0);
+		farm.decideActivitySet(allFarms,cmd);
+
+		List<String> x = farm.decideActivitySet(allFarms, cmd);
+		assertEquals(x.size(), 72);	
+		
+	}
+	
+	@Test
 	public void testOptOutDecision() {
 		Farm farm = allFarms.get(0);
 		

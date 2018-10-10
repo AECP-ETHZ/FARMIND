@@ -90,7 +90,7 @@ public class Consumat {
 			}
 			
 			pricingAverage = true;
-			MP.runModel(allFarms.size(),year,pricingAverage,memoryLengthAverage);				   // if needed, update mp script and then start model
+			MP.runModel(allFarms.size(),year, pricingAverage, memoryLengthAverage);				   // if needed, update mp script and then start model
 			MP_Incomes = MP.readMPIncomes(allFarms);
 			MP_Activities = MP.readMPActivities(allFarms);
 			
@@ -108,7 +108,7 @@ public class Consumat {
 			if (MP instanceof WeedControl) {
 				farmIndex = 0;
 				for (Farm farm : allFarms) {
-					
+
 					List<Activity> selectedActivity = MP_Activities.get(farmIndex); 
 					List<String>   selectedActivityString = new ArrayList<>();                     // create string list of final selected activities
 					
@@ -135,7 +135,7 @@ public class Consumat {
 			}
 				
 			if (MP_Activities.size() != allFarms.size()) {
-				LOGGER.severe("Exiting FARMIND. Output log is incomplete.");
+				LOGGER.severe("Exiting FARMIND. Gams results do not match expected number of farms.");
 				System.exit(0);
 			} 
 			

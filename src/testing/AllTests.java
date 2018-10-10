@@ -10,7 +10,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({	
 	  DecisionCalculatorTests.class,
 	  FarmTests.class,
-	  //ReadDataTests.class
+	  DecisionCalculatorImitationTests.class,
 	})	
 public class AllTests {
 }

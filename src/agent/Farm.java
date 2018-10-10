@@ -148,7 +148,13 @@ public class Farm {
 			else {
 				if (this.Satisfaction < this.getP_aspiration_coef()) {
 					this.strategy = 3; //OPTIMIZATION
-					ActivitySet = fuzzyLogicCalc.getOptimizationActivities();
+					if (cmd.getOptionValue("modelName").equals("WEEDCONTROL")) {
+						for (int i = 0; i < this.getActivities().size(); i++) {                    // for optimization of weedcontrol, return all activities
+							ActivitySet.add(this.getActivities().get(i).getName());
+						} 
+					} else {
+						ActivitySet = fuzzyLogicCalc.getOptimizationActivities();
+					}
 				} 
 			}
 		}
@@ -174,7 +180,13 @@ public class Farm {
 				}
 				else {
 					this.strategy = 3; //OPTIMIZATION
-					ActivitySet = fuzzyLogicCalc.getOptimizationActivities();
+					if (cmd.getOptionValue("modelName").equals("WEEDCONTROL")) {
+						for (int i = 0; i < this.getActivities().size(); i++) {                    // for optimization of weedcontrol, return all activities
+							ActivitySet.add(this.getActivities().get(i).getName());
+						} 
+					} else {
+						ActivitySet = fuzzyLogicCalc.getOptimizationActivities();
+					}
 				}
 			}
 		}

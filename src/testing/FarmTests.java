@@ -314,7 +314,7 @@ public class FarmTests {
 		reader.SocialNetworkFile = TestSocialNetworkFile;
 	} 
 	
-	public static final void useTestDataBad(ReadData reader) {
+	public static final void useTestDataImitation(ReadData reader) {
 		TestDataFile = "./test_data/farm_parameters_bad.csv";
 		reader.FarmParametersFile = TestDataFile;
 		reader.ActivityPreferenceFile = TestPreferenceFile;

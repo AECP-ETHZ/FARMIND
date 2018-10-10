@@ -22,7 +22,7 @@ public class DecisionCalculatorTests {
 	
 	@Before 
 	public void setup() {
-		ReadData reader = new ReadData();						   // read all input data files
+		ReadData reader = new ReadData();						               // read all input data files
 		useTestData(reader);
 		allFarms = reader.getFarms();						                   // build set of farms with new parameters
 	}
@@ -63,7 +63,7 @@ public class DecisionCalculatorTests {
 	public void testPreferenceVector() {
 		Farm farm = allFarms.get(0);
 		FuzzyLogicCalculator cal = new FuzzyLogicCalculator(farm, allFarms);
-		double m = farm.getPreferences().getDataElementName().size();		       // number of products in system
+		double m = farm.getPreferences().getDataElementName().size();		   // number of products in system
 		List<Double> P = new ArrayList<Double>();							   // rank of all product preferences for specific farm
 		Double[] R;                           				 			   	   // Product preference vector 
 
@@ -96,9 +96,7 @@ public class DecisionCalculatorTests {
 		List<Double> verify = Arrays.asList(1.0, 0.7466666666666666, 0.566); 
 		List<Double> x = cal.ND;
 		assertEquals(x,verify);
-		
 	}
-
 	
 	public static final String TestDataFile = "./test_data/farm_parameters.csv";
 	public static final String TestPreferenceFile = "./test_data/activity_preference.csv";

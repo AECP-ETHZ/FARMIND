@@ -67,6 +67,9 @@ public class FuzzyLogicCalculator {
 	 */
 	public List<String> getImitationActivities() {
 		double[] c1 = new double[this.P.size()];
+		int len = c1.length;
+		double[][] matrix = new double[len-2][len-2];                          // matrix of all activities against all activities
+		
 		for (int i = 0; i < this.P.size(); i++) {
 			c1[i] = P.get(i);
 		}
@@ -85,12 +88,8 @@ public class FuzzyLogicCalculator {
 		double[][] p_l = preference_matrix(c2);
 		double[][] p_s = preference_matrix(c3);
 		
-		int len = c1.length;
-		double[][] matrix = new double[len-2][len-2];
-		 
 		for (int i = 0; i< len - 2; i++) {
 			for (int j = 0; j < len - 2; j++) {
-				//matrix[i][j] = ( p_p[i][j] + farm.getP_beta_l() * ( p_l[i][j] + farm.getP_beta_s()*p_s[i][j] ) ) / (1 + farm.getP_beta_l() + farm.getP_beta_s());
 				double score = ( farm.getP_beta_p()*p_p[i][j] + farm.getP_beta_l()*p_l[i][j] + farm.getP_beta_s()*p_s[i][j] )  / (p_p[i][j] + p_l[i][j] + p_s[i][j]);
 				if(Double.isNaN(score)) {
 					score = 0;
@@ -100,7 +99,7 @@ public class FuzzyLogicCalculator {
 		}
 		
 		for (int i = 0; i< len - 2; i++) {
-			ND.add(ND(i,matrix));
+			ND.add(ND(i,matrix));											   // add ordered values to list
 		}
 
 		List<String> list = activityList((ND));							       // cluster algorithm returns optimal activity list
@@ -114,12 +113,15 @@ public class FuzzyLogicCalculator {
 	 * @return list of activities from the activity selection calculator
 	 */
 	public List<String> getOptimizationActivities() {
-		double[] c1 = new double[this.P.size()];
+		double[] c1 = new double[this.P.size()];							   
+		double[] c2 = new double[this.L.size()];
+		int len = c1.length;
+		double[][] matrix = new double[len-2][len-2];						   // matrix of all activities against all activities
+		
 		for (int i = 0; i < this.P.size(); i++) {
 			c1[i] = P.get(i);
 		}
 		
-		double[] c2 = new double[this.L.size()];	
 		for (int i = 0; i < this.L.size(); i++) {
 			c2[i] = L.get(i);
 		}
@@ -127,12 +129,8 @@ public class FuzzyLogicCalculator {
 		double[][] p_p = preference_matrix(c1);
 		double[][] p_l = preference_matrix(c2);
 		
-		int len = c1.length;
-		double[][] matrix = new double[len-2][len-2];
-		 
 		for (int i = 0; i< len - 2; i++) {
 			for (int j = 0; j < len - 2; j++) {
-				//matrix[i][j] = p_p[i][j] + farm.getP_beta_l() * ( p_l[i][j] );
 				double score = ( farm.getP_beta_p()*p_p[i][j] + farm.getP_beta_l()*p_l[i][j])  / (p_p[i][j] + p_l[i][j]);
 				if(Double.isNaN(score)) {
 					score = 0;
@@ -142,40 +140,41 @@ public class FuzzyLogicCalculator {
 		}
 		
 		for (int i = 0; i< len - 2; i++) {
-			ND.add(ND(i,matrix));
+			ND.add(ND(i,matrix));                                              // add ordered values to list
 		}
 		
 		List<String> list = activityList(ND);                                   // cluster algorithm returns optimal activity list
-
+		
 		return list;
 	}
 
 	// fuzzy logic and clustering functions
 	/**
-	 *  given a vector of non-domination scores return an optimized activity list
-	 *  using a clustering algorithm to detect two groups within the list
-	 * @param x original ND vector
-	 * @return list of activity names
+	 *  given a vector of non-domination scores return an optimized activity list based on the desired fuzzy set size
+	 * @param x: original ND vector
+	 * @return activityList: list of activity names
 	 */
 	private List<String> activityList(List<Double> x){
-		List<String> list = new ArrayList<String>();                           // final activity list
-		List<Double> original = new ArrayList<Double>(x);					   // backup list					
-		List<Double> sorted = new ArrayList<Double>(x);						   // sorted list
+		List<String> activityList = new ArrayList<String>();                   // final activity list
+		List<Double> originalND = new ArrayList<Double>(x);					   // backup list					
+		List<Double> sortedND = new ArrayList<Double>(x);					   // sorted list
 		List<Double> cluster = new ArrayList<Double>();						   // final selected activity values from clustering algorithm
-
-		//original = x; //normalizeList(x);
-		//sorted = x;
-		Collections.sort(sorted);											   // returns ascending order 0->1
-		cluster = cluster(sorted);
+		int index = 0;														   // index of ND value used to get specific activity indicated by index
 		
-		int index = 0;
-		for (int i = 0; i< cluster.size(); i++) {							   // turn ranking values into activity list
-			index = original.indexOf(cluster.get(i));
-			list.add(this.farm.getPreferences().getDataElementName().get(index));
-			original.set(index, -1.0);                                         // duplicate values exist in array, so 'remove' when used to get next duplicate value
+		Collections.sort(sortedND);											   // returns ascending order 0->1
+		cluster = cluster(sortedND);
+		
+		// turn ranking values into activity list by sorting the ND array, and then finding the corresponding match in the original list based on the index.
+		// Ex: orig = [0.8,0.3,1.0,0.8] --> sorted = [1.0,0.8,0.8,0.3]
+		// Take 1.0 from the sorted list and match to index value 2 from the original list. Then find activity with index 2 in the activity list of the system
+		// Then take 0.8 and match that to index 0 and find corresponding activity[index = 0].
+		for (int i = 0; i< cluster.size(); i++) {							   
+			index = originalND.indexOf(cluster.get(i));
+			activityList.add(this.farm.getPreferences().getDataElementName().get(index));
+			originalND.set(index, -1.0);                                         // duplicate values exist in array, so 'remove' when used to get next duplicate value
 		}
 		
-		return list;
+		return activityList;
 	}
 	
 	/** 
@@ -186,13 +185,6 @@ public class FuzzyLogicCalculator {
 	private List<Double> cluster(List<Double> sorted) {
 		List<Double> cluster = new ArrayList<Double>(); 
 		List<Double> cluster_smaller = new ArrayList<Double>(); 
-		//double mean = mean(sorted);
-
-//		for(int i = 0; i < sorted.size(); i++) {
-//			if (sorted.get(i) > mean) {
-//				cluster.add(sorted.get(i));
-//			}
-//		}
 		
 		int fuzzy_size = (int) farm.getP_fuzzy_size();
 		
@@ -206,21 +198,6 @@ public class FuzzyLogicCalculator {
 		
 		return cluster;		
 	}
-	
-//	/** 
-//	 * Return mean value of provided list 
-//	 * @param list of values to calculate mean with
-//	 * @return mean
-//	 */
-//	private double mean(List<Double> list) {
-//		double mean = 0;
-//		
-//		for (int i = 0; i<list.size(); i++) {
-//			mean = mean + list.get(i);
-//		}
-//		
-//		return mean / list.size();
-//	}
 		
 	/** 
 	 * Non Domination score for a fuzzy logic preference matrix
@@ -247,8 +224,8 @@ public class FuzzyLogicCalculator {
 	
 	/** 
 	 * Build preference matrix for a category based on the t score and the q range
-	 * @param category
-	 * @return matrix of preferences
+	 * @param category: input list of rated values. In this case L,S,P vectors
+	 * @return matrix: matrix of preferences comparing each activity against all others
 	 */
 	private double[][] preference_matrix(double[] category) {
 		int len = category.length;											// length of matrix columns/rows
@@ -267,11 +244,11 @@ public class FuzzyLogicCalculator {
 	
 	/** 
 	 * Build a rating score between x,y based on the q range
-	 * @param x first item value
-	 * @param y second item value
-	 * @param q_minus lower range of fuzzy region in set
-	 * @param q_plus upper range of fuzzy region in set
-	 * @return rating between x and y (not y and x)
+	 * @param x: first item value
+	 * @param y: second item value
+	 * @param q_minus: lower range of fuzzy region in set
+	 * @param q_plus: upper range of fuzzy region in set
+	 * @return rank: rating between x and y (not y and x)
 	 */
 	private double t_rating(double x, double y, double q_minus, double q_plus) {
 		double rank = 0;
@@ -288,32 +265,31 @@ public class FuzzyLogicCalculator {
 	/** 
 	 * Each farm has a vector with associated years of experience in the shared matrix of experience.
 	 * Scale this vector based on a parameter k. 
-	 * @param farm that we are performing the calculations for
-	 * @param m number of activities in the system
-	 * @return vector of farming experience for this farm
+	 * @param farm: agent that we are performing the calculations on
+	 * @param m: number of activities in the system
+	 * @return L: vector of farming preference for this farm
 	 */
 	private List<Double> getFarmExperienceVector(Farm farm, double m) {
-		List<Double> Q = new ArrayList<Double>();                              // learning by doing vector for specific farm
-		double time = 0;														   // years of experience
+		List<Double> L = new ArrayList<Double>();                              // learning by doing vector for specific farm
+		double time = 0;													   // years of experience
 		double k = farm.getLearningRate();								       // scale factor
-		double q;															   // calculated score
+		double score;														   // calculated score
 		
 		for (int i = 0; i < m; i++) {
 			time = farm.getExperience().getFarmDataElementValue(farm.getFarmName(), farm.getPreferences().getDataElementName().get(i) );
-			q = 1 / ( 1 +  Math.exp( (-k*time) ));
-			Q.add(q);
+			score = 1 / ( 1 +  Math.exp( (-k*time) ));
+			L.add(score);
 		}
 
-		return normalizeList(Q);
-		//return (Q);
+		return normalizeList(L);
 	}
 	
 	/** 
 	 * Each farm has a preference vector and we scale this vector based on the number of activities in the system. 
-	 * The vector contains values between 1 and 5 that correspond to the preference of the farmer for that specific activity with 5 being most preferred and 1 being least preferred. 
-	 * @param farm that we are performing the calculations for
-	 * @param m number of activities in the system
-	 * @return vector of farming preference for this farm
+	 * The vector contains values between 1 and 5 that correspond to the preference of the farmer for that specific activity with 1 being most preferred and 5 being least preferred. 
+	 * @param farm: agent that we are performing the calculations on
+	 * @param m: number of activities in the system
+	 * @return P: vector of farming preference for this farm
 	 */
 	private List<Double> getFarmPreferenceVector(Farm farm, double m) {
 		List<Double> P = new ArrayList<Double>();							   // rank of all activity preferences for specific farm
@@ -322,23 +298,22 @@ public class FuzzyLogicCalculator {
 		R = farm.getPreferences().getFarmMap().get(farm.getFarmName());
 		
 		for (int i = 0; i< m; i++) {
-			P.add(1 - R[i]/m);
+			P.add(1 - R[i]/m);												   // this (1 - x/m) ensures that if x=1 (most preferred), we will return value closest to 1. And x=5 will be smaller
 		}
 		
 		return normalizeList(P);
-		//return P;
 	}
 	
 	/** 
-	 * for all farms in the network connected to the main farm build the Experience vector (Q). 
-	 * Then take the average experience level for each activity for all farms in the network 
-	 * Base this average on the social network weight between the main farm and the node farm
-	 * 
-	 * @param farm that we are performing the calculations for
-	 * @param m number of activities in the system
-	 * @return vector of social farming experience for this farm
+	 * For all farms in the network connected to the main farm build the Experience vector (L). 
+	 * Then weight this vector based on the social network weight between the main farm and this connected node farm
+	 * For the final Network Experience vector take the average experience level for each activity for all farms in the network 
+	 * @param farm: specific agent that we are performing the calculations on
+	 * @param allFarms: all farms in the system 
+	 * @param m: number of activities in the system
+	 * @return S: vector of social farming experience for this farm
 	 */
-	private List<Double> getNetworkExperienceAverageVector(Farm farm, double m, List<Farm> farms) {
+	private List<Double> getNetworkExperienceAverageVector(Farm farm, double m, List<Farm> allFarms) {
 		List<Double> S = new ArrayList<Double>();							   // rank of all activity preferences for specific farm
 		int i,j = 0;														   // iterators
         double totalFarms = 0;												   // how many total farms are there in the network
@@ -346,27 +321,26 @@ public class FuzzyLogicCalculator {
 		Iterator<DefaultEdge> I;											   // iterator through all edges
         double w;															   // weight of edge between two nodes
         double sum = 0;														   // running sum of activity score
-        List<List<Double>> QForAllFarms = new ArrayList<List<Double>>();       // aggregate list of all Q lists
+        List<List<Double>> L_forAllFarms = new ArrayList<List<Double>>();      // aggregate list of all experience vectors where L is the experience vector for an individual farm
 
 		// social learning calculation
 		E = farm.getNetwork().outgoingEdgesOf(farm.getFarmName());
-        totalFarms = farms.size();
+        totalFarms = allFarms.size();
         I = E.iterator();
 
         for (i = 0; i < totalFarms; i++) {
-        	if (!farms.get(i).getFarmName().equals(farm.getFarmName()) ) {
-        		w = farm.getNetwork().getEdgeWeight(I.next());						   // weight of social tie between main farm and farm i
+        	if (!allFarms.get(i).getFarmName().equals(farm.getFarmName()) ) {
+        		w = farm.getNetwork().getEdgeWeight(I.next());				   // weight of social tie between main farm and farm i
         		if (w > 0) {
-	        		List<Double> Q = new ArrayList<Double>();                              // learning by doing vector for farm i
-	        		List<Double> Q_scaled = new ArrayList<Double>();                       // scaled learning by doing vector for farm i
+	        		List<Double> L = new ArrayList<Double>();                  // learning by doing vector for farm i
+	        		List<Double> L_scaled = new ArrayList<Double>();           // scaled learning by doing vector for farm i
 	
-	        		Q = getFarmExperienceVector(farms.get(i), m);
+	        		L = getFarmExperienceVector(allFarms.get(i), m);
 	        		for (j = 0; j< m; j++) {
-	        			 Q_scaled.add(Q.get(j)*w);
+	        			 L_scaled.add(L.get(j)*w);							   // weight specific years of experience based on social tie weight
 	        		}
 	
-	        		//QForAllFarms.add(normalizeList(Q_scaled));
-	        		QForAllFarms.add((Q_scaled));
+	        		L_forAllFarms.add((L_scaled));
         		}
         	}
         }
@@ -374,23 +348,22 @@ public class FuzzyLogicCalculator {
         // loop through all activities and all farms to develop final list
         for (j = 0; j < m; j++) {
         	sum = 0;
-        	for (i = 0; i < QForAllFarms.size(); i++) {
-        		if (QForAllFarms.get(i).get(j) > 0) {
-        			sum = sum + QForAllFarms.get(i).get(j);                        // farm i, activity j
+        	for (i = 0; i < L_forAllFarms.size(); i++) {
+        		if (L_forAllFarms.get(i).get(j) > 0) {
+        			sum = sum + L_forAllFarms.get(i).get(j);                   // farm i, activity j
         		}
         	}
-        	sum = sum/QForAllFarms.size();
+        	sum = sum/L_forAllFarms.size();									   // normalize based on number of farms
         	S.add(sum);
         }
 
 		return normalizeList(S);
-		//return (S);
 	}
 	
 	/**
 	 * Create a normalized list from 0 to 1
-	 * @param list unormalized list
-	 * @return normalized list
+	 * @param list: original list
+	 * @return normalizedList: normalized list based on input list
 	 */
 	private List<Double> normalizeList(List<Double> list) {
 		List<Double> normalizedList = new ArrayList<Double>();				   // normalized list to return
@@ -405,9 +378,9 @@ public class FuzzyLogicCalculator {
 	}
 	
 	/** 
-	 * Find minimum of List of doubles
-	 * @param list of input values
-	 * @return minimum value
+	 * Find minimum of list of doubles
+	 * @param list: input values for finding minimum
+	 * @return min: minimum value of input list
 	 */
 	private double min(List<Double> list) {
 		double min = 1;
@@ -421,9 +394,9 @@ public class FuzzyLogicCalculator {
 	}
 	
 	/** 
-	 * Find max of List of doubles
-	 * @param list of input values
-	 * @return max value
+	 * Find max of list of doubles
+	 * @param list: input values for finding max
+	 * @return max: max value of input list
 	 */
 	private double max(List<Double> list) {
 		double max = 0;

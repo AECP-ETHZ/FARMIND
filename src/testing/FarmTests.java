@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Properties;
 
-import org.apache.commons.cli.CommandLine;
 import org.junit.Before;
 import org.junit.Test;
 import activity.Activity;
@@ -18,7 +18,7 @@ import agent.Farm;
  */
 public class FarmTests {
 	List<Farm>     allFarms = new ArrayList<Farm>();
-	CommandLine cmd = null;
+	Properties cmd = null;
 	
 	@Before 
 	public void setup() {

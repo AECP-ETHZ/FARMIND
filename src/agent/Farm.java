@@ -5,12 +5,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import java.util.logging.Logger;
 import reader.FarmDataMatrix;
 
-import org.apache.commons.cli.CommandLine;
 import org.apache.commons.math3.distribution.NormalDistribution;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
@@ -122,7 +122,7 @@ public class Farm {
 	 * @param cmd: command line object that contains parameters for model
 	 * @return ActivitySet: list of activity options for a farm to select 
 	 */
-	public List<String> decideActivitySet(List<Farm> allFarms, CommandLine cmd) {
+	public List<String> decideActivitySet(List<Farm> allFarms, Properties cmd) {
 	    List<String> ActivitySet = new ArrayList<String>();				                           // list of activities from fuzzy logic
 		FuzzyLogicCalculator fuzzyLogicCalc = new FuzzyLogicCalculator(this, allFarms);            // calculator for the activity selection
 		
@@ -138,7 +138,7 @@ public class Farm {
 		}
 		
 		// modified simulation using only satisfaction
-		if ( Integer.parseInt(cmd.getOptionValue("uncertainty")) == 0) {
+		if ( Integer.parseInt(cmd.getProperty("uncertainty")) == 0) {
 			if (this.Satisfaction >= this.getP_aspiration_coef() ) {
 				this.strategy = 4; //REPETITION
 				for (int i = 0; i < this.getCurrentActivity().size(); i++) {
@@ -148,7 +148,7 @@ public class Farm {
 			else {
 				if (this.Satisfaction < this.getP_aspiration_coef()) {
 					this.strategy = 3; //OPTIMIZATION
-					if (cmd.getOptionValue("modelName").equals("WEEDCONTROL")) {
+					if (cmd.getProperty("modelName").equals("WEEDCONTROL")) {
 						for (int i = 0; i < this.getActivities().size(); i++) {                    // for optimization of weedcontrol, return all activities
 							ActivitySet.add(this.getActivities().get(i).getName());
 						} 
@@ -180,7 +180,7 @@ public class Farm {
 				}
 				else {
 					this.strategy = 3; //OPTIMIZATION
-					if (cmd.getOptionValue("modelName").equals("WEEDCONTROL")) {
+					if (cmd.getProperty("modelName").equals("WEEDCONTROL")) {
 						for (int i = 0; i < this.getActivities().size(); i++) {                    // for optimization of weedcontrol, return all activities
 							ActivitySet.add(this.getActivities().get(i).getName());
 						} 

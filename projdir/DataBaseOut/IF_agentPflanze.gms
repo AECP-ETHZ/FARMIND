@@ -31,9 +31,9 @@ Parameter          IF_agentPflanze(s_agentenID,s_pflanzen)
 10290.brotgetreide 0.00
 10290.futtergetreide 0.00
 10290.koernermais 0.00
-10290.silomais 0.00
+10290.silomais 1.00
 10290.zuckerrueben 0.00
-10290.futterrueben 0.00
+10290.futterrueben 1.00
 10290.kartoffeln 0.00
 10290.raps 0.00
 10290.soja 0.00
@@ -78,8 +78,8 @@ Parameter          IF_agentPflanze(s_agentenID,s_pflanzen)
 10310.forst 0.00
 10310.hochstamm 0.00
 10310.gemuese 0.00
-11730.brotgetreide 0.00
-11730.futtergetreide 0.00
+11730.brotgetreide 1.00
+11730.futtergetreide 1.00
 11730.koernermais 0.00
 11730.zuckerrueben 0.00
 11730.futterrueben 0.00

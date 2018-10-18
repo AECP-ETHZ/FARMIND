@@ -1,2 +1,1 @@
-cd projdir
-gams Fit_StratABM_Cal
+copy ".\data\Grossmargin_P4,00.csv" .\projdir

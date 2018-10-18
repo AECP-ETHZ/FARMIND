@@ -125,7 +125,7 @@ public class SwissLand implements MP_Interface{
 	}
 
 	@Override
-	public List<Double> readMPIncomes(List<Farm> allFarms) {
+	public List<Double> readMPIncomes(Properties cmd, List<Farm> allFarms) {
 		
 		List<Double> incomesFromMP = new ArrayList<Double>();				       // list of all agents' incomes produced by the MP
 		BufferedReader Buffer = null;	 									       // read input file
@@ -163,12 +163,12 @@ public class SwissLand implements MP_Interface{
 	}
 	
 	@Override
-	public List<ArrayList<Activity>> readMPActivities(List<Farm> allFarms) {
+	public List<ArrayList<Activity>> readMPActivities(Properties cmd, List<Farm> allFarms) {
 		List<ArrayList<Activity>> activitiesFromMP = new ArrayList<ArrayList<Activity>>();   // list of all agents' final activities selected by the MP
 		BufferedReader Buffer = null;	 									       // read input file
 		String Line;														       // read each line of the file individually
 		ArrayList<String> dataArray;										       // separate data line
-		ReadData reader = new ReadData();
+		ReadData reader = new ReadData(cmd);
 		List<Activity> allPossibleActivities = reader.getActivityList();		   // generated activity list with ID and name 
 		HashMap<String, ArrayList<Activity>> map = new HashMap<String, ArrayList<Activity>>();
 		

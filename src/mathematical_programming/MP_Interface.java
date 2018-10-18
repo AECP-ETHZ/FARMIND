@@ -19,9 +19,9 @@ public interface MP_Interface {
 	
 	public void runModel(Properties cmd, int nFarms, int year, boolean pricingAverage, int memoryLengthAverage);
 	
-	public List<Double> readMPIncomes(List<Farm> allFarms);
+	public List<Double> readMPIncomes(Properties cmd, List<Farm> allFarms);
 	
-	public List<ArrayList<Activity>> readMPActivities(List<Farm> allFarms);
+	public List<ArrayList<Activity>> readMPActivities(Properties cmd, List<Farm> allFarms);
 	
 	public ArrayList<Activity> getExitActivity();
 }

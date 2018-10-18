@@ -22,13 +22,15 @@ public class FarmTests {
 	
 	@Before 
 	public void setup() {
-		ReadData reader = new ReadData();						               // read all input data files
+		String[] args = {"2"};
+		cmd = main.Consumat.parseInput(args);
+		
+		ReadData reader = new ReadData(cmd);						               // read all input data files
 		useTestData(reader);
 		allFarms = reader.getFarms();						                   // build set of farms with new parameters
 		
 		main.Consumat.initializePopulationIncomeChangeRate(allFarms);
-		String[] args = {"-year", "2","-modelName", "WEEDCONTROL", "-uncertainty", "1"};
-		cmd = main.Consumat.parseInput(args);
+
 	}
 	
 	@Test
@@ -142,7 +144,6 @@ public class FarmTests {
 		farm.setActivity_Dissimilarity(10);
 		farm.setIncome_Dissimilarity(0);
 		farm.decideActivitySet(allFarms,cmd);
-		
 		int strat = farm.getStrategy();
 		assertEquals(strat, 1);	
 	}
@@ -155,9 +156,9 @@ public class FarmTests {
 		farm.setActivity_Dissimilarity(0);
 		farm.setIncome_Dissimilarity(0);
 		
-		String[] args = {"-year", "2","-modelName", "WEEDCONTROL", "-uncertainty", "0"};
+		String[] args = {"2"};
 		cmd = main.Consumat.parseInput(args);
-		
+		cmd.setProperty("uncertainty", "0");
 		farm.decideActivitySet(allFarms,cmd);
 		
 		int strat = farm.getStrategy();
@@ -172,9 +173,9 @@ public class FarmTests {
 		farm.setActivity_Dissimilarity(0);
 		farm.setIncome_Dissimilarity(0);
 		
-		String[] args = {"-year", "2","-modelName", "WEEDCONTROL", "-uncertainty", "0"};
+		String[] args = {"2"};
 		cmd = main.Consumat.parseInput(args);
-		
+		cmd.setProperty("uncertainty", "0");
 		farm.decideActivitySet(allFarms,cmd);
 		
 		int strat = farm.getStrategy();
@@ -191,9 +192,9 @@ public class FarmTests {
 		farm.setActivity_Dissimilarity(10);
 		farm.setIncome_Dissimilarity(0);
 		
-		String[] args = {"-year", "2","-modelName", "WEEDCONTROL", "-uncertainty", "0"};
+		String[] args = {"2"};
 		cmd = main.Consumat.parseInput(args);
-		
+		cmd.setProperty("uncertainty", "0");
 		farm.decideActivitySet(allFarms,cmd);
 		
 		int strat = farm.getStrategy();

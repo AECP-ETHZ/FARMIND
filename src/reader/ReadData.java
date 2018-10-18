@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Logger;
 
 import org.jgrapht.Graph;
@@ -43,15 +44,24 @@ public class ReadData {
 	public static final int PHI_MINUS = 17;  								   // parameter in the formula for calculating satisfaction
 	public static final int FUZZY_SIZE = 18;						           // size of fuzzy logic
 
-	public String FarmParametersFile = "./data/farm_parameters.csv";					   // allow external function to set data files for testing
-	public String ActivityPreferenceFile = "./data/activity_preference.csv";
-	public String InitialActivities = "./data/initial_activities.csv";
-	public String InitialIncomes = "./data/initial_incomes.csv";
-	public String InitialPerformingYears = "./data/initial_performing_years.csv";
-	public String SocialNetworkFile = "./data/social_networks.csv";
+	public String FarmParametersFile;					   // allow external function to set data files for testing
+	public String ActivityPreferenceFile;
+	public String InitialActivities;
+	public String InitialIncomes;
+	public String InitialPerformingYears;
+	public String SocialNetworkFile;
 	
 	private static final Logger LOGGER = Logger.getLogger("FARMIND_LOGGING");
 	
+	public ReadData(Properties cmd) {
+		FarmParametersFile = String.format("./%s/farm_parameters.csv",cmd.getProperty("data_folder"));					   // allow external function to set data files for testing
+		ActivityPreferenceFile = String.format("./%s/activity_preference.csv",cmd.getProperty("data_folder"));
+		InitialActivities = String.format("./%s/initial_activities.csv",cmd.getProperty("data_folder"));
+		InitialIncomes = String.format("./%s/initial_incomes.csv",cmd.getProperty("data_folder"));
+		InitialPerformingYears = String.format("./%s/initial_performing_years.csv",cmd.getProperty("data_folder"));
+		SocialNetworkFile = String.format("./%s/social_networks.csv",cmd.getProperty("data_folder")); 
+	}
+
 	/**
 	 * Each farm in the list contains a social network, the associated people, and preferred activities
 	 * The satisfaction and Information Seeking Behavior (ISB) are generated initially

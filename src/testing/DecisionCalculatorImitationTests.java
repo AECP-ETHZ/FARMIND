@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,10 +20,13 @@ import reader.ReadData;
  */
 public class DecisionCalculatorImitationTests {
 	List<Farm>     allFarms = new ArrayList<Farm>();
+	Properties cmd = null;
 	
 	@Before 
 	public void setup() {
-		ReadData reader = new ReadData();						               // read all input data files
+		String[] args = {"2"};
+		cmd = main.Consumat.parseInput(args);
+		ReadData reader = new ReadData(cmd);						               // read all input data files
 		useTestData(reader);
 		allFarms = reader.getFarms();						                   // build set of farms with new parameters
 	}

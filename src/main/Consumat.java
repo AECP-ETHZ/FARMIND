@@ -92,7 +92,7 @@ public class Consumat {
 			}
 			
 			pricingAverage = true;
-			MP.runModel(allFarms.size(),year, pricingAverage, memoryLengthAverage);				   // if needed, update mp script and then start model
+			MP.runModel(cmd, allFarms.size(),year, pricingAverage, memoryLengthAverage);				   // if needed, update mp script and then start model
 			MP_Incomes = MP.readMPIncomes(allFarms);
 			MP_Activities = MP.readMPActivities(allFarms);
 			
@@ -123,7 +123,7 @@ public class Consumat {
 					farmIndex++;
 				}
 				
-				MP.runModel(allFarms.size(),year,pricingAverage,memoryLengthAverage);			   // if needed, update mp script and then start model
+				MP.runModel(cmd, allFarms.size(),year,pricingAverage,memoryLengthAverage);			   // if needed, update mp script and then start model
 				MP_Incomes = MP.readMPIncomes(allFarms);
 				MP_Activities = MP.readMPActivities(allFarms);
 				
@@ -198,15 +198,7 @@ public class Consumat {
 	 */
 	public static Properties parseInput(String[] args) {
 		
-		if (args.length < 1) {
-			LOGGER.severe("Exiting FARMIND. Input number of iterations.");
-			System.exit(0);
-		} 
-		if (args.length < 2) {
-			LOGGER.severe("Exiting FARMIND. Input MP Model: WEEDCONTROL or SWISSLAND.");
-			System.exit(0);
-		} 
-		
+
 		Properties prop = new Properties();
     	InputStream input = null;
     	
@@ -216,12 +208,11 @@ public class Consumat {
 
     		//load a properties file from class path, inside static method
     		prop.load(input);
- 
-            //get the property value and print it out
-            System.out.println(prop.getProperty("data_folder"));
-	        System.out.println(prop.getProperty("modelName"));
-	        System.out.println(prop.getProperty("year"));
-	        
+    		if (args.length == 1) {
+    			prop.setProperty("year", args[0]);
+    		} 
+    		    		
+    		LOGGER.info("set iteration count to " + prop.getProperty("year"));
  
     	} catch (IOException ex) {
     		ex.printStackTrace();
@@ -236,34 +227,6 @@ public class Consumat {
         }
     	
     	return prop;
-		
-//        Options options = new Options();
-//
-//        Option yearCLI = new Option("year", true, "ABM simulation years");
-//        yearCLI.setRequired(true);
-//        options.addOption(yearCLI);
-//        
-//        Option modelName = new Option("modelName", true, "model: WEEDCONTROL or SWISSLAND");
-//        modelName.setRequired(true);
-//        options.addOption(modelName);
-//        
-//        Option uncertaintyCLI = new Option("uncertainty", true, "1 or 0 to include uncertainty in ABM");
-//        uncertaintyCLI.setRequired(true);
-//        options.addOption(uncertaintyCLI);
-//
-//        CommandLineParser parser = new DefaultParser();
-//        HelpFormatter formatter = new HelpFormatter();
-//        CommandLine cmd = null;
-//
-//        try {
-//            cmd = parser.parse(options, args);
-//        } catch (ParseException e) {
-//            System.out.println(e.getMessage());
-//            formatter.printHelp("Each argument is formatted as \"-argument VALUE\"", options);
-//            System.exit(1);
-//        }
-//		
-//		return cmd;
 	}
 		
 	/**

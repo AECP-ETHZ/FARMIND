@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Logger;
 
 import activity.Activity;
@@ -96,7 +97,7 @@ public class SwissLand implements MP_Interface{
 
 	@Override
 	// throwaway pricing average and memoryLength average value as it is not used in the Swissland model
-	public void runModel(int nFarm, int year, boolean pricingAverage, int memoryLengthAverage) {
+	public void runModel(Properties cmd, int nFarm, int year, boolean pricingAverage, int memoryLengthAverage) {
 		Runtime runtime = Runtime.getRuntime();						           // java runtime to run commands
 		
 		this.editMPscript(nFarm, year);										   // edit the gams script with updated pricing information

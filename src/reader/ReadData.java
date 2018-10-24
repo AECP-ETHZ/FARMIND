@@ -44,7 +44,7 @@ public class ReadData {
 	public static final int PHI_MINUS = 17;  								   // parameter in the formula for calculating satisfaction
 	public static final int FUZZY_SIZE = 18;						           // size of fuzzy logic
 
-	public String FarmParametersFile;					   // allow external function to set data files for testing
+	public String FarmParametersFile;					                       // allow external function to set data files for testing
 	public String ActivityPreferenceFile;
 	public String InitialActivities;
 	public String InitialIncomes;

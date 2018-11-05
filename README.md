@@ -6,13 +6,26 @@ The model represents each farm as an agent as well as a node in social networks.
 A linear programming model, integrated into the agent-based model, is then used to select an optimal activity for each agent to perform and generate an income value. Agents' satisfaction and uncertainty are updated accordingly. This sets the base for decision-making of next period.
 
 ### Running the ABM
-After extraction into a jar file, run the program using the 'run_java_ABM.bat' batch file or directly from the command line. 
+After extraction into a jar file, run the program using the 'run_java_ABM.bat' batch file or directly from the command line. A control.properties file indicates the runtime parameters for the model.
 
-The ABM requires two additional commands to run: the number of years, and the specific model. For example:
+The ABM requires the control.properties file to run. You can indicate an OPTIONAL year value in the command line and this will overwrite the value in the properties file. 
 
-	java -jar ABM.jar -year 5 -modelName WEEDCONTROL -uncertainty 1
+	java -jar ABM.jar 5
 
-will start the ABM for five years running with the WEEDCONTROL gams model on . The uncertainty flag set to 1 runs the normal simulation. When the uncertainty flag is set to 0 it only uses the model satisfaction when making the decisions. 
+will start the ABM for five years. 
+
+### control.properties file
+
+This is the structure of the control file for the model. If you want to use the abm.jar with the gams model, set the debug flag to 0. This changes the run_gams.bat file that is created so the abm will interface with the actual desired gams model. 
+
+The year flag can be overwritten in the command line as shown above. Simply add a number during the start and this will be used instead of the control value. 
+
+data_folder = data
+modelName = WEEDCONTROL
+uncertainty = 1
+year = 5
+project_folder = projdir
+debug = 1
 
 ### ABM Requirements
 1. /data/ folder containing input data files:

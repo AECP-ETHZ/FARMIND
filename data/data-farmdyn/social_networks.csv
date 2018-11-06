@@ -1,0 +1,6 @@
+,farm1,farm2,farm3,farm4,farm5
+farm1,0,1,1,0,1
+farm2,0,0,0,1,0
+farm3,1,0,0,1,1
+farm4,0,1,1,0,1
+farm5,1,1,0,0,0

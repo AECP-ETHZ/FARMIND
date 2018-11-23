@@ -1,10 +1,13 @@
 package mathematical_programming;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,83 +19,25 @@ import agent.Farm;
 import reader.ReadData;
 
 public class SwissLand implements MP_Interface{
-
+	File file; 																   // file object to read/write 							
+	String resultsFile;														   // results file
+	String gamsModelFileAnimals;											   // gams model file, used for editing actual gams script
+	String gamsModelFilePlants;												   // gams model file, used for editing actual gams script
+	String gamsIncomeFile;
+	String gamsAnimalResultsFile;
+	String gamsPlantsResultsFile;
+	String yearlyPriceFile; 												   // price file for reading yearly prices 
 	private static final Logger LOGGER = Logger.getLogger("FARMIND_LOGGING");
-	
-	@Override
-	public void inputsforMP(Farm farm, List<String> possibleActivity) {
-		
-		List<String> allActivities = new ArrayList<String>();
-		
-		for(Activity act: farm.getActivities()) {
-			allActivities.add(act.getName());
-		}
 
-		// edit animal activity file
-		try {
-            BufferedReader oldScript = new BufferedReader(new FileReader("projdir/DataBaseOut/If_agentTiere.gms"));
-            String line;
-            String script = "";
-            while ((line = oldScript.readLine()) != null) {
-            	
-            	for(String activity: allActivities ) {
-            		String Farm_Activity = String.format("%s.%s", farm.getFarmName(), activity);
-            		if (line.contains(Farm_Activity)) {
-            			if( possibleActivity.contains(activity) ) {
-            				line = String.format("%s.%s %.2f", farm.getFarmName(), activity, 1.0);
-            			}
-            			else {
-            				line = String.format("%s.%s %.2f", farm.getFarmName(), activity, 0.0);
-            			}	
-            		}	
-            	}
-            	
-                script += line + '\n';
-            }
-            
-            oldScript.close();
-            FileOutputStream newScript = new FileOutputStream("projdir/DataBaseOut/If_agentTiere.gms");
-            newScript.write(script.getBytes());
-            newScript.close();
-        }
+	public SwissLand(Properties cmd) {
+		gamsModelFileAnimals = String.format("%s\\DataBaseOut\\If_agentTiere.gms",cmd.getProperty("project_folder"));
+		gamsModelFilePlants = String.format("%s\\DataBaseOut\\If_agentPflanze.gms",cmd.getProperty("project_folder"));
+		gamsPlantsResultsFile = String.format("%s\\DataModelIn\\data_PFLLANDKAP_T0 .gms",cmd.getProperty("project_folder"));
+		gamsAnimalResultsFile = String.format("%s\\DataModelIn\\data_ANIMALKAP_T0.gms",cmd.getProperty("project_folder"));
+		gamsIncomeFile = String.format("%s\\DataModelIn\\data_FARMINCOME_T0.gms",cmd.getProperty("project_folder"));
+		resultsFile = String.format("%s\\Grossmargin_P4,00.csv",cmd.getProperty("project_folder"));
 		
-        catch (IOException ioe) {
-        	ioe.printStackTrace();
-        }
-		
-		// edit plant activity file
-		try {
-            BufferedReader oldScript = new BufferedReader(new FileReader("projdir/DataBaseOut/If_agentPflanze.gms"));
-            String line;
-            String script = "";
-            while ((line = oldScript.readLine()) != null) {
-            	
-            	for(String activity: allActivities ) {
-            		String Farm_Activity = String.format("%s.%s", farm.getFarmName(), activity);
-            		if (line.contains(Farm_Activity)) {
-            			if( possibleActivity.contains(activity) ) {
-            				line = String.format("%s.%s %.2f", farm.getFarmName(), activity, 1.0);
-            			}
-            			else {
-            				line = String.format("%s.%s %.2f", farm.getFarmName(), activity, 0.0);
-            			}	
-            		}	
-            	}
-            	
-                script += line + '\n';
-            }
-            
-            oldScript.close();
-            FileOutputStream newScript = new FileOutputStream("projdir/DataBaseOut/If_agentPflanze.gms");
-            newScript.write(script.getBytes());
-            newScript.close();
-        }
-		
-        catch (IOException ioe) {
-        	ioe.printStackTrace();
-        }
-		
-		
+		yearlyPriceFile = String.format("./%s/yearly_prices.csv",cmd.getProperty("data_folder"));
 	}
 
 	@Override
@@ -102,25 +47,82 @@ public class SwissLand implements MP_Interface{
 		
 		this.editMPscript(nFarm, year);										   // edit the gams script with updated pricing information
 		
-		File f = new File("projdir\\DataModelIn\\data_FARMIND.gms");
-		f.delete();
-		f = new File("projdir\\DataModelIn\\data_FARMINDLandData.gms");
-		f.delete();
-		
 		LOGGER.info("Starting MP model");
 		
 		try {
 			String name = System.getProperty("os.name").toLowerCase();
 			if (name.startsWith("win") ){
+				createRunGamsBatch(cmd, "win");	
 				runtime.exec("cmd /C" + "run_gams.bat");					   // actually run command
 			}
 			if (name.startsWith("mac")) {
+				createRunGamsBatch(cmd, "mac");			
 				runtime.exec("/bin/bash -c ./run_gams_mac.command");		   // actually run command
 			}
 			
 			LOGGER.info("Waiting for output generated by MP model");
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	private void createRunGamsBatch(Properties cmd, String OS) {
+		if (cmd.getProperty("debug").equals("1")) {
+			if (OS.equals("win")) {
+				LOGGER.info("Creating run_gams.bat file for debug");
+				File f = new File("run_gams.bat");
+				f.delete();
+				FileWriter fw;
+				try {
+					fw = new FileWriter(f,true);
+					BufferedWriter bw = new BufferedWriter(fw);
+					PrintWriter writer = new PrintWriter(bw);
+					writer.println("copy \".\\data\\Grossmargin_P4,00.csv\" .\\projdir");
+					LOGGER.fine("copy \".\\data\\Grossmargin_P4,00.csv\" .\\projdir");
+					
+					writer.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (OS.equals("mac")) {
+				LOGGER.info("Creating run_gams_mac file");
+				File f = new File("run_gams_mac.command");
+				f.delete();
+				FileWriter fw;
+				try {
+					fw = new FileWriter(f,true);
+					BufferedWriter bw = new BufferedWriter(fw);
+					PrintWriter writer = new PrintWriter(bw);
+					writer.println("#!/bin/bash");
+					writer.println("cp ./data/Grossmargin_P4,00.csv ./projdir/Grossmargin_P4,00.csv");
+					LOGGER.fine("cp ./data/Grossmargin_P4,00.csv ./projdir/Grossmargin_P4,00.csv");
+					writer.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		} else {
+			LOGGER.info("Creating run_gams.bat file for actual gams system");
+			File f = new File("run_gams.bat");
+			f.delete();
+			FileWriter fw;
+			try {
+				fw = new FileWriter(f,true);
+				BufferedWriter bw = new BufferedWriter(fw);
+				PrintWriter writer = new PrintWriter(bw);
+				if (cmd.getProperty("project_folder") == null)  {
+					LOGGER.severe("Please include parameter project_folder into the control file.");
+					System.exit(0);
+				}
+				String proj = "cd " + cmd.getProperty("project_folder");
+				writer.println(proj);
+				writer.println("gams 4_SwisslandFarmmodel");
+				LOGGER.fine("in command file: " + proj + " gams Fit_StratABM_Cal");
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -130,9 +132,8 @@ public class SwissLand implements MP_Interface{
 		List<Double> incomesFromMP = new ArrayList<Double>();				       // list of all agents' incomes produced by the MP
 		BufferedReader Buffer = null;	 									       // read input file
 		String Line;														       // read each line of the file individually
-		ArrayList<String> dataArray;										       // separate data line
 				
-		File f = new File("projdir\\DataModelIn\\data_FARMIND.gms");					   // actual results file
+		File f = new File(gamsIncomeFile);					                       // actual results file
 		while (!f.exists()) {try {
 			Thread.sleep(1000);												       // wait until the MP finishes running
 		} catch (InterruptedException e) {
@@ -140,15 +141,19 @@ public class SwissLand implements MP_Interface{
 		}}
 
 		try {
-			Buffer = new BufferedReader(new FileReader("projdir\\DataModelIn\\data_FARMIND.gms"));
-			
+			Buffer = new BufferedReader(new FileReader(gamsIncomeFile));
 			Line = Buffer.readLine();
 			Line = Buffer.readLine();
-			while ( ( (Line = Buffer.readLine()) != null ) && Line.matches(".*\\d+.*") ) {    
-				dataArray = CSVtoArrayList(Line);						          // Read farm's parameters line by line
-				incomesFromMP.add( Double.parseDouble(dataArray.get(1)) );		
+			while ( ( (Line = Buffer.readLine()) != null ) && Line.matches(".*\\d+.*") ) {  
+				String[] words = Line.split("\\.");												   // input data is ugly and needs some editing
+				String income = words[2];
+				words = income.split(" ");
+				income = words[1];
+				if(income.contains("/")) { 
+					income = income.substring(0, income.length() - 2); 
+				}
+				incomesFromMP.add( Double.parseDouble(income) );		
 			}
-			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}									       
@@ -165,22 +170,22 @@ public class SwissLand implements MP_Interface{
 	@Override
 	public List<ArrayList<Activity>> readMPActivities(Properties cmd, List<Farm> allFarms) {
 		List<ArrayList<Activity>> activitiesFromMP = new ArrayList<ArrayList<Activity>>();   // list of all agents' final activities selected by the MP
-		BufferedReader Buffer = null;	 									       // read input file
-		String Line;														       // read each line of the file individually
-		ArrayList<String> dataArray;										       // separate data line
+		BufferedReader Buffer = null;	 									   // read input file
+		String Line;														   // read each line of the file individually
+		ArrayList<String> dataArray;										   // separate data line
 		ReadData reader = new ReadData(cmd);
-		List<Activity> allPossibleActivities = reader.getActivityList();		   // generated activity list with ID and name 
+		List<Activity> allPossibleActivities = reader.getActivityList();	   // generated activity list with ID and name 
 		HashMap<String, ArrayList<Activity>> map = new HashMap<String, ArrayList<Activity>>();
 		
-		File f = new File("projdir\\DataModelIn\\data_FARMINDLandData.gms");	   // actual results file
+		File f = new File(gamsPlantsResultsFile);	   						   // actual results file
 		while (!f.exists()) {try {
-			Thread.sleep(1000);												       // wait until the MP finishes running
+			Thread.sleep(1000);												   // wait until the MP finishes running
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}}
-
+//TODO add animal results code
 		try {
-			Buffer = new BufferedReader(new FileReader("projdir\\DataModelIn\\data_FARMINDLandData.gms"));
+			Buffer = new BufferedReader(new FileReader(gamsPlantsResultsFile));
 			
 			Line = Buffer.readLine();
 			Line = Buffer.readLine();
@@ -200,7 +205,6 @@ public class SwissLand implements MP_Interface{
 						farmActivityList.add(p);
 					}
 				}
-				
 				map.put(dataArray.get(0), farmActivityList);
 			}
 			
@@ -224,6 +228,80 @@ public class SwissLand implements MP_Interface{
 		}
 
 		return activitiesFromMP;
+	}
+
+	@Override
+	public void inputsforMP(Farm farm, List<String> possibleActivity) {
+		
+		List<String> allActivities = new ArrayList<String>();
+		
+		for(Activity act: farm.getActivities()) {
+			allActivities.add(act.getName());
+		}
+
+		// edit animal activity file
+		try {
+            BufferedReader oldScript = new BufferedReader(new FileReader(gamsModelFileAnimals)); 
+            String line;
+            String script = "";
+            while ((line = oldScript.readLine()) != null) {
+            	
+            	for(String activity: allActivities ) {
+            		String Farm_Activity = String.format("%s.%s", farm.getFarmName(), activity);
+            		if (line.contains(Farm_Activity)) {
+            			if( possibleActivity.contains(activity) ) {
+            				line = String.format("%s.%s %.2f", farm.getFarmName(), activity, 1.0);
+            			}
+            			else {
+            				line = String.format("%s.%s %.2f", farm.getFarmName(), activity, 0.0);
+            			}	
+            		}	
+            	}
+                script += line + '\n';
+            }
+            
+            oldScript.close();
+            FileOutputStream newScript = new FileOutputStream(gamsModelFileAnimals); 
+            newScript.write(script.getBytes());
+            newScript.close();
+        }
+		
+        catch (IOException ioe) {
+        	ioe.printStackTrace();
+        }
+		
+		// edit plant activity file
+		try {
+            BufferedReader oldScript = new BufferedReader(new FileReader(gamsModelFilePlants));
+            String line;
+            String script = "";
+            while ((line = oldScript.readLine()) != null) {
+            	
+            	for(String activity: allActivities ) {
+            		String Farm_Activity = String.format("%s.%s", farm.getFarmName(), activity);
+            		if (line.contains(Farm_Activity)) {
+            			if( possibleActivity.contains(activity) ) {
+            				line = String.format("%s.%s %.2f", farm.getFarmName(), activity, 1.0);
+            			}
+            			else {
+            				line = String.format("%s.%s %.2f", farm.getFarmName(), activity, 0.0);
+            			}	
+            		}	
+            	}
+                script += line + '\n';
+            }
+            
+            oldScript.close();
+            FileOutputStream newScript = new FileOutputStream(gamsModelFilePlants); //"projdir/DataBaseOut/If_agentPflanze.gms");
+            newScript.write(script.getBytes());
+            newScript.close();
+        }
+		
+        catch (IOException ioe) {
+        	ioe.printStackTrace();
+        }
+		
+		
 	}
 
 	@Override

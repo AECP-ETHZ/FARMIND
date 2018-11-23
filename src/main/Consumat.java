@@ -55,7 +55,7 @@ public class Consumat {
 			
 			MP_Interface MP = new FactoryMP(cmd, simYear, memoryLengthAverage).getMP();            // select correct model based on input command parameter
 			
-			allFarmsDecideActivity(cmd, year, allFarms, MP, MP_Incomes, MP_Activities);
+			allFarmsDecideActivity(cmd, year, allFarms, MP, MP_Incomes, MP_Activities);			   // generate model files based on decisions made
 			pricingAverage = true;															       // use average of historical price
 			MP.runModel(cmd, allFarms.size(), year, pricingAverage, memoryLengthAverage);		   // update gams script and then start model (ie update pricing information etc)
 			MP_Incomes = MP.readMPIncomes(cmd, allFarms);										   // read income and activities from model results
@@ -105,7 +105,7 @@ public class Consumat {
 	}
 	
 	/** 
-	 * For each farm in allFarms list, update the individual farm and then make the decision about best activity based on satisfaction and dissimilarity
+	 * For each farm in allFarms list, update the individual farm and then make the decision about best activity based on satisfaction and dissimilarity and prepare MP model control files
 	 * @param cmd :: input control properties for simulation
 	 * @param year :: current iteration of model
 	 * @param allFarms :: list of all farm agents

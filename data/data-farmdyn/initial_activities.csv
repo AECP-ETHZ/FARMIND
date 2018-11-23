@@ -1,6 +1,6 @@
 ,V1,V2,V3
-farm1,Dairy,Arable,Biogas
+farm1,Dairy,Arable,MotherCows
 farm2,Beef,MotherCows,NA
 farm3,Biogas,Sows,Arable
 farm4,Sows,Fattners,NA
-farm5,Sows,Dairy,Beef
+farm5,Sows,Dairy,NA

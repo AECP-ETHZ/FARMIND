@@ -7,14 +7,14 @@ public class FactoryMP {
 	
 	public FactoryMP(Properties cmd, int simYear, int memoryLengthAverage) {
 		if (cmd.getProperty("modelName").equals("WEEDCONTROL")) {
-			setMP(new WeedControl(cmd, simYear,memoryLengthAverage));
+			setMP(new WeedControl(cmd, simYear, memoryLengthAverage));
 		} 
 		if (cmd.getProperty("modelName").equals("SWISSLAND")) {
-			setMP(new SwissLand());
+			setMP(new SwissLand(cmd));
 		}
 		
 		if (cmd.getProperty("modelName").equals("FARMDYN")) {
-			setMP(new SwissLand());
+			setMP(new FarmDyn(cmd, simYear, memoryLengthAverage));
 		}
 	}
 

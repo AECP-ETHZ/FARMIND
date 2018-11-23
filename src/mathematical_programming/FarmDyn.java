@@ -1,15 +1,20 @@
 package mathematical_programming;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
+
+import org.apache.commons.io.FileUtils;
 
 import activity.Activity;
 import agent.Farm;
@@ -27,105 +32,51 @@ public class FarmDyn implements MP_Interface{
 	String resultsFile;														   // results file
 	String gamsModelFile;													   // gams model file, used for editing actual gams script
 	String yearlyPriceFile; 												   // price file for reading yearly prices 
+	String baseGamsModel;													   // original base gams model of farmydn
 	
 	public FarmDyn(Properties cmd, int simYear, int memoryLengthAverage) {
 		strategyFile = String.format("%s\\p_AllowedStratPrePost.csv",cmd.getProperty("project_folder"));
 		resultsFile = String.format("%s\\Grossmargin_P4,00.csv",cmd.getProperty("project_folder"));
-		gamsModelFile = String.format("%s\\runinc\runInc.gms",cmd.getProperty("project_folder"));
+		baseGamsModel =  String.format("./%s",cmd.getProperty("project_folder"));
 		yearlyPriceFile = String.format("./%s/yearly_prices.csv",cmd.getProperty("data_folder"));
-		file = new File( strategyFile) ;				   // delete last time period's simulation file
+		file = new File( strategyFile) ;				                       // delete last time period's simulation file
 		if (file.exists()) {
 			file.delete();
-		}
-		
+		}	
 	}
 	
 	@Override
-	public void inputsforMP(Farm farm, List<String> possibleActivity) {
+	public void inputsforMP(Farm farm, List<String> possibleActivity) {						       // copy base model to individual folder and set up activities in incgen file
 		
 		List<String> allActivities = new ArrayList<String>();
 		
 		for(Activity act: farm.getActivities()) {
 			allActivities.add(act.getName());
 		}
-
-		// edit animal activity file
+		
+		// copy model directory to it's own folder so you can set up this individual run
+		String baseModel = baseGamsModel + String.format("\\%S","farmdyn_base_model");
+		String newModel = baseGamsModel + String.format("\\%S",farm.getFarmName());
+		File srcDir = new File(baseModel);
+		File destDir = new File(newModel);
 		try {
-            BufferedReader oldScript = new BufferedReader(new FileReader("projdir/DataBaseOut/If_agentTiere.gms"));
-            String line;
-            String script = "";
-            while ((line = oldScript.readLine()) != null) {
-            	
-            	for(String activity: allActivities ) {
-            		String Farm_Activity = String.format("%s.%s", farm.getFarmName(), activity);
-            		if (line.contains(Farm_Activity)) {
-            			if( possibleActivity.contains(activity) ) {
-            				line = String.format("%s.%s %.2f", farm.getFarmName(), activity, 1.0);
-            			}
-            			else {
-            				line = String.format("%s.%s %.2f", farm.getFarmName(), activity, 0.0);
-            			}	
-            		}	
-            	}
-            	
-                script += line + '\n';
-            }
-            
-            oldScript.close();
-            FileOutputStream newScript = new FileOutputStream("projdir/DataBaseOut/If_agentTiere.gms");
-            newScript.write(script.getBytes());
-            newScript.close();
-        }
+			FileUtils.copyDirectory(srcDir, destDir);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
-        catch (IOException ioe) {
-        	ioe.printStackTrace();
-        }
+		gamsModelFile = String.format("%s\\incgen\\runInc.gms",newModel);
 		
-		// edit plant activity file
-		try {
-            BufferedReader oldScript = new BufferedReader(new FileReader("projdir/DataBaseOut/If_agentPflanze.gms"));
-            String line;
-            String script = "";
-            while ((line = oldScript.readLine()) != null) {
-            	
-            	for(String activity: allActivities ) {
-            		String Farm_Activity = String.format("%s.%s", farm.getFarmName(), activity);
-            		if (line.contains(Farm_Activity)) {
-            			if( possibleActivity.contains(activity) ) {
-            				line = String.format("%s.%s %.2f", farm.getFarmName(), activity, 1.0);
-            			}
-            			else {
-            				line = String.format("%s.%s %.2f", farm.getFarmName(), activity, 0.0);
-            			}	
-            		}	
-            	}
-            	
-                script += line + '\n';
-            }
-            
-            oldScript.close();
-            FileOutputStream newScript = new FileOutputStream("projdir/DataBaseOut/If_agentPflanze.gms");
-            newScript.write(script.getBytes());
-            newScript.close();
-        }
-		
-        catch (IOException ioe) {
-        	ioe.printStackTrace();
-        }
-		
-		
+		editMPscript(possibleActivity);	
 	}
+	
 
 	@Override
 	// throwaway pricing average and memoryLength average value as it is not used in the Swissland model
 	public void runModel(Properties cmd, int nFarm, int year, boolean pricingAverage, int memoryLengthAverage) {
 		Runtime runtime = Runtime.getRuntime();						           // java runtime to run commands
-		
-		this.editMPscript(nFarm, year);										   // edit the gams script with updated pricing information
-		
-		File f = new File("projdir\\DataModelIn\\data_FARMIND.gms");
-		f.delete();
-		f = new File("projdir\\DataModelIn\\data_FARMINDLandData.gms");
+				
+		File f = new File(resultsFile);
 		f.delete();
 		
 		LOGGER.info("Starting MP model");
@@ -133,9 +84,11 @@ public class FarmDyn implements MP_Interface{
 		try {
 			String name = System.getProperty("os.name").toLowerCase();
 			if (name.startsWith("win") ){
+				createRunGamsBatch(cmd, "win");								   // generate run_gams.bat based on input control files
 				runtime.exec("cmd /C" + "run_gams.bat");					   // actually run command
 			}
 			if (name.startsWith("mac")) {
+				createRunGamsBatch(cmd, "mac");			
 				runtime.exec("/bin/bash -c ./run_gams_mac.command");		   // actually run command
 			}
 			
@@ -144,6 +97,68 @@ public class FarmDyn implements MP_Interface{
 			e.printStackTrace();
 		}
 	}
+	
+	private void createRunGamsBatch(Properties cmd, String OS) {
+		if (cmd.getProperty("debug").equals("1")) {
+			if (OS.equals("win")) {
+				LOGGER.info("Creating run_gams.bat file for debug");
+				File f = new File("run_gams.bat");
+				f.delete();
+				FileWriter fw;
+				try {
+					fw = new FileWriter(f,true);
+					BufferedWriter bw = new BufferedWriter(fw);
+					PrintWriter writer = new PrintWriter(bw);
+					writer.println("copy \".\\data\\Grossmargin_P4,00.csv\" .\\projdir");
+					LOGGER.fine("copy \".\\data\\Grossmargin_P4,00.csv\" .\\projdir");
+					
+					writer.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (OS.equals("mac")) {
+				LOGGER.info("Creating run_gams_mac file");
+				File f = new File("run_gams_mac.command");
+				f.delete();
+				FileWriter fw;
+				try {
+					fw = new FileWriter(f,true);
+					BufferedWriter bw = new BufferedWriter(fw);
+					PrintWriter writer = new PrintWriter(bw);
+					writer.println("#!/bin/bash");
+					writer.println("cp ./data/Grossmargin_P4,00.csv ./projdir/Grossmargin_P4,00.csv");
+					LOGGER.fine("cp ./data/Grossmargin_P4,00.csv ./projdir/Grossmargin_P4,00.csv");
+					writer.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		} else {
+			LOGGER.info("Creating run_gams.bat file for actual gams system");
+			File f = new File("run_gams.bat");
+			f.delete();
+			FileWriter fw;
+			try {
+				fw = new FileWriter(f,true);
+				BufferedWriter bw = new BufferedWriter(fw);
+				PrintWriter writer = new PrintWriter(bw);
+				if (cmd.getProperty("project_folder") == null)  {
+					LOGGER.severe("Please include parameter project_folder into the control file.");
+					System.exit(0);
+				}
+				String proj = "cd " + cmd.getProperty("project_folder");
+				writer.println(proj);				
+				writer.println("gams exp_starter.gms --task=\"Single farm run\"  -errorLog=99 -lo=3 --scen=incgen/runInc --ggig=on --baseBreed=\"falsemyBasBreed\" ");
+				
+				LOGGER.fine("in command file: " + proj + " gams Fit_StratABM_Cal");
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 
 	@Override
 	public List<Double> readMPIncomes(Properties cmd, List<Farm> allFarms) {
@@ -261,21 +276,24 @@ public class FarmDyn implements MP_Interface{
 	 * @param nFarm: number of farms
 	 * @param year: which year in iteration so we can select the proper price information
 	 */
-    private void editMPscript(int nFarm, int year) {	
-
-		//LOGGER.fine(String.format("MP year price: %f",MP_price));
-			
+    private void editMPscript(List<String> possibleActivity) {	
 		try {
             BufferedReader oldScript = new BufferedReader(new FileReader( gamsModelFile));
             String line;
             String script = "";
+            String act = possibleActivity.get(0);
+            for (int i = 1; i < possibleActivity.size(); i++) {
+            	act = act + "," + possibleActivity.get(i);
+            }
+            
+            System.out.println(act);
+            
             while ((line = oldScript.readLine()) != null) {
             	
                 // Edit line in the gams script with the number of agents 
                 if (line.contains("'Single farm run'.'Farm branches'")) {
-                    line = String.format("'Single farm run'.'Farm branches' '%d' ", nFarm);
+                    line = String.format("'Single farm run'.'Farm branches' '%S' ", act);
                 }
-
                 script += line + '\n';
             }
             

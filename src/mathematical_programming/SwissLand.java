@@ -32,7 +32,7 @@ public class SwissLand implements MP_Interface{
 	public SwissLand(Properties cmd) {
 		gamsModelFileAnimals = String.format("%s\\DataBaseOut\\If_agentTiere.gms",cmd.getProperty("project_folder"));
 		gamsModelFilePlants = String.format("%s\\DataBaseOut\\If_agentPflanze.gms",cmd.getProperty("project_folder"));
-		gamsPlantsResultsFile = String.format("%s\\DataModelIn\\data_PFLLANDKAP_T0 .gms",cmd.getProperty("project_folder"));
+		gamsPlantsResultsFile = String.format("%s\\DataModelIn\\data_PFLLANDKAP_T0.gms",cmd.getProperty("project_folder"));
 		gamsAnimalResultsFile = String.format("%s\\DataModelIn\\data_ANIMALKAP_T0.gms",cmd.getProperty("project_folder"));
 		gamsIncomeFile = String.format("%s\\DataModelIn\\data_FARMINCOME_T0.gms",cmd.getProperty("project_folder"));
 		resultsFile = String.format("%s\\Grossmargin_P4,00.csv",cmd.getProperty("project_folder"));
@@ -77,8 +77,13 @@ public class SwissLand implements MP_Interface{
 					fw = new FileWriter(f,true);
 					BufferedWriter bw = new BufferedWriter(fw);
 					PrintWriter writer = new PrintWriter(bw);
-					writer.println("copy \".\\data\\Grossmargin_P4,00.csv\" .\\projdir");
-					LOGGER.fine("copy \".\\data\\Grossmargin_P4,00.csv\" .\\projdir");
+					writer.println( String.format("copy \".\\%s\\data_PFLLANDKAP_T0.gms\" .\\%s\\DataModelIn",cmd.getProperty("data_folder"), 
+							cmd.getProperty("project_folder") ));
+					writer.println( String.format("copy \".\\%s\\data_FARMINCOME_T0.gms\" .\\%s\\DataModelIn",cmd.getProperty("data_folder"), 
+							cmd.getProperty("project_folder") ));
+					writer.println( String.format("copy \".\\%s\\data_ANIMALKAP_T0.gms\" .\\%s\\DataModelIn",cmd.getProperty("data_folder"),
+							cmd.getProperty("project_folder") ));
+					LOGGER.fine("copy DataModelIn results files");
 					
 					writer.close();
 				} catch (IOException e) {
@@ -96,6 +101,14 @@ public class SwissLand implements MP_Interface{
 					PrintWriter writer = new PrintWriter(bw);
 					writer.println("#!/bin/bash");
 					writer.println("cp ./data/Grossmargin_P4,00.csv ./projdir/Grossmargin_P4,00.csv");
+					
+					writer.println( String.format("cp ./%s/data_PFLLANDKAP_T0.gms\" ./%s/DataModelIn",cmd.getProperty("data_folder"),
+							cmd.getProperty("project_folder") ));
+					writer.println( String.format("cp ./%s/data_FARMINCOME_T0.gms\" ./%s/DataModelIn",cmd.getProperty("data_folder"),
+							cmd.getProperty("project_folder") ));
+					writer.println( String.format("cp ./%s/data_ANIMALKAP_T0.gms\" ./%sDataModelIn\\projdir",cmd.getProperty("data_folder"),
+							cmd.getProperty("project_folder")));
+					
 					LOGGER.fine("cp ./data/Grossmargin_P4,00.csv ./projdir/Grossmargin_P4,00.csv");
 					writer.close();
 				} catch (IOException e) {
@@ -145,13 +158,7 @@ public class SwissLand implements MP_Interface{
 			Line = Buffer.readLine();
 			Line = Buffer.readLine();
 			while ( ( (Line = Buffer.readLine()) != null ) && Line.matches(".*\\d+.*") ) {  
-				String[] words = Line.split("\\.");												   // input data is ugly and needs some editing
-				String income = words[2];
-				words = income.split(" ");
-				income = words[1];
-				if(income.contains("/")) { 
-					income = income.substring(0, income.length() - 2); 
-				}
+				String income = parseLineIncome(Line);
 				incomesFromMP.add( Double.parseDouble(income) );		
 			}
 		} catch (IOException e) {
@@ -165,6 +172,29 @@ public class SwissLand implements MP_Interface{
 		}
 
 		return incomesFromMP;
+	}
+	
+	private String parseLineIncome(String Line) {
+		String[] words = Line.split("\\.");												   // input data is ugly and needs some editing
+		String income = words[2];
+		words = income.split(" ");
+		income = words[1];
+		if(income.contains("/")) { 
+			income = income.substring(0, income.length() - 2); 
+		}
+		return income;
+	}
+	
+	private ArrayList<String> parseLineActivity(String Line) {
+		ArrayList<String> data = new ArrayList<String>();
+		String[] words = Line.split("\\.");												   // input data is ugly and needs some editing
+		String act = words[3];
+		String name = words[1];
+		words = act.split(" ");
+		act = words[0];
+		data.add(name);
+		data.add(act);
+		return data;
 	}
 	
 	@Override
@@ -183,14 +213,13 @@ public class SwissLand implements MP_Interface{
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}}
-//TODO add animal results code
+
 		try {
-			Buffer = new BufferedReader(new FileReader(gamsPlantsResultsFile));
-			
+			Buffer = new BufferedReader(new FileReader(gamsPlantsResultsFile));	
 			Line = Buffer.readLine();
 			Line = Buffer.readLine();
 			while (( (Line = Buffer.readLine()) != null ) && Line.matches(".*\\d+.*")) {                       
-				dataArray = CSVtoArrayList(Line);						          // file has 'farm','activity' on each row.
+				dataArray = parseLineActivity(Line);
 				
 				ArrayList<Activity> farmActivityList = new ArrayList<Activity>();
 				if (map.get(dataArray.get(0)) != null) {
@@ -210,7 +239,35 @@ public class SwissLand implements MP_Interface{
 			
 		} catch (IOException e) {
 			e.printStackTrace();
-		}									       
+		}
+		
+		try {
+			Buffer = new BufferedReader(new FileReader(gamsAnimalResultsFile));	
+			Line = Buffer.readLine();
+			Line = Buffer.readLine();
+			while (( (Line = Buffer.readLine()) != null ) && Line.matches(".*\\d+.*")) {                       
+				dataArray = parseLineActivity(Line);
+				
+				ArrayList<Activity> farmActivityList = new ArrayList<Activity>();
+				if (map.get(dataArray.get(0)) != null) {
+					farmActivityList = map.get(dataArray.get(0));              // if farm already in map, reuse so we can add next activity
+				}
+								
+				for(int i = 0; i < allPossibleActivities.size(); i++) { 
+					String name = dataArray.get(1);
+					if (allPossibleActivities.get(i).getName().equals(name) ) {
+						int ID = allPossibleActivities.get(i).getID();
+						Activity p = new Activity(ID, name); 
+						farmActivityList.add(p);
+					}
+				}
+				map.put(dataArray.get(0), farmActivityList);
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
+		
 
 		try {
 			Buffer.close();
@@ -321,23 +378,5 @@ public class SwissLand implements MP_Interface{
     private void editMPscript(int nFarm, int year) {	
     	    	
 	}
-    
-	/**
-	 * This function converts data from CSV file into array structure 
-	 * @param CSV String from input CSV file to break into array
-	 * @return Result ArrayList of strings 
-	 */
-	private static ArrayList<String> CSVtoArrayList(String CSV) {		       
-		ArrayList<String> Result = new ArrayList<String>();
-		
-		if (CSV != null) {
-			String[] splitData = CSV.split("\\s*,\\s*");
-			for (int i = 0; i < splitData.length; i++) {
-				if (!(splitData[i] == null) || !(splitData[i].length() == 0)) {
-					Result.add(splitData[i].trim());
-				}
-			}
-		}
-		return Result;
-	}
+
 }

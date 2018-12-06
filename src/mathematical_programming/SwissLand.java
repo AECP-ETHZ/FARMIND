@@ -26,7 +26,6 @@ public class SwissLand implements MP_Interface{
 	String gamsIncomeFile;
 	String gamsAnimalResultsFile;
 	String gamsPlantsResultsFile;
-	String yearlyPriceFile; 												   // price file for reading yearly prices 
 	private static final Logger LOGGER = Logger.getLogger("FARMIND_LOGGING");
 
 	public SwissLand(Properties cmd) {
@@ -37,7 +36,6 @@ public class SwissLand implements MP_Interface{
 		gamsIncomeFile = String.format("%s\\DataModelIn\\data_FARMINCOME_T0.gms",cmd.getProperty("project_folder"));
 		resultsFile = String.format("%s\\Grossmargin_P4,00.csv",cmd.getProperty("project_folder"));
 		
-		yearlyPriceFile = String.format("./%s/yearly_prices.csv",cmd.getProperty("data_folder"));
 	}
 
 	@Override
@@ -286,16 +284,34 @@ public class SwissLand implements MP_Interface{
 
 		return activitiesFromMP;
 	}
+	
+	private void checkActivityCombo(List<String> possibleActivity) {
+		
+		if (possibleActivity.contains("milchkuehe") & !possibleActivity.contains("jungvieh_miku"))  {
+			possibleActivity.add("jungvieh_miku");
+		}
+		if (possibleActivity.contains("milchkuehe") & !possibleActivity.contains("aufzucht_miku"))  {
+			possibleActivity.add("aufzucht_miku");
+		}
+		if (!possibleActivity.contains("milchkuehe") & possibleActivity.contains("aufzucht_miku"))  {
+			possibleActivity.remove("aufzucht_miku");
+		}
+		if (!possibleActivity.contains("milchkuehe") & possibleActivity.contains("jungvieh_miku"))  {
+			possibleActivity.remove("jungvieh_miku");
+		}		
+	}
 
 	@Override
 	public void inputsforMP(Farm farm, List<String> possibleActivity) {
 		
-		List<String> allActivities = new ArrayList<String>();
+		List<String> allActivities = new ArrayList<String>();				   // generic list of all activities in system
 		
 		for(Activity act: farm.getActivities()) {
 			allActivities.add(act.getName());
 		}
-
+		
+		checkActivityCombo(possibleActivity);
+		
 		// edit animal activity file
 		try {
             BufferedReader oldScript = new BufferedReader(new FileReader(gamsModelFileAnimals)); 
@@ -357,8 +373,6 @@ public class SwissLand implements MP_Interface{
         catch (IOException ioe) {
         	ioe.printStackTrace();
         }
-		
-		
 	}
 
 	@Override

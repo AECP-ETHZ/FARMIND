@@ -2,12 +2,12 @@ Parameter          IF_agentPflanze(s_agentenID,s_pflanzen)
  /
 
 10110.brotgetreide 0.00
-10110.futtergetreide 0.00
+10110.futtergetreide 1.00
 10110.koernermais 0.00
-10110.silomais 0.00
-10110.zuckerrueben 1.00
+10110.silomais 1.00
+10110.zuckerrueben 0.00
 10110.futterrueben 0.00
-10110.kartoffeln 1.00
+10110.kartoffeln 0.00
 10110.raps 0.00
 10110.soja 0.00
 10110.sonnenblumen 0.00
@@ -31,9 +31,9 @@ Parameter          IF_agentPflanze(s_agentenID,s_pflanzen)
 10290.brotgetreide 0.00
 10290.futtergetreide 0.00
 10290.koernermais 0.00
-10290.silomais 1.00
+10290.silomais 0.00
 10290.zuckerrueben 0.00
-10290.futterrueben 1.00
+10290.futterrueben 0.00
 10290.kartoffeln 0.00
 10290.raps 0.00
 10290.soja 0.00
@@ -67,14 +67,14 @@ Parameter          IF_agentPflanze(s_agentenID,s_pflanzen)
 10310.beeren 0.00
 10310.ackerbrache 0.00
 10310.kunstwiese 0.00
-10310.extWiese 0.00
+10310.extWiese 1.00
 10310.streueTorf 1.00
 10310.hecken 0.00
 10310.wenigIntWiese 0.00
-10310.naturWiese 0.00
-10310.extWeide 0.00
+10310.naturWiese 1.00
+10310.extWeide 1.00
 10310.soemmerung 1.00
-10310.naturWeide 0.00
+10310.naturWeide 1.00
 10310.forst 1.00
 10310.hochstamm 0.00
 10310.gemuese 0.00
@@ -95,10 +95,10 @@ Parameter          IF_agentPflanze(s_agentenID,s_pflanzen)
 11730.extWiese 0.00
 11730.streueTorf 1.00
 11730.hecken 0.00
-11730.wenigIntWiese 0.00
+11730.wenigIntWiese 1.00
 11730.naturWiese 0.00
 11730.extWeide 0.00
-11730.naturWeide 0.00
+11730.naturWeide 1.00
 11730.forst 1.00
 11730.hochstamm 0.00
 11730.gemuese 0.00

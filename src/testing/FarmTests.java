@@ -129,6 +129,7 @@ public class FarmTests {
 		farm.setSatisfaction(-1);
 		farm.setActivity_Dissimilarity(0);
 		farm.setIncome_Dissimilarity(0);
+		cmd.setProperty("modelName", "WEEDCONTROL");
 		farm.decideActivitySet(allFarms,cmd);
 
 		List<String> x = farm.decideActivitySet(allFarms, cmd);

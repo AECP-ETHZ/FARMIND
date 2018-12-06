@@ -13,8 +13,8 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import logging.ABMActivityLog;
 import logging.ABMTimeStepLog;
+import mathematical_programming.FactoryMP;
 import mathematical_programming.MP_Interface;
-import mathematical_programming.SwissLand;
 import mathematical_programming.WeedControl;
 import reader.ReadData;
 import activity.Activity;
@@ -35,7 +35,7 @@ public class Consumat {
 	 
 	public static void main(String[] args) {
 		initializeLogging();
-		LOGGER.info("Starting FARMIND: version number: 0.9.0");
+		LOGGER.info("Starting FARMIND: version number: 0.9.5");
 				
     	Properties          		cmd 				= parseInput(args);						             // parse input arguments
 		ReadData            		reader             	= new ReadData(cmd);					             // read all input data files
@@ -52,17 +52,10 @@ public class Consumat {
 		// run simulation for a set of years, getting updated income and activities from the MP model each iteration
 		for (int year = 1; year <= simYear; year++) {		                                       
 			LOGGER.info(String.format("Year %d simulation started", year));
-			MP_Interface MP;
 			
-			// set which model we use
-			if (cmd.getProperty("modelName").equals("WEEDCONTROL")) {
-				MP = new WeedControl(cmd, simYear,memoryLengthAverage);
-			} 
-			else {
-				MP = new SwissLand();
-			}
+			MP_Interface MP = new FactoryMP(cmd, simYear, memoryLengthAverage).getMP();            // select correct model based on input command parameter
 			
-			allFarmsDecideActivity(cmd, year, allFarms, MP, MP_Incomes, MP_Activities);
+			allFarmsDecideActivity(cmd, year, allFarms, MP, MP_Incomes, MP_Activities);			   // generate model files based on decisions made
 			pricingAverage = true;															       // use average of historical price
 			MP.runModel(cmd, allFarms.size(), year, pricingAverage, memoryLengthAverage);		   // update gams script and then start model (ie update pricing information etc)
 			MP_Incomes = MP.readMPIncomes(cmd, allFarms);										   // read income and activities from model results
@@ -112,7 +105,7 @@ public class Consumat {
 	}
 	
 	/** 
-	 * For each farm in allFarms list, update the individual farm and then make the decision about best activity based on satisfaction and dissimilarity
+	 * For each farm in allFarms list, update the individual farm and then make the decision about best activity based on satisfaction and dissimilarity and prepare MP model control files
 	 * @param cmd :: input control properties for simulation
 	 * @param year :: current iteration of model
 	 * @param allFarms :: list of all farm agents

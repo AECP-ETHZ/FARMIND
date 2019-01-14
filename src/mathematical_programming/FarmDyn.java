@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-import org.apache.commons.io.FileUtils;
+//import org.apache.commons.io.FileUtils;
 
 import activity.Activity;
 import agent.Farm;
@@ -59,11 +59,11 @@ public class FarmDyn implements MP_Interface{
 		String newModel = baseGamsModel + String.format("\\%S",farm.getFarmName());
 		File srcDir = new File(baseModel);
 		File destDir = new File(newModel);
-		try {
-			FileUtils.copyDirectory(srcDir, destDir);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			FileUtils.copyDirectory(srcDir, destDir);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 		
 		gamsModelFile = String.format("%s\\incgen\\runInc.gms",newModel);
 		

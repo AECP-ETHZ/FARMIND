@@ -30,7 +30,6 @@ public class FarmTests {
 		allFarms = reader.getFarms();						                   // build set of farms with new parameters
 		
 		main.Consumat.initializePopulationIncomeChangeRate(allFarms);
-
 	}
 	
 	@Test
@@ -207,8 +206,8 @@ public class FarmTests {
 		allFarms.get(0).updateAge();
 		allFarms.get(1).updateAge();
 		
-		assertEquals(allFarms.get(0).getAge(), 68);
-		assertEquals(allFarms.get(1).getAge(), 68);
+		assertEquals(allFarms.get(0).getAge(), 69);
+		assertEquals(allFarms.get(1).getAge(), 69);
 	}
 
 	@Test
@@ -313,7 +312,6 @@ public class FarmTests {
 		assertEquals(sat, -0.1769965217965832);                                // hand calculation
 	} 
 	
-	
 	public static String TestDataFile = "./test_data/farm_parameters.csv";
 	public static final String TestPreferenceFile = "./test_data/activity_preference.csv";
 	public static final String TestInitialActivities = "./test_data/initial_activities.csv";
@@ -329,15 +327,4 @@ public class FarmTests {
 		reader.InitialPerformingYears = TestYearsFile;
 		reader.SocialNetworkFile = TestSocialNetworkFile;
 	} 
-	
-	public static final void useTestDataImitation(ReadData reader) {
-		TestDataFile = "./test_data/farm_parameters_bad.csv";
-		reader.FarmParametersFile = TestDataFile;
-		reader.ActivityPreferenceFile = TestPreferenceFile;
-		reader.InitialActivities = TestInitialActivities;
-		reader.InitialIncomes = TestInitialIncomes;
-		reader.InitialPerformingYears = TestYearsFile;
-		reader.SocialNetworkFile = TestSocialNetworkFile;
-	} 
-
 }

@@ -189,7 +189,7 @@ public class FuzzyLogicCalculator {
 		int fuzzy_size = (int) farm.getP_fuzzy_size();
 		
 		cluster = sorted;
-		if (cluster.size() > fuzzy_size) {											   // limit returned cluster to 6 elements
+		if (cluster.size() > fuzzy_size) {											   
 			for (int i = 0; i< fuzzy_size; i++) {
 				cluster_smaller.add(cluster.get(cluster.size() - i - 1));
 			}
@@ -371,9 +371,17 @@ public class FuzzyLogicCalculator {
 		double min = min(list);
 		double max = max(list);
 		
-		for (int i = 0; i<list.size();i++) {
-			 normalizedList.add( (list.get(i) - min) / (max - min) );
+		if (min == max) {													   // prevents NaN from being returned
+			for (int i = 0; i<list.size();i++) {
+				 normalizedList.add( 1.0 );
+			}
 		}
+		else {
+			for (int i = 0; i<list.size();i++) {
+				 normalizedList.add( (list.get(i) - min) / (max - min) );
+			}
+		}
+		
 		return normalizedList;
 	}
 	

@@ -50,13 +50,16 @@ public class FuzzyLogicCalculator {
 		double q_plus  =  farm.getQ_range().get(1);  
 		L.add(q_minus);															  
 		L.add(q_plus);														   
+
+		q_minus = 0.4;														   // set upper and lower q range for preference
+		q_plus  = 0.6;  
+		P.add(q_minus);														   
+		P.add(q_plus);	
+		
+		q_minus = 0.4;														   // set upper and lower q range for preference
+		q_plus  = 0.6;
 		S.add(q_minus);
 		S.add(q_plus);
-		
-		q_minus = 0.25;														   // set upper and lower q range for preference
-		q_plus  = 0.5;  
-		P.add(q_minus);														   
-		P.add(q_plus);														   
 	}
 	
 	// activity calculations
@@ -86,11 +89,11 @@ public class FuzzyLogicCalculator {
 		
 		double[][] p_p = preference_matrix(c1);
 		double[][] p_l = preference_matrix(c2);
-		double[][] p_s = preference_matrix(c3);
+		double[][] p_s = preference_matrix_social_network(c3);
 		
 		for (int i = 0; i< len - 2; i++) {
 			for (int j = 0; j < len - 2; j++) {
-				double score = ( farm.getP_beta_p()*p_p[i][j] + farm.getP_beta_l()*p_l[i][j] + farm.getP_beta_s()*p_s[i][j] )  / (p_p[i][j] + p_l[i][j] + p_s[i][j]);
+				double score = ( farm.getP_beta_p()*p_p[i][j] + farm.getP_beta_l()*(p_l[i][j]) + farm.getP_beta_s()*(p_s[i][j]) )  / (p_p[i][j] + (p_l[i][j]) + (p_s[i][j]));
 				if(Double.isNaN(score)) {
 					score = 0;
 				}
@@ -161,8 +164,8 @@ public class FuzzyLogicCalculator {
 		List<Double> cluster = new ArrayList<Double>();						   // final selected activity values from clustering algorithm
 		int index = 0;														   // index of ND value used to get specific activity indicated by index
 		
-		Collections.sort(sortedND);											   // returns ascending order 0->1
-		cluster = cluster(sortedND);
+		Collections.sort(sortedND); 										   // returns ascending order 0->1
+		cluster = activityOptimalSelection(sortedND);
 		
 		// turn ranking values into activity list by sorting the ND array, and then finding the corresponding match in the original list based on the index.
 		// Ex: orig = [0.8,0.3,1.0,0.8] --> sorted = [1.0,0.8,0.8,0.3]
@@ -182,11 +185,21 @@ public class FuzzyLogicCalculator {
 	 * @param sorted original list to cluster
 	 * @return list of preferred activities
 	 */
-	private List<Double> cluster(List<Double> sorted) {
+	private List<Double> activityOptimalSelection(List<Double> sorted) {
 		List<Double> cluster = new ArrayList<Double>(); 
 		List<Double> cluster_smaller = new ArrayList<Double>(); 
+		int fuzzy_size = 0;
 		
-		int fuzzy_size = (int) farm.getP_fuzzy_size();
+		// if there are 1.0 values in the list, then we have optimal values. If not then we select the best values
+		for (int i = 0; i< sorted.size(); i++) {		
+			if (sorted.get(i) == 1.0) {
+				fuzzy_size++;
+			}
+		}
+		
+		if (fuzzy_size == 0) {
+			fuzzy_size = (int) farm.getP_fuzzy_size();	
+		}
 		
 		cluster = sorted;
 		if (cluster.size() > fuzzy_size) {											   
@@ -219,7 +232,7 @@ public class FuzzyLogicCalculator {
 		double maxND = max(ND);
 		if(maxND < 0) maxND = 0;
 		
-		return 1 - max(ND);
+		return 1-maxND; 
 	}
 	
 	/** 
@@ -243,6 +256,30 @@ public class FuzzyLogicCalculator {
 	}
 	
 	/** 
+	 * Build preference matrix for a category based on the t score and the q range
+	 * @param category: input list of rated values. In this case L,S,P vectors
+	 * @return matrix: matrix of preferences comparing each activity against all others
+	 */
+	private double[][] preference_matrix_social_network(double[] category) {
+		int len = category.length;											// length of matrix columns/rows
+		double q_plus = category[len-1];									// set q-
+		double q_minus = category[len-2];								    // set q+ 
+		double[][] matrix = new double[len-2][len-2];					    // cross activity preference matrix
+		
+		for (int i = 0; i< len-2; i++) {
+			for (int j = 0; j < len - 2; j++) {
+				double x = category[i];
+				double y = category[j];
+				if (x > 0) { x = 1.0;}                                         // set to 1.0 when using social network to enforce stricter boundaries
+				if (y > 0) { y = 1.0;}										   // this is to ensure that nothing		
+				matrix[i][j] = t_rating(x,y, q_minus,q_plus);
+			}
+		}
+		
+		return matrix;
+	}
+	
+	/** 
 	 * Build a rating score between x,y based on the q range
 	 * @param x: first item value
 	 * @param y: second item value
@@ -253,7 +290,9 @@ public class FuzzyLogicCalculator {
 	private double t_rating(double x, double y, double q_minus, double q_plus) {
 		double rank = 0;
 		
-		if ( (x - y) > q_plus) rank = 1;
+		if ( (x - y) > q_plus) {
+			rank = 1;
+		}
 		else if( (x - y) <= q_minus ) rank = 0;
 		else {
 			rank = ( (x - y - q_minus)/ (q_plus - q_minus));
@@ -298,9 +337,10 @@ public class FuzzyLogicCalculator {
 		R = farm.getPreferences().getFarmMap().get(farm.getFarmName());
 		
 		for (int i = 0; i< m; i++) {
-			P.add(1 - R[i]/m);												   // this (1 - x/m) ensures that if x=1 (most preferred), we will return value closest to 1. And x=5 will be smaller
+			//P.add(1 - R[i]/m);												   // this (1 - x/m) ensures that if x=1 (most preferred), we will return value closest to 1. And x=5 will be smaller
+			P.add(R[i]);
 		}
-		
+			
 		return normalizeList(P);
 	}
 	

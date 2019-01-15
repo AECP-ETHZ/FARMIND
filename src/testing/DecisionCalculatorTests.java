@@ -74,7 +74,7 @@ public class DecisionCalculatorTests {
 		R = farm.getPreferences().getFarmMap().get(farm.getFarmName());
 		
 		for (int i = 0; i< m; i++) {
-			P.add(1 - R[i]/m);
+			P.add(R[i]); //  1 - R[i]/m);
 		}
 		
 		List<Double> Px = cal.P;
@@ -97,7 +97,7 @@ public class DecisionCalculatorTests {
 		cal.S = crit3;
 		cal.getImitationActivities();
 		
-		List<Double> verify = Arrays.asList(1.0, 0.7466666666666666, 0.566); 
+		List<Double> verify = Arrays.asList(1.0, 0.59, 0.2657142857142857  ); //Arrays.asList(1.0, 0.7466666666666666, 0.566); 
 		List<Double> x = cal.ND;
 		assertEquals(x,verify);
 	}

@@ -44,7 +44,7 @@ public class DecisionCalculatorImitationTests {
 		Farm farm = allFarms.get(0);
 		FuzzyLogicCalculator cal = new FuzzyLogicCalculator(farm, allFarms);
 		
-		List<String> verify = Arrays.asList("activity01", "activity02", "activity03", "activity04", "activity05", "activity06"); 
+		List<String> verify = Arrays.asList("activity01", "activity02", "activity03", "activity04", "activity05"); 
 		List<String> x = cal.getImitationActivities();
 		assertEquals(x,verify);
 	}
@@ -55,7 +55,7 @@ public class DecisionCalculatorImitationTests {
 		Farm farm = allFarms.get(2);
 		FuzzyLogicCalculator cal = new FuzzyLogicCalculator(farm, allFarms);
 		
-		List<String> verify = Arrays.asList("activity06", "activity07", "activity08", "activity09", "activity10", "activity01"); 
+		List<String> verify = Arrays.asList("activity06", "activity07", "activity08", "activity09", "activity10"); 
 		List<String> x = cal.getImitationActivities();
 		assertEquals(x,verify);
 	}

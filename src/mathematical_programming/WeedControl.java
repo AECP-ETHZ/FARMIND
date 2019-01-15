@@ -91,7 +91,8 @@ public class WeedControl implements MP_Interface{
 					fw = new FileWriter(f,true);
 					BufferedWriter bw = new BufferedWriter(fw);
 					PrintWriter writer = new PrintWriter(bw);
-					writer.println("copy \".\\data\\Grossmargin_P4,00.csv\" .\\projdir");
+					writer.println( String.format("copy \".\\%s\\Grossmargin_P4,00.csv\" .\\%s\\", 
+							cmd.getProperty("data_folder"), cmd.getProperty("project_folder")) );
 					LOGGER.fine("copy \".\\data\\Grossmargin_P4,00.csv\" .\\projdir");
 					
 					writer.close();
@@ -109,7 +110,8 @@ public class WeedControl implements MP_Interface{
 					BufferedWriter bw = new BufferedWriter(fw);
 					PrintWriter writer = new PrintWriter(bw);
 					writer.println("#!/bin/bash");
-					writer.println("cp ./data/Grossmargin_P4,00.csv ./projdir/Grossmargin_P4,00.csv");
+					writer.println( String.format("cp ./%s/Grossmargin_P4,00.csv ./%s/Grossmargin_P4,00.csv",
+							cmd.getProperty("data_folder"), cmd.getProperty("project_folder")) );
 					LOGGER.fine("cp ./data/Grossmargin_P4,00.csv ./projdir/Grossmargin_P4,00.csv");
 					writer.close();
 				} catch (IOException e) {

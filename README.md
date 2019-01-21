@@ -6,26 +6,37 @@ The model represents each farm as an agent as well as a node in social networks.
 A linear programming model, integrated into the agent-based model, is then used to select an optimal activity for each agent to perform and generate an income value. Agents' satisfaction and uncertainty are updated accordingly. This sets the base for decision-making of next period.
 
 ### Running the ABM
-After extraction into a jar file, run the program using the 'run_java_ABM.bat' batch file or directly from the command line. A control.properties file indicates the runtime parameters for the model.
+After extraction into a jar file, run the program using the 'run_java_ABM.bat' batch file or directly from the command line. The ABM requires the control.properties file to run and indicates the runtime parameters for the model.
 
-The ABM requires the control.properties file to run. You can indicate an OPTIONAL year value in the command line and this will overwrite the value in the properties file. 
+	java -jar ABM.jar 
+
+will start the ABM based on the information in the control.properties file. 
+
+You can indicate an OPTIONAL year value in the command line and this will overwrite the value in the properties file. 
 
 	java -jar ABM.jar 5
 
-will start the ABM for five years. 
+will start the ABM for five years and use the other properties indicated in the control.properties file. 
 
 ### control.properties file
 
-This is the structure of the control file for the model. If you want to use the abm.jar with the gams model, set the debug flag to 0. This changes the run_gams.bat file that is created so the abm will interface with the actual desired gams model. 
+This is the structure of the control file for the model. If you want to use the abm.jar with the gams model, make sure to set the debug flag to 0. This changes the run_gams.bat file that is created so the abm will interface with the actual desired gams model. 
 
-The year flag can be overwritten in the command line as shown above. Simply add a number during the start and this will be used instead of the control value. 
+The year flag can be overwritten in the command line as shown above.
 
-data_folder = data
-modelName = WEEDCONTROL
-uncertainty = 1
-year = 5
-project_folder = projdir
-debug = 1
+	data_folder = data
+	
+	modelName = WEEDCONTROL
+	
+	uncertainty = 1
+	
+	year = 5
+	
+	project_folder = projdir
+	
+	debug = 0
+	
+The debug flag is set to 1 when testing with eclipse as this indicates that it should copy a results file for testing. When set to 1 it will actually start the gams model and wait for the results. 
 
 ### ABM Requirements
 1. /data/ folder containing input data files:
@@ -52,7 +63,7 @@ All of the those libraries should already be downloaded and included in the /lib
 	Window->Preferences->java->Build Path->User Libraries 
 
 2. Select "New" and input the name of the library:
-	Either *jgrapht*, *commons-math3-3.6.1*, or *commons-cli-1.4*
+	Either *jgrapht*, or *commons-math3-3.6.1*
 	
 3. After creating the library, link the new library with the jar files.
 	Select "Add JAR" and select the JAR files from the /lib/ folder in the project that correspond to the library name. 
@@ -66,7 +77,6 @@ All of the those libraries should already be downloaded and included in the /lib
 The libraries can be downloaded here if required:
 1. Download jgrapht-1.1.0.zip file from here: http://jgrapht.org/
 2. Download commons-math3-3.6.1-bin.zip from here: http://commons.apache.org/proper/commons-math/download_math.cgi
-3. Download the apache command line interface (cli) tool used for reading the input parameters: http://commons.apache.org/proper/commons-cli/
 
 ### Eclipse Development Environment
 The code is developed and debugged using eclipse 4.7 or greater using JUnit5 for unit testing. 
@@ -96,26 +106,14 @@ If the issue persists, try removing the libraries and reinstalling them again.
 	
 	When the model is running in test mode, the batch file 'run_gams.bat' will copy a output file (stored in /data/ folder as 'Grossmargin_P4,00'). 
 
-3. "Exiting Farmind. Input number of iterations."
+3. "java.io.FileNotFoundException: .\data\data-weedcontrol\social_networks.csv (The system cannot find the path specified)."
 
-	Input number of years (integer) required for the simulation when running the batch file
+	There is an issue with the control.properties file. There is an error with the "data_folder" path and the ABM is unable to find the required data files. 
 
-4. "Exiting Farmind. Input MP Model: WEEDCONTROL or SWISSLAND."
+4. "java.io.FileNotFoundException: projdir\p_AllowedStratPrePost.csv (The system cannot find the path specified)"
 	
-	Input which model you want the ABM to interface with during operations. 
-	
-5. Error related to input parameters:
-
-	"Missing required option: uncertainty usage: Each argument is formatted as "-argument VALUE"
-	
-	 -modelName <arg>             model: WEEDCONTROL or SWISSLAND
+	There is an issue with the control.properties file. There is an error with the "project_folder" path and the ABM is unable to find the required files. 
 	 
-	 -uncertainty <arg>           1 or 0 to use uncertainty in ABM
-	 
-	 -year <arg>                  ABM simulation years
-	 
-	 Make sure you are running the full command to start the ABM jar file. Three commands are necessary when starting. 
-	 
-6. Error relating to JNI issues when running jar file OR issues related to library usage. 
+5. Error relating to JNI issues when running jar file OR issues related to library usage. 
 	
 	JNI issues come from incorrect library settings. The easiest option to fix library issues is usually to uninstall all user libraries and re-add the libraries. 

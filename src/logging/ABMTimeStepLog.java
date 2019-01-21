@@ -6,14 +6,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-
 import activity.Activity;
 import agent.Farm;
 
 /**
  * Logs the output of each step of the ABM process to an output csv log of all decisions and parameters during the model execution. 
+ * 
  * @author kellerke
- *
  */
 public class ABMTimeStepLog {
 
@@ -26,28 +25,28 @@ public class ABMTimeStepLog {
 	private List<Activity> currentActivity;									   // current activity of the agent
 	private List<String> possibleActivity;								       // set of possible activities by the agent
 	private Farm farm;														   // farm holds parameters
-	private double activity_diss;
-	private double income_diss;
-	private double satisfaction;
+	private double activity_diss;											   // activity diss for agent
+	private double income_diss;												   // income diss for agent
+	private double satisfaction;											   // satisfaction for agent
 	
-	private int POSSIBLE_ACTIVITY_SET_PRINTING_SIZE = 6;
+	private int POSSIBLE_ACTIVITY_SET_PRINTING_SIZE = 6;					   // limit printable information so we don't flood the log
 	private int PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 4;
 	
 	/**
 	 * Constructor for the CSV log
-	 * @param allActivities:		full set of system activities
-	 * @param farmId:				ID of the farm
-	 * @param year:					which simulation time step
-	 * @param learning_rate:		learning rate for the agent
-	 * @param activity_diss:
-	 * @param income_diss:
-	 * @param satisfaction:
-	 * @param strat:				strategy (set of four possible)
-	 * @param income:				income of farm
-	 * @param currentActivity:		current activity(ies) in system
-	 * @param possibleActivities:	all possible activities
-	 * @param farm:					specific farm for this decision object
-	 * @param modelName:			String name of model
+	 * @param allActivities ::		full set of system activities
+	 * @param farmId ::				ID of the farm
+	 * @param year ::				which simulation time step
+	 * @param learning_rate ::		learning rate for the agent
+	 * @param activity_diss ::		activity dissimilarity score
+	 * @param income_diss ::		income dissimilarity score
+	 * @param satisfaction ::		satisfaction score for agent
+	 * @param strat ::				strategy (set of four possible)
+	 * @param income ::				income of farm
+	 * @param currentActivity ::	current activity(ies) in system
+	 * @param possibleActivities ::	all possible activities
+	 * @param farm ::				specific farm for this decision object
+	 * @param modelName ::			String name of model
 	 */
 	public ABMTimeStepLog(String modelName, List<String> allActivities, String farmId, Integer year, Double learning_rate, Double activity_diss, Double income_diss, double satisfaction, int strat, double income, List<Activity> currentActivity, List<String> possibleActivities, Farm farm) {
 		setFarmId(farmId);
@@ -71,12 +70,11 @@ public class ABMTimeStepLog {
 			PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 4;
 			POSSIBLE_ACTIVITY_SET_PRINTING_SIZE = 6;
 		}
-		
 	}
 	
 	/** 
 	 * write output CSV log file based on decision object. This log file can be updated each time period for each agent. 
-	 * @param fileName of output file which is previously checked to ensure we will not exceed 1 million lines of data. 
+	 * @param fileName :: output file which is previously checked to ensure we will not exceed 1 million lines of data. 
 	 */
 	public void appendLogFile(String fileName) {
 		String PATH = "./output";

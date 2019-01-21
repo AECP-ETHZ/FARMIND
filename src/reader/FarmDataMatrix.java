@@ -7,23 +7,24 @@ import java.util.Map;
 
 /** 
  * The FarmDataMatrix object is a reference object for each agent that stores the individual farm data. 
- * The FarmDataMatrix is an n*m matrix that contains the reference data (eg. individual activity) in the rows, and each column is an individual farm. 
+ * The FarmDataMatrix is an n*m matrix that contains the reference data (eg. individual activity) in the rows, and each column is an individual farm. <br>
  * row 1: Vector of data element names (eg. activities in system) <br>
  * row 2: Farm1: [values for each associated data element]  <br>
  * row 3: Farm2: [values for each associated data element] <br>
  * row m: FarmM: [values for each associated data element] <br>
  * These data elements for could be activity preference or years of farming experience<br>
+ * 
+ * @author kellerke
  */
-
 public class FarmDataMatrix {
 	private List<String> dataElementNames = new ArrayList<String>();				   	 // top row of matrix with names of the data elements
 	private Map<String,Double[]> elementFarmMap = new HashMap<String,Double[]>();	     // map that links farm and data with a value
 
 	/** 
 	 * Given a farmID and a name of the data element (eg. activity), return the value of that matrix cell. 
-	 * @param FarmID: of the specific farm
-	 * @param name: data element name to return value from matrix
-	 * @return value of that cell in the matrix
+	 * @param FarmID :: of the specific farm
+	 * @param name :: data element name to return value from matrix
+	 * @return val :: value of that cell in the matrix
 	 */
 	public double getFarmDataElementValue(String FarmID, String name) {
 		double val;
@@ -34,7 +35,7 @@ public class FarmDataMatrix {
 	
 	/**
 	 * Number of farms in matrix
-	 * @return count of farms in matrix
+	 * @return size :: count of farms in matrix
 	 */
 	public int sizeFarms() {
 		int size = elementFarmMap.size();
@@ -43,7 +44,7 @@ public class FarmDataMatrix {
 	
 	/**
 	 * Number of activities in matrix
-	 * @return count of activities in matrix
+	 * @return size :: count of activities in matrix
 	 */
 	public int sizeData() {
 		int size = dataElementNames.size();
@@ -52,10 +53,9 @@ public class FarmDataMatrix {
 	
 	/** 
 	 * Given a farmID and a name, set the value of that cell in the matrix. 
-	 * 
-	 * @param FarmID: of the specific farm
-	 * @param name: data element name (e.g. activity name)
-	 * @param value: to set for farm and element combination
+	 * @param FarmID :: of the specific farm
+	 * @param name :: data element name (e.g. activity name)
+	 * @param value :: to set for farm and element combination
 	 */
 	public void setFarmDataElementValue(String FarmID, String name, double value) {
 		int index = dataElementNames.indexOf(name);
@@ -79,7 +79,7 @@ public class FarmDataMatrix {
 	
 	/**
 	 * Set the row of data that corresponds with the specific farm name. 
-	 * @param matrixRow is an array list starting with a farm name and continuing with integer costs
+	 * @param matrixRow :: an array list starting with a farm name and continuing with integer costs
 	 */
 	public void setFarmMap(ArrayList<String> matrixRow) {
 		String name = matrixRow.get(0);

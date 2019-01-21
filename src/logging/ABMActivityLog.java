@@ -6,9 +6,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-
 import activity.Activity;
 
+/** 
+ * ABM activity log which writes to output csv file.
+ * 
+ * @author kellerke
+ */
 public class ABMActivityLog {
 
 	private String farmId;													   // unique farm id
@@ -24,14 +28,14 @@ public class ABMActivityLog {
 	
 	/** 
 	 * Constructor for the CSV Log
-	 * @param allActivities:		full set of activities
-	 * @param farmId:		    	ID of the farm
-	 * @param year:					time period
-	 * @param strat:				strategy
-	 * @param currentActivity:		current activity(ies) in system
-	 * @param MPSelectedActivity:   best activity from the MP model
-	 * @param MP_Incomes:			income of agent at time period
-	 * @param modelName:			string name of agent
+	 * @param allActivities ::		full set of activities
+	 * @param farmId ::		    	ID of the farm
+	 * @param year ::			    time period
+	 * @param strat ::				strategy
+	 * @param currentActivity ::    current activity(ies) in system
+	 * @param MPSelectedActivity :: best activity from the MP model
+	 * @param MP_Incomes ::			income of agent at time period
+	 * @param modelName ::			string name of agent
 	 */
 	public ABMActivityLog(String modelName, List<String> allActivities, String farmId, Integer year, int strat, List<Activity> currentActivity, List<Activity> MPSelectedActivity, Double MP_Incomes) {
 		setFarmId(farmId);
@@ -54,8 +58,9 @@ public class ABMActivityLog {
 	
 	/** 
 	 * write output CSV log file based on decision object. This log file can be updated each time period for each agent. 
-	 * @param fileName of output file which is previously checked to ensure we will not exceed 1 million lines of data. 
-	 * @param averagePrice: boolean to indicate which log file to write to
+	 * Does a number of checks to see what size of information is being printed to ensure we do not write more than is useful.
+	 * @param fileName ::output file which is previously checked to ensure we will not exceed 1 million lines of data. 
+	 * @param averagePrice :: boolean to indicate which log file to write to
 	 */
 	public void appendLogFile(String fileName, boolean averagePrice) {
 		String PATH = "./output";

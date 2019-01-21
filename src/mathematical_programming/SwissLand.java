@@ -13,11 +13,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
-
 import activity.Activity;
 import agent.Farm;
 import reader.ReadData;
 
+/** 
+ * Use the weedcontrol model from agroscope as an optimizer on the activities. This class runs the model, reads the input, and modifies the required control files. 
+ * 
+ * @author kellerke
+ *
+ */
 public class SwissLand implements MP_Interface{
 	File file; 																   // file object to read/write 							
 	String resultsFile;														   // results file
@@ -35,7 +40,6 @@ public class SwissLand implements MP_Interface{
 		gamsAnimalResultsFile = String.format("%s\\DataModelIn\\data_ANIMALKAP_T0.gms",cmd.getProperty("project_folder"));
 		gamsIncomeFile = String.format("%s\\DataModelIn\\data_FARMINCOME_T0.gms",cmd.getProperty("project_folder"));
 		resultsFile = String.format("%s\\Grossmargin_P4,00.csv",cmd.getProperty("project_folder"));
-		
 	}
 
 	@Override
@@ -64,6 +68,11 @@ public class SwissLand implements MP_Interface{
 		}
 	}
 	
+	/**
+	 * Create the specific batch file called "run_gams.bat" based on the operating system and the cmd properties. This batch file is used to actually start the MP model.
+	 * @param cmd :: command object built from control.properties
+	 * @param OS :: String that indicates what operating system. For debugging sometimes a mac is used. 
+	 */
 	private void createRunGamsBatch(Properties cmd, String OS) {
 		if (cmd.getProperty("debug").equals("1")) {
 			if (OS.equals("win")) {

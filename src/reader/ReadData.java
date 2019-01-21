@@ -8,11 +8,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
-
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleWeightedGraph;
-
 import activity.Activity;
 import agent.Farm;
 import agent.Location;
@@ -20,13 +18,14 @@ import agent.Person;
 
 /** 
  * This class reads input parameters from configuration files and results data from the optimization model.
- *
+ * 
+ * @author kellerke
  */
 public class ReadData {
 
-	public static final int NAME = 0;										   
-	public static final int COORDINATE1 = 1;
-	public static final int COORDINATE2 = 2;
+	public static final int NAME = 0;										   // name of agent
+	public static final int COORDINATE1 = 1;								   // location coordinate one
+	public static final int COORDINATE2 = 2;								   // location coordinate two
 	public static final int AGE = 3;										   // Agent age
 	public static final int EDUCATION = 4;									   // Agent education level
 	public static final int MEMORY = 5;										   // Agent memory length
@@ -202,8 +201,8 @@ public class ReadData {
 	
 	/** 
 	 * initialize farm activity by reading activity file
-	 * @param farms:: List of farms in system
-	 * @return success:: if the farms have been updated correctly 
+	 * @param farms :: List of farms in system
+	 * @return success :: if the farms have been updated correctly 
 	 */
 	private boolean initializeFarmActivities(List<Farm> farms) {
 		boolean success = false;
@@ -254,7 +253,7 @@ public class ReadData {
 	
 	/** 
 	 * Read the initial income data file and update each farm with the proper income
-	 * @param farms:: List of farms in system
+	 * @param farms :: List of farms in system
 	 * @return success :: success if the farms have been updated correctly
 	 */
 	private boolean initializeFarmIncomes(List<Farm> farms) {
@@ -457,8 +456,8 @@ public class ReadData {
 	
 	/**
 	 * This function converts data from CSV file into array structure 
-	 * @param CSV String from input CSv file to break into array
-	 * @return Result ArrayList of strings 
+	 * @param CSV :: String from input CSv file to break into array
+	 * @return Result :: ArrayList of strings 
 	 */
 	private static ArrayList<String> CSVtoArrayList(String CSV) {		       
 		ArrayList<String> Result = new ArrayList<String>();

@@ -13,17 +13,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
-
 import org.apache.commons.math3.util.Precision;
-
 import activity.Activity;
 import agent.Farm;
 import reader.ReadData;
 
 /** 
  * Use the weedcontrol model from the AECP group as an optimizer on the activities. This class runs the model, reads the input, and modifies the required control files. 
+ * 
  * @author kellerke
- *
  */
 public class WeedControl implements MP_Interface{
 	File file; 																   // file object to read/write 							
@@ -42,7 +40,7 @@ public class WeedControl implements MP_Interface{
 		resultsFile = String.format("%s\\Grossmargin_P4,00.csv",cmd.getProperty("project_folder"));
 		gamsModelFile = String.format("%s\\Fit_StratABM_Cal.gms",cmd.getProperty("project_folder"));
 		yearlyPriceFile = String.format("./%s/yearly_prices.csv",cmd.getProperty("data_folder"));
-		file = new File( strategyFile) ;				   // delete last time period's simulation file
+		file = new File( strategyFile) ;				   					   // delete last time period's simulation file
 		if (file.exists()) {
 			file.delete();
 		}
@@ -60,7 +58,6 @@ public class WeedControl implements MP_Interface{
 		
 		File f = new File(resultsFile);
 		f.delete();
-		
 		LOGGER.info("Starting MP model");
 		
 		try {
@@ -80,6 +77,11 @@ public class WeedControl implements MP_Interface{
 		}
 	}
 	
+	/**
+	 * Create the specific batch file called "run_gams.bat" based on the operating system and the cmd properties. This batch file is used to actually start the MP model.
+	 * @param cmd :: command object built from control.properties
+	 * @param OS :: String that indicates what operating system. For debugging sometimes a mac is used. 
+	 */
 	private void createRunGamsBatch(Properties cmd, String OS) {
 		if (cmd.getProperty("debug").equals("1")) {
 			if (OS.equals("win")) {
@@ -223,8 +225,8 @@ public class WeedControl implements MP_Interface{
 	
 	/**
 	 * edit the MP gams script with the updated year and price information
-	 * @param nFarm: number of farms
-	 * @param year: which year in iteration so we can select the proper price information
+	 * @param nFarm :: number of farms
+	 * @param year :: which year in iteration so we can select the proper price information
 	 */
     private void editMPscript(int nFarm, int year, boolean pricingAverage, int memoryLengthAverage) {	
     	    	
@@ -284,17 +286,16 @@ public class WeedControl implements MP_Interface{
 	}
     
     /** 
-     * Read yearly pricing information for Thomas' gams model
-     * @param memoryLengthAverage: how many years to use in the average of historical pricing
-     * @param simYear: specific simulation year
-     * @return Map of pricing information
+     * Read yearly pricing information for gams model
+     * @param memoryLengthAverage :: how many years to use in the average of historical pricing
+     * @param simYear :: specific simulation year
+     * @return year_prices :: Map of pricing information
      */
 	public List<Object> readMPyearPrice(int simYear, int memoryLengthAverage) {	
 		String Line;
 		ArrayList<String> yearPrice;
 		BufferedReader Buffer = null;		
 		List<Object> year_price = new ArrayList<Object>();
-		
 		List<Double> prices = new ArrayList<Double>();					   // list of modeling prices per year
 		List<String> years = new ArrayList<String>();						   // list of modeling price/years
 
@@ -340,7 +341,7 @@ public class WeedControl implements MP_Interface{
 	 * Read the MP output files to get income and activities
 	 * @param allFarms: list of all farms in system
 	 * @param cmd :: properties object
-	 * @return return incomes and activities produced by the MP model
+	 * @return return :: incomes and activities produced by the MP model
 	 */
 	public List<Object> readMPOutputFiles(Properties cmd, List<Farm> allFarms) {
 		List<Double> incomesFromMP = new ArrayList<Double>();				       // list of all agents' incomes produced by the MP
@@ -438,8 +439,8 @@ public class WeedControl implements MP_Interface{
 	
 	/**
 	 * This function converts data from CSV file into array structure 
-	 * @param CSV String from input CSV file to break into array
-	 * @return Result ArrayList of strings 
+	 * @param CSV :: String from input CSV file to break into array
+	 * @return Result :: ArrayList of strings 
 	 */
 	private static ArrayList<String> CSVtoArrayList(String CSV) {		       
 		ArrayList<String> Result = new ArrayList<String>();
@@ -457,8 +458,8 @@ public class WeedControl implements MP_Interface{
 	
 	/** 
 	 * Return mean value of provided list 
-	 * @param list: list of values to calculate mean with
-	 * @return mean: mean value of list
+	 * @param list :: list of values to calculate mean with
+	 * @return mean :: mean value of list
 	 */
 	private double mean(List<Double> list) {
 		double mean = 0;												       // mean value to return
@@ -472,13 +473,12 @@ public class WeedControl implements MP_Interface{
 	}
 	/**
 	 * This function calculates the standard deviation of provided list.
-	 * @param list: list for calculating standard deviation
-	 * @return std: standard deviation value
+	 * @param list :: list for calculating standard deviation
+	 * @return std :: standard deviation value
 	 */
 	private double std(List<Double> list) {
 		double std = 0;		
-		for (int i=0; i<list.size();i++)
-		{
+		for (int i=0; i<list.size();i++) {
 		    std = std + Math.pow(list.get(i) - mean(list), 2);
 		}
 		

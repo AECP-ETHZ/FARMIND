@@ -24,6 +24,8 @@ import agent.Farm;
  * This class contains the main() method of this program. 
  * Full simulation runs inside of the main() method by creating farm objects and making decisions for each farm.
  * Each time period, update the farm and run the linear optimization model. 
+ * 
+ * @author kellerke
  */
 public class Consumat {
 	static long line_counter = 0;
@@ -114,7 +116,6 @@ public class Consumat {
 	 * @param MP_Activities :: list of activities from previous time period
 	 */
 	private static void allFarmsDecideActivity(Properties cmd, int year, List<Farm> allFarms, MP_Interface MP, List<Double> MP_Incomes, List<ArrayList<Activity>> MP_Activities) {
-		
 		int farmIndex = 0;
 		double income = 0;	
 		ArrayList<Activity> activity = null;

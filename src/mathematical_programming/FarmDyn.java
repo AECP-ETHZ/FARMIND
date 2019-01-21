@@ -13,17 +13,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
-
-//import org.apache.commons.io.FileUtils;
-
 import activity.Activity;
 import agent.Farm;
 import reader.ReadData;
 
+/** 
+ * Use the Farmdyn model from the Bonn research group as an optimizer on the activities. This class runs the model, reads the input, and modifies the required control files. 
+ * 
+ * @author kellerke
+ */
 public class FarmDyn implements MP_Interface{
 
 	private static final Logger LOGGER = Logger.getLogger("FARMIND_LOGGING");
-	
 	File file; 																   // file object to read/write 							
 	List<Object> year_price = new ArrayList<Object>();						   // list of yearly prices for model
 	List<Double> yearlyPrices = new ArrayList<Double>();					   // list of modeling prices per year
@@ -70,7 +71,6 @@ public class FarmDyn implements MP_Interface{
 		editMPscript(possibleActivity);	
 	}
 	
-
 	@Override
 	// throwaway pricing average and memoryLength average value as it is not used in the Swissland model
 	public void runModel(Properties cmd, int nFarm, int year, boolean pricingAverage, int memoryLengthAverage) {
@@ -98,6 +98,11 @@ public class FarmDyn implements MP_Interface{
 		}
 	}
 	
+	/**
+	 * Create the specific batch file called "run_gams.bat" based on the operating system and the cmd properties. This batch file is used to actually start the MP model.
+	 * @param cmd :: command object built from control.properties
+	 * @param OS :: String that indicates what operating system. For debugging sometimes a mac is used. 
+	 */
 	private void createRunGamsBatch(Properties cmd, String OS) {
 		if (cmd.getProperty("debug").equals("1")) {
 			if (OS.equals("win")) {

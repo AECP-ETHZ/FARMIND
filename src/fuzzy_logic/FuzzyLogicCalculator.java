@@ -5,9 +5,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
 import org.jgrapht.graph.DefaultEdge;
-
 import agent.Farm;
 
 /** 
@@ -24,7 +22,6 @@ import agent.Farm;
  *  Product A is strictly preferred to Product B, and weakly preferred to activity E. It is not preferred at all to C or D. <br>
  * 
  * @author kellerke
- *
  */
 public class FuzzyLogicCalculator {
 	
@@ -36,8 +33,8 @@ public class FuzzyLogicCalculator {
 
 	/** 
 	 * Constructor for decision calculator for a specific farm based on the network.
-	 * @param farm - specific farm to study
-	 * @param farms - list of all farms in the region for network information
+	 * @param farm :: specific farm to study
+	 * @param farms :: list of all farms in the region for network information
 	 */
 	public FuzzyLogicCalculator(Farm farm, List<Farm> farms) {
 		double m = farm.getPreferences().getDataElementName().size();		   // number of activities in system
@@ -153,9 +150,9 @@ public class FuzzyLogicCalculator {
 
 	// fuzzy logic and clustering functions
 	/**
-	 *  given a vector of non-domination scores return an optimized activity list based on the desired fuzzy set size
-	 * @param x: original ND vector
-	 * @return activityList: list of activity names
+	 *  given a vector of non-domination scores (doubles) return an optimized activity list based on the desired fuzzy set size OR the natural clustering
+	 * @param x :: original ND vector
+	 * @return activityList :: list of activity names
 	 */
 	private List<String> activityList(List<Double> x){
 		List<String> activityList = new ArrayList<String>();                   // final activity list
@@ -181,22 +178,24 @@ public class FuzzyLogicCalculator {
 	}
 	
 	/** 
-	 * clustering based on the mean
-	 * @param sorted original list to cluster
-	 * @return list of preferred activities
+	 * if there are 1.0 values in the sorted list, then we have optimal values to return. If there are no 1.0 values then we select the best values based on the fuzzy size. <br>
+	 * a list of [1.0, 0.8, 1.0, 0.9, 0.2, 0.3] will return [1.0,1.0].
+	 * a list of [0.9, 0.8, 0.63, 0.9, 0.2, 0.3] will return [0.9,0.9,0.8] assuming fuzzy set size of 3. 
+	 * @param sorted :: original list to cluster
+	 * @return list of preferred activity scores
 	 */
 	private List<Double> activityOptimalSelection(List<Double> sorted) {
 		List<Double> cluster = new ArrayList<Double>(); 
 		List<Double> cluster_smaller = new ArrayList<Double>(); 
 		int fuzzy_size = 0;
 		
-		// if there are 1.0 values in the list, then we have optimal values. If not then we select the best values
 		for (int i = 0; i< sorted.size(); i++) {		
 			if (sorted.get(i) == 1.0) {
 				fuzzy_size++;
 			}
 		}
 		
+		// if no 1.0 optimal activities are present than use the default size and select the best option. 
 		if (fuzzy_size == 0) {
 			fuzzy_size = (int) farm.getP_fuzzy_size();	
 		}
@@ -213,10 +212,10 @@ public class FuzzyLogicCalculator {
 	}
 		
 	/** 
-	 * Non Domination score for a fuzzy logic preference matrix
+	 * Non Domination score for a fuzzy logic preference matrix.
 	 * Calculate ND score by comparing activities 'index' against all other activities
-	 * @param index which item in the list (eg activity) we want to score against the criterion matrix
-	 * @param matrix of criteria preferences for all items
+	 * @param index :: which item in the list (eg activity) we want to score against the criterion matrix
+	 * @param matrix :: criteria preferences for all items
 	 * @return nd score for this activity
 	 */
 	private double ND(int index, double[][] matrix ) {
@@ -237,8 +236,8 @@ public class FuzzyLogicCalculator {
 	
 	/** 
 	 * Build preference matrix for a category based on the t score and the q range
-	 * @param category: input list of rated values. In this case L,S,P vectors
-	 * @return matrix: matrix of preferences comparing each activity against all others
+	 * @param category :: input list of rated values. In this case L,S,P vectors
+	 * @return matrix :: matrix of preferences comparing each activity against all others
 	 */
 	private double[][] preference_matrix(double[] category) {
 		int len = category.length;											// length of matrix columns/rows
@@ -256,9 +255,9 @@ public class FuzzyLogicCalculator {
 	}
 	
 	/** 
-	 * Build preference matrix for a category based on the t score and the q range
-	 * @param category: input list of rated values. In this case L,S,P vectors
-	 * @return matrix: matrix of preferences comparing each activity against all others
+	 * Build preference matrix for the social network category based on the t score and the q range
+	 * @param category :: input list of rated values. In this case L,S,P vectors
+	 * @return matrix :: matrix of preferences comparing each activity against all others
 	 */
 	private double[][] preference_matrix_social_network(double[] category) {
 		int len = category.length;											// length of matrix columns/rows
@@ -281,11 +280,11 @@ public class FuzzyLogicCalculator {
 	
 	/** 
 	 * Build a rating score between x,y based on the q range
-	 * @param x: first item value
-	 * @param y: second item value
-	 * @param q_minus: lower range of fuzzy region in set
-	 * @param q_plus: upper range of fuzzy region in set
-	 * @return rank: rating between x and y (not y and x)
+	 * @param x :: first item value
+	 * @param y :: second item value
+	 * @param q_minus :: lower range of fuzzy region in set
+	 * @param q_plus :: upper range of fuzzy region in set
+	 * @return rank :: rating between x and y (not y and x)
 	 */
 	private double t_rating(double x, double y, double q_minus, double q_plus) {
 		double rank = 0;
@@ -304,9 +303,9 @@ public class FuzzyLogicCalculator {
 	/** 
 	 * Each farm has a vector with associated years of experience in the shared matrix of experience.
 	 * Scale this vector based on a parameter k. 
-	 * @param farm: agent that we are performing the calculations on
-	 * @param m: number of activities in the system
-	 * @return L: vector of farming preference for this farm
+	 * @param farm :: agent that we are performing the calculations on
+	 * @param m :: number of activities in the system
+	 * @return L :: vector of farming preference for this farm
 	 */
 	private List<Double> getFarmExperienceVector(Farm farm, double m) {
 		List<Double> L = new ArrayList<Double>();                              // learning by doing vector for specific farm
@@ -326,9 +325,9 @@ public class FuzzyLogicCalculator {
 	/** 
 	 * Each farm has a preference vector and we scale this vector based on the number of activities in the system. 
 	 * The vector contains values between 1 and 5 that correspond to the preference of the farmer for that specific activity with 1 being most preferred and 5 being least preferred. 
-	 * @param farm: agent that we are performing the calculations on
-	 * @param m: number of activities in the system
-	 * @return P: vector of farming preference for this farm
+	 * @param farm :: agent that we are performing the calculations on
+	 * @param m :: number of activities in the system
+	 * @return P :: vector of farming preference for this farm
 	 */
 	private List<Double> getFarmPreferenceVector(Farm farm, double m) {
 		List<Double> P = new ArrayList<Double>();							   // rank of all activity preferences for specific farm
@@ -348,10 +347,10 @@ public class FuzzyLogicCalculator {
 	 * For all farms in the network connected to the main farm build the Experience vector (L). 
 	 * Then weight this vector based on the social network weight between the main farm and this connected node farm
 	 * For the final Network Experience vector take the average experience level for each activity for all farms in the network 
-	 * @param farm: specific agent that we are performing the calculations on
-	 * @param allFarms: all farms in the system 
-	 * @param m: number of activities in the system
-	 * @return S: vector of social farming experience for this farm
+	 * @param farm :: specific agent that we are performing the calculations on
+	 * @param allFarms :: all farms in the system 
+	 * @param m :: number of activities in the system
+	 * @return S :: vector of social farming experience for this farm
 	 */
 	private List<Double> getNetworkExperienceAverageVector(Farm farm, double m, List<Farm> allFarms) {
 		List<Double> S = new ArrayList<Double>();							   // rank of all activity preferences for specific farm
@@ -402,8 +401,8 @@ public class FuzzyLogicCalculator {
 	
 	/**
 	 * Create a normalized list from 0 to 1
-	 * @param list: original list
-	 * @return normalizedList: normalized list based on input list
+	 * @param list :: original list
+	 * @return normalizedList :: normalized list based on input list
 	 */
 	private List<Double> normalizeList(List<Double> list) {
 		List<Double> normalizedList = new ArrayList<Double>();				   // normalized list to return
@@ -427,8 +426,8 @@ public class FuzzyLogicCalculator {
 	
 	/** 
 	 * Find minimum of list of doubles
-	 * @param list: input values for finding minimum
-	 * @return min: minimum value of input list
+	 * @param list :: input values for finding minimum
+	 * @return min :: minimum value of input list
 	 */
 	private double min(List<Double> list) {
 		double min = 1;
@@ -443,8 +442,8 @@ public class FuzzyLogicCalculator {
 	
 	/** 
 	 * Find max of list of doubles
-	 * @param list: input values for finding max
-	 * @return max: max value of input list
+	 * @param list :: input values for finding max
+	 * @return max :: max value of input list
 	 */
 	private double max(List<Double> list) {
 		double max = 0;

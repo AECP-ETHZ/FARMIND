@@ -23,9 +23,8 @@ public class FarmTests {
 	@Before 
 	public void setup() {
 		String[] args = {"2"};
-		cmd = main.Consumat.parseInput(args);
-		
-		ReadData reader = new ReadData(cmd);						               // read all input data files
+		cmd = main.Consumat.parseInput(args,true);						       // parse test data control.properties
+		ReadData reader = new ReadData(cmd);						           // read all input data files
 		useTestData(reader);
 		allFarms = reader.getFarms();						                   // build set of farms with new parameters
 		
@@ -157,7 +156,7 @@ public class FarmTests {
 		farm.setIncome_Dissimilarity(0);
 		
 		String[] args = {"2"};
-		cmd = main.Consumat.parseInput(args);
+		cmd = main.Consumat.parseInput(args,true);						       // parse test data control.properties
 		cmd.setProperty("uncertainty", "0");
 		farm.decideActivitySet(allFarms,cmd);
 		
@@ -174,7 +173,7 @@ public class FarmTests {
 		farm.setIncome_Dissimilarity(0);
 		
 		String[] args = {"2"};
-		cmd = main.Consumat.parseInput(args);
+		cmd = main.Consumat.parseInput(args,true);						       // parse test data control.properties
 		cmd.setProperty("uncertainty", "0");
 		farm.decideActivitySet(allFarms,cmd);
 		
@@ -193,7 +192,7 @@ public class FarmTests {
 		farm.setIncome_Dissimilarity(0);
 		
 		String[] args = {"2"};
-		cmd = main.Consumat.parseInput(args);
+		cmd = main.Consumat.parseInput(args,true);						       // parse test data control.properties
 		cmd.setProperty("uncertainty", "0");
 		farm.decideActivitySet(allFarms,cmd);
 		

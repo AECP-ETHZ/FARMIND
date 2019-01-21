@@ -25,8 +25,8 @@ public class DecisionCalculatorTests {
 	@Before 
 	public void setup() {
 		String[] args = {"2"};
-		cmd = main.Consumat.parseInput(args);
-		ReadData reader = new ReadData(cmd);						               // read all input data files
+		cmd = main.Consumat.parseInput(args,true);						       // parse test data control.properties
+		ReadData reader = new ReadData(cmd);						           // read all input data files
 		useTestData(reader);
 		allFarms = reader.getFarms();						                   // build set of farms with new parameters
 	}

@@ -41,8 +41,10 @@ public class ReadData {
 	public static final int ALPHA_MINUS = 15;								   // parameter in the formula for calculating satisfaction
 	public static final int PHI_PLUS = 16;								       // parameter in the formula for calculating satisfaction
 	public static final int PHI_MINUS = 17;  								   // parameter in the formula for calculating satisfaction
-	public static final int FUZZY_SIZE = 18;						           // size of fuzzy logic
-
+	public static final int OPT_FUZZY_SIZE = 18;						       // size of optimization fuzzy logic
+	public static final int IMT_FUZZY_SIZE = 19;						       // size of imitation fuzzy logic
+	public static final int RANKING_VERSION = 20;						       // size of imitation fuzzy logic
+	
 	public String FarmParametersFile;					                       // allow external function to set data files for testing
 	public String ActivityPreferenceFile;
 	public String InitialActivities;
@@ -89,7 +91,9 @@ public class ReadData {
 		double alpha_minus = 0;
 		double phi_plus = 0;
 		double phi_minus = 0;		
-		double fuzzy_size = 0;
+		double opt_fuzzy_size = 0;
+		double imt_fuzzy_size = 0;
+		int ranking_version = 0;
 	
 		List<Graph<String, DefaultEdge>> network = this.getSocialNetworks();   
 		List<Activity>                   activities = getActivityList();
@@ -121,7 +125,7 @@ public class ReadData {
 			while ((Line = Buffer.readLine()) != null) {                       
 				farmParameters = CSVtoArrayList(Line);						   // Read farm's parameters line by line
 				
-				if( farmParameters.size() != (FUZZY_SIZE+1) ) {
+				if( farmParameters.size() != (RANKING_VERSION+1) ) {
 					LOGGER.severe("Exiting Farmind. Input Farm Parameter file smaller than expected.");
 					System.exit(0);
 				}
@@ -163,13 +167,15 @@ public class ReadData {
 				alpha_minus = Double.parseDouble( farmParameters.get(ALPHA_MINUS));
 				phi_plus = Double.parseDouble( farmParameters.get(PHI_PLUS));
 				phi_minus = Double.parseDouble( farmParameters.get(PHI_MINUS));
-				fuzzy_size = Double.parseDouble(   farmParameters.get(FUZZY_SIZE) );
+				opt_fuzzy_size = Double.parseDouble(   farmParameters.get(OPT_FUZZY_SIZE) );
+				imt_fuzzy_size = Double.parseDouble(   farmParameters.get(IMT_FUZZY_SIZE) );
+				ranking_version = Integer.parseInt(  farmParameters.get(RANKING_VERSION) );
 
 				Person farmHead = new Person(age, education, memory);        
 				Farm farm = new Farm(name, location, network.get(farm_count_index), 
 						income, experience, preference, activities, 
 						activity_tolerance, income_tolerance, currentActivity, farmHead, 
-						beta_l, beta_s, beta_p, reference_income, aspiration_coef, lambda, alpha_plus, alpha_minus, phi_plus, phi_minus,fuzzy_size);
+						beta_l, beta_s, beta_p, reference_income, aspiration_coef, lambda, alpha_plus, alpha_minus, phi_plus, phi_minus, opt_fuzzy_size, imt_fuzzy_size, ranking_version);
 				
 				farms.add(farm);
 				farm_count_index++;	

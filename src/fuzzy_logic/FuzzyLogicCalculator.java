@@ -30,6 +30,8 @@ public class FuzzyLogicCalculator {
 	public List<Double> S = new ArrayList<Double>();						   // average social learning value for each activities weighted by social network 
 	public List<Double> ND = new ArrayList<Double>();                          // non-domination score vector to apply for clustering 
 	Farm farm;																   // farm associated with this calculator 
+	double fuzzy_size = 0;									  		           // set size of set to return
+	int ranking_version = 0;							                       // what ranking version to use
 
 	/** 
 	 * Constructor for decision calculator for a specific farm based on the network.
@@ -38,6 +40,8 @@ public class FuzzyLogicCalculator {
 	 */
 	public FuzzyLogicCalculator(Farm farm, List<Farm> farms) {
 		double m = farm.getPreferences().getDataElementName().size();		   // number of activities in system
+		this.ranking_version = farm.getP_ranking_version();                     // what ranking version to use
+		
 		this.L = getFarmExperienceVector(farm,m);
 		this.S = getNetworkExperienceAverageVector(farm, m, farms);
 		this.P = getFarmPreferenceVector(farm,m);
@@ -69,6 +73,8 @@ public class FuzzyLogicCalculator {
 		double[] c1 = new double[this.P.size()];
 		int len = c1.length;
 		double[][] matrix = new double[len-2][len-2];                          // matrix of all activities against all activities
+		
+		this.fuzzy_size = this.farm.getP_imt_fuzzy_size();					   // use imitation fuzzy size for this selection
 		
 		for (int i = 0; i < this.P.size(); i++) {
 			c1[i] = P.get(i);
@@ -117,6 +123,8 @@ public class FuzzyLogicCalculator {
 		double[] c2 = new double[this.L.size()];
 		int len = c1.length;
 		double[][] matrix = new double[len-2][len-2];						   // matrix of all activities against all activities
+		
+		this.fuzzy_size = this.farm.getP_opt_fuzzy_size();					   // for optimization activities we use this fuzzy size
 		
 		for (int i = 0; i < this.P.size(); i++) {
 			c1[i] = P.get(i);
@@ -197,7 +205,7 @@ public class FuzzyLogicCalculator {
 		
 		// if no 1.0 optimal activities are present than use the default size and select the best option. 
 		if (fuzzy_size == 0) {
-			fuzzy_size = (int) farm.getP_fuzzy_size();	
+			fuzzy_size = (int) this.fuzzy_size;	
 		}
 		
 		cluster = sorted;

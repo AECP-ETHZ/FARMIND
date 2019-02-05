@@ -53,7 +53,9 @@ public class Farm {
 	private double p_alpha_minus ;											   // Parameter for the Alpha Minus used for the Satisfaction Calculation
 	private double p_phi_plus ;												   // Parameter for the Phi Plus used for the Satisfaction Calculation
 	private double p_phi_minus;												   // Parameter for the Phi Minus used for the Satisfaction Calculation
-	private double p_fuzzy_size;											   // Parameter to control fuzzy logic size
+	private double p_opt_fuzzy_size;										   // Parameter to control the optimization fuzzy logic size
+	private double p_imt_fuzzy_size;										   // Parameter to control the imitation fuzzy logic size
+	private int p_ranking_version;											   // Parameter to control what fuzzy ranking algorithm is selected
 	private static final Logger LOGGER = Logger.getLogger("FARMIND_LOGGING");  // logger for system 
 	
 	/**
@@ -80,12 +82,12 @@ public class Farm {
 	 * @param alpha_minus :: for satisfaction calculation
 	 * @param phi_plus :: for satisfaction calculation
 	 * @param phi_minus :: for satisfaction calculation
-	 * @param fuzzy_size :: how large of a fuzzy set to return
+	 * @param opt_fuzzy_size :: how large of a fuzzy set to return
 	 */
 	public Farm(String name, Location location, Graph<String, DefaultEdge> socialNetwork, List<Double> incomeHistory,  
 			FarmDataMatrix farmingExperience, FarmDataMatrix preferences, List<Activity> activities, double activity_tolerance, double income_tolerance, 
 			List<Activity> currentActivity, Person farmHead, double beta_l, double beta_s, double beta_p, double reference_income, double aspiration_coef, double lambda, double alpha_plus, 
-			double alpha_minus, double phi_plus, double phi_minus, double fuzzy_size) {
+			double alpha_minus, double phi_plus, double phi_minus, double opt_fuzzy_size, double imt_fuzzy_size, int ranking_version) {
 		
 		this.setFarmName(name);
 		this.setLocation(location);
@@ -108,7 +110,9 @@ public class Farm {
 		this.setP_phi_minus(phi_minus);
 		this.setP_activity_tolerance_coef(activity_tolerance);
 		this.setP_income_tolerance_coef(income_tolerance);
-		this.setP_fuzzy_size(fuzzy_size);
+		this.setP_opt_fuzzy_size(opt_fuzzy_size);
+		this.setP_imt_fuzzy_size(imt_fuzzy_size);
+		this.setP_ranking_version(ranking_version);
 	}
 	
 	/** 
@@ -178,13 +182,14 @@ public class Farm {
 				else {
 					this.strategy = 3; //OPTIMIZATION
 					if (cmd.getProperty("modelName").equals("WEEDCONTROL")) {
-						for (int i = 0; i < this.getActivities().size(); i++) {                    // for optimization of weedcontrol, return all activities
-							ActivitySet.add(this.getActivities().get(i).getName());
-						} 
-					} else {
 						ActivitySet = fuzzyLogicCalc.getOptimizationActivities();
+//						for (int i = 0; i < this.getActivities().size(); i++) {                    // for optimization of weedcontrol, return all activities
+//							ActivitySet.add(this.getActivities().get(i).getName());
+//						} 
+//					} else {
+//						ActivitySet = fuzzyLogicCalc.getOptimizationActivities();
 					}
-				}
+				} 
 			}
 		}
 
@@ -747,10 +752,22 @@ public class Farm {
 	public void setP_reference_income(double p_reference_income) {
 		this.p_reference_income = p_reference_income;
 	}
-	public double getP_fuzzy_size() {
-		return p_fuzzy_size;
+	public double getP_opt_fuzzy_size() {
+		return p_opt_fuzzy_size;
 	}
-	public void setP_fuzzy_size(double p_fuzzy_size) {
-		this.p_fuzzy_size = p_fuzzy_size;
+	public void setP_opt_fuzzy_size(double p_fuzzy_size) {
+		this.p_opt_fuzzy_size = p_fuzzy_size;
+	}
+	public double getP_imt_fuzzy_size() {
+		return p_imt_fuzzy_size;
+	}
+	public void setP_imt_fuzzy_size(double p_imt_fuzzy_size) {
+		this.p_imt_fuzzy_size = p_imt_fuzzy_size;
+	}
+	public int getP_ranking_version() {
+		return p_ranking_version;
+	}
+	public void setP_ranking_version(int p_ranking_version) {
+		this.p_ranking_version = p_ranking_version;
 	}
 }

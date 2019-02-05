@@ -55,7 +55,7 @@ public class FarmTests {
 		assertEquals( farm.getP_alpha_minus(), 0.65 );
 		assertEquals( farm.getP_phi_plus(), 0.7 );
 		assertEquals( farm.getP_phi_minus(), 0.7 );
-		assertEquals( farm.getP_fuzzy_size(),6 );
+		assertEquals( farm.getP_opt_fuzzy_size(),72 );
 	}
 	
 	@Test

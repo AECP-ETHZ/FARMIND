@@ -44,6 +44,7 @@ public class ReadData {
 	public static final int OPT_FUZZY_SIZE = 18;						       // size of optimization fuzzy logic
 	public static final int IMT_FUZZY_SIZE = 19;						       // size of imitation fuzzy logic
 	public static final int RANKING_VERSION = 20;						       // size of imitation fuzzy logic
+	public static final int LEARNING_RATE = 21;						           // learning rate for external input 
 	
 	public String FarmParametersFile;					                       // allow external function to set data files for testing
 	public String ActivityPreferenceFile;
@@ -94,6 +95,7 @@ public class ReadData {
 		double opt_fuzzy_size = 0;
 		double imt_fuzzy_size = 0;
 		int ranking_version = 0;
+		double learning_rate = 0;
 	
 		List<Graph<String, DefaultEdge>> network = this.getSocialNetworks();   
 		List<Activity>                   activities = getActivityList();
@@ -125,7 +127,7 @@ public class ReadData {
 			while ((Line = Buffer.readLine()) != null) {                       
 				farmParameters = CSVtoArrayList(Line);						   // Read farm's parameters line by line
 				
-				if( farmParameters.size() != (RANKING_VERSION+1) ) {
+				if( farmParameters.size() != (LEARNING_RATE+1) ) {
 					LOGGER.severe("Exiting Farmind. Input Farm Parameter file smaller than expected.");
 					System.exit(0);
 				}
@@ -170,12 +172,13 @@ public class ReadData {
 				opt_fuzzy_size = Double.parseDouble(   farmParameters.get(OPT_FUZZY_SIZE) );
 				imt_fuzzy_size = Double.parseDouble(   farmParameters.get(IMT_FUZZY_SIZE) );
 				ranking_version = Integer.parseInt(  farmParameters.get(RANKING_VERSION) );
+				learning_rate = Double.parseDouble(  farmParameters.get(LEARNING_RATE));
 
 				Person farmHead = new Person(age, education, memory);        
 				Farm farm = new Farm(name, location, network.get(farm_count_index), 
 						income, experience, preference, activities, 
 						activity_tolerance, income_tolerance, currentActivity, farmHead, 
-						beta_l, beta_s, beta_p, reference_income, aspiration_coef, lambda, alpha_plus, alpha_minus, phi_plus, phi_minus, opt_fuzzy_size, imt_fuzzy_size, ranking_version);
+						beta_l, beta_s, beta_p, reference_income, aspiration_coef, lambda, alpha_plus, alpha_minus, phi_plus, phi_minus, opt_fuzzy_size, imt_fuzzy_size, ranking_version, learning_rate);
 				
 				farms.add(farm);
 				farm_count_index++;	
@@ -200,6 +203,12 @@ public class ReadData {
 		success = initializeFarmIncomes(farms);                                // read initialization income data from data file and set all initialize all incomes
 		if (success == false) {
 			LOGGER.severe("Error setting initial farm activities");
+		}
+		
+		// check the learning rate for all the farms. If the learning rate is 0 (ie externally set from parameter to 0), then calculate a rate based on memory length
+		for (Farm farm : farms) {
+			if (farm.getLearningRate() == 0)
+				farm.calculate_setLearningRate();
 		}
 		
 		return farms;
@@ -282,7 +291,7 @@ public class ReadData {
 				}
 				
 				farms.get(farm_count_index).setIncomeHistory(income);
-				farms.get(farm_count_index).setLearningRate();
+				//farms.get(farm_count_index).setLearningRate();
 				farms.get(farm_count_index).updateAveragePersonalIncomeChangeRate();
 				farm_count_index++;	
 			}

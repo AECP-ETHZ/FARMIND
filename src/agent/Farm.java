@@ -87,7 +87,7 @@ public class Farm {
 	public Farm(String name, Location location, Graph<String, DefaultEdge> socialNetwork, List<Double> incomeHistory,  
 			FarmDataMatrix farmingExperience, FarmDataMatrix preferences, List<Activity> activities, double activity_tolerance, double income_tolerance, 
 			List<Activity> currentActivity, Person farmHead, double beta_l, double beta_s, double beta_p, double reference_income, double aspiration_coef, double lambda, double alpha_plus, 
-			double alpha_minus, double phi_plus, double phi_minus, double opt_fuzzy_size, double imt_fuzzy_size, int ranking_version) {
+			double alpha_minus, double phi_plus, double phi_minus, double opt_fuzzy_size, double imt_fuzzy_size, int ranking_version, double learning_rate) {
 		
 		this.setFarmName(name);
 		this.setLocation(location);
@@ -113,6 +113,7 @@ public class Farm {
 		this.setP_opt_fuzzy_size(opt_fuzzy_size);
 		this.setP_imt_fuzzy_size(imt_fuzzy_size);
 		this.setP_ranking_version(ranking_version);
+		this.setLearningRate(learning_rate);
 	}
 	
 	/** 
@@ -677,7 +678,13 @@ public class Farm {
 	public double getLearningRate() {
 		return this.learning_rate;
 	}
-	public void setLearningRate() {
+	public void setLearningRate(double learning_rate) {
+		this.learning_rate = learning_rate;
+	}
+	/** 
+	 * If we want, we can set a learning rate based on the memory length
+	 */
+	public void calculate_setLearningRate() {
 		this.learning_rate = init_learning_rate();
 	}
 	public double getP_beta_l() {

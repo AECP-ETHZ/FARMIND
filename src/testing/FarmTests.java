@@ -95,6 +95,31 @@ public class FarmTests {
 	}
 	
 	@Test
+	public void testImitationDecisionSize1() {
+		Farm farm = allFarms.get(0);
+		
+		farm.setSatisfaction(100);
+		farm.setActivity_Dissimilarity(0);
+		farm.setIncome_Dissimilarity(10);
+		
+		List<String> x = farm.decideActivitySet(allFarms, cmd);
+		assertEquals(x.size(), 14);	
+	}
+	
+	@Test
+	public void testImitationDecisionSize2() {
+		Farm farm = allFarms.get(0);
+		
+		farm.setSatisfaction(100);
+		farm.setActivity_Dissimilarity(0);
+		farm.setIncome_Dissimilarity(10);
+		farm.setP_ranking_version(1);
+		
+		List<String> x = farm.decideActivitySet(allFarms, cmd);
+		assertEquals(x.size(), 5);	
+	}
+	
+	@Test
 	public void testRepetionDecision() {
 		Farm farm = allFarms.get(0);
 		

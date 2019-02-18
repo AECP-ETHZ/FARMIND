@@ -121,18 +121,30 @@ public class FarmTests {
 	}
 	
 	@Test
-	public void testOptimizationDecisionSize() {
+	public void testOptimizationDecisionSize1() {
 		Farm farm = allFarms.get(0);
 		
 		farm.setSatisfaction(-1);
 		farm.setActivity_Dissimilarity(0);
 		farm.setIncome_Dissimilarity(0);
 		cmd.setProperty("modelName", "WEEDCONTROL");
-		farm.decideActivitySet(allFarms,cmd);
-
+		
+		List<String> x = farm.decideActivitySet(allFarms, cmd);
+		assertEquals(x.size(), 14);	
+	}
+	
+	@Test
+	public void testOptimizationDecisionSize2() {
+		Farm farm = allFarms.get(0);
+		
+		farm.setSatisfaction(-1);
+		farm.setActivity_Dissimilarity(0);
+		farm.setIncome_Dissimilarity(0);
+		cmd.setProperty("modelName", "WEEDCONTROL");
+		farm.setP_ranking_version(1);
+		
 		List<String> x = farm.decideActivitySet(allFarms, cmd);
 		assertEquals(x.size(), 72);	
-		
 	}
 	
 	@Test

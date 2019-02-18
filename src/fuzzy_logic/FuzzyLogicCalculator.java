@@ -197,24 +197,29 @@ public class FuzzyLogicCalculator {
 		List<Double> cluster_smaller = new ArrayList<Double>(); 
 		int fuzzy_size = 0;
 		
-		for (int i = 0; i< sorted.size(); i++) {		
-			if (sorted.get(i) == 1.0) {
-				fuzzy_size++;
+		if (farm.getP_ranking_version() == 0) {
+			for (int i = 0; i< sorted.size(); i++) {		
+				if (sorted.get(i) == 1.0) {
+					fuzzy_size++;
+				}
+			}
+			
+			// if no 1.0 optimal activities are present than use the default size and select the best option. 
+			if (fuzzy_size == 0) {
+				fuzzy_size = (int) this.fuzzy_size;	
 			}
 		}
-		
-		// if no 1.0 optimal activities are present than use the default size and select the best option. 
-		if (fuzzy_size == 0) {
-			fuzzy_size = (int) this.fuzzy_size;	
+		else if (farm.getP_ranking_version() == 1 ) {
+			fuzzy_size = (int) this.fuzzy_size;		
 		}
-		
+			
 		cluster = sorted;
 		if (cluster.size() > fuzzy_size) {											   
 			for (int i = 0; i< fuzzy_size; i++) {
 				cluster_smaller.add(cluster.get(cluster.size() - i - 1));
 			}
 			return cluster_smaller;
-		}
+		}	
 		
 		return cluster;		
 	}

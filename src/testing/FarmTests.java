@@ -101,6 +101,7 @@ public class FarmTests {
 		farm.setSatisfaction(100);
 		farm.setActivity_Dissimilarity(0);
 		farm.setIncome_Dissimilarity(10);
+		// ranking version 0 selects all the 1.0 values from ND activity array
 		
 		List<String> x = farm.decideActivitySet(allFarms, cmd);
 		assertEquals(x.size(), 14);	
@@ -113,7 +114,7 @@ public class FarmTests {
 		farm.setSatisfaction(100);
 		farm.setActivity_Dissimilarity(0);
 		farm.setIncome_Dissimilarity(10);
-		farm.setP_ranking_version(1);
+		farm.setP_ranking_version(1); // ranking version 1 selects the fuzzy set size
 		
 		List<String> x = farm.decideActivitySet(allFarms, cmd);
 		assertEquals(x.size(), 5);	
@@ -155,21 +156,20 @@ public class FarmTests {
 		cmd.setProperty("modelName", "WEEDCONTROL");
 		
 		List<String> x = farm.decideActivitySet(allFarms, cmd);
-		assertEquals(x.size(), 14);	
+		assertEquals(x.size(), 72);	
 	}
 	
 	@Test
 	public void testOptimizationDecisionSize2() {
-		Farm farm = allFarms.get(0);
+		Farm farm = allFarms.get(1);
 		
 		farm.setSatisfaction(-1);
 		farm.setActivity_Dissimilarity(0);
 		farm.setIncome_Dissimilarity(0);
 		cmd.setProperty("modelName", "WEEDCONTROL");
-		farm.setP_ranking_version(1);
 		
 		List<String> x = farm.decideActivitySet(allFarms, cmd);
-		assertEquals(x.size(), 72);	
+		assertEquals(x.size(), 15);	
 	}
 	
 	@Test

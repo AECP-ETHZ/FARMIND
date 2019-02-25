@@ -32,6 +32,7 @@ public class FuzzyLogicCalculator {
 	Farm farm;																   // farm associated with this calculator 
 	double fuzzy_size = 0;									  		           // set size of set to return
 	int ranking_version = 0;							                       // what ranking version to use
+	String strat;															   // which strategy "optimize" or "imitate" we are using. This is affected later when we select our set size. 
 
 	/** 
 	 * Constructor for decision calculator for a specific farm based on the network.
@@ -72,8 +73,8 @@ public class FuzzyLogicCalculator {
 	public List<String> getImitationActivities() {
 		double[] c1 = new double[this.P.size()];
 		int len = c1.length;
-		double[][] matrix = new double[len-2][len-2];                          // matrix of all activities against all activities
-		
+		double[][] matrix = new double[len-2][len-2];                          // matrix of all activities against all activities		
+		this.strat = "imitate";
 		this.fuzzy_size = this.farm.getP_imt_fuzzy_size();					   // use imitation fuzzy size for this selection
 		
 		for (int i = 0; i < this.P.size(); i++) {
@@ -107,8 +108,8 @@ public class FuzzyLogicCalculator {
 		for (int i = 0; i< len - 2; i++) {
 			ND.add(ND(i,matrix));											   // add ordered values to list
 		}
-
-		List<String> list = activityList((ND));							       // cluster algorithm returns optimal activity list
+		
+		List<String> list = activityList(ND);                                   // cluster algorithm returns optimal activity list
 		
 		return list;
 	}
@@ -123,7 +124,7 @@ public class FuzzyLogicCalculator {
 		double[] c2 = new double[this.L.size()];
 		int len = c1.length;
 		double[][] matrix = new double[len-2][len-2];						   // matrix of all activities against all activities
-		
+		this.strat = "optimize";
 		this.fuzzy_size = this.farm.getP_opt_fuzzy_size();					   // for optimization activities we use this fuzzy size
 		
 		for (int i = 0; i < this.P.size(); i++) {
@@ -158,7 +159,7 @@ public class FuzzyLogicCalculator {
 
 	// fuzzy logic and clustering functions
 	/**
-	 *  given a vector of non-domination scores (doubles) return an optimized activity list based on the desired fuzzy set size OR the natural clustering
+	 * given a vector of non-domination scores (doubles) return an optimized activity list based on the desired fuzzy set size OR a default cluster size
 	 * @param x :: original ND vector
 	 * @return activityList :: list of activity names
 	 */
@@ -166,18 +167,18 @@ public class FuzzyLogicCalculator {
 		List<String> activityList = new ArrayList<String>();                   // final activity list
 		List<Double> originalND = new ArrayList<Double>(x);					   // backup list					
 		List<Double> sortedND = new ArrayList<Double>(x);					   // sorted list
-		List<Double> cluster = new ArrayList<Double>();						   // final selected activity values from clustering algorithm
+		List<Double> selectedActivityList = new ArrayList<Double>();		   // final selected activity values from clustering algorithm
 		int index = 0;														   // index of ND value used to get specific activity indicated by index
 		
 		Collections.sort(sortedND); 										   // returns ascending order 0->1
-		cluster = activityOptimalSelection(sortedND);
+		selectedActivityList = activitySelection(sortedND);
 		
 		// turn ranking values into activity list by sorting the ND array, and then finding the corresponding match in the original list based on the index.
 		// Ex: orig = [0.8,0.3,1.0,0.8] --> sorted = [1.0,0.8,0.8,0.3]
 		// Take 1.0 from the sorted list and match to index value 2 from the original list. Then find activity with index 2 in the activity list of the system
 		// Then take 0.8 and match that to index 0 and find corresponding activity[index = 0].
-		for (int i = 0; i< cluster.size(); i++) {							   
-			index = originalND.indexOf(cluster.get(i));
+		for (int i = 0; i< selectedActivityList.size(); i++) {							   
+			index = originalND.indexOf(selectedActivityList.get(i));
 			activityList.add(this.farm.getPreferences().getDataElementName().get(index));
 			originalND.set(index, -1.0);                                         // duplicate values exist in array, so 'remove' when used to get next duplicate value
 		}
@@ -186,42 +187,51 @@ public class FuzzyLogicCalculator {
 	}
 	
 	/** 
-	 * if there are 1.0 values in the sorted list, then we have optimal values to return. If there are no 1.0 values then we select the best values based on the fuzzy size. <br>
+	 * Given a list of ND values corresponding to each activity, return a list of values that correspond to the best selection. 
+	 * We have two choices here. 1 - use the default fuzzy size and take the top n values. 2 - select all the 1.0 (max) values from the list. <br>
+	 * If there are 1.0 values in the sorted list, then we have optimal values to return. If there are no 1.0 values then we select the best values based on the fuzzy size. <br>
 	 * a list of [1.0, 0.8, 1.0, 0.9, 0.2, 0.3] will return [1.0,1.0].
 	 * a list of [0.9, 0.8, 0.63, 0.9, 0.2, 0.3] will return [0.9,0.9,0.8] assuming fuzzy set size of 3. 
 	 * @param sorted :: original list to cluster
 	 * @return list of preferred activity scores
 	 */
-	private List<Double> activityOptimalSelection(List<Double> sorted) {
+	private List<Double> activitySelection(List<Double> sorted) {
 		List<Double> cluster = new ArrayList<Double>(); 
-		List<Double> cluster_smaller = new ArrayList<Double>(); 
+		List<Double> selected_cluster = new ArrayList<Double>(); 
 		int fuzzy_size = 0;
 		
-		if (farm.getP_ranking_version() == 0) {
-			for (int i = 0; i< sorted.size(); i++) {		
-				if (sorted.get(i) == 1.0) {
-					fuzzy_size++;
+		if (this.strat == "optimize") {
+			fuzzy_size = (int) this.fuzzy_size;
+			cluster = sorted;
+			
+			for (int i = 0; i< fuzzy_size; i++) {
+				selected_cluster.add(cluster.get(cluster.size() - i - 1));
+			}
+		}
+		
+		else if (this.strat == "imitate") {
+			if (farm.getP_ranking_version() == 0) {
+				for (int i = 0; i< sorted.size(); i++) {		
+					if (sorted.get(i) == 1.0) {
+						fuzzy_size++;
+					}
+				}
+				// if no 1.0 optimal activities are present than use the default size and select the best option. 
+				if (fuzzy_size == 0) {
+					fuzzy_size = (int) this.fuzzy_size;	
 				}
 			}
-			
-			// if no 1.0 optimal activities are present than use the default size and select the best option. 
-			if (fuzzy_size == 0) {
-				fuzzy_size = (int) this.fuzzy_size;	
+			else if (farm.getP_ranking_version() == 1 ) {
+				fuzzy_size = (int) this.fuzzy_size;		
 			}
-		}
-		else if (farm.getP_ranking_version() == 1 ) {
-			fuzzy_size = (int) this.fuzzy_size;		
-		}
-			
-		cluster = sorted;
-		if (cluster.size() > fuzzy_size) {											   
+				
+			cluster = sorted;
 			for (int i = 0; i< fuzzy_size; i++) {
-				cluster_smaller.add(cluster.get(cluster.size() - i - 1));
+				selected_cluster.add(cluster.get(cluster.size() - i - 1));
 			}
-			return cluster_smaller;
-		}	
+		}
 		
-		return cluster;		
+		return selected_cluster;		
 	}
 		
 	/** 

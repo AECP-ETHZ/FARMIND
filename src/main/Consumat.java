@@ -37,7 +37,7 @@ public class Consumat {
 	 
 	public static void main(String[] args) {
 		initializeLogging();
-		LOGGER.info("Starting FARMIND: version number: 0.9.5");
+		LOGGER.info("Starting FARMIND: version number: 0.10.0");
 				
     	Properties          		cmd 				= parseInput(args,false);				             // parse input arguments from control.properties
 		ReadData            		reader             	= new ReadData(cmd);					             // read all input data files

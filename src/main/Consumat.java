@@ -62,7 +62,7 @@ public class Consumat {
 			MP.runModel(cmd, allFarms.size(), year, pricingAverage, memoryLengthAverage);		   // update gams script and then start model (ie update pricing information etc)
 			MP_Incomes = MP.readMPIncomes(cmd, allFarms);										   // read income and activities from model results
 			MP_Activities = MP.readMPActivities(cmd, allFarms);
-			logActivitesMP(cmd, year, pricingAverage, allFarms, MP_Incomes, MP_Activities);
+			logActivitesMP(cmd, year, pricingAverage, allFarms, MP_Incomes, MP_Activities, MP);
 					
 			// rerun Weedcontrol model using selected strategy, but actual pricing information
 			if (MP instanceof WeedControl) {
@@ -71,7 +71,7 @@ public class Consumat {
 				MP.runModel(cmd, allFarms.size(),year,pricingAverage,memoryLengthAverage);			   // if needed, update mp script and then start model
 				MP_Incomes = MP.readMPIncomes(cmd, allFarms);
 				MP_Activities = MP.readMPActivities(cmd, allFarms);
-				logActivitesMP(cmd, year, pricingAverage, allFarms, MP_Incomes, MP_Activities);
+				logActivitesMP(cmd, year, pricingAverage, allFarms, MP_Incomes, MP_Activities, MP);
 			}
 			
 			updatePopulationIncomeChangeRate(allFarms, MP_Incomes);                                // at end of time step update the percent change for population
@@ -154,11 +154,17 @@ public class Consumat {
 	 * @param allFarms :: list of all farm agents
 	 * @param MP_Incomes :: list of incomes from previous time period
 	 * @param MP_Activities :: list of activities from previous time period
+	 * @param MP_Interface :: mathematical programming model. Used to set the exit activity in the case where it is required. Makes the log cleaner. 
 	 */
-	private static void logActivitesMP(Properties cmd, int year, boolean pricingAverage, List<Farm> allFarms, List<Double> MP_Incomes, List<ArrayList<Activity>> MP_Activities) {
+	private static void logActivitesMP(Properties cmd, int year, boolean pricingAverage, List<Farm> allFarms, List<Double> MP_Incomes, List<ArrayList<Activity>> MP_Activities, MP_Interface MP) {
 		int farmIndex = 0;
 		for (Farm farm : allFarms) {
-			ABMActivityLog log = new ABMActivityLog(cmd.getProperty("modelName"), farm.getPreferences().getDataElementName(), farm.getFarmName(), year, farm.getStrategy(), farm.getCurrentActivity(), MP_Activities.get(farmIndex), MP_Incomes.get(farmIndex));
+			ArrayList<Activity> activity = MP_Activities.get(farmIndex);
+			if (farm.getStrategy() == 1) {
+				activity = MP.getExitActivity();
+			}
+			
+			ABMActivityLog log = new ABMActivityLog(cmd.getProperty("modelName"), farm.getPreferences().getDataElementName(), farm.getFarmName(), year, farm.getStrategy(), farm.getCurrentActivity(), activity, MP_Incomes.get(farmIndex));
 			log.appendLogFile(FileName,pricingAverage);
 			farmIndex++; 
 		}

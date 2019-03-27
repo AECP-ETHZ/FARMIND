@@ -338,7 +338,7 @@ gn_inAnalysis =377
      p_costsVar(gn,spre,spost)                   "total variable costs dependend on weed control strategy"
      p_costsFix(gn,spre,spost)                   "total fixed costs dependend on weed control strategy"
      p_costsInterest(gn,spre,spost)              "Interest claim"
-p_cropPrice    "Price of silage maize Euro/st" /3.85/
+p_cropPrice    "Price of silage maize Euro/st" /3.95/
      p_dieselprice                               "price of diesel - only for calculation of soil type-related costs of cultivation (source: KTBL 2016/17, p. 67)" /0.70/
      p_fertNneed(gn,spre,spost)                  "necessary N-fertiliser"
      p_fertPneed(gn,spre,spost)                  "necessary P-fertiliser"
@@ -438,14 +438,14 @@ p_cropPrice    "Price of silage maize Euro/st" /3.85/
 *
 * ---Calculation of attainable yield:
 *
-p_attyield(gn) =  p_yieldMdm(gn,'t2006')/p_drymatter * 10 * (1 + p_affYieldShare);
+p_attyield(gn) =  p_yieldMdm(gn,'t2007')/p_drymatter * 10 * (1 + p_affYieldShare);
 
 
 *
 * ---Use betas and create production function (possibly with changed p_timeofEmergence2)
 *
  p_postSowDamage(gn,spost,s_process) =   {1 -  p_yieldLossD0 * v_Dpost.l(gn,spost)
-/ [100 * ( exp(p_CRate * p_TDistribution(gn,'t2006',s_process) )
+/ [100 * ( exp(p_CRate * p_TDistribution(gn,'t2007',s_process) )
                                                      + (p_yieldLossD0 * v_Dpost.l(gn,spost) ) / p_yieldLossDinfin ) ] };
 
 

@@ -83,6 +83,9 @@ public class Farm {
 	 * @param phi_plus :: for satisfaction calculation
 	 * @param phi_minus :: for satisfaction calculation
 	 * @param opt_fuzzy_size :: how large of a fuzzy set to return
+	 * @param learning_rate :: if learning rate is greater than 0, then we use that value, otherwise calculate internally
+	 * @param ranking_version :: input ranking version, 0 is default
+	 * @param imt_fuzzy_size :: fuzzy size for imitation version
 	 */
 	public Farm(String name, Location location, Graph<String, DefaultEdge> socialNetwork, List<Double> incomeHistory,  
 			FarmDataMatrix farmingExperience, FarmDataMatrix preferences, List<Activity> activities, double activity_tolerance, double income_tolerance, 

@@ -37,7 +37,7 @@ public class Consumat {
 	 
 	public static void main(String[] args) {
 		initializeLogging();
-		LOGGER.info("Starting FARMIND: version number: 0.10.0");
+		LOGGER.info("Starting FARMIND: version number: 0.11.0");
 				
     	Properties          		cmd 				= parseInput(args,false);				             // parse input arguments from control.properties
 		ReadData            		reader             	= new ReadData(cmd);					             // read all input data files
@@ -51,8 +51,7 @@ public class Consumat {
 		// initialize the farms with the input values before starting the full ABM simulation
 		initializePopulationIncomeChangeRate(allFarms);						                       
 
-		// run simulation for a set of years, getting updated income and activities from the MP model each iteration
-		for (int year = 1; year <= simYear; year++) {		                                       
+ 		for (int year = 1; year <= simYear; year++) {		                                       
 			LOGGER.info(String.format("Year %d simulation started", year));
 			
 			MP_Interface MP = new FactoryMP(cmd, simYear, memoryLengthAverage).getMP();            // select correct model based on input command parameter

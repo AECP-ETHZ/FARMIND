@@ -1,9 +1,8 @@
 package main;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -12,14 +11,15 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+
+import activity.Activity;
+import agent.Farm;
 import logging.ABMActivityLog;
 import logging.ABMTimeStepLog;
 import mathematical_programming.FactoryMP;
 import mathematical_programming.MP_Interface;
 import mathematical_programming.WeedControl;
 import reader.ReadData;
-import activity.Activity;
-import agent.Farm;
 
 /** 
  * This class contains the main() method of this program. 
@@ -228,7 +228,7 @@ public class Consumat {
                     ? "test_data/control.properties"
                     : "control.properties";
         
-        try (InputStream input = new FileInputStream(file)) {
+        try (FileReader input = new FileReader(file)) {
 
             //load a properties file from class path
             prop.load(input);

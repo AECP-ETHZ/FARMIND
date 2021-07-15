@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.NumberFormatException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -54,6 +55,8 @@ public class ReadData {
 	public String InitialPerformingYears;
 	public String SocialNetworkFile;
 	
+	public int ThisYear;
+	
 	private static final Logger LOGGER = Logger.getLogger("FARMIND_LOGGING");
 	
 	public ReadData(Properties cmd) {
@@ -62,7 +65,12 @@ public class ReadData {
 		this.InitialActivities = String.format("./%s/initial_activities.csv",cmd.getProperty("data_folder"));
 		this.InitialIncomes = String.format("./%s/initial_incomes.csv",cmd.getProperty("data_folder"));
 		this.InitialPerformingYears = String.format("./%s/initial_performing_years.csv",cmd.getProperty("data_folder"));
-		this.SocialNetworkFile = String.format("./%s/social_networks.csv",cmd.getProperty("data_folder")); 
+		this.SocialNetworkFile = String.format("./%s/social_networks.csv",cmd.getProperty("data_folder"));
+		
+		String year = cmd.getProperty("start_year_simulation");
+		this.ThisYear = year == null
+                      ? Calendar.getInstance().get(Calendar.YEAR)
+                      : Integer.parseInt(year);
 	}
 
 	/**
@@ -121,8 +129,7 @@ public class ReadData {
 		
 		// Read data files and create list of farms
 		try (BufferedReader Buffer = new BufferedReader(new FileReader(this.FarmParametersFile))) {
-			Calendar now = Calendar.getInstance();                             // Gets the current date and time
-			int currentYear = now.get(Calendar.YEAR); 
+			 
 			
 			Line = Buffer.readLine();									       // first line with titles to throw away
 			
@@ -148,7 +155,7 @@ public class ReadData {
 				coordinates[1] = Double.parseDouble(farmParameters.get(COORDINATE2));
 				location.setCoordinates(coordinates);
 				
-				age = currentYear - Integer.parseInt( farmParameters.get(AGE));
+				age = this.ThisYear - Integer.parseInt( farmParameters.get(AGE));
 				education = Integer.parseInt( farmParameters.get(EDUCATION) );
 				memory = Integer.parseInt( farmParameters.get(MEMORY));
 				if (memory < 4) {

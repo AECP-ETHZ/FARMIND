@@ -37,13 +37,13 @@ public class FarmDyn implements MP_Interface{
 	String baseGamsModel;													   // original base gams model of farmydn
 	
 	public FarmDyn(Properties cmd, int simYear, int memoryLengthAverage) {
-		strategyFile = String.format("%s\\p_AllowedStratPrePost.csv",cmd.getProperty("project_folder"));
-		resultsFile = String.format("%s\\Grossmargin_P4,00.csv",cmd.getProperty("project_folder"));
-		baseGamsModel =  String.format("./%s",cmd.getProperty("project_folder"));
-		yearlyPriceFile = String.format("./%s/yearly_prices.csv",cmd.getProperty("data_folder"));
-		file = new File( strategyFile) ;				                       // delete last time period's simulation file
-		if (file.exists()) {
-			file.delete();
+		this.strategyFile = String.format("%s\\p_AllowedStratPrePost.csv",cmd.getProperty("project_folder"));
+		this.resultsFile = String.format("%s\\Grossmargin_P4,00.csv",cmd.getProperty("project_folder"));
+		this.baseGamsModel =  String.format("./%s",cmd.getProperty("project_folder"));
+		this.yearlyPriceFile = String.format("./%s/yearly_prices.csv",cmd.getProperty("data_folder"));
+		this.file = new File( this.strategyFile) ;				                       // delete last time period's simulation file
+		if (this.file.exists()) {
+			this.file.delete();
 		}	
 	}
 	
@@ -58,7 +58,7 @@ public class FarmDyn implements MP_Interface{
 		
 		// copy model directory to it's own folder so you can set up this individual run
 //		String baseModel = baseGamsModel + String.format("\\%S","farmdyn_base_model");
-		String newModel = baseGamsModel + String.format("\\%S",farm.getFarmName());
+		String newModel = this.baseGamsModel + String.format("\\%S",farm.getFarmName());
 //		File srcDir = new File(baseModel);
 //		File destDir = new File(newModel);
 //		try {
@@ -67,7 +67,7 @@ public class FarmDyn implements MP_Interface{
 //			e.printStackTrace();
 //		}
 		
-		gamsModelFile = String.format("%s\\incgen\\runInc.gms",newModel);
+		this.gamsModelFile = String.format("%s\\incgen\\runInc.gms",newModel);
 		
 		editMPscript(possibleActivity);	
 	}
@@ -77,7 +77,7 @@ public class FarmDyn implements MP_Interface{
 	public void runModel(Properties cmd, int nFarm, int year, boolean pricingAverage, int memoryLengthAverage) {
 		Runtime runtime = Runtime.getRuntime();						           // java runtime to run commands
 				
-		File f = new File(resultsFile);
+		File f = new File(this.resultsFile);
 		f.delete();
 		
 		LOGGER.info("Starting MP model");
@@ -104,7 +104,7 @@ public class FarmDyn implements MP_Interface{
 	 * @param cmd :: command object built from control.properties
 	 * @param OS :: String that indicates what operating system. For debugging sometimes a mac is used. 
 	 */
-	private void createRunGamsBatch(Properties cmd, String OS) {
+	private static void createRunGamsBatch(Properties cmd, String OS) {
 		if (cmd.getProperty("debug").equals("1")) {
 			if (OS.equals("win")) {
 				LOGGER.info("Creating run_gams.bat file for debug");
@@ -284,7 +284,7 @@ public class FarmDyn implements MP_Interface{
 	 */
     private void editMPscript(List<String> possibleActivity) {	
 		try {
-            BufferedReader oldScript = new BufferedReader(new FileReader( gamsModelFile));
+            BufferedReader oldScript = new BufferedReader(new FileReader( this.gamsModelFile));
             String line;
             String script = "";
             String act = possibleActivity.get(0);
@@ -304,7 +304,7 @@ public class FarmDyn implements MP_Interface{
             }
             
             oldScript.close();
-            FileOutputStream newScript = new FileOutputStream(gamsModelFile);
+            FileOutputStream newScript = new FileOutputStream(this.gamsModelFile);
             newScript.write(script.getBytes());
             newScript.close();
         }

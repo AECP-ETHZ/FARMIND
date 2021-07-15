@@ -35,12 +35,12 @@ public class SwissLand implements MP_Interface{
 	private static final Logger LOGGER = Logger.getLogger("FARMIND_LOGGING");
 
 	public SwissLand(Properties cmd) {
-		gamsModelFileAnimals = String.format("%s\\DataBaseOut\\If_agentTiere.gms",cmd.getProperty("project_folder"));
-		gamsModelFilePlants = String.format("%s\\DataBaseOut\\If_agentPflanze.gms",cmd.getProperty("project_folder"));
-		gamsPlantsResultsFile = String.format("%s\\DataModelIn\\data_PFLLANDKAP_T0.gms",cmd.getProperty("project_folder"));
-		gamsAnimalResultsFile = String.format("%s\\DataModelIn\\data_ANIMALKAP_T0.gms",cmd.getProperty("project_folder"));
-		gamsIncomeFile = String.format("%s\\DataModelIn\\data_FARMINCOME_T0.gms",cmd.getProperty("project_folder"));
-		resultsFile = String.format("%s\\Grossmargin_P4,00.csv",cmd.getProperty("project_folder"));
+		this.gamsModelFileAnimals = String.format("%s\\DataBaseOut\\If_agentTiere.gms",cmd.getProperty("project_folder"));
+		this.gamsModelFilePlants = String.format("%s\\DataBaseOut\\If_agentPflanze.gms",cmd.getProperty("project_folder"));
+		this.gamsPlantsResultsFile = String.format("%s\\DataModelIn\\data_PFLLANDKAP_T0.gms",cmd.getProperty("project_folder"));
+		this.gamsAnimalResultsFile = String.format("%s\\DataModelIn\\data_ANIMALKAP_T0.gms",cmd.getProperty("project_folder"));
+		this.gamsIncomeFile = String.format("%s\\DataModelIn\\data_FARMINCOME_T0.gms",cmd.getProperty("project_folder"));
+		this.resultsFile = String.format("%s\\Grossmargin_P4,00.csv",cmd.getProperty("project_folder"));
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class SwissLand implements MP_Interface{
 	 * @param cmd :: command object built from control.properties
 	 * @param OS :: String that indicates what operating system. For debugging sometimes a mac is used. 
 	 */
-	private void createRunGamsBatch(Properties cmd, String OS) {
+	private static void createRunGamsBatch(Properties cmd, String OS) {
 		if (cmd.getProperty("debug").equals("1")) {
 			if (OS.equals("win")) {
 				LOGGER.info("Creating run_gams.bat file for debug");
@@ -154,7 +154,7 @@ public class SwissLand implements MP_Interface{
 		BufferedReader Buffer = null;	 									       // read input file
 		String Line;														       // read each line of the file individually
 				
-		File f = new File(gamsIncomeFile);					                       // actual results file
+		File f = new File(this.gamsIncomeFile);					                       // actual results file
 		while (!f.exists()) {try {
 			Thread.sleep(1000);												       // wait until the MP finishes running
 		} catch (InterruptedException e) {
@@ -162,7 +162,7 @@ public class SwissLand implements MP_Interface{
 		}}
 
 		try {
-			Buffer = new BufferedReader(new FileReader(gamsIncomeFile));
+			Buffer = new BufferedReader(new FileReader(this.gamsIncomeFile));
 			Line = Buffer.readLine();
 			Line = Buffer.readLine();
 			while ( ( (Line = Buffer.readLine()) != null ) && Line.matches(".*\\d+.*") ) {  
@@ -182,7 +182,7 @@ public class SwissLand implements MP_Interface{
 		return incomesFromMP;
 	}
 	
-	private String parseLineIncome(String Line) {
+	private static String parseLineIncome(String Line) {
 		String[] words = Line.split("\\.");												   // input data is ugly and needs some editing
 		String income = words[2];
 		words = income.split(" ");
@@ -193,7 +193,7 @@ public class SwissLand implements MP_Interface{
 		return income;
 	}
 	
-	private ArrayList<String> parseLineActivity(String Line) {
+	private static ArrayList<String> parseLineActivity(String Line) {
 		ArrayList<String> data = new ArrayList<String>();
 		String[] words = Line.split("\\.");												   // input data is ugly and needs some editing
 		String act = words[3];
@@ -215,7 +215,7 @@ public class SwissLand implements MP_Interface{
 		List<Activity> allPossibleActivities = reader.getActivityList();	   // generated activity list with ID and name 
 		HashMap<String, ArrayList<Activity>> map = new HashMap<String, ArrayList<Activity>>();
 		
-		File f = new File(gamsPlantsResultsFile);	   						   // actual results file
+		File f = new File(this.gamsPlantsResultsFile);	   						   // actual results file
 		while (!f.exists()) {try {
 			Thread.sleep(1000);												   // wait until the MP finishes running
 		} catch (InterruptedException e) {
@@ -223,7 +223,7 @@ public class SwissLand implements MP_Interface{
 		}}
 
 		try {
-			Buffer = new BufferedReader(new FileReader(gamsPlantsResultsFile));	
+			Buffer = new BufferedReader(new FileReader(this.gamsPlantsResultsFile));	
 			Line = Buffer.readLine();
 			Line = Buffer.readLine();
 			while (( (Line = Buffer.readLine()) != null ) && Line.matches(".*\\d+.*")) {                       
@@ -250,7 +250,7 @@ public class SwissLand implements MP_Interface{
 		}
 		
 		try {
-			Buffer = new BufferedReader(new FileReader(gamsAnimalResultsFile));	
+			Buffer = new BufferedReader(new FileReader(this.gamsAnimalResultsFile));	
 			Line = Buffer.readLine();
 			Line = Buffer.readLine();
 			while (( (Line = Buffer.readLine()) != null ) && Line.matches(".*\\d+.*")) {                       
@@ -295,7 +295,7 @@ public class SwissLand implements MP_Interface{
 		return activitiesFromMP;
 	}
 	
-	private void checkActivityCombo(List<String> possibleActivity) {
+	private static void checkActivityCombo(List<String> possibleActivity) {
 		
 		if (possibleActivity.contains("milchkuehe") & !possibleActivity.contains("jungvieh_miku"))  {
 			possibleActivity.add("jungvieh_miku");
@@ -324,7 +324,7 @@ public class SwissLand implements MP_Interface{
 		
 		// edit animal activity file
 		try {
-            BufferedReader oldScript = new BufferedReader(new FileReader(gamsModelFileAnimals)); 
+            BufferedReader oldScript = new BufferedReader(new FileReader(this.gamsModelFileAnimals)); 
             String line;
             String script = "";
             while ((line = oldScript.readLine()) != null) {
@@ -344,7 +344,7 @@ public class SwissLand implements MP_Interface{
             }
             
             oldScript.close();
-            FileOutputStream newScript = new FileOutputStream(gamsModelFileAnimals); 
+            FileOutputStream newScript = new FileOutputStream(this.gamsModelFileAnimals); 
             newScript.write(script.getBytes());
             newScript.close();
         }
@@ -355,7 +355,7 @@ public class SwissLand implements MP_Interface{
 		
 		// edit plant activity file
 		try {
-            BufferedReader oldScript = new BufferedReader(new FileReader(gamsModelFilePlants));
+            BufferedReader oldScript = new BufferedReader(new FileReader(this.gamsModelFilePlants));
             String line;
             String script = "";
             while ((line = oldScript.readLine()) != null) {
@@ -375,7 +375,7 @@ public class SwissLand implements MP_Interface{
             }
             
             oldScript.close();
-            FileOutputStream newScript = new FileOutputStream(gamsModelFilePlants); //"projdir/DataBaseOut/If_agentPflanze.gms");
+            FileOutputStream newScript = new FileOutputStream(this.gamsModelFilePlants); //"projdir/DataBaseOut/If_agentPflanze.gms");
             newScript.write(script.getBytes());
             newScript.close();
         }

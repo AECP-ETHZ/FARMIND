@@ -83,7 +83,7 @@ public class WeedControl implements MP_Interface{
 	 * @param cmd :: command object built from control.properties
 	 * @param OS :: String that indicates what operating system. For debugging sometimes a mac is used. 
 	 */
-	private void createRunGamsBatch(Properties cmd, String OS) {
+	private static void createRunGamsBatch(Properties cmd, String OS) {
 		if (cmd.getProperty("debug").equals("1")) {
 			if (OS.equals("win")) {
 				LOGGER.info("Creating run_gams.bat file for debug");
@@ -296,7 +296,7 @@ public class WeedControl implements MP_Interface{
 		String Line;
 		ArrayList<String> yearPrice;
 		BufferedReader Buffer = null;		
-		List<Object> year_price = new ArrayList<Object>();
+		List<Object> years_prices = new ArrayList<Object>();
 		List<Double> prices = new ArrayList<Double>();					   // list of modeling prices per year
 		List<String> years = new ArrayList<String>();						   // list of modeling price/years
 
@@ -332,10 +332,10 @@ public class WeedControl implements MP_Interface{
 			System.exit(0);
 		}
 		
-		year_price.add(years);
-		year_price.add(prices);
+		years_prices.add(years);
+		years_prices.add(prices);
 		
-		return year_price;
+		return years_prices;
 	}
 	
 	/** 
@@ -464,7 +464,7 @@ public class WeedControl implements MP_Interface{
 	 * @param list :: list of values to calculate mean with
 	 * @return mean :: mean value of list
 	 */
-	private double mean(List<Double> list) {
+	private static double mean(List<Double> list) {
 		double mean = 0;												       // mean value to return
 		
 		for (int i = 0; i<list.size(); i++) {
@@ -479,7 +479,7 @@ public class WeedControl implements MP_Interface{
 	 * @param list :: list for calculating standard deviation
 	 * @return std :: standard deviation value
 	 */
-	private double std(List<Double> list) {
+	private static double std(List<Double> list) {
 		double std = 0;		
 		for (int i=0; i<list.size();i++) {
 		    std = std + Math.pow(list.get(i) - mean(list), 2);

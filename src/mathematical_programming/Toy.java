@@ -37,7 +37,7 @@ public class Toy implements MP_Interface{
 	private static final Logger LOGGER = Logger.getLogger("FARMIND_LOGGING");
 	
 	public Toy(Properties cmd, int simYear, int memoryLengthAverage) {
-		resultsFile = String.format("%s\\toy_results.csv",cmd.getProperty("project_folder"));
+		this.resultsFile = String.format("%s\\toy_results.csv",cmd.getProperty("project_folder"));
 	}
 	
 	@Override
@@ -140,7 +140,7 @@ public class Toy implements MP_Interface{
 		
 		List<Activity> allPossibleActivities = reader.getActivityList();		   // generated activity list with ID and name 
 		
-		File f = new File(resultsFile);					   // actual results file
+		File f = new File(this.resultsFile);					   // actual results file
 		while (!f.exists()) {try {
 			Thread.sleep(1000);												       // wait until the MP finishes running
 		} catch (InterruptedException e) {
@@ -148,7 +148,7 @@ public class Toy implements MP_Interface{
 		}}
 
 		try {
-			Buffer = new BufferedReader(new FileReader(resultsFile));
+			Buffer = new BufferedReader(new FileReader(this.resultsFile));
 			Line = Buffer.readLine();
 			while ((Line = Buffer.readLine()) != null) {        
 				dataArray = CSVtoArrayList(Line);						          // Read farm's parameters line by line

@@ -28,24 +28,24 @@ public class DecisionCalculatorImitationTests {
 	@Before 
 	public void setup() throws FileNotFoundException, IOException {
 		String[] args = {"2"};
-		cmd = Consumat.parseInput(args,true);						       // parse test data control.properties
-		ReadData reader = new ReadData(cmd);						           // read all input data files
+		this.cmd = Consumat.parseInput(args,true);						       // parse test data control.properties
+		ReadData reader = new ReadData(this.cmd);						           // read all input data files
 		useTestData(reader);
-		allFarms = reader.getFarms();						                   // build set of farms with new parameters
+		this.allFarms = reader.getFarms();						                   // build set of farms with new parameters
 	}
 	
 	@Test
 	public void testProductSelectionCalculator() {
-		Farm farm = allFarms.get(0);
-		FuzzyLogicCalculator cal = new FuzzyLogicCalculator(farm, allFarms);
+		Farm farm = this.allFarms.get(0);
+		FuzzyLogicCalculator cal = new FuzzyLogicCalculator(farm, this.allFarms);
 		assertNotEquals(cal, null);
 	}
 	
 	@Test
 	// beta l and beta p set to 0 with beta_s active
 	public void testbeta_s_farm0() {
-		Farm farm = allFarms.get(0);
-		FuzzyLogicCalculator cal = new FuzzyLogicCalculator(farm, allFarms);
+		Farm farm = this.allFarms.get(0);
+		FuzzyLogicCalculator cal = new FuzzyLogicCalculator(farm, this.allFarms);
 		
 		List<String> verify = Arrays.asList("activity01", "activity02", "activity03", "activity04", "activity05"); 
 		List<String> x = cal.getImitationActivities();
@@ -55,8 +55,8 @@ public class DecisionCalculatorImitationTests {
 	@Test
 	// beta l and beta p set to 0 with beta_s active
 	public void testbeta_s_farm2() {
-		Farm farm = allFarms.get(2);
-		FuzzyLogicCalculator cal = new FuzzyLogicCalculator(farm, allFarms);
+		Farm farm = this.allFarms.get(2);
+		FuzzyLogicCalculator cal = new FuzzyLogicCalculator(farm, this.allFarms);
 		
 		List<String> verify = Arrays.asList("activity06", "activity07", "activity08", "activity09", "activity10"); 
 		List<String> x = cal.getImitationActivities();

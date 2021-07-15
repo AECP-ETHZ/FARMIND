@@ -9,7 +9,7 @@ public class Location {
 	private double[] coordinates;
 
 	public double[] getCoordinates() {
-		return coordinates;
+		return this.coordinates;
 	}
 
 	public void setCoordinates(double[] coordinates) {

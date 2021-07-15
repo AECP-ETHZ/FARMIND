@@ -114,9 +114,10 @@ public class Consumat {
      * @param MP :: Mathematical programming (gams) interface object
      * @param MP_Incomes :: list of incomes from previous time period
      * @param MP_Activities :: list of activities from previous time period
+     * @throws IOException 
      */
     private static void allFarmsDecideActivity(Properties cmd, int year, List<Farm> allFarms, MP_Interface MP, 
-            List<Double> MP_Incomes, List<ArrayList<Activity>> MP_Activities) {
+            List<Double> MP_Incomes, List<ArrayList<Activity>> MP_Activities) throws IOException {
         int farmIndex = 0;
         double income = 0;    
         ArrayList<Activity> activity = null;
@@ -156,8 +157,9 @@ public class Consumat {
      * @param MP_Incomes :: list of incomes from previous time period
      * @param MP_Activities :: list of activities from previous time period
      * @param MP_Interface :: mathematical programming model. Used to set the exit activity in the case where it is required. Makes the log cleaner. 
+     * @throws IOException 
      */
-    private static void logActivitesMP(Properties cmd, int year, boolean pricingAverage, List<Farm> allFarms, List<Double> MP_Incomes, List<ArrayList<Activity>> MP_Activities, MP_Interface MP) {
+    private static void logActivitesMP(Properties cmd, int year, boolean pricingAverage, List<Farm> allFarms, List<Double> MP_Incomes, List<ArrayList<Activity>> MP_Activities, MP_Interface MP) throws IOException {
         int farmIndex = 0;
         for (Farm farm : allFarms) {
             ArrayList<Activity> activity = MP_Activities.get(farmIndex);

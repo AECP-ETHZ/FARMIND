@@ -47,12 +47,12 @@ public class ABMActivityLog {
 		this.income = MP_Incomes;
 		
 		if(modelName.equals("WEEDCONTROL")) {
-			SELECTED_ACTIVITY_SET_PRINTING_SIZE = 1;
-			PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 1;
+			this.SELECTED_ACTIVITY_SET_PRINTING_SIZE = 1;
+			this.PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 1;
 		}
 		else {
-			SELECTED_ACTIVITY_SET_PRINTING_SIZE = 3;
-			PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 3;
+			this.SELECTED_ACTIVITY_SET_PRINTING_SIZE = 3;
+			this.PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 3;
 		}
 	}
 	
@@ -61,140 +61,127 @@ public class ABMActivityLog {
 	 * Does a number of checks to see what size of information is being printed to ensure we do not write more than is useful.
 	 * @param fileName ::output file which is previously checked to ensure we will not exceed 1 million lines of data. 
 	 * @param averagePrice :: boolean to indicate which log file to write to
+	 * @throws IOException 
 	 */
-	public void appendLogFile(String fileName, boolean averagePrice) {
+	public void appendLogFile(String fileName, boolean averagePrice) throws IOException {
 		String PATH = "./output";
 		File directory = new File(PATH);
 		if(!directory.exists()) {
 			directory.mkdir();
 		}
-		
-		File file = new File(String.format("./output/%s_activity_actualPrice.csv", fileName));
-		FileWriter fw = null;
-		try {
-			fw = new FileWriter(file,true);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		if(averagePrice) {
-			file = new File(String.format("./output/%s_activity_averagePrice.csv", fileName));
-			fw = null;
-			try {
-				fw = new FileWriter(file,true);
-			} catch (IOException e) {
-				e.printStackTrace();
-			} 
-		}
- 
-		BufferedWriter bw = new BufferedWriter(fw);
-		PrintWriter writer = new PrintWriter(bw);
-		
-		String name = "year,name,";
-		
-		for(int i = 0; i < PREVIOUS_ACTIVITY_SET_PRINTING_SIZE; i++) {
-			name = name + String.format("previous_activity_%s,",  i+1 );
-		}
 
-		for(int i = 0; i < SELECTED_ACTIVITY_SET_PRINTING_SIZE; i++) {
-			name = name + String.format("selected_activity_%s,",  i+1 );
+		File file = new File(String.format("%s/%s_activity_%sPrice.csv",
+		        PATH, fileName, averagePrice ? "average" : "actual"));
+ 
+		try (PrintWriter writer = new PrintWriter(
+		    new BufferedWriter(new FileWriter(file, true))
+		)) {
+		
+    		String name = "year,name,";
+    		
+    		for(int i = 0; i < this.PREVIOUS_ACTIVITY_SET_PRINTING_SIZE; i++) {
+    			name = name + String.format("previous_activity_%s,",  i+1 );
+    		}
+    
+    		for(int i = 0; i < this.SELECTED_ACTIVITY_SET_PRINTING_SIZE; i++) {
+    			name = name + String.format("selected_activity_%s,",  i+1 );
+    		}
+    		
+    		name = name + "strategy";
+    		name = name + ",income";
+    		
+    		if (file.length() == 0) {
+    			writer.println(name);
+    		}
+    		
+    		writer.print(String.format("%s,",this.year));
+    		writer.print(String.format("%s,",this.getFarmId()));
+    		
+    		// if PREVIOUS activity set is larger than printing limit, print NA for all options
+    		if(this.currentActivity.size() == 0 || this.currentActivity.size() > this.PREVIOUS_ACTIVITY_SET_PRINTING_SIZE) {
+    			for(int i = 0; i < this.PREVIOUS_ACTIVITY_SET_PRINTING_SIZE-1 ; i++) {
+    				writer.print("NA," );
+    			}
+    		}
+    		
+    		// if PREVIOUS activity set is smaller than printing limit, print those activities plus NA if required
+    		else {
+    			for(int i = 0; i < this.PREVIOUS_ACTIVITY_SET_PRINTING_SIZE; i++) {
+    				if (this.currentActivity.size() >= (i+1)) {
+    					writer.print(String.format("%s,",  this.currentActivity.get(i).getName()) );
+    				}
+    				else {
+    					writer.print("NA," );
+    				}
+    			}
+    		}
+    		
+    		// if SELECTED activity set is larger than printing limit, print NA for all options
+    		if(this.MPSelectedActivity.size() == 0 || this.MPSelectedActivity.size() > this.SELECTED_ACTIVITY_SET_PRINTING_SIZE) {
+    			for(int i = 0; i < this.SELECTED_ACTIVITY_SET_PRINTING_SIZE-1 ; i++) {
+    				writer.print("NA," );
+    			}
+    		}
+    		
+    		// if SELECTED activity set is smaller than printing limit, print those activities plus NA if required
+    		else {
+    			for(int i = 0; i < this.SELECTED_ACTIVITY_SET_PRINTING_SIZE; i++) {
+    				if (this.MPSelectedActivity.size() >= (i+1)) {
+    					writer.print(String.format("%s,",  this.MPSelectedActivity.get(i).getName()) );
+    				}
+    				else {
+    					writer.print("NA," );
+    				}
+    			}
+    		}
+    		
+    		writer.print(String.format("%s,",this.strategy) );
+    		writer.print(String.format("%s",this.income) );
+    		
+    		writer.println("");
 		}
-		
-		name = name + "strategy";
-		name = name + ",income";
-		
-		if (file.length() == 0) {
-			writer.println(name);
-		}
-		
-		writer.print(String.format("%s,",this.year));
-		writer.print(String.format("%s,",this.getFarmId()));
-		
-		// if PREVIOUS activity set is larger than printing limit, print NA for all options
-		if(this.currentActivity.size() == 0 || this.currentActivity.size() > PREVIOUS_ACTIVITY_SET_PRINTING_SIZE) {
-			for(int i = 0; i < PREVIOUS_ACTIVITY_SET_PRINTING_SIZE-1 ; i++) {
-				writer.print("NA," );
-			}
-		}
-		
-		// if PREVIOUS activity set is smaller than printing limit, print those activities plus NA if required
-		else {
-			for(int i = 0; i < PREVIOUS_ACTIVITY_SET_PRINTING_SIZE; i++) {
-				if (this.currentActivity.size() >= (i+1)) {
-					writer.print(String.format("%s,",  this.currentActivity.get(i).getName()) );
-				}
-				else {
-					writer.print("NA," );
-				}
-			}
-		}
-		
-		// if SELECTED activity set is larger than printing limit, print NA for all options
-		if(this.MPSelectedActivity.size() == 0 || this.MPSelectedActivity.size() > SELECTED_ACTIVITY_SET_PRINTING_SIZE) {
-			for(int i = 0; i < SELECTED_ACTIVITY_SET_PRINTING_SIZE-1 ; i++) {
-				writer.print("NA," );
-			}
-		}
-		
-		// if SELECTED activity set is smaller than printing limit, print those activities plus NA if required
-		else {
-			for(int i = 0; i < SELECTED_ACTIVITY_SET_PRINTING_SIZE; i++) {
-				if (this.MPSelectedActivity.size() >= (i+1)) {
-					writer.print(String.format("%s,",  this.MPSelectedActivity.get(i).getName()) );
-				}
-				else {
-					writer.print("NA," );
-				}
-			}
-		}
-		
-		writer.print(String.format("%s,",this.strategy) );
-		writer.print(String.format("%s",this.income) );
-		
-		writer.println("");
-		writer.close();
 	}
 	
 	public String getFarmId() {
-		return farmId;
+		return this.farmId;
 	}
 	public void setFarmId(String farmId) {
 		this.farmId = farmId;
 	}
 	public Integer getYear() {
-		return year;
+		return this.year;
 	}
 	public void setYear(Integer year) {
 		this.year = year;
 	}
 	public int getStrategy() {
-		return strategy;
+		return this.strategy;
 	}
 	public void setStrategy(int i) {
 		this.strategy = i;
 	}
 	public List<Activity> getCurrentActivity() {
-		return currentActivity;
+		return this.currentActivity;
 	}
 	public void setCurrentActivity(List<Activity> currentActivity) {
 		this.currentActivity = currentActivity;
 	}
 	public List<String> getPossibleActivity() {
-		return possibleActivity;
+		return this.possibleActivity;
 	}
 	public void setPossibleActivity(List<String> possibleActivity) {
 		this.possibleActivity = possibleActivity;
 	}
 	public List<String> getAllActivity() {
-		return allActivity;
+		return this.allActivity;
 	}
 	public void setAllActivity(List<String> allActivity) {
 		this.allActivity = allActivity;
 	}
 	public List<Activity> getMPSelectedActivity() {
-		return MPSelectedActivity;
+		return this.MPSelectedActivity;
 	}
 	public void setMPSelectedActivity(List<Activity> mPSelectedActivity) {
-		MPSelectedActivity = mPSelectedActivity;
+		this.MPSelectedActivity = mPSelectedActivity;
 	}
 }

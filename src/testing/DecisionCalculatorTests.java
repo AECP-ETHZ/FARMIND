@@ -28,23 +28,23 @@ public class DecisionCalculatorTests {
 	@Before 
 	public void setup() throws FileNotFoundException, IOException {
 		String[] args = {"2"};
-		cmd = Consumat.parseInput(args,true);						       // parse test data control.properties
-		ReadData reader = new ReadData(cmd);						           // read all input data files
+		this.cmd = Consumat.parseInput(args,true);						       // parse test data control.properties
+		ReadData reader = new ReadData(this.cmd);						           // read all input data files
 		useTestData(reader);
-		allFarms = reader.getFarms();						                   // build set of farms with new parameters
+		this.allFarms = reader.getFarms();						                   // build set of farms with new parameters
 	}
 	
 	@Test
 	public void testProductSelectionCalculator() {
-		Farm farm = allFarms.get(0);
-		FuzzyLogicCalculator cal = new FuzzyLogicCalculator(farm, allFarms);
+		Farm farm = this.allFarms.get(0);
+		FuzzyLogicCalculator cal = new FuzzyLogicCalculator(farm, this.allFarms);
 		assertNotEquals(cal, null);
 	}
 
 	@Test
 	public void testLearningVector() {
-		Farm farm = allFarms.get(0);
-		FuzzyLogicCalculator cal = new FuzzyLogicCalculator(farm, allFarms);
+		Farm farm = this.allFarms.get(0);
+		FuzzyLogicCalculator cal = new FuzzyLogicCalculator(farm, this.allFarms);
 		double m = farm.getPreferences().getDataElementName().size();		   // number of products in system
 
 		List<Double> Q = new ArrayList<Double>();                              // learning by doing vector for specific farm
@@ -68,8 +68,8 @@ public class DecisionCalculatorTests {
 	
 	@Test
 	public void testPreferenceVector() {
-		Farm farm = allFarms.get(0);
-		FuzzyLogicCalculator cal = new FuzzyLogicCalculator(farm, allFarms);
+		Farm farm = this.allFarms.get(0);
+		FuzzyLogicCalculator cal = new FuzzyLogicCalculator(farm, this.allFarms);
 		double m = farm.getPreferences().getDataElementName().size();		   // number of products in system
 		List<Double> P = new ArrayList<Double>();							   // rank of all product preferences for specific farm
 		Double[] R;                           				 			   	   // Product preference vector 
@@ -90,8 +90,8 @@ public class DecisionCalculatorTests {
 
 	@Test
 	public void testNDSelection() {
-		Farm farm = allFarms.get(0);
-		FuzzyLogicCalculator cal = new FuzzyLogicCalculator(farm, allFarms);
+		Farm farm = this.allFarms.get(0);
+		FuzzyLogicCalculator cal = new FuzzyLogicCalculator(farm, this.allFarms);
 		List<Double> crit1 = Arrays.asList(15.0,10.0,5.0,1.0,5.0);	           // sample from document
 		List<Double> crit2 = Arrays.asList(6.0,14.0,10.0,1.0,5.0);
 		List<Double> crit3 = Arrays.asList(10.0,7.0,13.0,1.0,5.0);
@@ -126,7 +126,7 @@ public class DecisionCalculatorTests {
 	 * @param list unormalized list
 	 * @return normalized list
 	 */
-	private List<Double> normalizeList(List<Double> list) {
+	private static List<Double> normalizeList(List<Double> list) {
 		List<Double> normalizedList = new ArrayList<Double>();				   // normalized list to return
 
 		double min = min(list);
@@ -143,7 +143,7 @@ public class DecisionCalculatorTests {
 	 * @param list of input values
 	 * @return minimum value
 	 */
-	private double min(List<Double> list) {
+	private static double min(List<Double> list) {
 		double min = 1;
 		double temp = 0;
 		
@@ -159,7 +159,7 @@ public class DecisionCalculatorTests {
 	 * @param list of input values
 	 * @return max value
 	 */
-	private double max(List<Double> list) {
+	private static double max(List<Double> list) {
 		double max = 0;
 		double temp = 0;
 		

@@ -3,6 +3,7 @@ package mathematical_programming;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -204,7 +205,7 @@ public class FarmDyn implements MP_Interface{
 	}
 	
 	@Override
-	public List<ArrayList<Activity>> readMPActivities(Properties cmd, List<Farm> allFarms) {
+	public List<ArrayList<Activity>> readMPActivities(Properties cmd, List<Farm> allFarms) throws FileNotFoundException, IOException {
 		List<ArrayList<Activity>> activitiesFromMP = new ArrayList<ArrayList<Activity>>();   // list of all agents' final activities selected by the MP
 		BufferedReader Buffer = null;	 									       // read input file
 		String Line;														       // read each line of the file individually

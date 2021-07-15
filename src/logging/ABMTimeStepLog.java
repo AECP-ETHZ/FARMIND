@@ -63,196 +63,191 @@ public class ABMTimeStepLog {
 		setSatisfaction(satisfaction);
 		
 		if (modelName.equals("WEEDCONTROL")) {
-			PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 1;
-			POSSIBLE_ACTIVITY_SET_PRINTING_SIZE = 9;
+			this.PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 1;
+			this.POSSIBLE_ACTIVITY_SET_PRINTING_SIZE = 9;
 		}
 		else {
-			PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 4;
-			POSSIBLE_ACTIVITY_SET_PRINTING_SIZE = 6;
+			this.PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 4;
+			this.POSSIBLE_ACTIVITY_SET_PRINTING_SIZE = 6;
 		}
 	}
 	
 	/** 
 	 * write output CSV log file based on decision object. This log file can be updated each time period for each agent. 
 	 * @param fileName :: output file which is previously checked to ensure we will not exceed 1 million lines of data. 
+	 * @throws IOException 
 	 */
-	public void appendLogFile(String fileName) {
+	public void appendLogFile(String fileName) throws IOException {
 		String PATH = "./output";
 		File directory = new File(PATH);
 		if(!directory.exists()) {
 			directory.mkdir();
 		}
 		
-		String filename = fileName + "_parameters";
+		File file = new File(String.format("%s/%s_parameters.csv", PATH, fileName));
 		
-		File file = new File(String.format("./output/%s.csv", filename));
-		FileWriter fw = null;
-		try {
-			fw = new FileWriter(file,true);
-		} catch (IOException e) {
-			e.printStackTrace();
+		try (PrintWriter writer = new PrintWriter(
+		        new BufferedWriter(new FileWriter(file))
+		)) {
+    		
+    		String name = "year,name,age,education,memory,alpha_plus,alpha_minus,lambda,phi_plus,phi_minus,reference_income,aspiration,"
+    				+ "beta_l,beta_s,beta_p,tolerance_activity,tolerance_income,activity_dissimilarity,income_dissimilarity,learning_rate,satisfaction," 
+    				+ "income,strategy,";
+    		
+    		for(int i = 0; i < this.PREVIOUS_ACTIVITY_SET_PRINTING_SIZE; i++) {
+    			name = name + String.format("previous_activity_%s,",  i+1 );
+    		}
+    
+    		for(int i = 0; i < this.POSSIBLE_ACTIVITY_SET_PRINTING_SIZE -1 ; i++) {
+    			name = name + String.format("possible_activity_%s,",  i+1 );
+    		}
+    		
+    		name = name + String.format("possible_activity_%s",  this.POSSIBLE_ACTIVITY_SET_PRINTING_SIZE );          // print last element without comma
+    		
+    		if (file.length() == 0) {
+    			writer.println(name);
+    		}
+    		
+    		writer.print(String.format("%s,",this.year));
+    		writer.print(String.format("%s,",this.getFarmId()));
+    		
+    		writer.print( String.format("%s,",this.farm.getAge()) );
+    		writer.print( String.format("%s,",this.farm.getEducation() ) );
+    		writer.print( String.format("%s,",this.farm.getMemory() ) );
+    		
+    		writer.print(String.format("%s,",this.farm.getP_alpha_plus()));
+    		writer.print(String.format("%s,",this.farm.getP_alpha_minus()));
+    		writer.print(String.format("%s,",this.farm.getP_lambda()));
+    		writer.print(String.format("%s,",this.farm.getP_phi_plus() ));
+    		writer.print(String.format("%s,",this.farm.getP_phi_minus() ));
+    		writer.print(String.format("%s,",this.farm.getP_reference_income() ));
+    		writer.print(String.format("%s,",this.farm.getP_aspiration_coef() ));
+    		writer.print(String.format("%s,",this.farm.getP_beta_l() )); 
+    		writer.print(String.format("%s,",this.farm.getP_beta_s() ));
+    		writer.print(String.format("%s,",this.farm.getP_beta_p() ));
+    		
+    		writer.print(String.format("%s,",this.farm.getP_activity_tolerance_coef() ));
+    		writer.print(String.format("%s,",this.farm.getP_income_tolerance_coef() ));
+    		writer.print(String.format("%.4f,", this.getActivity_diss() ) );
+    		writer.print(String.format("%.4f,", this.getIncome_diss() ) );
+    		
+    		writer.print(String.format("%.4f,", this.getLearningRate() ) );
+    		writer.print(String.format("%.4f,", this.getSatisfaction() ) );
+    		
+    		writer.print(String.format("%.2f,",this.income ) );
+    		writer.print(String.format("%s,",this.strategy) );
+    		
+    		// if previous activity set is larger than printing limit, print NA for all options
+    		if(this.currentActivity.size() == 0 || this.currentActivity.size() > this.PREVIOUS_ACTIVITY_SET_PRINTING_SIZE) {
+    			for(int i = 0; i < this.PREVIOUS_ACTIVITY_SET_PRINTING_SIZE-1 ; i++) {
+    				writer.print("NA," );
+    			}
+    		}
+    		
+    		// if previous activity set is smaller than printing limit, print those activities plus NA if required
+    		else {
+    			for(int i = 0; i < this.PREVIOUS_ACTIVITY_SET_PRINTING_SIZE; i++) {
+    				if (this.currentActivity.size() >= (i+1)) {
+    					writer.print(String.format("%s,",  this.currentActivity.get(i).getName()) );
+    				}
+    				else {
+    					writer.print("NA," );
+    				}
+    			}
+    		}
+    		
+    		// if there are no possible activities or more than we want to print, print NA for all places
+    		if (this.possibleActivity.size() == 0 || this.possibleActivity.size() > this.POSSIBLE_ACTIVITY_SET_PRINTING_SIZE) {
+    			for(int i = 0; i < this.POSSIBLE_ACTIVITY_SET_PRINTING_SIZE-1 ; i++) {
+    				writer.print("NA," );
+    			}
+    			writer.print("NA" );
+    		}
+    		
+    		// if we have the exact amount print them, and print the last one without a comma 
+    		else if (this.possibleActivity.size() == this.POSSIBLE_ACTIVITY_SET_PRINTING_SIZE){
+    			for(int i = 0; i < this.POSSIBLE_ACTIVITY_SET_PRINTING_SIZE-1; i++) {
+    				writer.print(String.format("%s,", this.possibleActivity.get(i)) );
+    			}
+    				writer.print(String.format("%s", this.possibleActivity.get(this.POSSIBLE_ACTIVITY_SET_PRINTING_SIZE-1)) );
+    		}
+    		
+    		// possible activity set is smaller than largest possible, but not empty (ie 2 possible activities with a maximum print size of 10)
+    		// in this case print the two possible activities and then print NA for the following with the last NA without a comma
+    		else {
+    			int NA_count = this.POSSIBLE_ACTIVITY_SET_PRINTING_SIZE -  this.possibleActivity.size();
+    			
+    			for(int i = 0; i < this.possibleActivity.size(); i++) {
+    				writer.print(String.format("%s,", this.possibleActivity.get(i)) );
+    			}
+    			
+    			for(int i = 0; i < NA_count-1 ; i++) {
+    				writer.print("NA," );
+    			}
+    			writer.print("NA" );
+    		}
+    		
+    		writer.println("");
 		}
-		BufferedWriter bw = new BufferedWriter(fw);
-		PrintWriter writer = new PrintWriter(bw);
-		
-		String name = "year,name,age,education,memory,alpha_plus,alpha_minus,lambda,phi_plus,phi_minus,reference_income,aspiration,"
-				+ "beta_l,beta_s,beta_p,tolerance_activity,tolerance_income,activity_dissimilarity,income_dissimilarity,learning_rate,satisfaction," 
-				+ "income,strategy,";
-		
-		for(int i = 0; i < PREVIOUS_ACTIVITY_SET_PRINTING_SIZE; i++) {
-			name = name + String.format("previous_activity_%s,",  i+1 );
-		}
-
-		for(int i = 0; i < POSSIBLE_ACTIVITY_SET_PRINTING_SIZE -1 ; i++) {
-			name = name + String.format("possible_activity_%s,",  i+1 );
-		}
-		
-		name = name + String.format("possible_activity_%s",  POSSIBLE_ACTIVITY_SET_PRINTING_SIZE );          // print last element without comma
-		
-		if (file.length() == 0) {
-			writer.println(name);
-		}
-		
-		writer.print(String.format("%s,",this.year));
-		writer.print(String.format("%s,",this.getFarmId()));
-		
-		writer.print( String.format("%s,",this.farm.getAge()) );
-		writer.print( String.format("%s,",this.farm.getEducation() ) );
-		writer.print( String.format("%s,",this.farm.getMemory() ) );
-		
-		writer.print(String.format("%s,",this.farm.getP_alpha_plus()));
-		writer.print(String.format("%s,",this.farm.getP_alpha_minus()));
-		writer.print(String.format("%s,",this.farm.getP_lambda()));
-		writer.print(String.format("%s,",this.farm.getP_phi_plus() ));
-		writer.print(String.format("%s,",this.farm.getP_phi_minus() ));
-		writer.print(String.format("%s,",this.farm.getP_reference_income() ));
-		writer.print(String.format("%s,",this.farm.getP_aspiration_coef() ));
-		writer.print(String.format("%s,",this.farm.getP_beta_l() )); 
-		writer.print(String.format("%s,",this.farm.getP_beta_s() ));
-		writer.print(String.format("%s,",this.farm.getP_beta_p() ));
-		
-		writer.print(String.format("%s,",this.farm.getP_activity_tolerance_coef() ));
-		writer.print(String.format("%s,",this.farm.getP_income_tolerance_coef() ));
-		writer.print(String.format("%.4f,", this.getActivity_diss() ) );
-		writer.print(String.format("%.4f,", this.getIncome_diss() ) );
-		
-		writer.print(String.format("%.4f,", this.getLearningRate() ) );
-		writer.print(String.format("%.4f,", this.getSatisfaction() ) );
-		
-		writer.print(String.format("%.2f,",this.income ) );
-		writer.print(String.format("%s,",this.strategy) );
-		
-		// if previous activity set is larger than printing limit, print NA for all options
-		if(this.currentActivity.size() == 0 || this.currentActivity.size() > PREVIOUS_ACTIVITY_SET_PRINTING_SIZE) {
-			for(int i = 0; i < PREVIOUS_ACTIVITY_SET_PRINTING_SIZE-1 ; i++) {
-				writer.print("NA," );
-			}
-		}
-		
-		// if previous activity set is smaller than printing limit, print those activities plus NA if required
-		else {
-			for(int i = 0; i < PREVIOUS_ACTIVITY_SET_PRINTING_SIZE; i++) {
-				if (this.currentActivity.size() >= (i+1)) {
-					writer.print(String.format("%s,",  this.currentActivity.get(i).getName()) );
-				}
-				else {
-					writer.print("NA," );
-				}
-			}
-		}
-		
-		// if there are no possible activities or more than we want to print, print NA for all places
-		if (this.possibleActivity.size() == 0 || this.possibleActivity.size() > POSSIBLE_ACTIVITY_SET_PRINTING_SIZE) {
-			for(int i = 0; i < POSSIBLE_ACTIVITY_SET_PRINTING_SIZE-1 ; i++) {
-				writer.print("NA," );
-			}
-			writer.print("NA" );
-		}
-		
-		// if we have the exact amount print them, and print the last one without a comma 
-		else if (this.possibleActivity.size() == POSSIBLE_ACTIVITY_SET_PRINTING_SIZE){
-			for(int i = 0; i < POSSIBLE_ACTIVITY_SET_PRINTING_SIZE-1; i++) {
-				writer.print(String.format("%s,", this.possibleActivity.get(i)) );
-			}
-				writer.print(String.format("%s", this.possibleActivity.get(POSSIBLE_ACTIVITY_SET_PRINTING_SIZE-1)) );
-		}
-		
-		// possible activity set is smaller than largest possible, but not empty (ie 2 possible activities with a maximum print size of 10)
-		// in this case print the two possible activities and then print NA for the following with the last NA without a comma
-		else {
-			int NA_count = POSSIBLE_ACTIVITY_SET_PRINTING_SIZE -  this.possibleActivity.size();
-			
-			for(int i = 0; i < this.possibleActivity.size(); i++) {
-				writer.print(String.format("%s,", this.possibleActivity.get(i)) );
-			}
-			
-			for(int i = 0; i < NA_count-1 ; i++) {
-				writer.print("NA," );
-			}
-			writer.print("NA" );
-		}
-		
-		writer.println("");
-		writer.close();
 	}
 	
 	public String getFarmId() {
-		return farmId;
+		return this.farmId;
 	}
 	public void setFarmId(String farmId) {
 		this.farmId = farmId;
 	}
 	public Integer getYear() {
-		return year;
+		return this.year;
 	}
 	public void setYear(Integer year) {
 		this.year = year;
 	}
 	public int getStrategy() {
-		return strategy;
+		return this.strategy;
 	}
 	public void setStrategy(int i) {
 		this.strategy = i;
 	}
 	public double getIncome() {
-		return income;
+		return this.income;
 	}
 	public void setIncome(double income) {
 		this.income = income;
 	}
 	public List<Activity> getCurrentActivity() {
-		return currentActivity;
+		return this.currentActivity;
 	}
 	public void setCurrentActivity(List<Activity> currentActivity) {
 		this.currentActivity = currentActivity;
 	}
 	public List<String> getPossibleActivity() {
-		return possibleActivity;
+		return this.possibleActivity;
 	}
 	public void setPossibleActivity(List<String> possibleActivity) {
 		this.possibleActivity = possibleActivity;
 	}
 	public List<String> getAllActivity() {
-		return allActivity;
+		return this.allActivity;
 	}
 	public void setAllActivity(List<String> allActivity) {
 		this.allActivity = allActivity;
 	}
 	public double getLearningRate() {
-		return learning_rate;
+		return this.learning_rate;
 	}
 	public void setLearningRate(double k) {
 		this.learning_rate = k;
 	}
 	public Farm getFarm() {
-		return farm;
+		return this.farm;
 	}
 	public void setFarm(Farm farm) {
 		this.farm = farm;
 	}
 
 	public double getActivity_diss() {
-		return activity_diss;
+		return this.activity_diss;
 	}
 
 	public void setActivity_diss(double activity_diss) {
@@ -260,7 +255,7 @@ public class ABMTimeStepLog {
 	}
 
 	public double getIncome_diss() {
-		return income_diss;
+		return this.income_diss;
 	}
 
 	public void setIncome_diss(double income_diss) {
@@ -268,7 +263,7 @@ public class ABMTimeStepLog {
 	}
 
 	public double getSatisfaction() {
-		return satisfaction;
+		return this.satisfaction;
 	}
 
 	public void setSatisfaction(double satisfaction) {

@@ -32,11 +32,11 @@ public class FactoryMP {
 	}
 
 	public MP_Interface getMP() {
-		return MP;
+		return this.MP;
 	}
 
 	public void setMP(MP_Interface mP) {
-		MP = mP;
+		this.MP = mP;
 	}
 	
 	

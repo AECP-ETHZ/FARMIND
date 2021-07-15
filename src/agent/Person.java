@@ -17,7 +17,7 @@ public class Person {
 	}
 	
 	public int getAge() {
-		return age;
+		return this.age;
 	}
 
 	public void setAge(int age) {
@@ -25,7 +25,7 @@ public class Person {
 	}
 
 	public int getEducation() {
-		return education;
+		return this.education;
 	}
 
 	public void setEducation(int education) {
@@ -33,7 +33,7 @@ public class Person {
 	}
 
 	public int getMemory() {
-		return memory;
+		return this.memory;
 	}
 
 	public void setMemory(int memory) {

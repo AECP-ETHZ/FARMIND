@@ -28,8 +28,8 @@ public class FarmDataMatrix {
 	 */
 	public double getFarmDataElementValue(String FarmID, String name) {
 		double val;
-		int index = dataElementNames.indexOf(name);
-		val = elementFarmMap.get(FarmID)[index];	 						   // get(FarmID) returns int array
+		int index = this.dataElementNames.indexOf(name);
+		val = this.elementFarmMap.get(FarmID)[index];	 						   // get(FarmID) returns int array
 		return val;
 	}
 	
@@ -38,7 +38,7 @@ public class FarmDataMatrix {
 	 * @return size :: count of farms in matrix
 	 */
 	public int sizeFarms() {
-		int size = elementFarmMap.size();
+		int size = this.elementFarmMap.size();
 		return size;
 	}
 	
@@ -47,7 +47,7 @@ public class FarmDataMatrix {
 	 * @return size :: count of activities in matrix
 	 */
 	public int sizeData() {
-		int size = dataElementNames.size();
+		int size = this.dataElementNames.size();
 		return size;
 	}
 	
@@ -58,15 +58,15 @@ public class FarmDataMatrix {
 	 * @param value :: to set for farm and element combination
 	 */
 	public void setFarmDataElementValue(String FarmID, String name, double value) {
-		int index = dataElementNames.indexOf(name);
-		Double[] array = elementFarmMap.get(FarmID);
+		int index = this.dataElementNames.indexOf(name);
+		Double[] array = this.elementFarmMap.get(FarmID);
 		array[index] = value;
 		
-		elementFarmMap.replace(FarmID, array);
+		this.elementFarmMap.replace(FarmID, array);
 	}
 	
 	public List<String> getDataElementName() {
-		return dataElementNames;
+		return this.dataElementNames;
 	}
 
 	public void setDataElementName(List<String> listNames) {
@@ -74,7 +74,7 @@ public class FarmDataMatrix {
 	}
 	
 	public Map<String,Double[]> getFarmMap() {
-		return elementFarmMap;
+		return this.elementFarmMap;
 	}
 	
 	/**

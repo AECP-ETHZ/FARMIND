@@ -138,7 +138,7 @@ public class Farm {
 			return ActivitySet;
 		}
 		
-		if ((head.getAge() > 650)) {
+		if ((this.head.getAge() > 650)) {
 			this.strategy = 1;     //OPT-OUT (The farmer retires.)
 			return ActivitySet;
 		}
@@ -300,7 +300,7 @@ public class Farm {
 	 */
 	public void updateIncomeDissimilarity() {
 		
-		this.Income_Dissimilarity = averagePopulationIncomeChangeRate - averagePersonalIncomeChangeRate;
+		this.Income_Dissimilarity = this.averagePopulationIncomeChangeRate - this.averagePersonalIncomeChangeRate;
 	}
 	
      /**
@@ -328,7 +328,7 @@ public class Farm {
 		}
 		
 		for (int i = 0; i< this.experience.getDataElementName().size(); i++ ) {
-			double value = this.experience.getFarmDataElementValue(farmName, this.experience.getDataElementName().get(i)); 
+			double value = this.experience.getFarmDataElementValue(this.farmName, this.experience.getDataElementName().get(i)); 
 			
 			if (activityNames.contains(this.experience.getDataElementName().get(i))) {
 				value = value*0.8 + 1;
@@ -340,7 +340,7 @@ public class Farm {
 			if(value > this.getMemory()) value = this.getMemory();
 			if(value < 0) value = 0;
 			
-			this.experience.setFarmDataElementValue(farmName, this.experience.getDataElementName().get(i), value);
+			this.experience.setFarmDataElementValue(this.farmName, this.experience.getDataElementName().get(i), value);
 		}	
 	}
 	
@@ -480,7 +480,7 @@ public class Farm {
 	 * @param list :: list of values to calculate mean with
 	 * @return mean :: mean value of list
 	 */
-	private double mean(List<Double> list) {
+	private static double mean(List<Double> list) {
 		double mean = 0;												       // mean value to return
 		
 		for (int i = 0; i<list.size(); i++) {
@@ -495,7 +495,7 @@ public class Farm {
 	 * @param list :: list for calculating standard deviation
 	 * @return std :: standard deviation value
 	 */
-	private double std(List<Double> list) {
+	private static double std(List<Double> list) {
 		double std = 0;		
 		for (int i=0; i<list.size();i++)
 		{
@@ -542,7 +542,8 @@ public class Farm {
 	 * This standard deviation is used to set the upper and lower values for the q range. 
 	 * @return q_range :: lower and upper boundary for fuzzy logic selection
 	 */
-	public List<Double> calc_q_set() {
+	@SuppressWarnings("hiding")
+    public List<Double> calc_q_set() {
 		double k = this.getLearningRate();
 		List<Double> experience = new ArrayList<Double>();
 		List<Double> q_range = new ArrayList<Double>();
@@ -598,7 +599,7 @@ public class Farm {
 		this.farmName = farmName;
 	}
 	public Location getLocation() {
-		return location;
+		return this.location;
 	}
 	public void setLocation(Location location) {
 		this.location = location;

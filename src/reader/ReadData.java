@@ -1,6 +1,7 @@
 package reader;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,24 +57,25 @@ public class ReadData {
 	private static final Logger LOGGER = Logger.getLogger("FARMIND_LOGGING");
 	
 	public ReadData(Properties cmd) {
-		FarmParametersFile = String.format("./%s/farm_parameters.csv",cmd.getProperty("data_folder"));					   // allow external function to set data files for testing
-		ActivityPreferenceFile = String.format("./%s/activity_preference.csv",cmd.getProperty("data_folder"));
-		InitialActivities = String.format("./%s/initial_activities.csv",cmd.getProperty("data_folder"));
-		InitialIncomes = String.format("./%s/initial_incomes.csv",cmd.getProperty("data_folder"));
-		InitialPerformingYears = String.format("./%s/initial_performing_years.csv",cmd.getProperty("data_folder"));
-		SocialNetworkFile = String.format("./%s/social_networks.csv",cmd.getProperty("data_folder")); 
+		this.FarmParametersFile = String.format("./%s/farm_parameters.csv",cmd.getProperty("data_folder"));					   // allow external function to set data files for testing
+		this.ActivityPreferenceFile = String.format("./%s/activity_preference.csv",cmd.getProperty("data_folder"));
+		this.InitialActivities = String.format("./%s/initial_activities.csv",cmd.getProperty("data_folder"));
+		this.InitialIncomes = String.format("./%s/initial_incomes.csv",cmd.getProperty("data_folder"));
+		this.InitialPerformingYears = String.format("./%s/initial_performing_years.csv",cmd.getProperty("data_folder"));
+		this.SocialNetworkFile = String.format("./%s/social_networks.csv",cmd.getProperty("data_folder")); 
 	}
 
 	/**
 	 * Each farm in the list contains a social network, the associated people, and preferred activities
 	 * The satisfaction and Information Seeking Behavior (ISB) are generated initially
 	 * @return List of all farm objects from the input csv file
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 */
-	public List<Farm> getFarms() {
+	public List<Farm> getFarms() throws FileNotFoundException, IOException {
 		String Line;
 		List<Farm> farms = new ArrayList<Farm>();
 		ArrayList<String> farmParameters;
-		BufferedReader Buffer = null;	 									   // read input file
 		int farm_count_index = 0;                                              // index is used to set the actual farm id value
 		
 		String name = "";
@@ -118,10 +120,10 @@ public class ReadData {
 		}
 		
 		// Read data files and create list of farms
-		try {
+		try (BufferedReader Buffer = new BufferedReader(new FileReader(this.FarmParametersFile))) {
 			Calendar now = Calendar.getInstance();                             // Gets the current date and time
 			int currentYear = now.get(Calendar.YEAR); 
-			Buffer = new BufferedReader(new FileReader(FarmParametersFile));
+			
 			Line = Buffer.readLine();									       // first line with titles to throw away
 			
 			while ((Line = Buffer.readLine()) != null) {                       
@@ -184,14 +186,6 @@ public class ReadData {
 				farm_count_index++;	
 			}
 			
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (Buffer != null) Buffer.close();
-			} catch (IOException Exception) {
-				Exception.printStackTrace();
-			}
 		}
 		
 		boolean success = false;
@@ -218,17 +212,17 @@ public class ReadData {
 	 * initialize farm activity by reading activity file
 	 * @param farms :: List of farms in system
 	 * @return success :: if the farms have been updated correctly 
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 */
-	private boolean initializeFarmActivities(List<Farm> farms) {
+	private boolean initializeFarmActivities(List<Farm> farms) throws FileNotFoundException, IOException {
 		boolean success = false;
 		String Line;
 		ArrayList<String> farmParameters;
-		BufferedReader Buffer = null;	 									   // read input file
 		int farm_count_index = 0;                                              // index is used to set the actual farm id value
 		List<Activity>                   activities = getActivityList();
 		
-		try {
-			Buffer = new BufferedReader(new FileReader(InitialActivities));
+		try (BufferedReader Buffer = new BufferedReader(new FileReader(this.InitialActivities))) {
 			Line = Buffer.readLine();									       // first line with titles to throw away
 			farm_count_index = 0;	
 			while ((Line = Buffer.readLine()) != null) { 
@@ -245,22 +239,12 @@ public class ReadData {
 						}
 					}
 				}				
-				farms.get(farm_count_index).setCurrentActivity(currentActivity);;
+				farms.get(farm_count_index).setCurrentActivity(currentActivity);
 				farm_count_index++;	
 			}
 			
 			success = true;
 		
-		} catch (IOException e) {
-			//e.printStackTrace();
-			LOGGER.severe(  String.format("%s", e ));
-		} finally {
-			try {
-				if (Buffer != null) Buffer.close();
-			} catch (IOException Exception) {
-				//Exception.printStackTrace();
-				LOGGER.severe(  String.format("%s", Exception ));
-			}
 		}
 		
 		return success;
@@ -270,16 +254,17 @@ public class ReadData {
 	 * Read the initial income data file and update each farm with the proper income
 	 * @param farms :: List of farms in system
 	 * @return success :: success if the farms have been updated correctly
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 */
-	private boolean initializeFarmIncomes(List<Farm> farms) {
+	private boolean initializeFarmIncomes(List<Farm> farms) throws FileNotFoundException, IOException {
 		boolean success = false;
 		String Line;
 		ArrayList<String> farmParameters;
-		BufferedReader Buffer = null;	 									   // read input file
 		int farm_count_index = 0;                                              // index is used to set the actual farm id value
 		
-		try {
-			Buffer = new BufferedReader(new FileReader(InitialIncomes));
+		try (BufferedReader Buffer = new BufferedReader(new FileReader(this.InitialIncomes))) {
+			
 			Line = Buffer.readLine();									       // first line with titles to throw away
 			farm_count_index = 0;	
 			while ((Line = Buffer.readLine()) != null) { 
@@ -298,14 +283,6 @@ public class ReadData {
 		
 			success = true;
 			
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (Buffer != null) Buffer.close();
-			} catch (IOException Exception) {
-				Exception.printStackTrace();
-			}
 		}
 		
 		return success; 
@@ -314,15 +291,15 @@ public class ReadData {
 	/**
 	 * Read preferences of each farm for each activity and build preference object
 	 * @return matrix of the farm region preferences
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 */
-	private FarmDataMatrix getPreferences() {
+	private FarmDataMatrix getPreferences() throws FileNotFoundException, IOException {
 		String Line;
 		ArrayList<String> matrixRow;
-		BufferedReader Buffer = null;	
 		FarmDataMatrix preferences = new FarmDataMatrix();
 
-		try {
-			Buffer = new BufferedReader(new FileReader(ActivityPreferenceFile));
+		try (BufferedReader Buffer = new BufferedReader(new FileReader(this.ActivityPreferenceFile))) {
 			Line = Buffer.readLine();
 			matrixRow = CSVtoArrayList(Line);
 			matrixRow.remove(0);
@@ -333,14 +310,6 @@ public class ReadData {
 				preferences.setFarmMap(matrixRow);
 			}
 				
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (Buffer != null) Buffer.close();
-			} catch (IOException Exception) {
-				Exception.printStackTrace();
-			}
 		}
 		
 		return preferences;
@@ -349,15 +318,15 @@ public class ReadData {
 	/** 
 	 * read years of experience file 
 	 * @return object corresponding to years performing activity for each farm
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 */
-	private FarmDataMatrix getExperience() {
+	private FarmDataMatrix getExperience() throws FileNotFoundException, IOException {
 		String Line;
 		ArrayList<String> matrixRow;
-		BufferedReader Buffer = null;	
 		FarmDataMatrix experience = new FarmDataMatrix();
 
-		try {
-			Buffer = new BufferedReader(new FileReader(InitialPerformingYears));
+		try (BufferedReader Buffer = new BufferedReader(new FileReader(this.InitialPerformingYears))) {
 			Line = Buffer.readLine();
 			matrixRow = CSVtoArrayList(Line);
 			matrixRow.remove(0);
@@ -366,15 +335,6 @@ public class ReadData {
 			while ((Line = Buffer.readLine()) != null) {                       // Read row data
 				matrixRow = CSVtoArrayList(Line);
 				experience.setFarmMap(matrixRow);
-			}
-				
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (Buffer != null) Buffer.close();
-			} catch (IOException Exception) {
-				Exception.printStackTrace();
 			}
 		}
 		
@@ -386,17 +346,17 @@ public class ReadData {
 	 * Each farm id/name is set as the root of the star graph, and each associated node has an associated link weight
 	 * Each farm will have an individual graph set based on the master list produced in this method
 	 * @return List of graphs for each farm
+	 * @throws IOException 
 	 */
-	private List<Graph<String, DefaultEdge>> getSocialNetworks(){
+	private List<Graph<String, DefaultEdge>> getSocialNetworks() throws IOException {
 		List<Graph<String, DefaultEdge>> NetworkList = new ArrayList<Graph<String, DefaultEdge>>();
-		BufferedReader Buffer = null;	
 		String Line;
 		ArrayList<String> data;
 		ArrayList<String> FarmNames;
 		DefaultEdge edge;
 		
-		try {
-			Buffer = new BufferedReader(new FileReader(SocialNetworkFile));
+		try (BufferedReader Buffer = new BufferedReader(new FileReader(this.SocialNetworkFile))){
+			
 			Line = Buffer.readLine();	
 			FarmNames = CSVtoArrayList(Line);
 			FarmNames.remove(0);
@@ -418,16 +378,11 @@ public class ReadData {
 					{
 						continue;
 					}
-					else {
-						edge = g.addEdge( data.get(0), FarmNames.get(i) );
-						g.setEdgeWeight(edge, Double.parseDouble(data.get(i+1)) );
-					}
+					edge = g.addEdge( data.get(0), FarmNames.get(i) );
+					g.setEdgeWeight(edge, Double.parseDouble(data.get(i+1)) );
 				}
 				NetworkList.add(g);
 			}
-			Buffer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 		
 		return NetworkList;
@@ -437,15 +392,15 @@ public class ReadData {
 	 * Create list of activity type/category by reading the years of experience file
 	 * This is used to generate the individual farm activities lists
 	 * @return List of activities in the master CSV file
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 */
-	public List<Activity> getActivityList() {
+	public List<Activity> getActivityList() throws FileNotFoundException, IOException {
 		String Line;
 		List<Activity> activities = new ArrayList<Activity>();
 		ArrayList<String> activityRow;
-		BufferedReader Buffer = null;	
-
-		try {
-			Buffer = new BufferedReader(new FileReader(InitialPerformingYears));
+		
+		try (BufferedReader Buffer = new BufferedReader(new FileReader(this.InitialPerformingYears))) {
 			Line = Buffer.readLine();									       // first line to be deleted
 			activityRow = CSVtoArrayList(Line);
 			int ID = 100;													   // initial ID value of 100
@@ -457,15 +412,8 @@ public class ReadData {
 				activities.add(activity);
 			}
 				
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (Buffer != null) Buffer.close();
-			} catch (IOException Exception) {
-				Exception.printStackTrace();
-			}
 		}
+		
 		return activities;
 	}
 	

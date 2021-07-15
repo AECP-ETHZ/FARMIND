@@ -1,5 +1,7 @@
 package mathematical_programming;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -35,16 +37,20 @@ public interface MP_Interface {
 	 * @param cmd :: command object based on control.properties file 
 	 * @param allFarms :: full list of farm agents in system
 	 * @return :: return income list
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 */
-	public List<Double> readMPIncomes(Properties cmd, List<Farm> allFarms);
+	public List<Double> readMPIncomes(Properties cmd, List<Farm> allFarms) throws FileNotFoundException, IOException;
 	
 	/** 
 	 * Read results from MP model with activities of each agent
 	 * @param cmd :: command object based on control.properties file 
 	 * @param allFarms :: full list of farm agents in system
 	 * @return :: return activity list
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 */
-	public List<ArrayList<Activity>> readMPActivities(Properties cmd, List<Farm> allFarms);
+	public List<ArrayList<Activity>> readMPActivities(Properties cmd, List<Farm> allFarms) throws FileNotFoundException, IOException;
 	
 	/**
 	 * If agent leaves system then we set an exit activity. We want to keep the agent in the system, we just don't want further calculations for this agent

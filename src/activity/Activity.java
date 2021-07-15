@@ -32,11 +32,11 @@ public class Activity {
 	}
 
 	public void setId(int id) {
-		ID = id;
+		this.ID = id;
 	}
 
 	public int getID() {
-		return ID;
+		return this.ID;
 	}
 
 }

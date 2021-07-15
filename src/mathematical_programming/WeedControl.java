@@ -1,7 +1,6 @@
 package mathematical_programming;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -36,7 +35,7 @@ public class WeedControl implements MP_Interface{
 	private static final Logger LOGGER = Logger.getLogger("FARMIND_LOGGING");
 	
 	@SuppressWarnings("unchecked")
-	public WeedControl(Properties cmd, int simYear, int memoryLengthAverage) {
+	public WeedControl(Properties cmd, int simYear, int memoryLengthAverage) throws IOException {
 		this.strategyFile = String.format("%s\\p_AllowedStratPrePost.csv",cmd.getProperty("project_folder"));
 		this.resultsFile = String.format("%s\\Grossmargin_P4,00.csv",cmd.getProperty("project_folder"));
 		this.gamsModelFile = String.format("%s\\Fit_StratABM_Cal.gms",cmd.getProperty("project_folder"));
@@ -52,7 +51,7 @@ public class WeedControl implements MP_Interface{
 	}
 
 	@Override
-	public void runModel(Properties cmd, int nFarm, int year, boolean pricingAverage, int memoryLengthAverage ) {
+	public void runModel(Properties cmd, int nFarm, int year, boolean pricingAverage, int memoryLengthAverage ) throws FileNotFoundException, IOException {
 		Runtime runtime = Runtime.getRuntime();						           // java runtime to run commands
 		
 		this.editMPscript(nFarm, year, pricingAverage, memoryLengthAverage);   // edit the gams script with updated pricing information
@@ -82,54 +81,35 @@ public class WeedControl implements MP_Interface{
 	 * Create the specific batch file called "run_gams.bat" based on the operating system and the cmd properties. This batch file is used to actually start the MP model.
 	 * @param cmd :: command object built from control.properties
 	 * @param OS :: String that indicates what operating system. For debugging sometimes a mac is used. 
+	 * @throws IOException 
 	 */
-	private static void createRunGamsBatch(Properties cmd, String OS) {
+	private static void createRunGamsBatch(Properties cmd, String OS) throws IOException {
 		if (cmd.getProperty("debug").equals("1")) {
 			if (OS.equals("win")) {
 				LOGGER.info("Creating run_gams.bat file for debug");
 				File f = new File("run_gams.bat");
-				f.delete();
-				FileWriter fw;
-				try {
-					fw = new FileWriter(f,true);
-					BufferedWriter bw = new BufferedWriter(fw);
-					PrintWriter writer = new PrintWriter(bw);
+				try (PrintWriter writer = new PrintWriter(new FileWriter(f, false))) {
+					
 					writer.println( String.format("copy \".\\%s\\Grossmargin_P4,00.csv\" .\\%s\\", 
 							cmd.getProperty("data_folder"), cmd.getProperty("project_folder")) );
 					LOGGER.fine("copy \".\\data\\Grossmargin_P4,00.csv\" .\\projdir");
-					
-					writer.close();
-				} catch (IOException e) {
-					e.printStackTrace();
 				}
 			}
 			if (OS.equals("mac")) {
 				LOGGER.info("Creating run_gams_mac file");
 				File f = new File("run_gams_mac.command");
-				f.delete();
-				FileWriter fw;
-				try {
-					fw = new FileWriter(f,true);
-					BufferedWriter bw = new BufferedWriter(fw);
-					PrintWriter writer = new PrintWriter(bw);
+				try (PrintWriter writer = new PrintWriter(new FileWriter(f, false))) {
 					writer.println("#!/bin/bash");
 					writer.println( String.format("cp ./%s/Grossmargin_P4,00.csv ./%s/Grossmargin_P4,00.csv",
 							cmd.getProperty("data_folder"), cmd.getProperty("project_folder")) );
 					LOGGER.fine("cp ./data/Grossmargin_P4,00.csv ./projdir/Grossmargin_P4,00.csv");
 					writer.close();
-				} catch (IOException e) {
-					e.printStackTrace();
 				}
 			}
 		} else {
 			LOGGER.info("Creating run_gams.bat file for actual gams system");
 			File f = new File("run_gams.bat");
-			f.delete();
-			FileWriter fw;
-			try {
-				fw = new FileWriter(f,true);
-				BufferedWriter bw = new BufferedWriter(fw);
-				PrintWriter writer = new PrintWriter(bw);
+			try (PrintWriter writer = new PrintWriter(new FileWriter(f, false))) {
 				if (cmd.getProperty("project_folder") == null)  {
 					LOGGER.severe("Please include parameter project_folder into the control file.");
 					System.exit(0);
@@ -138,9 +118,6 @@ public class WeedControl implements MP_Interface{
 				writer.println(proj);
 				writer.println("gams Fit_StratABM_Cal");
 				LOGGER.fine("in command file: " + proj + " gams Fit_StratABM_Cal");
-				writer.close();
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
 		}
 	}
@@ -173,17 +150,14 @@ public class WeedControl implements MP_Interface{
 	}
 	
 	@Override
-	public void inputsforMP(Farm farm, List<String> possibleActivity) {
+	public void inputsforMP(Farm farm, List<String> possibleActivity) throws IOException {
 		int[][] output = new int[55][6]; 
 
 		for (int i = 0; i<6; i++) {                                            // set all the first row, except the last column, to 1 as the initialization strategies. 
 			output[0][i] = 1;
 		}
 		
-		try {
-			FileWriter fw = new FileWriter(this.file,true);
-			BufferedWriter bw = new BufferedWriter(fw);
-			PrintWriter writer = new PrintWriter(bw);
+		try (PrintWriter writer = new PrintWriter(new FileWriter(this.file, true))) {
 			if (this.file.length() == 0) {
 				writer.println(",,spre1,spre2,spre3,spre4,spre5,spre6");
 			}
@@ -208,10 +182,6 @@ public class WeedControl implements MP_Interface{
 				
 				writer.println(String.format("%s,spost%d,%d,%d,%d,%d,%d,%d", farmId, i, row[0],row[1],row[2],row[3],row[4],row[5]));
 			}
-			writer.close();
-			
-		} catch (IOException e) {
-			e.printStackTrace();
 		}	
 	}
 	
@@ -228,8 +198,10 @@ public class WeedControl implements MP_Interface{
 	 * edit the MP gams script with the updated year and price information
 	 * @param nFarm :: number of farms
 	 * @param year :: which year in iteration so we can select the proper price information
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 */
-    private void editMPscript(int nFarm, int year, boolean pricingAverage, int memoryLengthAverage) {	
+    private void editMPscript(int nFarm, int year, boolean pricingAverage, int memoryLengthAverage) throws FileNotFoundException, IOException {	
     	    	
 		if(year > this.listOfYears.size()) {
 			System.out.println("Out of iteration years - limited by number of years for MP "
@@ -251,8 +223,7 @@ public class WeedControl implements MP_Interface{
 		MP_price = Precision.round((double) MP_price,2);		
 		LOGGER.fine(String.format("MP year price: %f",MP_price));
 			
-		try {
-            BufferedReader oldScript = new BufferedReader(new FileReader( this.gamsModelFile));
+		try (BufferedReader oldScript = new BufferedReader(new FileReader( this.gamsModelFile))) {
             String line;
             String script = "";
             while ((line = oldScript.readLine()) != null) {
@@ -275,14 +246,9 @@ public class WeedControl implements MP_Interface{
                 script += line + '\n';
             }
             
-            oldScript.close();
-            FileOutputStream newScript = new FileOutputStream(this.gamsModelFile);
-            newScript.write(script.getBytes());
-            newScript.close();
-        }
-		
-        catch (IOException ioe) {
-        	ioe.printStackTrace();
+            try (FileOutputStream newScript = new FileOutputStream(this.gamsModelFile)) {
+                newScript.write(script.getBytes());
+            }
         }
 	}
     
@@ -291,32 +257,22 @@ public class WeedControl implements MP_Interface{
      * @param memoryLengthAverage :: how many years to use in the average of historical pricing
      * @param simYear :: specific simulation year
      * @return year_prices :: Map of pricing information
+     * @throws IOException 
      */
-	public List<Object> readMPyearPrice(int simYear, int memoryLengthAverage) {	
+	public List<Object> readMPyearPrice(int simYear, int memoryLengthAverage) throws IOException {	
 		String Line;
 		ArrayList<String> yearPrice;
-		BufferedReader Buffer = null;		
 		List<Object> years_prices = new ArrayList<Object>();
-		List<Double> prices = new ArrayList<Double>();					   // list of modeling prices per year
-		List<String> years = new ArrayList<String>();						   // list of modeling price/years
+		List<Double> prices = new ArrayList<Double>();  // list of modeling prices per year
+		List<String> years = new ArrayList<String>();  // list of modeling price/years
 
-		try {
- 			// read input file
-			Buffer = new BufferedReader(new FileReader(this.yearlyPriceFile));
-			Line = Buffer.readLine();									       // first line with titles to throw away
+		// read input file
+        try (BufferedReader Buffer = new BufferedReader(new FileReader(this.yearlyPriceFile))) {
+ 			Line = Buffer.readLine();  // first line with titles to throw away
 			while ((Line = Buffer.readLine()) != null) { 
-				yearPrice = CSVtoArrayList(Line);						   // Read farm's parameters line by line
+				yearPrice = CSVtoArrayList(Line);  // Read farm's parameters line by line
 				years.add(yearPrice.get(0));
 				prices.add(Double.parseDouble(yearPrice.get(1)));				
-			}
-		
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (Buffer != null) Buffer.close();
-			} catch (IOException Exception) {
-				Exception.printStackTrace();
 			}
 		}
 		
@@ -350,7 +306,6 @@ public class WeedControl implements MP_Interface{
 		List<Double> incomesFromMP = new ArrayList<Double>();				       // list of all agents' incomes produced by the MP
 		List<List<Activity>> activitiesFromMP = new ArrayList<List<Activity>>();   // list of all agents' final activities selected by the MP
 		List<Object> incomes_activitiesOutput = new ArrayList<Object>();		   // combination list of incomes and activities to return
-		BufferedReader Buffer = null;	 									       // read input file
 		String Line;														       // read each line of the file individually
 		ArrayList<String> dataArray;										       // separate data line
 		ReadData reader = new ReadData(cmd);
@@ -369,8 +324,7 @@ public class WeedControl implements MP_Interface{
 			String specific_farm_name = farm.getFarmName();
 			// see if name is in file, if so, then add to list
 			int name_found = 0;
-			try {
-				Buffer = new BufferedReader(new FileReader(this.resultsFile));
+			try (BufferedReader Buffer = new BufferedReader(new FileReader(this.resultsFile))) {
 				Line = Buffer.readLine();
 				while ((Line = Buffer.readLine()) != null) {        
 					dataArray = CSVtoArrayList(Line);						          // Read farm's parameters line by line
@@ -410,22 +364,14 @@ public class WeedControl implements MP_Interface{
 						}
 					}
 				}
-				
-				} catch (IOException e) {
-					e.printStackTrace();
-				}									       
-		
-				try {
-					Buffer.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				
-				// if name is not found in file, then we add an income of 0 with an exit activity and go to next farm
-				if (name_found == 0) {
-					incomesFromMP.add(0.0);
-					activitiesFromMP.add(this.getExitActivity());
-				}
+			}								       
+	
+			
+			// if name is not found in file, then we add an income of 0 with an exit activity and go to next farm
+			if (name_found == 0) {
+				incomesFromMP.add(0.0);
+				activitiesFromMP.add(this.getExitActivity());
+			}
 				
 		}
 

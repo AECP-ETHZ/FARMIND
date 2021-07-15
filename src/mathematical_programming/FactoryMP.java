@@ -1,5 +1,6 @@
 package mathematical_programming;
 
+import java.io.IOException;
 import java.util.Properties;
 
 /** 
@@ -15,8 +16,9 @@ public class FactoryMP {
 	 * @param cmd :: all properties of the model
 	 * @param simYear :: how many years to use for simulation
 	 * @param memoryLengthAverage :: average memory length of input data files
+	 * @throws IOException 
 	 */
-	public FactoryMP(Properties cmd, int simYear, int memoryLengthAverage) {
+	public FactoryMP(Properties cmd, int simYear, int memoryLengthAverage) throws IOException {
 		if (cmd.getProperty("modelName").equals("WEEDCONTROL")) {
 			setMP(new WeedControl(cmd, simYear, memoryLengthAverage));
 		} 

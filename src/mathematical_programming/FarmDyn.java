@@ -1,12 +1,10 @@
 package mathematical_programming;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -14,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
+
 import activity.Activity;
 import agent.Farm;
 import reader.ReadData;
@@ -103,52 +102,29 @@ public class FarmDyn implements MP_Interface{
 	 * Create the specific batch file called "run_gams.bat" based on the operating system and the cmd properties. This batch file is used to actually start the MP model.
 	 * @param cmd :: command object built from control.properties
 	 * @param OS :: String that indicates what operating system. For debugging sometimes a mac is used. 
+	 * @throws 
 	 */
-	private static void createRunGamsBatch(Properties cmd, String OS) {
+	private static void createRunGamsBatch(Properties cmd, String OS) throws FileNotFoundException {
 		if (cmd.getProperty("debug").equals("1")) {
 			if (OS.equals("win")) {
 				LOGGER.info("Creating run_gams.bat file for debug");
-				File f = new File("run_gams.bat");
-				f.delete();
-				FileWriter fw;
-				try {
-					fw = new FileWriter(f,true);
-					BufferedWriter bw = new BufferedWriter(fw);
-					PrintWriter writer = new PrintWriter(bw);
+				try (PrintWriter writer = new PrintWriter("run_gams.bat")) {
+					
 					writer.println("copy \".\\data\\Grossmargin_P4,00.csv\" .\\projdir");
 					LOGGER.fine("copy \".\\data\\Grossmargin_P4,00.csv\" .\\projdir");
-					
-					writer.close();
-				} catch (IOException e) {
-					e.printStackTrace();
 				}
 			}
 			if (OS.equals("mac")) {
 				LOGGER.info("Creating run_gams_mac file");
-				File f = new File("run_gams_mac.command");
-				f.delete();
-				FileWriter fw;
-				try {
-					fw = new FileWriter(f,true);
-					BufferedWriter bw = new BufferedWriter(fw);
-					PrintWriter writer = new PrintWriter(bw);
+				try (PrintWriter writer = new PrintWriter("run_gams_mac.command")) {
 					writer.println("#!/bin/bash");
 					writer.println("cp ./data/Grossmargin_P4,00.csv ./projdir/Grossmargin_P4,00.csv");
 					LOGGER.fine("cp ./data/Grossmargin_P4,00.csv ./projdir/Grossmargin_P4,00.csv");
-					writer.close();
-				} catch (IOException e) {
-					e.printStackTrace();
 				}
 			}
 		} else {
 			LOGGER.info("Creating run_gams.bat file for actual gams system");
-			File f = new File("run_gams.bat");
-			f.delete();
-			FileWriter fw;
-			try {
-				fw = new FileWriter(f,true);
-				BufferedWriter bw = new BufferedWriter(fw);
-				PrintWriter writer = new PrintWriter(bw);
+			try (PrintWriter writer = new PrintWriter("run_gams.bat")) {
 				if (cmd.getProperty("project_folder") == null)  {
 					LOGGER.severe("Please include parameter project_folder into the control file.");
 					System.exit(0);
@@ -158,19 +134,15 @@ public class FarmDyn implements MP_Interface{
 				writer.println("gams exp_starter.gms --task=\"Single farm run\"  -errorLog=99 -lo=3 --scen=incgen/runInc --ggig=on --baseBreed=\"falsemyBasBreed\" ");
 				
 				LOGGER.fine("in command file: " + proj + " gams Fit_StratABM_Cal");
-				writer.close();
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
 		}
 	}
 
 
 	@Override
-	public List<Double> readMPIncomes(Properties cmd, List<Farm> allFarms) {
+	public List<Double> readMPIncomes(Properties cmd, List<Farm> allFarms) throws FileNotFoundException, IOException {
 		
 		List<Double> incomesFromMP = new ArrayList<Double>();				       // list of all agents' incomes produced by the MP
-		BufferedReader Buffer = null;	 									       // read input file
 		String Line;														       // read each line of the file individually
 		ArrayList<String> dataArray;										       // separate data line
 				
@@ -181,33 +153,20 @@ public class FarmDyn implements MP_Interface{
 			e.printStackTrace();
 		}}
 
-		try {
-			Buffer = new BufferedReader(new FileReader("projdir\\DataModelIn\\data_FARMIND.gms"));
-			
+		try (BufferedReader Buffer = new BufferedReader(new FileReader(f))) {
 			Line = Buffer.readLine();
 			Line = Buffer.readLine();
-			while ( ( (Line = Buffer.readLine()) != null ) && Line.matches(".*\\d+.*") ) {    
+			while ( ( (Line = Buffer.readLine()) != null ) && Line.matches(".*\\d+.*") ) {
 				dataArray = CSVtoArrayList(Line);						          // Read farm's parameters line by line
-				incomesFromMP.add( Double.parseDouble(dataArray.get(1)) );		
+				incomesFromMP.add( Double.parseDouble(dataArray.get(1)) );
 			}
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}									       
-
-		try {
-			Buffer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
-
 		return incomesFromMP;
 	}
 	
 	@Override
 	public List<ArrayList<Activity>> readMPActivities(Properties cmd, List<Farm> allFarms) throws FileNotFoundException, IOException {
 		List<ArrayList<Activity>> activitiesFromMP = new ArrayList<ArrayList<Activity>>();   // list of all agents' final activities selected by the MP
-		BufferedReader Buffer = null;	 									       // read input file
 		String Line;														       // read each line of the file individually
 		ArrayList<String> dataArray;										       // separate data line
 		ReadData reader = new ReadData(cmd);
@@ -221,8 +180,7 @@ public class FarmDyn implements MP_Interface{
 			e.printStackTrace();
 		}}
 
-		try {
-			Buffer = new BufferedReader(new FileReader("projdir\\DataModelIn\\data_FARMINDLandData.gms"));
+		try (BufferedReader Buffer = new BufferedReader(new FileReader("projdir/DataModelIn/data_FARMINDLandData.gms"))) {
 			
 			Line = Buffer.readLine();
 			Line = Buffer.readLine();
@@ -246,14 +204,6 @@ public class FarmDyn implements MP_Interface{
 				map.put(dataArray.get(0), farmActivityList);
 			}
 			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}									       
-
-		try {
-			Buffer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 		
 		// convert map to ordered list
@@ -283,8 +233,7 @@ public class FarmDyn implements MP_Interface{
 	 * @param year: which year in iteration so we can select the proper price information
 	 */
     private void editMPscript(List<String> possibleActivity) {	
-		try {
-            BufferedReader oldScript = new BufferedReader(new FileReader( this.gamsModelFile));
+		try (BufferedReader oldScript = new BufferedReader(new FileReader( this.gamsModelFile))) {
             String line;
             String script = "";
             String act = possibleActivity.get(0);
@@ -302,11 +251,10 @@ public class FarmDyn implements MP_Interface{
                 }
                 script += line + '\n';
             }
-            
-            oldScript.close();
-            FileOutputStream newScript = new FileOutputStream(this.gamsModelFile);
-            newScript.write(script.getBytes());
-            newScript.close();
+
+            try (FileOutputStream newScript = new FileOutputStream(this.gamsModelFile)) {
+                newScript.write(script.getBytes());
+            }
         }
 		
         catch (IOException ioe) {

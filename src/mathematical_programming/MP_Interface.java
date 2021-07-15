@@ -19,8 +19,9 @@ public interface MP_Interface {
 	 * Generate the required input files for the gams MP model
 	 * @param farm :: farm object
 	 * @param possibleActivity :: list of possible activities that this farm will send to the gams MP model
+	 * @throws IOException 
 	 */
-	public void inputsforMP(Farm farm, List<String> possibleActivity);
+	public void inputsforMP(Farm farm, List<String> possibleActivity) throws IOException;
 	
 	/**
 	 * Run the gams MP model based on the configuration we set in the inputsforMP model 
@@ -29,8 +30,10 @@ public interface MP_Interface {
 	 * @param year :: what simulation year we are testing (can change the run if it's the first iteration)
 	 * @param pricingAverage :: used in weedcontrol to set average pricing of wheat over previous iterations
 	 * @param memoryLengthAverage :: used to set how long agents remember (use average across group despite possible inter-farm variations)
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 */
-	public void runModel(Properties cmd, int nFarms, int year, boolean pricingAverage, int memoryLengthAverage);
+	public void runModel(Properties cmd, int nFarms, int year, boolean pricingAverage, int memoryLengthAverage) throws FileNotFoundException, IOException;
 	
 	/** 
 	 * Read results from MP model with income of each agent

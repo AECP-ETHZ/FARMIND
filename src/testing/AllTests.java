@@ -13,4 +13,5 @@ import org.junit.runners.Suite;
 	  DecisionCalculatorImitationTests.class,
 	})	
 public class AllTests {
+    // this is just a collection of tests that are implemented in other classes
 }

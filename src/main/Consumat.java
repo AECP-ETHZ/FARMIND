@@ -89,8 +89,9 @@ public class Consumat {
      * @param MP :: Mathematical programming object to manage model
      * @param allFarms :: list of all farms in system
      * @param MP_Activities :: List of activities for each farm
+     * @throws IOException 
      */
-    private static void runModelWeedSingle(MP_Interface MP, List<Farm> allFarms, List<ArrayList<Activity>> MP_Activities) {
+    private static void runModelWeedSingle(MP_Interface MP, List<Farm> allFarms, List<ArrayList<Activity>> MP_Activities) throws IOException {
         int farmIndex = 0;
         for (Farm farm : allFarms) {
 

@@ -2,6 +2,8 @@ package testing;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,6 +14,7 @@ import org.junit.Test;
 
 import agent.Farm;
 import fuzzy_logic.FuzzyLogicCalculator;
+import main.Consumat;
 import reader.ReadData;		
 
 /**
@@ -23,9 +26,9 @@ public class DecisionCalculatorTests {
 	Properties cmd = null;
 	
 	@Before 
-	public void setup() {
+	public void setup() throws FileNotFoundException, IOException {
 		String[] args = {"2"};
-		cmd = main.Consumat.parseInput(args,true);						       // parse test data control.properties
+		cmd = Consumat.parseInput(args,true);						       // parse test data control.properties
 		ReadData reader = new ReadData(cmd);						           // read all input data files
 		useTestData(reader);
 		allFarms = reader.getFarms();						                   // build set of farms with new parameters

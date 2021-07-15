@@ -2,6 +2,9 @@ package testing;
 
 import reader.ReadData;
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -9,26 +12,29 @@ import java.util.Properties;
 
 import org.junit.Before;
 import org.junit.Test;
+
 import activity.Activity;
 import agent.Farm;
+import main.Consumat;
 
 /** 
  * This class tests farm agent object.
  *
  */
+@SuppressWarnings("unqualified-field-access")
 public class FarmTests {
 	List<Farm>     allFarms = new ArrayList<Farm>();
 	Properties cmd = null;
 	
 	@Before 
-	public void setup() {
+	public void setup() throws FileNotFoundException, IOException {
 		String[] args = {"2"};
-		cmd = main.Consumat.parseInput(args,true);						       // parse test data control.properties
+		cmd = Consumat.parseInput(args,true);						       // parse test data control.properties
 		ReadData reader = new ReadData(cmd);						           // read all input data files
 		useTestData(reader);
 		allFarms = reader.getFarms();						                   // build set of farms with new parameters
 		
-		main.Consumat.initializePopulationIncomeChangeRate(allFarms);
+		Consumat.initializePopulationIncomeChangeRate(allFarms);
 	}
 	
 	@Test
@@ -185,7 +191,7 @@ public class FarmTests {
 	}
 
 	@Test
-	public void testRepetionDecisionNoUncertainty() {
+	public void testRepetionDecisionNoUncertainty() throws FileNotFoundException, IOException {
 		Farm farm = allFarms.get(0);
 		
 		farm.setSatisfaction(100);
@@ -193,7 +199,7 @@ public class FarmTests {
 		farm.setIncome_Dissimilarity(0);
 		
 		String[] args = {"2"};
-		cmd = main.Consumat.parseInput(args,true);						       // parse test data control.properties
+		cmd = Consumat.parseInput(args,true);						       // parse test data control.properties
 		cmd.setProperty("uncertainty", "0");
 		farm.decideActivitySet(allFarms,cmd);
 		
@@ -202,7 +208,7 @@ public class FarmTests {
 	}
 	
 	@Test
-	public void testOptimizationDecisionNoUncertainty() {
+	public void testOptimizationDecisionNoUncertainty() throws FileNotFoundException, IOException {
 		Farm farm = allFarms.get(0);
 		
 		farm.setSatisfaction(-1);
@@ -210,7 +216,7 @@ public class FarmTests {
 		farm.setIncome_Dissimilarity(0);
 		
 		String[] args = {"2"};
-		cmd = main.Consumat.parseInput(args,true);						       // parse test data control.properties
+		cmd = Consumat.parseInput(args,true);						       // parse test data control.properties
 		cmd.setProperty("uncertainty", "0");
 		farm.decideActivitySet(allFarms,cmd);
 		
@@ -219,7 +225,7 @@ public class FarmTests {
 	}
 	
 	@Test
-	public void testOptOutDecisionNoUncertainty() {
+	public void testOptOutDecisionNoUncertainty() throws FileNotFoundException, IOException {
 		// this should force to opt out but since the decision is now repetition or optimization, the system selects optimization
 		
 		Farm farm = allFarms.get(0);
@@ -229,7 +235,7 @@ public class FarmTests {
 		farm.setIncome_Dissimilarity(0);
 		
 		String[] args = {"2"};
-		cmd = main.Consumat.parseInput(args,true);						       // parse test data control.properties
+		cmd = Consumat.parseInput(args,true);						       // parse test data control.properties
 		cmd.setProperty("uncertainty", "0");
 		farm.decideActivitySet(allFarms,cmd);
 		

@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Logger;
+import java.util.function.BiFunction;
 import reader.FarmDataMatrix;
 import org.apache.commons.math3.distribution.NormalDistribution;
 import org.jgrapht.Graph;
@@ -284,11 +285,9 @@ public class Farm {
     		// Ignore the activity in the dissimilarity if it is performed by this farm
     		if (thisFarmActivityList.contains(networkActivityList.get(i))) {
     			continue;
-    			
-    		} else {
-    	    // Count activities not performed by this farm for the dissimilarity
-    			dissimilarity = dissimilarity + (activityMap.get(networkActivityList.get(i)) / ((double)edgeCount) );
     		}
+            // Count activities not performed by this farm for the dissimilarity
+            dissimilarity = dissimilarity + (activityMap.get(networkActivityList.get(i)) / ((double)edgeCount) );
     	}
 
         currentDissimilarity = dissimilarity / networkActivityList.size();
@@ -416,31 +415,28 @@ public class Farm {
 		double probWeighting = 0;                                              // probability weighting function
 		double probWeighting_delta = 0;
 		
-		double phi = 0;
-
+		BiFunction<Double, Double, Double> formula = (p, phi) -> 
+	        Math.pow(p, phi)
+		    /
+		    Math.pow(
+                Math.pow(p, phi) + Math.pow(1-p, phi), 1/phi
+            )
+		;
+		
 		if (income >= this.p_reference_income) {
 			value = Math.pow(income, alpha_plus);
-			probability = 1-probability;
-			probWeighting = ( Math.pow(probability, phi_plus) ) / Math.pow( (Math.pow(probability, phi_plus) + Math.pow((1 - probability), phi_plus)), (1/phi_plus) );
 			
-			probability = 1 - prob_delta_pos;
-			probWeighting_delta = ( Math.pow(probability, phi_plus) ) / Math.pow( (Math.pow(probability, phi_plus) + Math.pow((1 - probability), phi_plus)), (1/phi_plus) );
-			
-			phi = probWeighting - probWeighting_delta;
+			probWeighting = formula.apply(1 - probability, phi_plus);
+			probWeighting_delta = formula.apply(1 - prob_delta_pos, phi_plus);
 		} 
 		else {
 			value = (-1)*lambda*Math.pow(income, alpha_minus);
 			
-			probWeighting = ( Math.pow(probability, phi_minus) ) / Math.pow( (Math.pow(probability, phi_minus) + Math.pow((1 - probability), phi_minus)), (1/phi_minus) );
-			
-			probability = prob_delta_neg;
-			probWeighting_delta = ( Math.pow(probability, phi_minus) ) / Math.pow( (Math.pow(probability, phi_minus) + Math.pow((1 - probability), phi_minus)), (1/phi_minus) );
-			
-			phi = probWeighting - probWeighting_delta;
+			probWeighting = formula.apply(probability, phi_minus);
+			probWeighting_delta = formula.apply(prob_delta_neg, phi_minus);
 		}
-
-		satisfaction = value*phi;
-
+		
+		satisfaction = value * (probWeighting - probWeighting_delta);
 		return satisfaction;
 	}
 	/**
@@ -710,7 +706,7 @@ public class Farm {
 		this.p_aspiration_coef = p_aspiration_coef;
 	}
 	public double getP_activity_tolerance_coef() {
-		return p_activity_tolerance_coef;
+		return this.p_activity_tolerance_coef;
 	}
 	public void setP_activity_tolerance_coef(double p_activity_tolerance_coef) {
 		this.p_activity_tolerance_coef = p_activity_tolerance_coef;
@@ -722,61 +718,61 @@ public class Farm {
 		this.p_income_tolerance_coef = p_income_tolerance_coef;
 	}
 	public double getP_lambda() {
-		return p_lambda;
+		return this.p_lambda;
 	}
 	public void setP_lambda(double p_lambda) {
 		this.p_lambda = p_lambda;
 	}
 	public double getP_alpha_plus() {
-		return p_alpha_plus;
+		return this.p_alpha_plus;
 	}
 	public void setP_alpha_plus(double p_alpha_plus) {
 		this.p_alpha_plus = p_alpha_plus;
 	}
 	public double getP_alpha_minus() {
-		return p_alpha_minus;
+		return this.p_alpha_minus;
 	}
 	public void setP_alpha_minus(double p_alpha_minus) {
 		this.p_alpha_minus = p_alpha_minus;
 	}
 	public double getP_phi_plus() {
-		return p_phi_plus;
+		return this.p_phi_plus;
 	}
 	public void setP_phi_plus(double p_phi_plus) {
 		this.p_phi_plus = p_phi_plus;
 	}
 	public double getP_phi_minus() {
-		return p_phi_minus;
+		return this.p_phi_minus;
 	}
 	public void setP_phi_minus(double p_phi_minus) {
 		this.p_phi_minus = p_phi_minus;
 	}
 	public double getP_beta_p() {
-		return p_beta_p;
+		return this.p_beta_p;
 	}
 	public void setP_beta_p(double p_beta_p) {
 		this.p_beta_p = p_beta_p;
 	}
 	public double getP_reference_income() {
-		return p_reference_income;
+		return this.p_reference_income;
 	}
 	public void setP_reference_income(double p_reference_income) {
 		this.p_reference_income = p_reference_income;
 	}
 	public double getP_opt_fuzzy_size() {
-		return p_opt_fuzzy_size;
+		return this.p_opt_fuzzy_size;
 	}
 	public void setP_opt_fuzzy_size(double p_fuzzy_size) {
 		this.p_opt_fuzzy_size = p_fuzzy_size;
 	}
 	public double getP_imt_fuzzy_size() {
-		return p_imt_fuzzy_size;
+		return this.p_imt_fuzzy_size;
 	}
 	public void setP_imt_fuzzy_size(double p_imt_fuzzy_size) {
 		this.p_imt_fuzzy_size = p_imt_fuzzy_size;
 	}
 	public int getP_ranking_version() {
-		return p_ranking_version;
+		return this.p_ranking_version;
 	}
 	public void setP_ranking_version(int p_ranking_version) {
 		this.p_ranking_version = p_ranking_version;

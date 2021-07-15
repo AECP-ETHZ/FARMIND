@@ -56,10 +56,10 @@ public class FarmDyn implements MP_Interface{
 		}
 		
 		// copy model directory to it's own folder so you can set up this individual run
-		String baseModel = baseGamsModel + String.format("\\%S","farmdyn_base_model");
+//		String baseModel = baseGamsModel + String.format("\\%S","farmdyn_base_model");
 		String newModel = baseGamsModel + String.format("\\%S",farm.getFarmName());
-		File srcDir = new File(baseModel);
-		File destDir = new File(newModel);
+//		File srcDir = new File(baseModel);
+//		File destDir = new File(newModel);
 //		try {
 //			FileUtils.copyDirectory(srcDir, destDir);
 //		} catch (IOException e) {

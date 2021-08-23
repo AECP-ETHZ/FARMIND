@@ -138,7 +138,11 @@ public class Consumat {
             farm.updateFarmParameters(allFarms, income, activity);         
             List<String> possibleActivitySet = farm.decideActivitySet(allFarms,cmd);      
             
-            ABMTimeStepLog log = new ABMTimeStepLog(cmd.getProperty("modelName"), farm.getPreferences().getDataElementName(), farm.getFarmName(), year, farm.getLearningRate(), farm.getActivity_Dissimilarity(), farm.getIncome_Dissimilarity(), farm.getSatisfaction(), farm.getStrategy(), farm.getIncomeHistory().get(0), farm.getCurrentActivity(), possibleActivitySet, farm);
+            ABMTimeStepLog log = new ABMTimeStepLog(
+                    cmd.getProperty("modelName"),
+                    year,
+                    possibleActivitySet,
+                    farm);
             updateLogFileName();
             log.appendLogFile(FileName);
             
@@ -168,7 +172,12 @@ public class Consumat {
                 activity = MP.getExitActivity();
             }
             
-            ABMActivityLog log = new ABMActivityLog(cmd.getProperty("modelName"), farm.getPreferences().getDataElementName(), farm.getFarmName(), year, farm.getStrategy(), farm.getCurrentActivity(), activity, MP_Incomes.get(farmIndex));
+            ABMActivityLog log = new ABMActivityLog(
+                    cmd.getProperty("modelName"),
+                    year,
+                    activity,
+                    MP_Incomes.get(farmIndex),
+                    farm);
             log.appendLogFile(FileName,pricingAverage);
             farmIndex++; 
         }

@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.List;
 import activity.Activity;
 import agent.Farm;
@@ -16,53 +17,42 @@ import agent.Farm;
  */
 public class ABMTimeStepLog {
 
-	private String farmId;													   // unique farm id
-	private Integer year;													   // which time step this decision was made in
-	private int strategy;													   // farm strategy
-	private double income;													   // income of time step
-	private double learning_rate;											   // learning rate of agent
-	private List<String> allActivity;										   // All possible activities in the model
-	private List<Activity> currentActivity;									   // current activity of the agent
-	private List<String> possibleActivity;								       // set of possible activities by the agent
-	private Farm farm;														   // farm holds parameters
-	private double activity_diss;											   // activity diss for agent
-	private double income_diss;												   // income diss for agent
-	private double satisfaction;											   // satisfaction for agent
+	private final String farmId;													   // unique farm id
+	private final Integer year;													   // which time step this decision was made in
+	private final int strategy;													   // farm strategy
+	private final double income;													   // income of time step
+	private final double learning_rate;											   // learning rate of agent
+	private final List<Activity> currentActivity;									   // current activity of the agent
+	private final List<String> possibleActivity;								       // set of possible activities by the agent
+	private final Farm farm;														   // farm holds parameters
+	private final double activity_diss;											   // activity diss for agent
+	private final double income_diss;												   // income diss for agent
+	private final double satisfaction;											   // satisfaction for agent
 	
 	private int POSSIBLE_ACTIVITY_SET_PRINTING_SIZE = 6;					   // limit printable information so we don't flood the log
 	private int PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 4;
 	
 	/**
 	 * Constructor for the CSV log
-	 * @param allActivities ::		full set of system activities
-	 * @param farmId ::				ID of the farm
+     * @param modelName ::          String name of model
 	 * @param year ::				which simulation time step
-	 * @param learning_rate ::		learning rate for the agent
-	 * @param activity_diss ::		activity dissimilarity score
-	 * @param income_diss ::		income dissimilarity score
-	 * @param satisfaction ::		satisfaction score for agent
-	 * @param strat ::				strategy (set of four possible)
-	 * @param income ::				income of farm
-	 * @param currentActivity ::	current activity(ies) in system
 	 * @param possibleActivities ::	all possible activities
 	 * @param farm ::				specific farm for this decision object
-	 * @param modelName ::			String name of model
 	 */
-	public ABMTimeStepLog(String modelName, List<String> allActivities, String farmId, Integer year, Double learning_rate, Double activity_diss, Double income_diss, double satisfaction, int strat, double income, List<Activity> currentActivity, List<String> possibleActivities, Farm farm) {
-		setFarmId(farmId);
-		setYear(year);
-		setStrategy(strat);
-		setIncome(income);
-		setCurrentActivity(currentActivity);
-		setPossibleActivity(possibleActivities);
-		setAllActivity(allActivities);
-		setLearningRate(learning_rate);
-		setFarm(farm);
-		setIncome_diss(income_diss);
-		setActivity_diss(activity_diss);
-		setSatisfaction(satisfaction);
+	public ABMTimeStepLog(String modelName, Integer year, final List<String> possibleActivities, final Farm farm) {
+	    this.farmId = farm.getFarmName();
+		this.year = year;
+		this.strategy = farm.getStrategy();
+		this.income = farm.getIncomeHistory().get(0);
+		this.currentActivity = farm.getCurrentActivity();
+		this.possibleActivity = possibleActivities;
+		this.learning_rate = farm.getLearningRate();
+		this.farm = farm;
+		this.income_diss = farm.getIncome_Dissimilarity();
+		this.activity_diss = farm.getActivity_Dissimilarity();
+		this.satisfaction = farm.getSatisfaction();
 		
-		if (modelName.equals("WEEDCONTROL")) {
+		if (Arrays.asList("WEEDCONTROL", "PRECALCULATED").contains(modelName)) {
 			this.PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 1;
 			this.POSSIBLE_ACTIVITY_SET_PRINTING_SIZE = 9;
 		}
@@ -109,7 +99,7 @@ public class ABMTimeStepLog {
     		}
     		
     		writer.print(String.format("%s,",this.year));
-    		writer.print(String.format("%s,",this.getFarmId()));
+    		writer.print(String.format("%s,",this.farmId));
     		
     		writer.print( String.format("%s,",this.farm.getAge()) );
     		writer.print( String.format("%s,",this.farm.getEducation() ) );
@@ -128,11 +118,11 @@ public class ABMTimeStepLog {
     		
     		writer.print(String.format("%s,",this.farm.getP_activity_tolerance_coef() ));
     		writer.print(String.format("%s,",this.farm.getP_income_tolerance_coef() ));
-    		writer.print(String.format("%.4f,", this.getActivity_diss() ) );
-    		writer.print(String.format("%.4f,", this.getIncome_diss() ) );
+    		writer.print(String.format("%.4f,", this.activity_diss ) );
+    		writer.print(String.format("%.4f,", this.income_diss ) );
     		
-    		writer.print(String.format("%.4f,", this.getLearningRate() ) );
-    		writer.print(String.format("%.4f,", this.getSatisfaction() ) );
+    		writer.print(String.format("%.4f,", this.learning_rate ) );
+    		writer.print(String.format("%.4f,", this.satisfaction ) );
     		
     		writer.print(String.format("%.2f,",this.income ) );
     		writer.print(String.format("%s,",this.strategy) );
@@ -191,84 +181,4 @@ public class ABMTimeStepLog {
 		}
 	}
 	
-	public String getFarmId() {
-		return this.farmId;
-	}
-	public void setFarmId(String farmId) {
-		this.farmId = farmId;
-	}
-	public Integer getYear() {
-		return this.year;
-	}
-	public void setYear(Integer year) {
-		this.year = year;
-	}
-	public int getStrategy() {
-		return this.strategy;
-	}
-	public void setStrategy(int i) {
-		this.strategy = i;
-	}
-	public double getIncome() {
-		return this.income;
-	}
-	public void setIncome(double income) {
-		this.income = income;
-	}
-	public List<Activity> getCurrentActivity() {
-		return this.currentActivity;
-	}
-	public void setCurrentActivity(List<Activity> currentActivity) {
-		this.currentActivity = currentActivity;
-	}
-	public List<String> getPossibleActivity() {
-		return this.possibleActivity;
-	}
-	public void setPossibleActivity(List<String> possibleActivity) {
-		this.possibleActivity = possibleActivity;
-	}
-	public List<String> getAllActivity() {
-		return this.allActivity;
-	}
-	public void setAllActivity(List<String> allActivity) {
-		this.allActivity = allActivity;
-	}
-	public double getLearningRate() {
-		return this.learning_rate;
-	}
-	public void setLearningRate(double k) {
-		this.learning_rate = k;
-	}
-	public Farm getFarm() {
-		return this.farm;
-	}
-	public void setFarm(Farm farm) {
-		this.farm = farm;
-	}
-
-	public double getActivity_diss() {
-		return this.activity_diss;
-	}
-
-	public void setActivity_diss(double activity_diss) {
-		this.activity_diss = activity_diss;
-	}
-
-	public double getIncome_diss() {
-		return this.income_diss;
-	}
-
-	public void setIncome_diss(double income_diss) {
-		this.income_diss = income_diss;
-	}
-
-	public double getSatisfaction() {
-		return this.satisfaction;
-	}
-
-	public void setSatisfaction(double satisfaction) {
-		this.satisfaction = satisfaction;
-	}
-	
-
 }

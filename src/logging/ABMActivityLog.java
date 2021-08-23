@@ -5,8 +5,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.List;
 import activity.Activity;
+import agent.Farm;
 
 /** 
  * ABM activity log which writes to output csv file.
@@ -15,38 +17,31 @@ import activity.Activity;
  */
 public class ABMActivityLog {
 
-	private String farmId;													   // unique farm id
-	private Integer year;													   // which time step this decision was made in
-	private int strategy;													   // farm strategy
-	private List<String> allActivity;										   // All possible activities in the model
-	private List<Activity> currentActivity;									   // current activity of the agent
-	private List<String> possibleActivity;								       // set of possible activities by the agent
-	private List<Activity> MPSelectedActivity;								   // activity actually selected by the MP
-	private int PREVIOUS_ACTIVITY_SET_PRINTING_SIZE;						   // how many activities to print
-	private int SELECTED_ACTIVITY_SET_PRINTING_SIZE;						   // how many activities to print
-	private double income;													   // income of farm
+	private final String farmId;                           // unique farm id
+	private final Integer year;                            // which time step this decision was made in
+	private final int strategy;                            // All possible activities in the model
+	private final List<Activity> currentActivity;          // current activity of the agent
+	private final List<Activity> MPSelectedActivity;       // activity actually selected by the MP
+	private final int PREVIOUS_ACTIVITY_SET_PRINTING_SIZE; // how many activities to print
+	private final int SELECTED_ACTIVITY_SET_PRINTING_SIZE; // how many activities to print
+	private final double income;                           // income of farm
 	
 	/** 
 	 * Constructor for the CSV Log
-	 * @param allActivities ::		full set of activities
-	 * @param farmId ::		    	ID of the farm
+     * @param modelName ::          string name of agent
 	 * @param year ::			    time period
-	 * @param strat ::				strategy
-	 * @param currentActivity ::    current activity(ies) in system
 	 * @param MPSelectedActivity :: best activity from the MP model
-	 * @param MP_Incomes ::			income of agent at time period
-	 * @param modelName ::			string name of agent
+	 * @param farm ::			    specific farm for this decision object
 	 */
-	public ABMActivityLog(String modelName, List<String> allActivities, String farmId, Integer year, int strat, List<Activity> currentActivity, List<Activity> MPSelectedActivity, Double MP_Incomes) {
-		setFarmId(farmId);
-		setYear(year);
-		setStrategy(strat);
-		setCurrentActivity(currentActivity);
-		setAllActivity(allActivities);
-		setMPSelectedActivity(MPSelectedActivity);
+	public ABMActivityLog(String modelName, Integer year, final List<Activity> MPSelectedActivity, Double MP_Incomes, final Farm farm) {
+		this.farmId = farm.getFarmName();
+		this.year = year;
+		this.strategy = farm.getStrategy();
+		this.currentActivity = farm.getCurrentActivity();
+		this.MPSelectedActivity = MPSelectedActivity;
 		this.income = MP_Incomes;
 		
-		if(modelName.equals("WEEDCONTROL")) {
+		if(Arrays.asList("WEEDCONTROL", "PRECALCULATED").contains(modelName)) {
 			this.SELECTED_ACTIVITY_SET_PRINTING_SIZE = 1;
 			this.PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 1;
 		}
@@ -95,7 +90,7 @@ public class ABMActivityLog {
     		}
     		
     		writer.print(String.format("%s,",this.year));
-    		writer.print(String.format("%s,",this.getFarmId()));
+    		writer.print(String.format("%s,",this.farmId));
     		
     		// if PREVIOUS activity set is larger than printing limit, print NA for all options
     		if(this.currentActivity.size() == 0 || this.currentActivity.size() > this.PREVIOUS_ACTIVITY_SET_PRINTING_SIZE) {
@@ -140,48 +135,5 @@ public class ABMActivityLog {
     		
     		writer.println("");
 		}
-	}
-	
-	public String getFarmId() {
-		return this.farmId;
-	}
-	public void setFarmId(String farmId) {
-		this.farmId = farmId;
-	}
-	public Integer getYear() {
-		return this.year;
-	}
-	public void setYear(Integer year) {
-		this.year = year;
-	}
-	public int getStrategy() {
-		return this.strategy;
-	}
-	public void setStrategy(int i) {
-		this.strategy = i;
-	}
-	public List<Activity> getCurrentActivity() {
-		return this.currentActivity;
-	}
-	public void setCurrentActivity(List<Activity> currentActivity) {
-		this.currentActivity = currentActivity;
-	}
-	public List<String> getPossibleActivity() {
-		return this.possibleActivity;
-	}
-	public void setPossibleActivity(List<String> possibleActivity) {
-		this.possibleActivity = possibleActivity;
-	}
-	public List<String> getAllActivity() {
-		return this.allActivity;
-	}
-	public void setAllActivity(List<String> allActivity) {
-		this.allActivity = allActivity;
-	}
-	public List<Activity> getMPSelectedActivity() {
-		return this.MPSelectedActivity;
-	}
-	public void setMPSelectedActivity(List<Activity> mPSelectedActivity) {
-		this.MPSelectedActivity = mPSelectedActivity;
 	}
 }

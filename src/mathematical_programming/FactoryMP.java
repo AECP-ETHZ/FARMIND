@@ -28,9 +28,12 @@ public class FactoryMP {
 		if (cmd.getProperty("modelName").equals("FARMDYN")) {
 			setMP(new FarmDyn(cmd, simYear, memoryLengthAverage));
 		}
-		if (cmd.getProperty("modelName").equals("TOY")) {
-			setMP(new Toy(cmd, simYear, memoryLengthAverage));
-		}
+        if (cmd.getProperty("modelName").equals("TOY")) {
+            setMP(new Toy(cmd, simYear, memoryLengthAverage));
+        }
+        if (cmd.getProperty("modelName").equals("PRECALCULATED")) {
+            setMP(new PreCalculated(cmd, simYear, memoryLengthAverage));
+        }
 	}
 
 	public MP_Interface getMP() {

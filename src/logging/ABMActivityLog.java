@@ -67,7 +67,7 @@ public class ABMActivityLog {
 
 		File file = new File(String.format("%s/%s_activity_%sPrice.csv",
 		        PATH, fileName, averagePrice ? "average" : "actual"));
- 
+		boolean appending = file.exists() && file.length() > 0;
 		try (PrintWriter writer = new PrintWriter(
 		    new BufferedWriter(new FileWriter(file, true))
 		)) {
@@ -85,7 +85,7 @@ public class ABMActivityLog {
     		name = name + "strategy";
     		name = name + ",income";
     		
-    		if (file.length() == 0) {
+    		if (!appending) {
     			writer.println(name);
     		}
     		

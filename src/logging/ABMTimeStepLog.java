@@ -75,9 +75,9 @@ public class ABMTimeStepLog {
 		}
 		
 		File file = new File(String.format("%s/%s_parameters.csv", PATH, fileName));
-		
+		boolean appending = file.exists() && file.length() > 0;
 		try (PrintWriter writer = new PrintWriter(
-		        new BufferedWriter(new FileWriter(file))
+		        new BufferedWriter(new FileWriter(file, true))
 		)) {
     		
     		String name = "year,name,age,education,memory,alpha_plus,alpha_minus,lambda,phi_plus,phi_minus,reference_income,aspiration,"
@@ -94,7 +94,7 @@ public class ABMTimeStepLog {
     		
     		name = name + String.format("possible_activity_%s",  this.POSSIBLE_ACTIVITY_SET_PRINTING_SIZE );          // print last element without comma
     		
-    		if (file.length() == 0) {
+    		if (!appending) {
     			writer.println(name);
     		}
     		

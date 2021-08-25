@@ -1,10 +1,11 @@
 package mathematical_programming;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,11 +30,18 @@ public class PreCalculated implements MP_Interface{
 	
     private Map<String,List<String>> possibleActivitiesState;
     
-    private Map<String,Map<String,Double>> yearsHarvest;
+    private Map<String, List<Entry<String, Double>>> yearsHarvest;
 	
+    /**
+     * Constructor
+     * 
+     * @param cmd : properties
+     * @param simYear : conventional argument, unused
+     * @param memoryLengthAverage : conventional argument, unused
+     */
 	public PreCalculated(Properties cmd, int simYear, int memoryLengthAverage) {
 	    this.possibleActivitiesState = new HashMap<String,List<String>>();
-	    this.yearsHarvest = new HashMap<String,Map<String,Double>>();
+	    this.yearsHarvest = new HashMap<String,List<Entry<String,Double>>>();
 	}
 	
     @Override
@@ -58,13 +66,25 @@ public class PreCalculated implements MP_Interface{
     	    while ((row = reader.readNext()) != null) {
     	        
                 String farmName = row[0].strip();
-                this.yearsHarvest.put(farmName, new HashMap<String,Double>());
-                
+                Map<String,Double> evaluation = new HashMap<String,Double>();
+                List<String> possibleActivities = this.possibleActivitiesState.get(farmName);
                 for (int i=1; i<columns.length; i++) {
-                    this.yearsHarvest.get(farmName)
-                                     .put(columns[i],
-                                          Double.parseDouble(row[i]));
+                    if (possibleActivities.contains(columns[i])) {
+                        evaluation.put(columns[i], Double.parseDouble(row[i]));
+                    }
                 }
+                
+                List<Entry<String, Double>> entryList = new ArrayList<Entry<String, Double>>(evaluation.entrySet());
+                Collections.sort(entryList, new Comparator<Entry<String, Double>>(){
+                    @Override
+                    public int compare(Entry<String, Double> a, Entry<String, Double> b) {
+                        double da = a.getValue() == null ? Double.NEGATIVE_INFINITY : a.getValue();
+                        double db = b.getValue() == null ? Double.NEGATIVE_INFINITY : b.getValue();
+                        return da > db ? -1 : da == db ? 0 : 1;
+                    }
+                });
+                
+                this.yearsHarvest.put(farmName, entryList);
             }
 	    }
 	}
@@ -74,18 +94,16 @@ public class PreCalculated implements MP_Interface{
 		List<Double> incomes = new ArrayList<Double>();						   // list of all farm incomes   
 
 		for (Farm farm : allFarms) {
-		    Double income = this.yearsHarvest
-                .get(farm.getFarmName())
-                .get(farm.getCurrentActivity().get(0).getName());
-		    incomes.add(income == null ? 0 : income);
-		    if (income == null) {
-		        this.LOGGER.info(
-		                String.format("n: %s, a: %s, i: %d",
+		    List<Entry<String, Double>> possibleIncomes = this.yearsHarvest.get(farm.getFarmName());
+		    Double income = possibleIncomes.isEmpty() ? Double.NEGATIVE_INFINITY : possibleIncomes.get(0).getValue();
+		    if (income == Double.NEGATIVE_INFINITY) {
+		        LOGGER.info(String.format("n: %s, a: %s, i: %d",
 	                farm.getFarmName(),
 	                farm.getCurrentActivity().get(0).getName(),
 	                farm.getCurrentActivity().get(0).getID()
 	            ));
 		    }
+		    incomes.add(income);
 		}
 
 		return incomes;
@@ -96,25 +114,12 @@ public class PreCalculated implements MP_Interface{
 		List<ArrayList<Activity>> activities = new ArrayList<ArrayList<Activity>>();	   	 	   // list of all farm activities selected by MP model
         
 		for (Farm farm : allFarms) {
-            double maxD = Double.NEGATIVE_INFINITY;
-            String topActivity = null;
-            for (Entry<String, Double> e : this.yearsHarvest.get(farm.getFarmName()).entrySet()) {
-                double d = e.getValue();
-                if (d > maxD) {
-                    maxD = d;
-                    topActivity = e.getKey();
-                }
-                if (d == maxD) {
-                    //TODO: ???
-                    topActivity = e.getKey();
-                }
-                
-            }
-            
+            List<Entry<String, Double>> topEntry = this.yearsHarvest.get(farm.getFarmName());
+            String topActivity = topEntry.isEmpty() ? null : topEntry.get(0).getKey();
             ArrayList<Activity> farmActivities = new ArrayList<Activity>();
-            //if (topActivity != null) {
+            if (topActivity != null) {
                 farmActivities.add(new Activity(Integer.parseInt(topActivity.substring(8)), topActivity));
-            //}
+            }
             activities.add(farmActivities);
         }
 

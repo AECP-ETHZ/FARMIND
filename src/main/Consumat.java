@@ -19,6 +19,7 @@ import logging.ABMTimeStepLog;
 import mathematical_programming.FactoryMP;
 import mathematical_programming.MP_Interface;
 import mathematical_programming.WeedControl;
+import mathematical_programming.PreCalculated;
 import reader.ReadData;
 
 /** 
@@ -58,7 +59,7 @@ public class Consumat {
             MP_Interface MP = new FactoryMP(cmd, simYear, memoryLengthAverage).getMP();            // select correct model based on input command parameter
             
             allFarmsDecideActivity(cmd, year, allFarms, MP, MP_Incomes, MP_Activities);            // generate model files based on decisions made
-            pricingAverage = true;                                                                 // use average of historical price
+            pricingAverage = !(MP instanceof PreCalculated);                                                                 // use average of historical price
             MP.runModel(cmd, allFarms.size(), year, pricingAverage, memoryLengthAverage);          // update gams script and then start model (ie update pricing information etc)
             MP_Incomes = MP.readMPIncomes(cmd, allFarms);                                          // read income and activities from model results
             MP_Activities = MP.readMPActivities(cmd, allFarms);

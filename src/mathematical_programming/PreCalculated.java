@@ -36,8 +36,8 @@ public class PreCalculated implements MP_Interface{
      * Constructor
      * 
      * @param cmd : properties
-     * @param simYear : conventional argument, unused
-     * @param memoryLengthAverage : conventional argument, unused
+     * @param simYear : MP_Interface conventional argument, unused
+     * @param memoryLengthAverage : MP_Interface conventional argument, unused
      */
 	public PreCalculated(Properties cmd, int simYear, int memoryLengthAverage) {
 	    this.possibleActivitiesState = new HashMap<String,List<String>>();
@@ -91,12 +91,12 @@ public class PreCalculated implements MP_Interface{
 
 	@Override
 	public List<Double> readMPIncomes(Properties cmd, List<Farm> allFarms) throws FileNotFoundException, IOException {
-		List<Double> incomes = new ArrayList<Double>();						   // list of all farm incomes   
+		List<Double> incomes = new ArrayList<Double>();  // list of all farm incomes, same order as allFarms
 
 		for (Farm farm : allFarms) {
 		    List<Entry<String, Double>> possibleIncomes = this.yearsHarvest.get(farm.getFarmName());
-		    Double income = possibleIncomes.isEmpty() ? Double.NEGATIVE_INFINITY : possibleIncomes.get(0).getValue();
-		    if (income == Double.NEGATIVE_INFINITY) {
+		    Double income = possibleIncomes.isEmpty() ? 0 : possibleIncomes.get(0).getValue();
+		    if (possibleIncomes.isEmpty()) {
 		        LOGGER.info(String.format("n: %s, a: %s, i: %d",
 	                farm.getFarmName(),
 	                farm.getCurrentActivity().get(0).getName(),
@@ -111,14 +111,19 @@ public class PreCalculated implements MP_Interface{
 
 	@Override
 	public List<ArrayList<Activity>> readMPActivities(Properties cmd, List<Farm> allFarms) throws FileNotFoundException, IOException {
-		List<ArrayList<Activity>> activities = new ArrayList<ArrayList<Activity>>();	   	 	   // list of all farm activities selected by MP model
+		List<ArrayList<Activity>> activities = new ArrayList<ArrayList<Activity>>();  // list of all farm activities selected by MP model
         
 		for (Farm farm : allFarms) {
             List<Entry<String, Double>> topEntry = this.yearsHarvest.get(farm.getFarmName());
             String topActivity = topEntry.isEmpty() ? null : topEntry.get(0).getKey();
             ArrayList<Activity> farmActivities = new ArrayList<Activity>();
             if (topActivity != null) {
-                farmActivities.add(new Activity(Integer.parseInt(topActivity.substring(8)), topActivity));
+                // based on the convention that activity names match this regular expression:
+                // /activity\d+/
+                // TODO: this convention should be optional. To abandon it, one could store a
+                //       dynamically generated map with activity names and ids somewhere.
+                int taId = Integer.parseInt(topActivity.substring(8));
+                farmActivities.add(new Activity(taId, topActivity));
             }
             activities.add(farmActivities);
         }
@@ -129,7 +134,8 @@ public class PreCalculated implements MP_Interface{
 	@Override
 	public ArrayList<Activity> getExitActivity() {
 		// if the agent decides to opt-out we use this to return the correct opt-out activity
-		ArrayList<Activity> activities = new ArrayList<Activity>();	   	 	       // list of all farm activities selected by MP model
+		ArrayList<Activity> activities = new ArrayList<Activity>();
+		
 		Activity exit = new Activity(0,"exit");
 		activities.add(exit);
 	

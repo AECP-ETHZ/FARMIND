@@ -21,6 +21,8 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
       # Maven 
-      - name: Build with Maven
-        run: mvn --batch-mode --update-snapshots clean install
+      - name: Build
+        run: mvn --batch-mode --update-snapshots clean install -DskipTests
+      - name: Test
+        run: mvn --batch-mode --update-snapshots test
 

@@ -65,7 +65,7 @@ public class PreCalculated implements MP_Interface{
     	    String[] row;
     	    while ((row = reader.readNext()) != null) {
     	        
-                String farmName = row[0].strip();
+                String farmName = row[0].trim();
                 Map<String,Double> evaluation = new HashMap<String,Double>();
                 List<String> possibleActivities = this.possibleActivitiesState.get(farmName);
                 for (int i=1; i<columns.length; i++) {
@@ -95,7 +95,7 @@ public class PreCalculated implements MP_Interface{
 
 		for (Farm farm : allFarms) {
 		    List<Entry<String, Double>> possibleIncomes = this.yearsHarvest.get(farm.getFarmName());
-		    Double income = possibleIncomes.isEmpty() ? 0 : possibleIncomes.get(0).getValue();
+		    Double income = possibleIncomes.isEmpty() ? 0.0 : possibleIncomes.get(0).getValue();
 		    if (possibleIncomes.isEmpty()) {
 		        LOGGER.info(String.format("n: %s, a: %s, i: %d",
 	                farm.getFarmName(),

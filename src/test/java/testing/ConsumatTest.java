@@ -5,34 +5,24 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import main.Consumat;
 
-class ConsumatTest {
+public class ConsumatTest {
 
-    @BeforeAll
-    static void setUpBeforeClass() throws Exception {
+    @Before
+    public void setUp() throws Exception {
     }
 
-    @AfterAll
-    static void tearDownAfterClass() throws Exception {
-    }
-
-    @BeforeEach
-    void setUp() throws Exception {
-    }
-
-    @AfterEach
-    void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
     }
 
     @Test
-    void testMain() throws FileNotFoundException, IOException {
+    public void testMain() throws FileNotFoundException, IOException {
         Consumat.main(new String[0]);
     }
 

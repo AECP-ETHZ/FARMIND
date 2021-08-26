@@ -56,9 +56,9 @@ public class PreCalculated implements MP_Interface{
                 + "\n      nFarms: "+nFarms
                 + "\n      pricingAverage: "+pricingAverage
                 + "\n      memoryLengthAverage: "+memoryLengthAverage);
-
+	    // TODO : finalize file name and directory structure conventions
 	    try (CSVReader reader = new CSVReader(new FileReader(
-	        String.format("%s/Run_%d.csv", cmd.get("precalc_data_dir"), year)
+	        String.format("%s/precalc/Run_%d.csv", cmd.get("data_folder"), year)
 	    ), ',')) {
     	    String[] columns = reader.readNext();
     	    

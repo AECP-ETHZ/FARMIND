@@ -63,7 +63,7 @@ public class PreCalculated implements MP_Interface{
                 String income = row[0].trim();
                 List<String> activities = new ArrayList<String>();
                 for (int i=1; i<columns.length; i++) {
-                    if (row[i].trim() == "1") {
+                    if (row[i].trim().equals("1")) {
                         activities.add(columns[i].trim());
                     }
                 }
@@ -86,7 +86,7 @@ public class PreCalculated implements MP_Interface{
                 + "\n      pricingAverage: "+pricingAverage
                 + "\n      memoryLengthAverage: "+memoryLengthAverage);
 	    try (CSVReader reader = new CSVReader(new FileReader(
-	        String.format("%s/MPdata/run%d.csv", cmd.get("data_folder"), PreCalculated.MP_DATA_FOLDER, year)
+	        String.format("%s/%s/run%d.csv", cmd.get("data_folder"), PreCalculated.MP_DATA_FOLDER, year)
 	    ), ',')) {
 	        String[] incomes = reader.readNext();
             Map<String,Map<String,Score>> allFarmScores = new HashMap<String,Map<String,Score>>();
@@ -106,9 +106,7 @@ public class PreCalculated implements MP_Interface{
                 farmIncomes.put(farmName, farmIncome);
     	    }
     	    
-    	    @SuppressWarnings("unused")
-            String[] climateLoad = reader.readNext(); // unnecessary: the row with ",THG1,THG2,..."
-    	        // is just there to separate incomes from climate effect
+    	    // at this point row is kind of a header: [, THG1, THG2, THG3, ...]
     	    
             // impact
             while ((row = reader.readNext()) != null) {

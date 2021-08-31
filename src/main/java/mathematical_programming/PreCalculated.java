@@ -20,6 +20,7 @@ import com.opencsv.CSVReader;
 import activity.Activity;
 import agent.Farm;
 
+
 /** 
  * In this Model the results are not calculated from scratch but read from CSV files containing pre-calculated results. 
  * 
@@ -28,13 +29,16 @@ import agent.Farm;
  */
 
 public class PreCalculated implements MP_Interface{
-	private static final Logger LOGGER = Logger.getLogger("FARMIND_LOGGING");
+
+    private static final Logger LOGGER = Logger.getLogger("FARMIND_LOGGING");
 	
     private Map<String,Set<String>> possibleActivitiesState;
     
     private Map<String, List<Entry<String, Score>>> yearsHarvest;
     
     private Map<String, List<String>> incomeActivityMap;
+    
+    private Map<Integer, String> yearRunMap;
     
     private final static String MP_DATA_FOLDER = "MPdata";
 	
@@ -46,6 +50,7 @@ public class PreCalculated implements MP_Interface{
      * @param memoryLengthAverage : MP_Interface conventional argument, unused
      * @throws IOException 
      * @throws FileNotFoundException 
+     * @throws InvalidInputFileException 
      */
 	public PreCalculated(Properties cmd, int simYear, int memoryLengthAverage) throws FileNotFoundException, IOException {
 	    this.possibleActivitiesState = new HashMap<String,Set<String>>();
@@ -71,6 +76,29 @@ public class PreCalculated implements MP_Interface{
                 this.incomeActivityMap.put(income, activities);
             }
         }
+
+        this.yearRunMap = new HashMap<Integer,String>();
+        try (CSVReader reader = new CSVReader(new FileReader(
+                String.format("%s/year_run.csv", cmd.get("data_folder"))
+            ), ',')) {
+            String[] columns = reader.readNext();
+            if (! columns[0].equals("year") || !columns[1].equals("run")) {
+                throw new RuntimeException("not a valid input file: year_run.csv\n"
+                        + " expected two columns: year, run");
+            }
+            
+            String[] row;
+            while ((row = reader.readNext()) != null) {
+                if (row.length == 0 || (
+                    row.length == 1 && row[0].trim().equals("")
+                )) continue;
+                Integer year = Integer.parseInt(row[0].trim());
+                String runFile = row[1].trim();
+                
+                this.yearRunMap.put(year, runFile);
+            }
+        }
+
 	}
 	
     @Override
@@ -86,7 +114,7 @@ public class PreCalculated implements MP_Interface{
                 + "\n      pricingAverage: "+pricingAverage
                 + "\n      memoryLengthAverage: "+memoryLengthAverage);
 	    try (CSVReader reader = new CSVReader(new FileReader(
-	        String.format("%s/%s/run%d.csv", cmd.get("data_folder"), PreCalculated.MP_DATA_FOLDER, year)
+	        String.format("%s/%s/%s.csv", cmd.get("data_folder"), PreCalculated.MP_DATA_FOLDER, this.yearRunMap.get(year))
 	    ), ',')) {
 	        String[] incomes = reader.readNext();
             Map<String,Map<String,Score>> allFarmScores = new HashMap<String,Map<String,Score>>();
@@ -117,10 +145,10 @@ public class PreCalculated implements MP_Interface{
                 Map<String,Score> farmScore = new HashMap<String,Score>();
                 for (int i=1; i<incomes.length; i++) {
                     if (this.acceptableIncome(farmName, incomes[i])) {
-                    farmScore.put(incomes[i], new Score(
-                        farmIncomes.get(farmName).get(incomes[i]),
-                        Double.parseDouble(row[i])
-                    ));
+                        farmScore.put(incomes[i], new Score(
+                            farmIncomes.get(farmName).get(incomes[i]),
+                            Double.parseDouble(row[i])
+                        ));
                     }
                 }
                 

@@ -7,15 +7,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.logging.Logger;
 import java.util.function.BiFunction;
-import reader.FarmDataMatrix;
+import java.util.logging.Logger;
+
 import org.apache.commons.math3.distribution.NormalDistribution;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
+
 import activity.Activity;
 import fuzzy_logic.FuzzyLogicCalculator;
-import java.lang.Math;
+import reader.FarmDataMatrix;
 
 /** 
  * Farm object contains farm characteristics, an activity list, activity preferences, experience of performing activities and a social network. 
@@ -126,20 +127,25 @@ public class Farm {
 	 * 
 	 * @param allFarms :: full list of all farms in system
 	 * @param cmd :: command line object that contains parameters for model
+	 * @param MP 
 	 * @return ActivitySet :: list of activity options for a farm to select 
 	 */
 	public List<String> decideActivitySet(List<Farm> allFarms, Properties cmd) {
-	    List<String> ActivitySet = new ArrayList<String>();				                           // list of activities from fuzzy logic
-		FuzzyLogicCalculator fuzzyLogicCalc = new FuzzyLogicCalculator(this, allFarms);            // calculator for the activity selection
+	    List<String> ActivitySet = new ArrayList<String>();
+	    
+	    // list of activities from fuzzy logic
+		FuzzyLogicCalculator fuzzyLogicCalc = new FuzzyLogicCalculator(this, allFarms);  // calculator for the activity selection
+		
+		// In case the farmer retires, opt-out
+		if ((this.head.getAge() > 650)) {
+		    this.strategy = 1;
+		}
 		
 		// if the farming is currently performing opt-out, then continue performing opt-out
 		if (this.strategy == 1) {
-			this.strategy = 1;
-			return ActivitySet;
-		}
-		
-		if ((this.head.getAge() > 650)) {
-			this.strategy = 1;     //OPT-OUT (The farmer retires.)
+		    if (cmd.getProperty("modelName").equals("PRECALCULATED")) {
+		        ActivitySet.add("activity01");
+		    }
 			return ActivitySet;
 		}
 		
@@ -155,7 +161,7 @@ public class Farm {
 				if (this.Satisfaction < this.getP_aspiration_coef()) {
 					this.strategy = 3; //OPTIMIZATION
 					if (cmd.getProperty("modelName").equals("WEEDCONTROL")) {
-						for (int i = 0; i < this.getActivities().size(); i++) {                    // for optimization of weedcontrol, return all activities
+						for (int i = 0; i < this.getActivities().size(); i++) {  // for optimization of weedcontrol, return all activities
 							ActivitySet.add(this.getActivities().get(i).getName());
 						} 
 					} else {
@@ -174,6 +180,9 @@ public class Farm {
 				}
 				else {
 					this.strategy = 1; //OPT-OUT
+					if (cmd.getProperty("modelName").equals("PRECALCULATED")) {
+						ActivitySet.add("activity01");
+					}
 					LOGGER.fine(String.format("Opt-out made: %d for farm %s", this.strategy, this.farmName));
 				}
 			}

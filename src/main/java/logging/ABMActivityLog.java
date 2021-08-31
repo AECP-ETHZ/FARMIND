@@ -41,13 +41,19 @@ public class ABMActivityLog {
 		this.MPSelectedActivity = MPSelectedActivity;
 		this.income = MP_Incomes;
 		
-		if(Arrays.asList("WEEDCONTROL", "PRECALCULATED").contains(modelName)) {
-			this.SELECTED_ACTIVITY_SET_PRINTING_SIZE = 1;
-			this.PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 1;
-		}
-		else {
-			this.SELECTED_ACTIVITY_SET_PRINTING_SIZE = 3;
-			this.PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 3;
+		switch (modelName) {
+    		case "WEEDCONTROL": 
+                this.SELECTED_ACTIVITY_SET_PRINTING_SIZE = 1;
+                this.PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 1;
+                break;
+    		case "PRECALCULATED":
+                this.SELECTED_ACTIVITY_SET_PRINTING_SIZE = 5;
+                this.PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 5;
+                break;
+    		default:
+                this.SELECTED_ACTIVITY_SET_PRINTING_SIZE = 3;
+                this.PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 3;
+                break;
 		}
 	}
 	

@@ -5,8 +5,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.List;
+
 import activity.Activity;
 import agent.Farm;
 
@@ -81,11 +81,11 @@ public class ABMActivityLog {
     		String name = "year,name,";
     		
     		for(int i = 0; i < this.PREVIOUS_ACTIVITY_SET_PRINTING_SIZE; i++) {
-    			name = name + String.format("previous_activity_%s,",  i+1 );
+    			name = name + String.format("previous_activity_%c,", (char)('a' + i));
     		}
     
     		for(int i = 0; i < this.SELECTED_ACTIVITY_SET_PRINTING_SIZE; i++) {
-    			name = name + String.format("selected_activity_%s,",  i+1 );
+    			name = name + String.format("selected_activity_%c,", (char)('a' + i));
     		}
     		
     		name = name + "strategy";

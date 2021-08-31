@@ -5,8 +5,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.List;
+
 import activity.Activity;
 import agent.Farm;
 
@@ -52,14 +52,20 @@ public class ABMTimeStepLog {
 		this.activity_diss = farm.getActivity_Dissimilarity();
 		this.satisfaction = farm.getSatisfaction();
 		
-		if (Arrays.asList("WEEDCONTROL", "PRECALCULATED").contains(modelName)) {
-			this.PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 1;
-			this.POSSIBLE_ACTIVITY_SET_PRINTING_SIZE = 9;
-		}
-		else {
-			this.PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 4;
-			this.POSSIBLE_ACTIVITY_SET_PRINTING_SIZE = 6;
-		}
+        switch (modelName) {
+            case "WEEDCONTROL": 
+                this.PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 1;
+                this.POSSIBLE_ACTIVITY_SET_PRINTING_SIZE = 9;
+                break;
+            case "PRECALCULATED":
+                this.PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 5;
+                this.POSSIBLE_ACTIVITY_SET_PRINTING_SIZE = 5;
+                break;
+            default:
+                this.PREVIOUS_ACTIVITY_SET_PRINTING_SIZE = 4;
+                this.POSSIBLE_ACTIVITY_SET_PRINTING_SIZE = 6;
+                break;
+        }
 	}
 	
 	/** 
@@ -82,17 +88,15 @@ public class ABMTimeStepLog {
     		
     		String name = "year,name,age,education,memory,alpha_plus,alpha_minus,lambda,phi_plus,phi_minus,reference_income,aspiration,"
     				+ "beta_l,beta_s,beta_p,tolerance_activity,tolerance_income,activity_dissimilarity,income_dissimilarity,learning_rate,satisfaction," 
-    				+ "income,strategy,";
+    				+ "income,strategy";
     		
     		for(int i = 0; i < this.PREVIOUS_ACTIVITY_SET_PRINTING_SIZE; i++) {
-    			name = name + String.format("previous_activity_%s,",  i+1 );
+    			name = name + String.format(",previous_activity_%c", (char)('a' + i));
     		}
     
-    		for(int i = 0; i < this.POSSIBLE_ACTIVITY_SET_PRINTING_SIZE -1 ; i++) {
-    			name = name + String.format("possible_activity_%s,",  i+1 );
+    		for(int i = 0; i < this.POSSIBLE_ACTIVITY_SET_PRINTING_SIZE; i++) {
+    			name = name + String.format(",possible_activity_%c", (char)('a' + i));
     		}
-    		
-    		name = name + String.format("possible_activity_%s",  this.POSSIBLE_ACTIVITY_SET_PRINTING_SIZE );          // print last element without comma
     		
     		if (!appending) {
     			writer.println(name);

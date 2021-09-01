@@ -201,7 +201,7 @@ public class FuzzyLogicCalculator {
         List<Double> selected_cluster = new ArrayList<Double>();
         int fuzzy_size = 0;
         
-        if (this.strat == "optimize") {
+        if (this.strat.equals("optimize")) {
             fuzzy_size = (int) this.fuzzy_size;
             cluster = sorted;
             
@@ -210,7 +210,7 @@ public class FuzzyLogicCalculator {
             }
         }
         
-        else if (this.strat == "imitate") {
+        else if (this.strat.equals("imitate")) {
             if (this.farm.getP_ranking_version() == 0) {
                 for (int i = 0; i< sorted.size(); i++) {
                     if (sorted.get(i) == 1.0) {

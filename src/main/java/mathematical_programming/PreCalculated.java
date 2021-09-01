@@ -127,7 +127,7 @@ public class PreCalculated implements MP_Interface{
             while ((row = reader.readNext()) != null) {
                 
                 String farmName = row[0].trim();
-                if (farmName == "") break;
+                if (farmName.equals("")) break;
                 
                 Map<String, Integer> farmIncome = new HashMap<String, Integer>();
                 for (int i=1; i<incomes.length; i++) {
@@ -142,7 +142,7 @@ public class PreCalculated implements MP_Interface{
             while ((row = reader.readNext()) != null) {
                 
                 String farmName = row[0].trim();
-                if (farmName == "") break;
+                if (farmName.equals("")) break;
                 
                 Map<String,Score> farmScore = new HashMap<String,Score>();
                 for (int i=1; i<incomes.length; i++) {

@@ -1,4 +1,4 @@
-package mathematical_programming;
+package farmind.mathematical_programming;
 
 import java.io.IOException;
 import java.util.Properties;

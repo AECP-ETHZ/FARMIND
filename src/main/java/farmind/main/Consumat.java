@@ -1,4 +1,4 @@
-package main;
+package farmind.main;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,15 +14,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-import activity.Activity;
-import agent.Farm;
-import logging.ABMActivityLog;
-import logging.ABMTimeStepLog;
-import mathematical_programming.FactoryMP;
-import mathematical_programming.MP_Interface;
-import mathematical_programming.WeedControl;
-import mathematical_programming.PreCalculated;
-import reader.ReadData;
+import farmind.activity.Activity;
+import farmind.agent.Farm;
+import farmind.logging.ABMActivityLog;
+import farmind.logging.ABMTimeStepLog;
+import farmind.mathematical_programming.FactoryMP;
+import farmind.mathematical_programming.MP_Interface;
+import farmind.mathematical_programming.WeedControl;
+import farmind.mathematical_programming.PreCalculated;
+import farmind.reader.ReadData;
 
 /** 
  * This class contains the main() method of this program. 

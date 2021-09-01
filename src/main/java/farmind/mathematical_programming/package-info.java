@@ -6,4 +6,4 @@
  * @author kellerke
  *
  */
-package mathematical_programming;
+package farmind.mathematical_programming;

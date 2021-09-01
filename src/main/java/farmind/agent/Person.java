@@ -1,4 +1,4 @@
-package agent;
+package farmind.agent;
 
 /** 
  * Person object contains parameters age, education and memory length of farm member.

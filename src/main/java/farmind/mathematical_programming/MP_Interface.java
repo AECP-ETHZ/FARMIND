@@ -1,12 +1,12 @@
-package mathematical_programming;
+package farmind.mathematical_programming;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import activity.Activity;
-import agent.Farm;
+import farmind.activity.Activity;
+import farmind.agent.Farm;
 
 /** 
  * Contains the generic functions to allow the possible activities from the decision making process to be exported to the mathematical programming (MP) model. 

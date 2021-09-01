@@ -1,4 +1,4 @@
-package logging;
+package farmind.logging;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-import activity.Activity;
-import agent.Farm;
+import farmind.activity.Activity;
+import farmind.agent.Farm;
 
 /** 
  * ABM activity log which writes to output csv file.

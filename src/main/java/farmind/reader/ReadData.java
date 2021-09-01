@@ -1,4 +1,4 @@
-package reader;
+package farmind.reader;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -12,10 +12,10 @@ import java.util.logging.Logger;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleWeightedGraph;
-import activity.Activity;
-import agent.Farm;
-import agent.Location;
-import agent.Person;                 
+import farmind.activity.Activity;
+import farmind.agent.Farm;
+import farmind.agent.Location;
+import farmind.agent.Person;                 
 
 /** 
  * This class reads input parameters from configuration files and results data from the optimization model.

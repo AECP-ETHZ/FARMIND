@@ -1,4 +1,4 @@
-package agent;
+package farmind.agent;
 
 /**
  * Location object contains the coordinates of farm. 

@@ -7,4 +7,4 @@
  * @author kellerke
  *
  */
-package logging;
+package farmind.logging;

@@ -1,6 +1,6 @@
-package testing;
+package farmind.testing;
 
-import reader.ReadData;
+import farmind.reader.ReadData;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.FileNotFoundException;
@@ -13,9 +13,9 @@ import java.util.Properties;
 import org.junit.Before;
 import org.junit.Test;
 
-import activity.Activity;
-import agent.Farm;
-import main.Consumat;
+import farmind.activity.Activity;
+import farmind.agent.Farm;
+import farmind.main.Consumat;
 
 /** 
  * This class tests farm agent object.

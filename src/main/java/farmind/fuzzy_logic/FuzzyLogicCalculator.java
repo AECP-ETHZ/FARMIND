@@ -1,4 +1,4 @@
-package fuzzy_logic;
+package farmind.fuzzy_logic;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import org.jgrapht.graph.DefaultEdge;
-import agent.Farm;
+import farmind.agent.Farm;
 
 /** 
  * Object contains three vectors (L,P,S) that contain normalized rankings of experience, preference, and social network experience for a specific farm. <br>

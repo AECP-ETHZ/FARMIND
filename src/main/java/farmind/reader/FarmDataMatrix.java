@@ -1,4 +1,4 @@
-package reader;
+package farmind.reader;
 
 import java.util.ArrayList;
 import java.util.HashMap;

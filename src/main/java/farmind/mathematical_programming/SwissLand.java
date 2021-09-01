@@ -1,4 +1,4 @@
-package mathematical_programming;
+package farmind.mathematical_programming;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,9 +12,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
-import activity.Activity;
-import agent.Farm;
-import reader.ReadData;
+import farmind.activity.Activity;
+import farmind.agent.Farm;
+import farmind.reader.ReadData;
 
 /** 
  * Use the weedcontrol model from agroscope as an optimizer on the activities. This class runs the model, reads the input, and modifies the required control files. 

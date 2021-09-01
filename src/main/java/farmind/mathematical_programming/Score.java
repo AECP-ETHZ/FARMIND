@@ -1,4 +1,4 @@
-package mathematical_programming;
+package farmind.mathematical_programming;
 
 /** 
  * A primitive data class. 

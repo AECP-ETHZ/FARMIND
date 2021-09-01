@@ -7,4 +7,4 @@
  * @author kellerke
  *
  */
-package reader;
+package farmind.reader;

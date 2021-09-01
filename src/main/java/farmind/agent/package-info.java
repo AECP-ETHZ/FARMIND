@@ -7,4 +7,4 @@
  * @author kellerke
  *
  */
-package agent;
+package farmind.agent;

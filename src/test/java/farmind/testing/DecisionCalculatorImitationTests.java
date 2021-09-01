@@ -1,4 +1,4 @@
-package testing;
+package farmind.testing;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,10 +12,10 @@ import java.util.Properties;
 import org.junit.Before;
 import org.junit.Test;
 
-import agent.Farm;
-import fuzzy_logic.FuzzyLogicCalculator;
-import main.Consumat;
-import reader.ReadData;
+import farmind.agent.Farm;
+import farmind.fuzzy_logic.FuzzyLogicCalculator;
+import farmind.main.Consumat;
+import farmind.reader.ReadData;
 
 /**
  * This class tests the decision calculator.

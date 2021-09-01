@@ -1,4 +1,4 @@
-package testing;
+package farmind.testing;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,7 +9,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import main.Consumat;
+import farmind.main.Consumat;
 
 public class ConsumatTest {
 

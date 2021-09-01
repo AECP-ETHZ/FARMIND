@@ -1,4 +1,4 @@
-package mathematical_programming;
+package farmind.mathematical_programming;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -17,8 +17,8 @@ import java.util.logging.Logger;
 
 import com.opencsv.CSVReader;
 
-import activity.Activity;
-import agent.Farm;
+import farmind.activity.Activity;
+import farmind.agent.Farm;
 
 
 /** 

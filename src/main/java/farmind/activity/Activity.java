@@ -1,4 +1,4 @@
-package activity;
+package farmind.activity;
 
 /**
  * Each agent has a set of possible activities that are a result of strategic decision-making based on the COMSUMAT approach. 

@@ -7,4 +7,4 @@
  * @author kellerke
  *
  */
-package main;
+package farmind.main;

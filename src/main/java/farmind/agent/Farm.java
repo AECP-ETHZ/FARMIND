@@ -1,4 +1,4 @@
-package agent;
+package farmind.agent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,9 +14,9 @@ import org.apache.commons.math3.distribution.NormalDistribution;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 
-import activity.Activity;
-import fuzzy_logic.FuzzyLogicCalculator;
-import reader.FarmDataMatrix;
+import farmind.activity.Activity;
+import farmind.fuzzy_logic.FuzzyLogicCalculator;
+import farmind.reader.FarmDataMatrix;
 
 /** 
  * Farm object contains farm characteristics, an activity list, activity preferences, experience of performing activities and a social network. 

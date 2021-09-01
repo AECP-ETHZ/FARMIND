@@ -6,4 +6,4 @@
  * @author kellerke
  *
  */
-package fuzzy_logic;
+package farmind.fuzzy_logic;

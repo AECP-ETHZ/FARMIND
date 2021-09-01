@@ -41,6 +41,8 @@ public class PreCalculated implements MP_Interface{
     private Map<Integer, String> yearRunMap;
     
     private final static String MP_DATA_FOLDER = "MPdata";
+
+    private static final double NEAR_MAXIMUM = 0.95;
 	
     /**
      * Constructor
@@ -120,16 +122,16 @@ public class PreCalculated implements MP_Interface{
             Map<String,Map<String,Score>> allFarmScores = new HashMap<String,Map<String,Score>>();
             
             // incomes
-    	    Map<String,Map<String,Double>> farmIncomes = new HashMap<String,Map<String,Double>>();
+    	    Map<String,Map<String,Integer>> farmIncomes = new HashMap<String,Map<String,Integer>>();
             String[] row;
     	    while ((row = reader.readNext()) != null) {
     	        
                 String farmName = row[0].trim();
                 if (farmName == "") break;
                 
-                Map<String,Double> farmIncome = new HashMap<String,Double>();
+                Map<String, Integer> farmIncome = new HashMap<String, Integer>();
                 for (int i=1; i<incomes.length; i++) {
-                    farmIncome.put(incomes[i], Double.parseDouble(row[i]));
+                    farmIncome.put(incomes[i], Integer.parseInt(row[i]));
                 }
                 farmIncomes.put(farmName, farmIncome);
     	    }
@@ -147,7 +149,7 @@ public class PreCalculated implements MP_Interface{
                     if (this.acceptableIncome(farmName, incomes[i])) {
                         farmScore.put(incomes[i], new Score(
                             farmIncomes.get(farmName).get(incomes[i]),
-                            Double.parseDouble(row[i])
+                            Integer.parseInt(row[i])
                         ));
                     }
                 }
@@ -158,18 +160,42 @@ public class PreCalculated implements MP_Interface{
             
             for (Entry<String, Map<String, Score>> farmScores : allFarmScores.entrySet()) {
                 List<Entry<String, Score>> entryList = new ArrayList<Entry<String, Score>>(farmScores.getValue().entrySet());
+                int maxIncome = 0;
+                for (Entry<String, Score> scoreEntry : entryList) {
+                    if (scoreEntry.getValue().income > maxIncome) {
+                        maxIncome = scoreEntry.getValue().income;
+                    }
+                }
+                int highIncome = (int)(NEAR_MAXIMUM * maxIncome);
                 Collections.sort(entryList, new Comparator<Entry<String, Score>>(){
                     @Override
                     public int compare(Entry<String, Score> a, Entry<String, Score> b) {
                         Score sa = a.getValue();
                         Score sb = b.getValue();
                         
-                        if (sa.income > sb.income) return -1;
-                        if (sa.income < sb.income) return 1;
+                        boolean aElite = sa.income >= highIncome;
+                        boolean bElite = sb.income >= highIncome;
                         
-                        if (sa.impact < sb.impact) return -1;
-                        if (sa.impact > sb.impact) return 1;
+                        if (aElite && !bElite) return -1;
                         
+                        if (!aElite && bElite) return 1;
+                        
+                        if (!aElite && !bElite) {
+                            if (sa.income > sb.income) return -1;
+                            if (sa.income < sb.income) return 1;
+                            
+                            if (sa.impact < sb.impact) return -1;
+                            if (sa.impact > sb.impact) return 1;
+                        }
+                        
+                        if (aElite && bElite) {
+                            if (sa.impact < sb.impact) return -1;
+                            if (sa.impact > sb.impact) return 1;
+                            
+                            if (sa.impact < sb.impact) return -1;
+                            if (sa.impact > sb.impact) return 1;
+                        }
+
                         return 0;
                    }
                 });

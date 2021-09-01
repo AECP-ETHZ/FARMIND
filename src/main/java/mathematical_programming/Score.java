@@ -8,11 +8,10 @@ package mathematical_programming;
  */
 
 class Score {
-    public final Double income;
-    public final Double impact;
-    public Score(final Double income, final Double impact) {
+    public final Integer income;
+    public final Integer impact;
+    public Score(final Integer income, final Integer impact) {
         this.income = income;
         this.impact = impact;
     }
 }
-    

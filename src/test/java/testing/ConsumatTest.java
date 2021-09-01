@@ -23,7 +23,7 @@ public class ConsumatTest {
 
     @Test
     public void testMain() throws FileNotFoundException, IOException {
-        Consumat.main(new String[0]);
+        Consumat.main(new String[] {"2", "test-out"});
     }
 
 }

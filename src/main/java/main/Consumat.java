@@ -1,9 +1,11 @@
 package main;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
@@ -32,8 +34,8 @@ import reader.ReadData;
 public class Consumat {
     static long line_counter = 0;
     static int file_counter = 1;
-    static String origFileName = createFileName();                                                   // file name for logging
-    static String FileName = origFileName + String.format("%d",0);                                   // After 1 million lines, excel cannot read the file so we have to append at a certian 
+    static String origFileName;  // file name for logging
+    static String FileName;  // After 1 million lines, excel cannot read the file so we have to append at a certian 
     private static final Logger LOGGER = Logger.getLogger("FARMIND_LOGGING");
     static FileHandler fh;
      
@@ -50,10 +52,22 @@ public class Consumat {
         int                       memoryLengthAverage = averageMemoryLength(allFarms);             // average memory length of all agents/farms
         boolean                   pricingAverage      = true;                                      // use the average pricing information for the historical memory length
         
+        if (cmd.getProperty("orig_file_name") != null) {
+            origFileName = cmd.getProperty("orig_file_name");
+            FileName = String.format("%s_%d",origFileName, 0);
+            for (String ending : Arrays.asList("parameters", "activity_averagePrice", "activity_actualPrice")) {
+                File csv = new File(String.format("./output/%s_%s.csv", FileName, ending));
+                if (csv.exists()) csv.delete();
+            }
+        } else {
+            origFileName = createFileName();  // file name for logging
+            FileName = origFileName + String.format("%d",0);
+        }
+        
         // initialize the farms with the input values before starting the full ABM simulation
-        initializePopulationIncomeChangeRate(allFarms);                                               
+        initializePopulationIncomeChangeRate(allFarms);
 
-        for (int year = 1; year <= simYear; year++) {                                               
+        for (int year = 1; year <= simYear; year++) {
             LOGGER.info(String.format("Year %d simulation started", year));
             
             MP_Interface MP = new FactoryMP(cmd, simYear, memoryLengthAverage).getMP();            // select correct model based on input command parameter
@@ -97,7 +111,7 @@ public class Consumat {
         for (Farm farm : allFarms) {
 
             List<Activity> selectedActivity = MP_Activities.get(farmIndex); 
-            List<String>   selectedActivityString = new ArrayList<>();                     // create string list of final selected activities
+            List<String>   selectedActivityString = new ArrayList<>();  // create string list of final selected activities
             
             for (Activity act: selectedActivity) {
                 selectedActivityString.add(act.getName());
@@ -124,20 +138,20 @@ public class Consumat {
         double income = 0;    
         ArrayList<Activity> activity = null;
         for (Farm farm : allFarms) {
-            if (year == 1) {                                                                   // ignore first year updated as we already have that initialized with input file
+            if (year == 1) {                                                                       // ignore first year updated as we already have that initialized with input file
                 income = -1;
             } else {
-                income = MP_Incomes.get(farmIndex);                                               // for all other years get the MP income and the MP activities to update each farm
+                income = MP_Incomes.get(farmIndex);                                                // for all other years get the MP income and the MP activities to update each farm
                 activity = MP_Activities.get(farmIndex);
             }
             
-            if (farm.getStrategy() == 1) {                                                       // If farm exited farm activities previously, then keep farm as exit activity
+            if (farm.getStrategy() == 1) {                                                         // If farm exited farm activities previously, then keep farm as exit activity
                 activity = MP.getExitActivity();
             }
             
-            farm.updateExperience();                                                             // each time period update experience
-            farm.updateFarmParameters(allFarms, income, activity);         
-            List<String> possibleActivitySet = farm.decideActivitySet(allFarms,cmd);      
+            farm.updateExperience();                                                               // each time period update experience
+            farm.updateFarmParameters(allFarms, income, activity);
+            List<String> possibleActivitySet = farm.decideActivitySet(allFarms, cmd);
             
             ABMTimeStepLog log = new ABMTimeStepLog(
                     cmd.getProperty("modelName"),
@@ -149,8 +163,8 @@ public class Consumat {
             
             MP.inputsforMP(farm, possibleActivitySet);
         
-            farm.updateAge();                                                                     // each time period update age
-            farmIndex++;                                                                       // go to next farm in list
+            farm.updateAge();                                                                      // each time period update age
+            farmIndex++;                                                                           // go to next farm in list
         }
     }
 
@@ -194,8 +208,8 @@ public class Consumat {
             fh.setLevel(Level.ALL);
             
             LOGGER.addHandler(fh);
-            SimpleFormatter formatter = new SimpleFormatter();  
-            fh.setFormatter(formatter);  
+            SimpleFormatter formatter = new SimpleFormatter();
+            fh.setFormatter(formatter);
             
             LOGGER.setLevel(Level.ALL);
             
@@ -242,10 +256,15 @@ public class Consumat {
 
             //load a properties file from class path
             prop.load(input);
+            //overwrite some properties
             if (args.length == 1) {
                 prop.setProperty("year", args[0]);
-            }            
-            LOGGER.info("set iteration count to " + prop.getProperty("year"));
+                LOGGER.info("set iteration count to " + prop.getProperty("year"));
+            }
+            if (args.length == 2) {
+                prop.setProperty("orig_file_name", args[1]);
+                LOGGER.info("write output to " + prop.getProperty("orig_file_name") +"...");
+            }
  
             return prop;
         }
@@ -272,17 +291,17 @@ public class Consumat {
         List<Double> differenceIncomeYears = new ArrayList<Double>();
         List<Double> populationYearlyMeanIncome = new ArrayList<Double>();
         
-        int memory = allFarms.get(0).getMemory();                              // assume all farms have same memory length
+        int memory = allFarms.get(0).getMemory();  // assume all farms have same memory length
         
         for(int i = 0; i < memory; i++) {
             List<Double> incomeFarmYear = new ArrayList<Double>();
             for (Farm farm: allFarms) {
-                incomeFarmYear.add(farm.getIncomeHistory().get(i)); 
+                incomeFarmYear.add(farm.getIncomeHistory().get(i));
             }
-            populationYearlyMeanIncome.add(mean(incomeFarmYear));    
+            populationYearlyMeanIncome.add(mean(incomeFarmYear));
         }
         
-        int meanYearCount = 2;                                                 // number of years to count in the past for the mean calculation
+        int meanYearCount = 2;  // number of years to count in the past for the mean calculation
         
         for(int i = meanYearCount; i > 0; i-- ) {
             double diff = (populationYearlyMeanIncome.get(i-1) -  populationYearlyMeanIncome.get(i)) /  populationYearlyMeanIncome.get(i);
@@ -304,10 +323,10 @@ public class Consumat {
         List<Double> differenceIncomeYears = new ArrayList<Double>();
         List<Double> populationYearlyMeanIncome = new ArrayList<Double>();
         
-        int memory = allFarms.get(0).getMemory();                              // assume all farms have same memory length
+        int memory = allFarms.get(0).getMemory();  // assume all farms have same memory length
         double currentYearAverageIncome = mean(thisYearIncome);
         populationYearlyMeanIncome.add(currentYearAverageIncome);
-                
+        
         // get the average income for the population for each year, but skip the oldest income. 
         // The incomes will get updated for each agent, and the oldest income will be removed. 
         for(int i = 0; i < memory-1; i++) {
@@ -318,7 +337,7 @@ public class Consumat {
             populationYearlyMeanIncome.add(mean(incomeFarmYear));    
         }
         
-        int meanYearCount = 2;                                                 // number of years to count in the past for the mean calculation
+        int meanYearCount = 2;  // number of years to count in the past for the mean calculation
         
         for(int i = meanYearCount; i > 0; i-- ) {
             double diff = (populationYearlyMeanIncome.get(i-1) -  populationYearlyMeanIncome.get(i)) /  populationYearlyMeanIncome.get(i);
@@ -337,7 +356,7 @@ public class Consumat {
      * @return mean :: average of the input list
      */
     private static double mean(List<Double> list) {
-        double mean = 0;                                                       // mean value to return
+        double mean = 0;  // mean value to return
         
         for (int i = 0; i<list.size(); i++) {
             mean = mean + list.get(i);
@@ -351,12 +370,12 @@ public class Consumat {
      * @return fileName :: base name of output logging file
      */
     public static String createFileName() {
-        Calendar now = Calendar.getInstance();                             // Gets the current date and time
+        Calendar now = Calendar.getInstance();  // Gets the current date and time
         int day = now.get(Calendar.DAY_OF_MONTH); 
         int month = now.get(Calendar.MONTH) + 1;
         int year_file = now.get(Calendar.YEAR);
         int hour = now.get(Calendar.HOUR);
-        int minute = now.get(Calendar.MINUTE);    
+        int minute = now.get(Calendar.MINUTE);
         String fileName = String.format("Results-%d%02d%02d_%d-%d_v", year_file, month, day, hour, minute);
         
         return fileName;

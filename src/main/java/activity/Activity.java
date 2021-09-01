@@ -10,8 +10,8 @@ package activity;
  */
 public class Activity {
 
-	private String name;												       // name of the activity 
-	private int ID;															   // ID of the activity 
+	private String name;	// name of the activity 
+	private int ID;			// ID of the activity 
 
 	/**
 	 * Activity object constructor. Always check against master list of activities before creation.

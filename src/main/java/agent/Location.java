@@ -5,15 +5,15 @@ package agent;
  *
  */
 public class Location {
-	
-	private double[] coordinates;
+    
+    private double[] coordinates;
 
-	public double[] getCoordinates() {
-		return this.coordinates;
-	}
+    public double[] getCoordinates() {
+        return this.coordinates;
+    }
 
-	public void setCoordinates(double[] coordinates) {
-		this.coordinates = coordinates;
-	} 
+    public void setCoordinates(double[] coordinates) {
+        this.coordinates = coordinates;
+    } 
 
 }

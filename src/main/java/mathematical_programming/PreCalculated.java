@@ -31,7 +31,7 @@ import agent.Farm;
 public class PreCalculated implements MP_Interface{
 
     private static final Logger LOGGER = Logger.getLogger("FARMIND_LOGGING");
-	
+    
     private Map<String,Set<String>> possibleActivitiesState;
     
     private Map<String, List<Entry<String, Score>>> yearsHarvest;
@@ -43,7 +43,7 @@ public class PreCalculated implements MP_Interface{
     private final static String MP_DATA_FOLDER = "MPdata";
 
     private static final double NEAR_MAXIMUM = 0.95;
-	
+    
     /**
      * Constructor
      * 
@@ -54,14 +54,14 @@ public class PreCalculated implements MP_Interface{
      * @throws FileNotFoundException 
      * @throws InvalidInputFileException 
      */
-	public PreCalculated(Properties cmd, int simYear, int memoryLengthAverage) throws FileNotFoundException, IOException {
-	    this.possibleActivitiesState = new HashMap<String,Set<String>>();
-	    this.yearsHarvest = new HashMap<String,List<Entry<String,Score>>>();
-	    
-	    this.incomeActivityMap = new HashMap<String,List<String>>();
-	    try (CSVReader reader = new CSVReader(new FileReader(
-	            String.format("%s/%s/transformation-activity-income.csv", cmd.get("data_folder"), PreCalculated.MP_DATA_FOLDER)
-	        ), ',')) {
+    public PreCalculated(Properties cmd, int simYear, int memoryLengthAverage) throws FileNotFoundException, IOException {
+        this.possibleActivitiesState = new HashMap<String,Set<String>>();
+        this.yearsHarvest = new HashMap<String,List<Entry<String,Score>>>();
+        
+        this.incomeActivityMap = new HashMap<String,List<String>>();
+        try (CSVReader reader = new CSVReader(new FileReader(
+                String.format("%s/%s/transformation-activity-income.csv", cmd.get("data_folder"), PreCalculated.MP_DATA_FOLDER)
+            ), ',')) {
             String[] columns = reader.readNext();
             
             String[] row;
@@ -101,31 +101,31 @@ public class PreCalculated implements MP_Interface{
             }
         }
 
-	}
-	
+    }
+    
     @Override
     public void inputsforMP(Farm farm, List<String> possibleActivity) throws IOException {
         this.possibleActivitiesState.put(farm.getFarmName(), new HashSet<String>());
         this.possibleActivitiesState.get(farm.getFarmName()).addAll(possibleActivity);
     }
 
-	@Override
-	public void runModel(Properties cmd, int nFarms, int year, boolean pricingAverage, int memoryLengthAverage) throws IOException {
-	    LOGGER.info("run calculation for year "+year
+    @Override
+    public void runModel(Properties cmd, int nFarms, int year, boolean pricingAverage, int memoryLengthAverage) throws IOException {
+        LOGGER.info("run calculation for year "+year
                 + "\n      nFarms: "+nFarms
                 + "\n      pricingAverage: "+pricingAverage
                 + "\n      memoryLengthAverage: "+memoryLengthAverage);
-	    try (CSVReader reader = new CSVReader(new FileReader(
-	        String.format("%s/%s/%s.csv", cmd.get("data_folder"), PreCalculated.MP_DATA_FOLDER, this.yearRunMap.get(year))
-	    ), ',')) {
-	        String[] incomes = reader.readNext();
+        try (CSVReader reader = new CSVReader(new FileReader(
+            String.format("%s/%s/%s.csv", cmd.get("data_folder"), PreCalculated.MP_DATA_FOLDER, this.yearRunMap.get(year))
+        ), ',')) {
+            String[] incomes = reader.readNext();
             Map<String,Map<String,Score>> allFarmScores = new HashMap<String,Map<String,Score>>();
             
             // incomes
-    	    Map<String,Map<String,Integer>> farmIncomes = new HashMap<String,Map<String,Integer>>();
+            Map<String,Map<String,Integer>> farmIncomes = new HashMap<String,Map<String,Integer>>();
             String[] row;
-    	    while ((row = reader.readNext()) != null) {
-    	        
+            while ((row = reader.readNext()) != null) {
+                
                 String farmName = row[0].trim();
                 if (farmName == "") break;
                 
@@ -134,10 +134,10 @@ public class PreCalculated implements MP_Interface{
                     farmIncome.put(incomes[i], Integer.parseInt(row[i]));
                 }
                 farmIncomes.put(farmName, farmIncome);
-    	    }
-    	    
-    	    // at this point row is kind of a header: [, THG1, THG2, THG3, ...]
-    	    
+            }
+            
+            // at this point row is kind of a header: [, THG1, THG2, THG3, ...]
+            
             // impact
             while ((row = reader.readNext()) != null) {
                 
@@ -202,43 +202,43 @@ public class PreCalculated implements MP_Interface{
                 
                 this.yearsHarvest.put(farmScores.getKey(), entryList);
             }
-	    }
-	}
+        }
+    }
 
-	private boolean acceptableIncome(String farmName, String income) {
-	    Set<String> possibleActivities = this.possibleActivitiesState.get(farmName);
-	    List<String> incomeActivities = this.incomeActivityMap.get(income);
-	    for (String activity : incomeActivities) {
-	        if (!possibleActivities.contains(activity)) return false;
-	    }
-	    return true;
-	}
-	
-	@Override
-	public List<Double> readMPIncomes(Properties cmd, List<Farm> allFarms) throws FileNotFoundException, IOException {
-		List<Double> incomes = new ArrayList<Double>();  // list of all farm incomes, same order as allFarms
+    private boolean acceptableIncome(String farmName, String income) {
+        Set<String> possibleActivities = this.possibleActivitiesState.get(farmName);
+        List<String> incomeActivities = this.incomeActivityMap.get(income);
+        for (String activity : incomeActivities) {
+            if (!possibleActivities.contains(activity)) return false;
+        }
+        return true;
+    }
+    
+    @Override
+    public List<Double> readMPIncomes(Properties cmd, List<Farm> allFarms) throws FileNotFoundException, IOException {
+        List<Double> incomes = new ArrayList<Double>();  // list of all farm incomes, same order as allFarms
 
-		for (Farm farm : allFarms) {
-		    List<Entry<String, Score>> possibleScores = this.yearsHarvest.get(farm.getFarmName());
-		    Double income = possibleScores.isEmpty() ? 0.0 : possibleScores.get(0).getValue().income;
-		    if (possibleScores.isEmpty()) {
-		        LOGGER.info(String.format("n: %s, a: %s, i: %d",
-	                farm.getFarmName(),
-	                farm.getCurrentActivity().get(0).getName(),
-	                farm.getCurrentActivity().get(0).getID()
-	            ));
-		    }
-		    incomes.add(income);
-		}
+        for (Farm farm : allFarms) {
+            List<Entry<String, Score>> possibleScores = this.yearsHarvest.get(farm.getFarmName());
+            Double income = possibleScores.isEmpty() ? 0.0 : possibleScores.get(0).getValue().income;
+            if (possibleScores.isEmpty()) {
+                LOGGER.info(String.format("n: %s, a: %s, i: %d",
+                    farm.getFarmName(),
+                    farm.getCurrentActivity().get(0).getName(),
+                    farm.getCurrentActivity().get(0).getID()
+                ));
+            }
+            incomes.add(income);
+        }
 
-		return incomes;
-	}
+        return incomes;
+    }
 
-	@Override
-	public List<ArrayList<Activity>> readMPActivities(Properties cmd, List<Farm> allFarms) throws FileNotFoundException, IOException {
-		List<ArrayList<Activity>> activities = new ArrayList<ArrayList<Activity>>();  // list of all farm activities selected by MP model
+    @Override
+    public List<ArrayList<Activity>> readMPActivities(Properties cmd, List<Farm> allFarms) throws FileNotFoundException, IOException {
+        List<ArrayList<Activity>> activities = new ArrayList<ArrayList<Activity>>();  // list of all farm activities selected by MP model
         
-		for (Farm farm : allFarms) {
+        for (Farm farm : allFarms) {
             ArrayList<Activity> farmActivities = new ArrayList<Activity>();
             
             // that's not really a for loop, it just processes the first item - if any - and breaks.
@@ -261,17 +261,17 @@ public class PreCalculated implements MP_Interface{
             activities.add(farmActivities);
         }
 
-		return activities;
-	}
+        return activities;
+    }
 
-	@Override
-	public ArrayList<Activity> getExitActivity() {
-		// if the agent decides to opt-out we use this to return the correct opt-out activity
-		ArrayList<Activity> activities = new ArrayList<Activity>();
-		
-		Activity exit = new Activity(1,"activity01");
-		activities.add(exit);
-	
-		return activities;
-	}
+    @Override
+    public ArrayList<Activity> getExitActivity() {
+        // if the agent decides to opt-out we use this to return the correct opt-out activity
+        ArrayList<Activity> activities = new ArrayList<Activity>();
+        
+        Activity exit = new Activity(1,"activity01");
+        activities.add(exit);
+    
+        return activities;
+    }
 }

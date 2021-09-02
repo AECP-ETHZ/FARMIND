@@ -41,8 +41,10 @@ public class PreCalculated implements MP_Interface{
     private Map<Integer, String> yearRunMap;
     
     private final static String MP_DATA_FOLDER = "MPdata";
-
-    private static final double NEAR_MAXIMUM = 0.95;
+    
+    private final static double NEAR_MAXIMUM = 0.95;
+    
+    private final double nearMaximum;
     
     /**
      * Constructor
@@ -100,7 +102,10 @@ public class PreCalculated implements MP_Interface{
                 this.yearRunMap.put(year, runFile);
             }
         }
-
+        
+        this.nearMaximum = cmd.get("near_maximum") == null
+                ? NEAR_MAXIMUM
+                : Double.parseDouble(cmd.getProperty("near_maximum"));
     }
     
     @Override
@@ -166,7 +171,7 @@ public class PreCalculated implements MP_Interface{
                         maxIncome = scoreEntry.getValue().income;
                     }
                 }
-                int highIncome = (int)(NEAR_MAXIMUM * maxIncome);
+                int highIncome = (int)(this.nearMaximum * maxIncome);
                 Collections.sort(entryList, new Comparator<Entry<String, Score>>(){
                     @Override
                     public int compare(Entry<String, Score> a, Entry<String, Score> b) {

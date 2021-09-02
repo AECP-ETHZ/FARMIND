@@ -257,11 +257,11 @@ public class Consumat {
             //load a properties file from class path
             prop.load(input);
             //overwrite some properties
-            if (args.length == 1) {
+            if (args.length >= 1) {
                 prop.setProperty("year", args[0]);
                 LOGGER.info("set iteration count to " + prop.getProperty("year"));
             }
-            if (args.length == 2) {
+            if (args.length >= 2) {
                 prop.setProperty("orig_file_name", args[1]);
                 LOGGER.info("write output to " + prop.getProperty("orig_file_name") +"...");
             }

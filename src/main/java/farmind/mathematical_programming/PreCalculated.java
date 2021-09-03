@@ -40,8 +40,6 @@ public class PreCalculated implements MP_Interface{
     
     private Map<Integer, String> yearRunMap;
     
-    private final static String MP_DATA_FOLDER = "MPdata";
-    
     private final static double NEAR_MAXIMUM = 0.95;
     
     private final double nearMaximum;
@@ -62,7 +60,7 @@ public class PreCalculated implements MP_Interface{
         
         this.incomeActivityMap = new HashMap<String,List<String>>();
         try (CSVReader reader = new CSVReader(new FileReader(
-                String.format("%s/%s/transformation-activity-income.csv", cmd.get("data_folder"), PreCalculated.MP_DATA_FOLDER)
+                String.format("%s/transformation-activity-income.csv", cmd.get("precalc_MPdata_folder"))
             ), ',')) {
             String[] columns = reader.readNext();
             
@@ -121,7 +119,7 @@ public class PreCalculated implements MP_Interface{
                 + "\n      pricingAverage: "+pricingAverage
                 + "\n      memoryLengthAverage: "+memoryLengthAverage);
         try (CSVReader reader = new CSVReader(new FileReader(
-            String.format("%s/%s/%s.csv", cmd.get("data_folder"), PreCalculated.MP_DATA_FOLDER, this.yearRunMap.get(year))
+            String.format("%s/%s.csv", cmd.get("precalc_MPdata_folder"), this.yearRunMap.get(year))
         ), ',')) {
             String[] incomes = reader.readNext();
             Map<String,Map<String,Score>> allFarmScores = new HashMap<String,Map<String,Score>>();

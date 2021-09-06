@@ -133,9 +133,6 @@ public class Farm {
     public List<String> decideActivitySet(List<Farm> allFarms, Properties cmd) {
         List<String> ActivitySet = new ArrayList<String>();
         
-        // list of activities from fuzzy logic
-        FuzzyLogicCalculator fuzzyLogicCalc = new FuzzyLogicCalculator(this, allFarms);  // calculator for the activity selection
-        
         // In case the farmer retires, opt-out
         if ((this.head.getAge() > 650)) {
             this.strategy = 1;
@@ -148,6 +145,9 @@ public class Farm {
             }
             return ActivitySet;
         }
+        
+        // list of activities from fuzzy logic
+        FuzzyLogicCalculator fuzzyLogicCalc = new FuzzyLogicCalculator(this, allFarms);  // calculator for the activity selection
         
         // modified simulation using only satisfaction
         if ( Integer.parseInt(cmd.getProperty("uncertainty")) == 0) {

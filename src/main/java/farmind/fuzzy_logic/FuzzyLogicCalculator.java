@@ -97,7 +97,11 @@ public class FuzzyLogicCalculator {
         
         for (int i = 0; i< len - 2; i++) {
             for (int j = 0; j < len - 2; j++) {
-                double score = ( this.farm.getP_beta_p()*p_p[i][j] + this.farm.getP_beta_l()*(p_l[i][j]) + this.farm.getP_beta_s()*(p_s[i][j]) )  / (p_p[i][j] + (p_l[i][j]) + (p_s[i][j]));
+                double score = (
+                      this.farm.getP_beta_p()*p_p[i][j]
+                    + this.farm.getP_beta_l()*p_l[i][j]
+                    + this.farm.getP_beta_s()*p_s[i][j]
+                )  / (p_p[i][j] + p_l[i][j] + p_s[i][j]);
                 if(Double.isNaN(score)) {
                     score = 0;
                 }
@@ -177,7 +181,7 @@ public class FuzzyLogicCalculator {
         // Ex: orig = [0.8,0.3,1.0,0.8] --> sorted = [1.0,0.8,0.8,0.3]
         // Take 1.0 from the sorted list and match to index value 2 from the original list. Then find activity with index 2 in the activity list of the system
         // Then take 0.8 and match that to index 0 and find corresponding activity[index = 0].
-        for (int i = 0; i< selectedActivityList.size(); i++) {                               
+        for (int i = 0; i< selectedActivityList.size(); i++) {
             index = originalND.indexOf(selectedActivityList.get(i));
             activityList.add(this.farm.getPreferences().getDataElementName().get(index));
             originalND.set(index, -1.0);                                       // duplicate values exist in array, so 'remove' when used to get next duplicate value

@@ -1,0 +1,6 @@
+,latitude,longitude,year,education,memory,beta_l,beta_s,beta_p,reference_income,aspiration_coef,tolerance_income,tolerance_activity,lambda,alpha_plus,alpha_minus,phi_plus,phi_minus,opt_fuzzy_size,imt_fuzzy_size,ranking_version,learning_rate
+agent01,0,0,1981,9,5,1,1,1,40932,0,0.9,0.07,2.25,0.88,0.88,0.61,0.69,5,5,0,1
+agent02,0,0,1981,12,5,1,1,1,238270,0,0.9,0.19,2.25,0.88,0.88,0.61,0.69,5,5,0,1
+agent03,0,0,1981,8,5,1,1,1,204049,0,0.9,0.2,2.25,0.88,0.88,0.61,0.69,5,5,0,1
+agent04,0,0,1981,6,5,1,1,1,240861,0,0.9,0.3,2.25,0.88,0.88,0.61,0.69,5,5,0,1
+agent05,0,0,1981,10,5,1,1,1,240861,0,0.9,0.2,2.25,0.88,0.88,0.61,0.69,5,5,0,1

@@ -1,0 +1,6 @@
+,agent01,agent02,agent03,agent04,agent05
+agent01,1,0,1,0,0
+agent02,0,1,1,0,1
+agent03,1,1,1,1,1
+agent04,0,0,1,1,0
+agent05,0,1,1,0,1

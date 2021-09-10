@@ -69,7 +69,8 @@ public class ConsumatTest {
             }
         }
         
-        assertEquals(activityPrice.get(yers-1).get("agent05").get("income"), "247861.0");
-        assertEquals(parameters.get(yers-1).get("agent05").get("possible_activity_e"), "activity05");
+        assertEquals("247861.0", activityPrice.get(yers-1).get("agent05").get("income"));
+        assertEquals("551354.0", activityPrice.get(yers-1).get("agent03").get("thg"));
+        assertEquals("activity05", parameters.get(yers-1).get("agent05").get("possible_activity_e"));
     }
 }

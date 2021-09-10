@@ -25,21 +25,25 @@ public class ABMActivityLog {
     private final int PREVIOUS_ACTIVITY_SET_PRINTING_SIZE; // how many activities to print
     private final int SELECTED_ACTIVITY_SET_PRINTING_SIZE; // how many activities to print
     private final double income;                           // income of farm
-    
-    /** 
+    private final Double impact;                           // THG of farm
+
+    /**
      * Constructor for the CSV Log
-     * @param modelName ::          string name of agent
-     * @param year ::                time period
+     * @param modelName :: string name of agent
+     * @param year :: time period
      * @param MPSelectedActivity :: best activity from the MP model
-     * @param farm ::                specific farm for this decision object
+     * @param MP_Income :: the income achieved by selected activities
+     * @param MP_Impact :: the impact caused by selected activities
+     * @param farm :: specific farm for this decision object
      */
-    public ABMActivityLog(String modelName, Integer year, final List<Activity> MPSelectedActivity, Double MP_Incomes, final Farm farm) {
+    public ABMActivityLog(String modelName, Integer year, final List<Activity> MPSelectedActivity, Double MP_Income, Double MP_Impact, final Farm farm) {
         this.farmId = farm.getFarmName();
         this.year = year;
         this.strategy = farm.getStrategy();
         this.currentActivity = farm.getCurrentActivity();
         this.MPSelectedActivity = MPSelectedActivity;
-        this.income = MP_Incomes;
+        this.income = MP_Income;
+        this.impact = MP_Impact;
         
         switch (modelName) {
             case "WEEDCONTROL": 
@@ -56,6 +60,7 @@ public class ABMActivityLog {
                 break;
         }
     }
+
     
     /** 
      * write output CSV log file based on decision object. This log file can be updated each time period for each agent. 
@@ -77,21 +82,24 @@ public class ABMActivityLog {
         try (PrintWriter writer = new PrintWriter(
             new BufferedWriter(new FileWriter(file, true))
         )) {
-        
-            String name = "year,name,";
-            
-            for(int i = 0; i < this.PREVIOUS_ACTIVITY_SET_PRINTING_SIZE; i++) {
-                name = name + String.format("previous_activity_%c,", (char)('a' + i));
-            }
-    
-            for(int i = 0; i < this.SELECTED_ACTIVITY_SET_PRINTING_SIZE; i++) {
-                name = name + String.format("selected_activity_%c,", (char)('a' + i));
-            }
-            
-            name = name + "strategy";
-            name = name + ",income";
-            
             if (!appending) {
+                String name = "year,name,";
+                
+                for(int i = 0; i < this.PREVIOUS_ACTIVITY_SET_PRINTING_SIZE; i++) {
+                    name = name + String.format("previous_activity_%c,", (char)('a' + i));
+                }
+                
+                for(int i = 0; i < this.SELECTED_ACTIVITY_SET_PRINTING_SIZE; i++) {
+                    name = name + String.format("selected_activity_%c,", (char)('a' + i));
+                }
+                
+                name = name + "strategy";
+                name = name + ",income";
+                
+                if (this.impact != null) {
+                    name = name + ",thg";
+                }
+                
                 writer.println(name);
             }
             
@@ -136,8 +144,9 @@ public class ABMActivityLog {
                 }
             }
             
-            writer.print(String.format("%s,",this.strategy) );
-            writer.print(String.format("%s",this.income) );
+            writer.print(String.format("%s,",this.strategy));
+            writer.print(String.format("%s",this.income));
+            if (this.impact != null) writer.print(String.format(",%s",this.impact));
             
             writer.println("");
         }

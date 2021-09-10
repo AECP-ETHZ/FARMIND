@@ -514,4 +514,10 @@ public class WeedControl implements MP_Interface{
 				{54,3},
 				{54,4}														   // strategy 72, post sowing 54, pre sowing 4
 		};
+
+    @Override
+    public List<Double> readMPImpacts(Properties cmd, List<Farm> allFarms) {
+        return Arrays.asList(new Double[allFarms.size()]);
+    }
+
 }

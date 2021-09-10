@@ -277,4 +277,18 @@ public class PreCalculated implements MP_Interface{
     
         return activities;
     }
+
+    @Override
+    public List<Double> readMPImpacts(Properties cmd, List<Farm> allFarms) {
+        List<Double> impacts = new ArrayList<Double>();  // list of all farm impacts (THG value), same order as allFarms
+
+        for (Farm farm : allFarms) {
+            List<Entry<String, Score>> possibleScores = this.yearsHarvest.get(farm.getFarmName());
+            Double impact = possibleScores.isEmpty() ? 0.0 : possibleScores.get(0).getValue().impact;
+            impacts.add(impact);
+        }
+
+        return impacts;
+    }
+
 }

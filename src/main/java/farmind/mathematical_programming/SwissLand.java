@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
@@ -343,5 +344,10 @@ public class SwissLand implements MP_Interface{
     private void editMPscript(int nFarm, int year) {	
         // TODO: implementation
 	}
+
+    @Override
+    public List<Double> readMPImpacts(Properties cmd, List<Farm> allFarms) {
+        return Arrays.asList(new Double[allFarms.size()]);
+    }
 
 }

@@ -25,9 +25,10 @@ import farmind.mathematical_programming.PreCalculated;
 import farmind.reader.ReadData;
 
 /** 
- * This class contains the main() method of this program. 
- * Full simulation runs inside of the main() method by creating farm objects and making decisions for each farm.
- * Each time period, update the farm and run the linear optimization model. 
+ * This class contains the main() method of this program.
+ * Full simulation runs inside of the main() method by creating farm objects and making decisions
+ * for each farm.
+ * For each time period, update the farm and run the linear optimization model.
  * 
  * @author kellerke
  */
@@ -103,7 +104,8 @@ public class Consumat {
     /** 
      * rerun Weedcontrol model using selected strategy, but actual pricing information
      * this needs to be done twice as the first time gets the activity based on EXPECTED income
-     * the second time we use the selected activity(ies) and get the ACTUAL income of that agent for the selected strategy
+     * the second time we use the selected activity(ies) and get the ACTUAL income of that agent
+     * for the selected strategy.
      * @param MP :: Mathematical programming object to manage model
      * @param allFarms :: list of all farms in system
      * @param MP_Activities :: List of activities for each farm
@@ -126,7 +128,8 @@ public class Consumat {
     }
     
     /** 
-     * For each farm in allFarms list, update the individual farm and then make the decision about best activity based on satisfaction and dissimilarity and prepare MP model control files
+     * For each farm in allFarms list, update the individual farm and then make the decision about
+     * best activity based on satisfaction and dissimilarity and prepare MP model control files
      * @param cmd :: input control properties for simulation
      * @param year :: current iteration of model
      * @param allFarms :: list of all farm agents
@@ -175,12 +178,14 @@ public class Consumat {
      * Create/update log file after MP run model results are read
      * @param cmd :: input control properties for simulation
      * @param year :: model iteration
-     * @param pricingAverage :: indicate if average historical crop price, or actual crop price was used for model run
+     * @param pricingAverage :: indicate if average historical crop price, or actual crop price was
+     *                          used for model run
      * @param allFarms :: list of all farm agents
      * @param MP_Incomes :: list of incomes from previous time period
      * @param MP_Impacts 
      * @param MP_Activities :: list of activities from previous time period
-     * @param MP_Interface :: mathematical programming model. Used to set the exit activity in the case where it is required. Makes the log cleaner. 
+     * @param MP_Interface :: mathematical programming model. Used to set the exit activity in the
+     *                        case where it is required. Makes the log cleaner. 
      * @throws IOException 
      */
     private static void logActivitesMP(Properties cmd, int year, boolean pricingAverage, List<Farm> allFarms, List<Double> MP_Incomes, List<Double> MP_Impacts, List<ArrayList<Activity>> MP_Activities, MP_Interface MP) throws IOException {
@@ -277,7 +282,8 @@ public class Consumat {
         
     /**
      * For the output log file, we update the name after 1 million lines. 
-     * Since Excel is not able to parse CSV files with more than 1 Million lines of data we need to add to the file name
+     * Since Excel is not able to parse CSV files with more than 1 Million lines of data we need to
+     * add to the file name
      */
     private static void updateLogFileName() {
         line_counter++;

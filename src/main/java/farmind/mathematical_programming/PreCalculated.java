@@ -121,7 +121,7 @@ public class PreCalculated implements MP_Interface{
         try (CSVReader reader = new CSVReader(new FileReader(
             String.format("%s/%s.csv", cmd.get("precalc_MPdata_folder"), this.yearRunMap.get(year))
         ), ',')) {
-            String[] incomes = reader.readNext();
+            String[] incomes = reader.readNext();  // header row: [, income1, income2, ...]
             Map<String,Map<String,Score>> allFarmScores = new HashMap<String,Map<String,Score>>();
             
             // incomes
@@ -130,7 +130,7 @@ public class PreCalculated implements MP_Interface{
             while ((row = reader.readNext()) != null) {
                 
                 String farmName = row[0].trim();
-                if (farmName.equals("")) break;
+                if (farmName.equals("")) break;  // we reached the THG header row
                 
                 Map<String, Integer> farmIncome = new HashMap<String, Integer>();
                 for (int i=1; i<incomes.length; i++) {
@@ -139,7 +139,8 @@ public class PreCalculated implements MP_Interface{
                 farmIncomes.put(farmName, farmIncome);
             }
             
-            // at this point row is kind of a header: [, THG1, THG2, THG3, ...]
+            // at this point half the file is supposed to be read and the current row looking like
+            // a header row: [, THG1, THG2, THG3, ...]
             
             // impact
             while ((row = reader.readNext()) != null) {
@@ -149,6 +150,9 @@ public class PreCalculated implements MP_Interface{
                 
                 Map<String,Score> farmScore = new HashMap<String,Score>();
                 for (int i=1; i<incomes.length; i++) {
+                    // income/impact scores will only be considered if the income is listed in one
+                    // of the activities from the farm's activity set, which depends on its strategy
+                    // as set in Farm.decideActivitySet()
                     if (this.acceptableIncome(farmName, incomes[i])) {
                         farmScore.put(incomes[i], new Score(
                             farmIncomes.get(farmName).get(incomes[i]),
@@ -157,12 +161,17 @@ public class PreCalculated implements MP_Interface{
                     }
                 }
                 
-                // now we now everything about that farm
+                // now we know everything about that farm
                 allFarmScores.put(farmName, farmScore);
             }
             
+            // sort the scores of each farm from highest to lowest
             for (Entry<String, Map<String, Score>> farmScores : allFarmScores.entrySet()) {
                 List<Entry<String, Score>> entryList = new ArrayList<Entry<String, Score>>(farmScores.getValue().entrySet());
+                
+                // there is an income loss tolerance, given by the control property 'near_maximum',
+                // but when incomes are lower than e.g., 95% of the maximum income, they fall down in
+                // the ranking regardless of how low their impact is.
                 int maxIncome = 0;
                 for (Entry<String, Score> scoreEntry : entryList) {
                     if (scoreEntry.getValue().income > maxIncome) {
@@ -179,10 +188,12 @@ public class PreCalculated implements MP_Interface{
                         boolean aElite = sa.income >= highIncome;
                         boolean bElite = sb.income >= highIncome;
                         
+                        // 'high' income is better than 'low' income
                         if (aElite && !bElite) return -1;
                         
                         if (!aElite && bElite) return 1;
                         
+                        // if both incomes are 'low' higher income is better
                         if (!aElite && !bElite) {
                             if (sa.income > sb.income) return -1;
                             if (sa.income < sb.income) return 1;
@@ -191,6 +202,7 @@ public class PreCalculated implements MP_Interface{
                             if (sa.impact > sb.impact) return 1;
                         }
                         
+                        // if both incomes are 'high' lower impact is better
                         if (aElite && bElite) {
                             if (sa.impact < sb.impact) return -1;
                             if (sa.impact > sb.impact) return 1;

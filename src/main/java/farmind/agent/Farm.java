@@ -174,7 +174,7 @@ public class Farm {
         // Full simulation using dissimilarity and satisfaction
         else {
             if ( (this.Activity_Dissimilarity >= this.p_activity_tolerance_coef) || (this.Income_Dissimilarity >= this.p_income_tolerance_coef) ) {  
-                if (this.Satisfaction >= this.getP_aspiration_coef()) {
+                if (cmd.getProperty("noOptOut") == "true" || this.Satisfaction >= this.getP_aspiration_coef()) {
                     this.strategy = 2; //IMITATION
                     ActivitySet = fuzzyLogicCalc.getImitationActivities();
                 }

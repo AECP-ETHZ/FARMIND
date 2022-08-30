@@ -191,6 +191,21 @@ public class FarmTests {
     }
 
     @Test
+    public void testNoOptOutDecision() {
+        Farm farm = allFarms.get(0);
+        
+        farm.setSatisfaction(-1);
+        farm.setActivity_Dissimilarity(10);
+        farm.setIncome_Dissimilarity(0);
+        
+        cmd.setProperty("noOptOut", "1");
+        
+        farm.decideActivitySet(allFarms,cmd);
+        int strat = farm.getStrategy();
+        assertEquals(strat, 2);    
+    }
+
+    @Test
     public void testRepetionDecisionNoUncertainty() throws FileNotFoundException, IOException {
         Farm farm = allFarms.get(0);
         

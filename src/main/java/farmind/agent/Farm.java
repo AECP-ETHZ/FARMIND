@@ -150,7 +150,7 @@ public class Farm {
         FuzzyLogicCalculator fuzzyLogicCalc = new FuzzyLogicCalculator(this, allFarms);  // calculator for the activity selection
         
         // modified simulation using only satisfaction
-        if ( Integer.parseInt(cmd.getProperty("uncertainty")) == 0) {
+        if (cmd.getProperty("uncertainty").equals("0")) {
             if (this.Satisfaction >= this.getP_aspiration_coef() ) {
                 this.strategy = 4; //REPETITION
                 for (int i = 0; i < this.getCurrentActivity().size(); i++) {
@@ -173,8 +173,10 @@ public class Farm {
         
         // Full simulation using dissimilarity and satisfaction
         else {
-            if ( (this.Activity_Dissimilarity >= this.p_activity_tolerance_coef) || (this.Income_Dissimilarity >= this.p_income_tolerance_coef) ) {  
-                if (cmd.getProperty("noOptOut") == "true" || this.Satisfaction >= this.getP_aspiration_coef()) {
+            if (this.Activity_Dissimilarity >= this.p_activity_tolerance_coef
+             || this.Income_Dissimilarity   >= this.p_income_tolerance_coef) {  
+                if (cmd.getProperty("noOptOut").equals("1")
+                 || this.Satisfaction >= this.getP_aspiration_coef()) {
                     this.strategy = 2; //IMITATION
                     ActivitySet = fuzzyLogicCalc.getImitationActivities();
                 }

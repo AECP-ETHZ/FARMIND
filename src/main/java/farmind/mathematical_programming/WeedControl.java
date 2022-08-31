@@ -84,7 +84,7 @@ public class WeedControl implements MP_Interface{
 	 * @throws IOException 
 	 */
 	private static void createRunGamsBatch(Properties cmd, String OS) throws IOException {
-		if (cmd.getProperty("debug").equals("1")) {
+		if (cmd.getProperty("debug", "0").equals("1")) {
 			if (OS.equals("win")) {
 				LOGGER.info("Creating run_gams.bat file for debug");
 				File f = new File("run_gams.bat");

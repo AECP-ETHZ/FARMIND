@@ -106,7 +106,7 @@ public class FarmDyn implements MP_Interface{
 	 * @throws 
 	 */
 	private static void createRunGamsBatch(Properties cmd, String OS) throws FileNotFoundException {
-		if (cmd.getProperty("debug").equals("1")) {
+		if (cmd.getProperty("debug", "0").equals("1")) {
 			if (OS.equals("win")) {
 				LOGGER.info("Creating run_gams.bat file for debug");
 				try (PrintWriter writer = new PrintWriter("run_gams.bat")) {
